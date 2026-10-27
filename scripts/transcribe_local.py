@@ -12,6 +12,23 @@ import json
 import sys
 
 
+def load_wav(path):
+    """Baca WAV PCM 16-bit mono 16 kHz (sudah diekstrak ffmpeg) sebagai float32.
+
+    Sengaja tidak memakai decoder bawaan faster-whisper (PyAV), karena versi PyAV
+    terbaru tidak kompatibel (TypeError: open() ... 'metadata_errors').
+    """
+    import wave
+
+    import numpy as np
+
+    with wave.open(path, "rb") as w:
+        if w.getsampwidth() != 2 or w.getnchannels() != 1 or w.getframerate() != 16000:
+            raise ValueError("Audio harus WAV PCM 16-bit mono 16 kHz")
+        data = w.readframes(w.getnframes())
+    return np.frombuffer(data, dtype=np.int16).astype(np.float32) / 32768.0
+
+
 def main():
     if len(sys.argv) < 3:
         print("usage: transcribe_local.py <audio> <model> [language]", file=sys.stderr)
@@ -26,7 +43,7 @@ def main():
 
     model = WhisperModel(model_name, device="auto", compute_type="auto")
     segments, info = model.transcribe(
-        audio,
+        load_wav(audio),
         language=language,
         word_timestamps=True,
         vad_filter=True,
