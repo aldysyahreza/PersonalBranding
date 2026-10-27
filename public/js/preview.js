@@ -3,12 +3,23 @@
 // tombol "Cek frame akurat" merender frame asli lewat ffmpeg.
 import { h } from './ui.js';
 import { store } from './store.js';
-import { buildPhrases, splitLeadKey, framing, isCut, OUTPUT_FORMATS, keepSegments, mapTime, fmtTime, zoomAt } from '../shared/core.js';
+import { buildPhrases, splitLeadKey, framing, isCut, OUTPUT_FORMATS, keepSegments, mapTime, fmtTime, zoomAt, kineticLines, resolveEmphasis } from '../shared/core.js';
 
 const WEIGHTS = { Thin: 100, ExtraLight: 200, Light: 300, Regular: 400, Medium: 500, SemiBold: 600, Bold: 700, ExtraBold: 800, Black: 900 };
 export function fontCss(name = 'Inter') {
-  const [family, ...rest] = String(name).split(' ');
-  return { fontFamily: `'${family}', system-ui, sans-serif`, fontWeight: WEIGHTS[rest.join('')] || 400 };
+  const parts = String(name).split(' ');
+  const last = parts[parts.length - 1];
+  // "Montserrat ExtraBold" → keluarga "Montserrat", tebal 800; "Great Vibes" → keluarga utuh, tebal 400.
+  const family = WEIGHTS[last] ? parts.slice(0, -1).join(' ') : parts.join(' ');
+  return { fontFamily: `'${family}', system-ui, sans-serif`, fontWeight: WEIGHTS[last] || 400 };
+}
+
+const measureCtx = document.createElement('canvas').getContext('2d');
+/** Lebar teks (px) di browser dengan font yang sama dengan render. */
+function textWidth(text, size, font) {
+  const f = fontCss(font);
+  measureCtx.font = `${f.fontWeight} ${size}px ${f.fontFamily}`;
+  return measureCtx.measureText(text).width;
 }
 
 export function createPreview() {
@@ -95,16 +106,66 @@ export function createPreview() {
   }
 
   function phrasesFor(pr) {
-    const key = JSON.stringify([pr.transcript?.segments, pr.style.captions.maxWords, pr.style.captions.maxChars]);
-    if (key !== cache.key) cache = { key, phrases: buildPhrases(pr.transcript?.segments || [], { maxWords: pr.style.captions.maxWords, maxChars: pr.style.captions.maxChars }) };
+    const cap = pr.style.captions;
+    const key = JSON.stringify([pr.transcript?.segments, cap.maxWords, cap.maxChars, cap.layout, cap.emphasis]);
+    if (key !== cache.key) {
+      // Salinan kata agar penandaan gaya penekanan tidak mengubah data transkrip.
+      const segs = JSON.parse(JSON.stringify(pr.transcript?.segments || []));
+      const phrases = buildPhrases(segs, { maxWords: cap.maxWords, maxChars: cap.maxChars });
+      if (cap.layout === 'kinetic') resolveEmphasis(phrases, cap.emphasis);
+      cache = { key, phrases };
+    }
     return cache.phrases;
+  }
+
+  let capState = { key: null, words: [] };
+  /** Caption kinetik: blok baris dibangun sekali per frasa; tiap kata menyala saat waktunya tiba. */
+  function drawKinetic(pr, t, ph) {
+    const cap = pr.style.captions;
+    const stateKey = `${ph.start}|${W}|${JSON.stringify(cap)}|${JSON.stringify(pr.style.colors)}|${JSON.stringify(pr.style.fonts)}`;
+    if (capState.key !== stateKey) {
+      const k = Math.min(W, H) / 1080, col = pr.style.colors, fonts = { accent: 'Great Vibes', ...pr.style.fonts };
+      const side = W * pr.style.safeZone.side;
+      const safeTop = H * pr.style.safeZone.top, safeBottom = H * (1 - pr.style.safeZone.bottom);
+      const capY = Math.round(Math.min(safeBottom, Math.max(safeTop + cap.keySize * k * 2, H * cap.position)));
+      const size = { small: cap.leadSize * k, big: cap.keySize * k, script: cap.keySize * (cap.scriptScale ?? 1.8) * k };
+      const fontOf = { small: fonts.lead, big: fonts.key, script: fonts.accent };
+      const ls = kineticLines(ph.words, { maxWidth: (W - side * 2) * 0.92, widthOf: (text, tier) => textWidth(cap.uppercase ? text.toUpperCase() : text, size[tier], fontOf[tier]) });
+      const gap = { small: 1.15, big: 1.02, script: 0.82 };
+      const font = { small: fonts.lead, big: fonts.key, script: fonts.accent };
+      const heights = ls.map((l) => size[l.tier] * gap[l.tier]);
+      let y = capY - heights.reduce((a, b) => a + b, 0);
+      const shadow = `0 ${cap.shadow * k}px ${cap.shadow * k * 1.2}px rgba(0,0,0,.5)`;
+      const words = [];
+      capLayer.replaceChildren(...ls.map((l, li) => {
+        y += heights[li];
+        const lineEl = h('div', { class: 'pv-cap-line pv-kin-line', style: { left: `${side}px`, right: `${side}px`, top: `${y}px`, fontSize: `${size[l.tier]}px`, lineHeight: 1, color: col.text, textShadow: shadow, letterSpacing: l.tier === 'big' ? '-0.01em' : '0', ...fontCss(font[l.tier]) } });
+        lineEl.dataset.start = l.words[0].start;
+        l.words.forEach((w) => {
+          const txt = cap.uppercase ? w.text.toUpperCase() : w.text;
+          let el;
+          if (w.style === 'box' && l.tier === 'big') el = h('span', { class: 'pv-kin-word pv-emph-box', style: { background: col.accent, padding: `0 ${10 * k}px`, textShadow: 'none' } }, txt);
+          else if (w.style === 'color') el = h('span', { class: 'pv-kin-word', style: { color: col.accent } }, txt);
+          else if (w.style === 'arc') el = h('span', { class: 'pv-kin-word pv-arc', style: { '--arc': col.accent } }, txt);
+          else el = h('span', { class: 'pv-kin-word' }, txt);
+          el.dataset.start = w.start;
+          words.push(el);
+          lineEl.append(el, ' ');
+        });
+        return lineEl;
+      }));
+      capState = { key: stateKey, words, lines: [...capLayer.children] };
+    }
+    for (const el of capState.words) el.classList.toggle('on', t >= Number(el.dataset.start) - 0.02);
+    for (const el of capState.lines) el.classList.toggle('on', t >= Number(el.dataset.start) - 0.02);
   }
 
   function drawCaptions(pr, t) {
     const cap = pr.style.captions;
+    const ph = cap.enabled ? phrasesFor(pr).find((x) => t >= x.start && t < x.end) : null;
+    if (ph && cap.layout === 'kinetic') return drawKinetic(pr, t, ph);
+    capState = { key: null, words: [] };
     capLayer.replaceChildren();
-    if (!cap.enabled) return;
-    const ph = phrasesFor(pr).find((x) => t >= x.start && t < x.end);
     if (!ph) return;
     const k = Math.min(W, H) / 1080;
     const col = pr.style.colors;
@@ -133,29 +194,37 @@ export function createPreview() {
     }
   }
 
+  let cardKey = null;
   function drawCards(pr, t) {
-    cardLayer.replaceChildren();
     const card = (pr.cards || []).find((c) => c.approved && t >= c.start && t < c.end);
+    const key = card ? `${JSON.stringify(card)}|${W}|${JSON.stringify(pr.style.cards)}|${JSON.stringify(pr.style.colors)}|${JSON.stringify(pr.style.fonts)}` : null;
+    if (key === cardKey) return;
+    cardKey = key;
+    cardLayer.replaceChildren();
     if (!card) return;
+    cardLayer.style.setProperty('--card-dur', `${Math.max(0.3, card.end - card.start)}s`);
     const st = pr.style, col = st.colors, k = Math.min(W, H) / 1080;
     const side = W * st.safeZone.side;
     const full = card.layout !== 'panel';
     const icon = card.icon ? { check: '✓', cross: '✕', arrow: '→', warning: '▲', star: '★' }[card.icon] : '';
     const label = (txt) => h('div', { style: { fontSize: `${st.cards.labelSize * k}px`, color: col.cardMuted, ...fontCss(st.fonts.lead) } }, txt);
     let titleEl;
-    const numSize = st.cards.numberSize * k * Math.min(1, (W - side * 2) / Math.max(1, String(card.title || '').length * 0.62 * st.cards.numberSize * k));
-    if (card.type === 'number') titleEl = h('div', { style: { whiteSpace: 'nowrap', fontSize: `${numSize}px`, lineHeight: 1, color: col.accent, textShadow: `0 ${6 * k}px ${10 * k}px rgba(0,0,0,.25)`, ...fontCss(st.fonts.card) } }, card.title);
+    const numSize = Math.min(st.cards.numberSize * k * 1.6, ((W - side * 2) * 0.7) / Math.max(0.5, String(card.title || '0').length * 0.66));
+    const dark = 'rgba(90,10,10,1)';
+    const extrude = Array.from({ length: 7 }, (_, i) => `${(i + 1) * 0.9 * k}px ${(i + 1) * 1.6 * k}px 0 ${dark}`).join(',');
+    if (card.type === 'number') titleEl = h('div', { class: 'pv-anim-slam', style: { whiteSpace: 'nowrap', fontSize: `${numSize}px`, lineHeight: 1, color: col.accent, textShadow: `${extrude}, ${14 * k}px ${26 * k}px ${22 * k}px rgba(0,0,0,.35)`, ...fontCss(st.fonts.card) } }, card.title);
     else if (card.type === 'list') titleEl = h('div', {}, h('div', { style: { fontSize: `${st.cards.titleSize * 0.8 * k}px`, color: col.cardText, ...fontCss(st.fonts.card) } }, card.title), ...String(card.subtitle || '').split(/\s*[;|]\s*/).filter(Boolean).map((it) => h('div', { style: { fontSize: `${st.cards.labelSize * k}px`, color: col.cardText, marginTop: `${18 * k}px`, ...fontCss(st.fonts.lead) } }, `• ${it}`)));
-    else titleEl = h('div', { style: { fontSize: `${st.cards.titleSize * 0.85 * k}px`, lineHeight: 1.3, ...fontCss(st.fonts.key) } }, h('span', { style: { background: col.accent, color: '#fff', padding: `0 ${14 * k}px`, boxDecorationBreak: 'clone', WebkitBoxDecorationBreak: 'clone' } }, card.title));
+    else titleEl = h('div', { class: 'pv-anim-wipe', style: { fontSize: `${st.cards.titleSize * 0.85 * k}px`, lineHeight: 1.3, ...fontCss(st.fonts.key) } }, h('span', { style: { background: col.accent, color: '#fff', padding: `0 ${14 * k}px`, boxShadow: `${12 * k}px ${12 * k}px 0 rgba(120,15,15,1)`, boxDecorationBreak: 'clone', WebkitBoxDecorationBreak: 'clone' } }, card.title));
     // Sama seperti render ASS: judul berpusat di cy, ikon + label atas di atasnya, label bawah di bawahnya.
-    const head = h('div', { class: 'pv-card-head', style: { left: `${side}px`, right: `${side}px` } },
-      icon ? h('div', { style: { fontSize: `${120 * k}px`, color: col.accent, lineHeight: 1 } }, icon) : null,
+    const head = h('div', { class: 'pv-card-head pv-anim-drop', style: { left: `${side}px`, right: `${side}px` } },
+      icon ? h('div', { class: 'pv-anim-pop', style: { fontSize: `${120 * k}px`, color: col.accent, lineHeight: 1 } }, icon) : null,
       card.kicker ? label(card.kicker) : null);
     const body = h('div', { class: 'pv-card-content', style: { left: `${side}px`, right: `${side}px` } }, titleEl);
     const foot = card.subtitle && card.type !== 'list' ? h('div', { class: 'pv-card-foot', style: { left: `${side}px`, right: `${side}px` } }, label(card.subtitle)) : null;
     let cy;
     if (full) {
-      const bg = h('div', { class: 'pv-card-full', style: { background: col.cardBg } });
+      const paper = st.cards.paper !== false ? `url(/api/library/paper/${W}/${H}/file?c=${encodeURIComponent(col.cardBg)}) center/cover, ` : '';
+      const bg = h('div', { class: 'pv-card-full', style: { background: `${paper}${col.cardBg}` } });
       if (st.cards.grid) bg.append(h('div', { class: 'pv-grid', style: { width: `${760 * k}px`, height: `${520 * k}px`, top: `${H * 0.47}px`, backgroundSize: `${52 * k}px ${52 * k}px` } }));
       cy = H * 0.47;
       cardLayer.append(bg);
@@ -166,6 +235,8 @@ export function createPreview() {
       cy = top + ph / 2 + (card.icon ? 70 * k : 0);
     }
     body.style.top = `${cy}px`;
+    body.classList.add('pv-anim-drift');
+    if (foot) foot.classList.add('pv-anim-late');
     cardLayer.append(body, head, foot);
     const th = body.offsetHeight;
     head.style.top = `${cy - th / 2 - 8 * k}px`;

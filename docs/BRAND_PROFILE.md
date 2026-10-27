@@ -19,7 +19,7 @@ Saat aplikasi dibuat, satu-satunya sumber adalah **preferensi profil yang dituli
 
 ## 3. Asumsi desain sementara (perlu dikonfirmasi)
 - Gaya "Editorial Talking Head" diturunkan dari video referensi, bukan dari panduan visual Aldy.
-- Warna aksen `#D92A2A`, latar kartu `#F3F2EF`, font Inter: placeholder.
+- Warna aksen `#D92A2A`, latar kartu `#F3F2EF`, font Montserrat + Great Vibes: dipilih karena mirip referensi, bukan identitas Aldy.
 - Bahasa video: Bahasa Indonesia dengan istilah Inggris.
 - Kata kunci penekanan default (brand, strategi, positioning, sistem, AI, funnel, offer, …) diturunkan dari bidang fokus — belum tentu kosakata yang paling sering diucapkan.
 

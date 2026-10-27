@@ -1,4 +1,9 @@
-/* Font bundel (Inter, OFL) — sama dengan yang dipakai render ffmpeg/libass. */
+/* Font bundel (OFL) — sama dengan yang dipakai render ffmpeg/libass. */
+@font-face { font-family: 'Montserrat'; src: url('/fonts/Montserrat-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('/fonts/Montserrat-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('/fonts/Montserrat-ExtraBold.ttf') format('truetype'); font-weight: 800; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('/fonts/Montserrat-Black.ttf') format('truetype'); font-weight: 900; font-display: swap; }
+@font-face { font-family: 'Great Vibes'; src: url('/fonts/GreatVibes-Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
 @font-face { font-family: 'Inter'; src: url('/fonts/Inter-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; }
 @font-face { font-family: 'Inter'; src: url('/fonts/Inter-SemiBold.otf') format('opentype'); font-weight: 600; font-display: swap; }
 @font-face { font-family: 'Inter'; src: url('/fonts/Inter-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
@@ -252,3 +257,27 @@ code.path { display: block; margin: 4px 0; }
 .tl-item.zoom.on { background: var(--info); color: #fff; }
 .lib { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; padding: 10px; background: var(--soft); border-radius: 8px; }
 .lib-row { display: flex; gap: 10px; align-items: center; }
+
+/* --- Animasi preview (meniru render ASS) --- */
+.pv-kin-line { white-space: nowrap; opacity: 0; transform: translateY(calc(-100% + 16px)); transition: opacity .12s, transform .22s ease-out; }
+.pv-kin-line.on { opacity: 1; transform: translateY(-100%); }
+.pv-kin-word { opacity: 0; filter: blur(7px); transition: opacity .17s, filter .17s; display: inline-block; }
+.pv-kin-word.on { opacity: 1; filter: blur(0); }
+.pv-arc { position: relative; }
+.pv-arc::after { content: ''; position: absolute; left: -5%; right: -10%; bottom: -0.32em; height: 0.3em; border-bottom: 0.11em solid var(--arc); border-radius: 0 0 50% 50% / 0 0 100% 100%; transform: rotate(-3deg) scaleX(0); transform-origin: left; transition: transform .32s .12s ease-out; }
+.pv-arc.on::after { transform: rotate(-3deg) scaleX(1); }
+@keyframes pvSlam { 0% { opacity: 0; filter: blur(12px); transform: scale(1.35); } 100% { opacity: 1; filter: blur(0); transform: scale(1.04); } }
+@keyframes pvDrift { from { transform: translateY(-50%) scale(1.03); } to { transform: translateY(-50%) scale(0.97); } }
+@keyframes pvWipe { from { clip-path: inset(-20% 100% -20% -5%); } to { clip-path: inset(-20% -5% -20% -5%); } }
+@keyframes pvDrop { from { opacity: 0; margin-top: -14px; } to { opacity: 1; margin-top: 0; } }
+@keyframes pvPop { 0% { transform: scale(0) rotate(-25deg); } 70% { transform: scale(1.15) rotate(0); } 100% { transform: scale(1); } }
+@keyframes pvFade { from { opacity: 0; } to { opacity: 1; } }
+.pv-anim-slam { animation: pvSlam .23s ease-out both; }
+.pv-anim-drift { animation: pvDrift var(--card-dur, 2s) linear both; }
+.pv-anim-wipe { animation: pvWipe .28s .04s ease-out both; }
+.pv-anim-drop { animation: pvDrop .24s ease-out both; }
+.pv-anim-pop { display: inline-block; animation: pvPop .33s .06s ease-out both; }
+.pv-anim-late { animation: pvFade .2s .3s both; }
+.word.emph-box { background: var(--accent); }
+.word.emph-arc { background: transparent; color: var(--accent); border-color: var(--accent); text-decoration: underline wavy; }
+.word.emph-script { background: transparent; color: var(--ink); border-color: var(--accent); font-family: 'Great Vibes', cursive; font-size: 1.05rem; font-weight: 400; }

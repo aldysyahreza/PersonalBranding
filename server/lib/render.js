@@ -2,13 +2,14 @@
 // dipakai untuk: ekspor final, render pratinjau cepat, dan frame pratinjau.
 // Dengan begitu pratinjau mencerminkan konfigurasi aktual yang akan diekspor.
 import fs from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { config } from './config.js';
 import { run } from './proc.js';
 import { probe, UserError } from './media.js';
 import { buildAss } from './ass.js';
 import { keepSegments, outputDuration, mapSpan, mapTime, framing, zoomPieces, OUTPUT_FORMATS, r3 } from '../../public/shared/core.js';
-import { libraryFile, isLibraryItem, catalog } from './synth.js';
+import { libraryFile, isLibraryItem, catalog, paperFile } from './synth.js';
 import { workDir } from './projects.js';
 
 export const QUALITY = {
@@ -21,6 +22,17 @@ export const QUALITY = {
 export const CONTAINERS = { mp4: { ext: '.mp4', label: 'MP4 (H.264 + AAC)' }, mov: { ext: '.mov', label: 'MOV (H.264 + AAC)' } };
 
 export const BUILTIN_SFX_LIST = catalog().sfx.map((x) => x.id);
+
+let majorCache = null;
+/** Versi mayor ffmpeg (0 bila tidak terbaca, mis. build git "N-xxxxx"). */
+export function ffmpegMajor() {
+  if (majorCache === null) {
+    const r = spawnSync('ffmpeg', ['-version']);
+    const m = String(r.stdout || '').match(/ffmpeg version n?(\d+)\./);
+    majorCache = m ? Number(m[1]) : 0;
+  }
+  return majorCache;
+}
 
 function dbToLin(db) {
   return Math.pow(10, db / 20).toFixed(4);
@@ -68,7 +80,10 @@ export function buildCommand(project, o) {
   const outDur = outputDuration(keep);
   const dir = workDir(project.id);
   const assName = `subs_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.ass`;
-  fs.writeFileSync(path.join(dir, assName), buildAss(project, { width: W, height: H, keep }));
+  // Kartu layar penuh memakai latar kertas bertekstur (overlay PNG) di bawah teks ASS.
+  const fullCards = (project.cards || []).filter((c) => c.approved && c.layout !== 'panel').map((c) => mapSpan(c.start, c.end, keep)).filter(Boolean);
+  const usePaper = project.style.cards?.paper !== false && fullCards.length > 0;
+  fs.writeFileSync(path.join(dir, assName), buildAss(project, { width: W, height: H, keep, paper: usePaper }));
 
   const inputs = ['-i', project.source.path];
   let nextInput = 1;
@@ -140,6 +155,16 @@ export function buildCommand(project, o) {
     bi++;
   }
 
+  // 4b) Latar kertas untuk kartu layar penuh (potong keras seperti referensi).
+  if (usePaper) {
+    inputs.push('-loop', '1', '-framerate', String(fps), '-t', String(outDur), '-i', paperFile(W, H, project.style.colors?.cardBg));
+    const pi = nextInput++;
+    const enable = fullCards.map((c) => `between(t,${r3(c.start)},${r3(c.end)})`).join('+');
+    f.push(`[${pi}:v]format=yuv420p,setsar=1[paper]`);
+    f.push(`[${cur}][paper]overlay=0:0:eof_action=pass:enable='${enable}'[vpaper]`);
+    cur = 'vpaper';
+  }
+
   // 5) Subtitle + kartu (ASS).
   const fontsRel = path.relative(dir, config.fontsDir).split(path.sep).join('/');
   const fontsArg = /[:'\\,\[\];]/.test(fontsRel) ? '' : `:fontsdir=${fontsRel}`;
@@ -194,10 +219,16 @@ export function buildCommand(project, o) {
     f.push(`${mix.join('')}amix=inputs=${mix.length}:duration=first:dropout_transition=0:normalize=0,alimiter=limit=0.95,aresample=48000[aout]`);
   }
 
+  // Graph dikirim langsung sebagai argumen (tanpa shell). -filter_complex_script tidak dipakai
+  // karena sudah usang/dihapus di ffmpeg versi baru. Salinan graph disimpan untuk diagnosis.
   const graphFile = path.join(dir, assName.replace('.ass', '.graph.txt'));
-  fs.writeFileSync(graphFile, f.join(';\n'));
+  const graph = f.join(';');
+  fs.writeFileSync(graphFile, graph);
 
-  const args = ['-hide_banner', '-y', '-nostdin', ...inputs, '-filter_complex_script', graphFile, '-map', '[vout]'];
+  // Batas panjang baris perintah Windows ±32 rb karakter: graph sangat panjang dibaca dari file
+  // (sintaks "-/filter_complex <file>" ffmpeg ≥ 7, atau -filter_complex_script untuk versi lama).
+  const graphArgs = graph.length < 20000 ? ['-filter_complex', graph] : ffmpegMajor() >= 7 ? ['-/filter_complex', graphFile] : ['-filter_complex_script', graphFile];
+  const args = ['-hide_banner', '-y', '-nostdin', ...inputs, ...graphArgs, '-map', '[vout]'];
   if (o.stillAt !== undefined) {
     args.push('-ss', String(Math.max(0, Math.min(outDur - 0.05, o.stillAt))), '-frames:v', '1', '-update', '1', o.outFile);
     return { args, cwd: dir, outDur, keep, tempFiles: [path.join(dir, assName), graphFile] };

@@ -14,12 +14,12 @@ import { providerStatus, transcribeLocal, transcribeOpenAI } from './lib/transcr
 import { rulePlan, claudePlan, planToItems } from './lib/plan.js';
 import { renderVideo, renderStill, preflight, estimateSize, QUALITY, CONTAINERS, BUILTIN_SFX_LIST } from './lib/render.js';
 import { BRAND_PROFILE } from './lib/brand.js';
-import { catalog, libraryFile, isLibraryItem, LICENSE_NOTE } from './lib/synth.js';
+import { catalog, libraryFile, isLibraryItem, LICENSE_NOTE, paperFile } from './lib/synth.js';
 import { distributeText, parseSubtitles, toSrt, projectStatus, OUTPUT_FORMATS, uid } from '../public/shared/core.js';
 
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
-  '.json': 'application/json', '.otf': 'font/otf', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
+  '.json': 'application/json', '.otf': 'font/otf', '.ttf': 'font/ttf', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
   '.webp': 'image/webp', '.svg': 'image/svg+xml', '.mp4': 'video/mp4', '.m4v': 'video/mp4', '.mov': 'video/quicktime',
   '.webm': 'video/webm', '.mkv': 'video/x-matroska', '.avi': 'video/x-msvideo', '.mp3': 'audio/mpeg', '.wav': 'audio/wav',
   '.m4a': 'audio/mp4', '.aac': 'audio/aac', '.ogg': 'audio/ogg', '.flac': 'audio/flac', '.srt': 'text/plain; charset=utf-8',
@@ -259,6 +259,14 @@ route('GET', '/api/projects/:id/media/asset/:assetId', async ({ id, assetId, req
 route('GET', '/api/library/:kind/:item/file', async ({ kind, item, req, res }) => {
   if (!isLibraryItem(kind, item)) throw new UserError('Item pustaka tidak ditemukan.', '', 404);
   serveFile(req, res, libraryFile(kind, item));
+  return null;
+});
+route('GET', '/api/library/paper/:w/:h/file', async ({ w, h, req, res, url }) => {
+  const W = Number(w), Hh = Number(h);
+  if (!(W > 0 && W <= 4096)) throw new UserError('Ukuran tidak valid.', '', 400);
+  const c = /^#[0-9a-fA-F]{6}$/.test(url.searchParams.get('c') || '') ? url.searchParams.get('c') : '#F2F1ED';
+  if (!(Hh > 0 && Hh <= 4096)) throw new UserError('Ukuran tidak valid.', '', 400);
+  serveFile(req, res, paperFile(W, Hh, c));
   return null;
 });
 route('POST', '/api/projects/:id/library/music', async ({ id, req }) => {

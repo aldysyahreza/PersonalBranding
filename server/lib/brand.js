@@ -20,7 +20,7 @@ export const BRAND_PROFILE = {
   ],
   assumptions: [
     'Gaya visual "Editorial Talking Head" (latar gelap-hangat, kartu terang, satu warna aksen merah) diturunkan dari video referensi, bukan dari panduan visual Aldy.',
-    'Warna aksen #D92A2A dan font Inter adalah placeholder.',
+    'Warna aksen #D92A2A serta font Montserrat + Great Vibes dipilih karena mirip referensi — placeholder sampai ada identitas visual resmi.',
     'Bahasa konten diasumsikan Bahasa Indonesia, kadang campur istilah Inggris.',
     'Daftar kata kunci penekanan diturunkan dari bidang fokus yang dinyatakan; belum tentu kosakata yang sering diucapkan.',
   ],

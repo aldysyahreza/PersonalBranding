@@ -3,6 +3,7 @@
 // sehingga bebas royalti. Hasil ditulis sebagai WAV ke folder library/ (cache).
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { ROOT } from './config.js';
 
 const SR = 44100;
@@ -322,5 +323,27 @@ export function libraryFile(kind, id) {
     fs.writeFileSync(tmp, buf.toWav());
     fs.renameSync(tmp, file);
   }
+  return file;
+}
+
+/* ------------------------------ tekstur kertas kartu ------------------------------ */
+
+/**
+ * Latar kartu: kertas putih hangat dengan pita cahaya jendela diagonal & noise halus
+ * (meniru nuansa referensi). Dibuat sekali per ukuran output dengan ffmpeg (geq).
+ */
+export function paperFile(W, H, hex = '#F2F1ED') {
+  const m = hex.replace('#', '');
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(m.slice(i, i + 2), 16));
+  fs.mkdirSync(LIBRARY_DIR, { recursive: true });
+  const file = path.join(LIBRARY_DIR, `paper-${W}x${H}-${m.toLowerCase()}-v1.png`);
+  if (fs.existsSync(file)) return file;
+  // Cahaya: pita diagonal lembut + gradasi terang di kanan atas + bayangan tepi.
+  const light = `(7*sin((X*0.62+Y)/(W*0.20))+5*sin((X*0.62+Y)/(W*0.07)+1.3)*gt(sin((X*0.62+Y)/(W*0.20)),0.2)+8*(1-Y/H)*(X/W)-26*pow(hypot(X-W*0.55,Y-H*0.42)/hypot(W,H),2))`;
+  const expr = (c) => `clip(${c}+${light},0,255)`;
+  const tmp = `${file}.tmp.png`;
+  const res = spawnSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'lavfi', '-i', `color=c=black:s=${W}x${H}:d=1,format=rgb24`, '-vf', `geq=r='${expr(r)}':g='${expr(g)}':b='${expr(b)}',noise=alls=3:allf=u`, '-frames:v', '1', tmp]);
+  if (res.status !== 0) throw new Error(`Tekstur kertas gagal dibuat: ${String(res.stderr).slice(-300)}`);
+  fs.renameSync(tmp, file);
   return file;
 }

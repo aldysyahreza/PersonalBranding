@@ -39,10 +39,18 @@ Opsional:
 | Preset gaya | `config/presets/*.json` — `aldy-editorial.json` + preset yang Anda simpan dari Editor |
 | Profil brand (fakta/asumsi) | `docs/BRAND_PROFILE.md`, `server/lib/brand.js` |
 | Analisis referensi | `docs/REFERENCE_ANALYSIS.md` |
-| Font (Inter, OFL) | `assets/fonts/` |
+| Font (Montserrat, Great Vibes, Inter — OFL) | `assets/fonts/` (+ lisensi) |
 | Konfigurasi & secret | `.env` (tidak pernah di-commit; lihat `.env.example`) |
 
 Lokasi `projects/` dan `output/` dapat diubah via `PROJECTS_DIR` / `OUTPUT_DIR` di `.env`.
+
+## Gaya visual (preset "Aldy — Editorial Talking Head")
+
+Meniru ritme video referensi, lalu dikembangkan:
+- **Caption kinetik** (`captions.layout: "kinetic"`): kata muncul satu per satu tepat saat diucapkan (blur → tajam, naik halus), menumpuk per frasa lalu hilang bersama. Hierarki otomatis: kata sambung kecil (Montserrat Medium), kata bermakna besar (Montserrat ExtraBold), aksen.
+- **Aksen bergiliran** (`captions.emphasis: "mix"`): kotak merah → garis lengkung merah yang tergambar → huruf script (Great Vibes). Bisa dipilih per kata di Transkrip (klik kata untuk berganti).
+- **Kartu**: latar kertas bertekstur dengan cahaya jendela diagonal, angka 3D merah yang "dibanting" masuk + blok merah transparan, judul kotak merah dengan bayangan blok yang terbuka dari kiri, ikon berputar masuk, poin daftar muncul bergantian, dan zoom-out pelan sepanjang kartu.
+- Posisi ornamen dihitung dari **lebar huruf asli** file font (`server/lib/fontmetrics.js`), jadi tetap rapi saat font diganti.
 
 ## Preset gaya
 
@@ -83,4 +91,5 @@ scripts/transcribe_local.py  faster-whisper
 - Preview browser memakai CSS untuk warna & tidak memutar SFX/ducking — gunakan "Render pratinjau" untuk campuran final.
 - Codec yang tidak didukung browser (mis. HEVC di beberapa browser) tidak bisa dipreview langsung, tetapi tetap bisa dirender.
 - Render frame akurat men-decode dari awal video, jadi lebih lambat untuk video panjang.
+- Filter graph dikirim langsung ke ffmpeg (bukan `-filter_complex_script`, yang usang di ffmpeg baru). Graph sangat panjang otomatis dibaca dari file (`-/filter_complex`, ffmpeg ≥ 7).
 - Ekspor berjalan satu per proyek; status job disimpan di memori (hilang bila server dimatikan; riwayat ekspor tetap tersimpan di proyek).

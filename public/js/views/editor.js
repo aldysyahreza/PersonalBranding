@@ -28,7 +28,7 @@ export function refreshPreview() {
   renderInspector();
 }
 
-const FONTS = ['Inter Medium', 'Inter SemiBold', 'Inter Bold', 'Inter ExtraBold', 'Inter Black'].map((f) => [f, f]);
+const FONTS = ['Montserrat Medium', 'Montserrat Bold', 'Montserrat ExtraBold', 'Montserrat Black', 'Great Vibes', 'Inter Medium', 'Inter SemiBold', 'Inter Bold', 'Inter ExtraBold', 'Inter Black'].map((f) => [f, f]);
 
 /** Ubah gaya tanpa merender ulang seluruh halaman (preview diperbarui langsung). */
 const setStyle = (path, key) => (v) => edit((x) => {

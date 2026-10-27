@@ -25,8 +25,10 @@ function project() {
 test('preset level menimpa nilai dasar tanpa mengubah preset asli', () => {
   const base = getPreset('aldy-editorial');
   const dyn = resolveStyle(base, 'dinamis');
-  assert.equal(dyn.captions.layout, 'karaoke');
-  assert.equal(resolveStyle(base, 'editorial').captions.layout, 'stack');
+  assert.equal(dyn.captions.layout, 'kinetic');
+  assert.equal(dyn.captions.keySize, 96);
+  assert.equal(resolveStyle(base, 'editorial').captions.layout, 'kinetic');
+  assert.equal(resolveStyle(base, 'minimal').captions.layout, 'single');
   assert.deepEqual(deepMerge({ a: { b: 1, c: 2 } }, { a: { b: 3 } }), { a: { b: 3, c: 2 } });
 });
 
@@ -93,4 +95,15 @@ test('kartu dari ucapan: angka terucap, frasa inti, CTA — tanpa kata di luar u
   assert.equal(num.needsReview, false); // "tiga" diucapkan → "3" tidak dianggap kata baru
   assert.ok(items.cards.some((c) => c.cta && c.title.startsWith('simpan')));
   assert.ok(items.sfx.some((s) => s.builtin === 'impact') && items.sfx.some((s) => s.builtin === 'notif'));
+});
+
+test('caption kinetik: kata muncul pada timestamp-nya & ornamen lengkung untuk aksen arc', () => {
+  const p = project();
+  p.transcript.segments[1].words[1].emph = 'arc';
+  const keep = keepSegments(10, []);
+  const ass = buildAss(p, { width: 1080, height: 1920, keep });
+  // Tiap kata punya animasi muncul (transparan → penuh) dengan waktu relatif sendiri.
+  assert.match(ass, /\\alpha&HFF&\\blur\d+\\t\(\d+,\d+,\\alpha&H00&\\blur0\)\}pilih/);
+  assert.match(ass, /\\clip\(\d+,\d+,\d+,\d+\)\\t\(\d+,\d+,\\clip/); // lengkung tergambar (clip beranimasi)
+  assert.match(ass, /Style: Accent,Great Vibes/);
 });

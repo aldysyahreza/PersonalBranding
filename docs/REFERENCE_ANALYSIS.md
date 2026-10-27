@@ -21,6 +21,11 @@
 | Nuansa | Rapi, edukatif, mobile-first | Satu warna aksen, sisanya netral |
 
 ## Yang sengaja tidak ditiru
-- Font tulisan tangan/script dan efek 3D pada teks referensi (diganti tipografi Inter yang bersih).
+- Font milik referensi (tidak diketahui/berlisensi) — diganti padanan terbuka: Montserrat (sans tebal) dan Great Vibes (script).
 - Identitas, kalimat, dan aset kreator referensi.
 - Pengubahan wajah/penampilan apa pun.
+
+## Analisis gerak (frame 12–15 fps)
+- **Caption**: kata masuk satu per satu dengan blur gerak singkat (±150 ms), menumpuk dalam blok 2–3 baris: kata tebal besar ("If scripting"), kata sambung kecil tipis ("is the"), lalu kata emosional dalam huruf script ("one thing"). Garis lengkung merah tergambar di bawah kata kunci. Blok hilang bersama dengan potongan keras.
+- **Kartu**: kertas putih hangat dengan pita cahaya diagonal; angka merah 3D (ekstrusi gelap + bayangan lembut) di atas grid tipis; blok merah transparan di belakang sebagian angka; seluruh komposisi **zoom-out pelan** selama kartu tampil; masuk/keluar dengan potongan keras.
+- **Diterapkan** di preset sebagai caption `kinetic`, aksen `mix`, kartu `paper`, dan font Montserrat + Great Vibes (pengganti terbuka yang paling mirip).

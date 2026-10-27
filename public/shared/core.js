@@ -259,6 +259,65 @@ export function buildPhrases(segments, { maxWords = 4, maxChars = 26, pauseBreak
   return phrases;
 }
 
+/* ------------------------- Caption kinetik (gaya referensi) ------------------------- */
+
+// Kata sambung ditampilkan kecil & tipis; kata bermakna besar & tebal (hierarki seperti referensi).
+const CONNECTORS = new Set([
+  'yang', 'di', 'ke', 'dari', 'dan', 'atau', 'untuk', 'dengan', 'itu', 'ini', 'ada', 'adalah', 'akan', 'juga',
+  'sudah', 'lagi', 'kalau', 'jika', 'tapi', 'karena', 'jadi', 'pun', 'sih', 'kok', 'ya', 'si', 'para', 'oleh',
+  'pada', 'dalam', 'sebuah', 'seorang', 'bahwa', 'agar', 'supaya', 'lebih', 'paling', 'sangat', 'masih', 'bisa',
+  'the', 'a', 'an', 'is', 'are', 'was', 'were', 'of', 'to', 'in', 'on', 'and', 'or', 'that', 'this', 'it', 'so',
+  'be', 'as', 'at', 'for', 'if', 'but', 'with', 'your', 'my', 'our',
+]);
+export const EMPH_CYCLE = ['box', 'arc', 'script'];
+
+/**
+ * Tentukan gaya penekanan tiap kata. word.emph boleh true | 'box' | 'arc' | 'script'.
+ * true + mode 'mix' → bergiliran box → arc → script di sepanjang video (variasi seperti referensi).
+ */
+export function resolveEmphasis(phrases, mode = 'mix') {
+  let n = 0;
+  for (const ph of phrases) {
+    for (const w of ph.words) {
+      if (!w.emph) w.style = null;
+      else if (typeof w.emph === 'string') w.style = w.emph;
+      else if (mode === 'mix') w.style = EMPH_CYCLE[n++ % EMPH_CYCLE.length];
+      else if (mode === 'none') w.style = null;
+      else w.style = mode === 'color' ? 'color' : 'box';
+    }
+  }
+  return phrases;
+}
+
+/**
+ * Susun satu frasa menjadi baris bertingkat: 'small' (kata sambung), 'big' (kata bermakna,
+ * boleh berisi kotak/arc), 'script' (aksen huruf sambung). Posisi baris dihitung sekali
+ * sehingga kata yang muncul belakangan tidak menggeser kata lain.
+ */
+export function kineticLines(words, { bigChars = 16, smallChars = 26, maxWidth = 0, widthOf = null } = {}) {
+  // Batas baris: lebar teks terukur (px) bila tersedia, jika tidak jumlah karakter.
+  const fits = (tier, text) => (widthOf && maxWidth ? widthOf(text, tier) <= maxWidth : text.length <= (tier === 'small' ? smallChars : bigChars));
+  const tierOf = (w) => (w.style === 'script' ? 'script' : !w.style && CONNECTORS.has(normWord(w.text)) ? 'small' : 'big');
+  const allSmall = words.every((w) => tierOf(w) === 'small');
+  const lines = [];
+  for (const w of words) {
+    const tier = allSmall ? 'big' : tierOf(w);
+    const cur = lines[lines.length - 1];
+    if (cur && cur.tier === tier && fits(tier, [...cur.words, w].map((x) => x.text).join(' '))) cur.words.push(w);
+    else lines.push({ tier, words: [w] });
+  }
+  // Rapikan: baris 'small' berisi satu kata pendek di tengah dua baris 'big' digabung ke baris berikutnya.
+  for (let i = 1; i < lines.length - 1; i++) {
+    const l = lines[i];
+    const merged = [...l.words, ...lines[i + 1].words].map((x) => x.text).join(' ');
+    if (l.tier === 'small' && l.words.length === 1 && lines[i + 1].tier === 'big' && lines[i - 1].tier === 'big' && fits('big', merged)) {
+      lines[i + 1].words.unshift(...l.words);
+      lines.splice(i, 1);
+    }
+  }
+  return lines.slice(0, 4);
+}
+
 /** Bagi frasa menjadi baris kecil (lead) dan baris besar (key) untuk layout "stack". */
 export function splitLeadKey(words) {
   if (words.length <= 2) return { lead: [], key: words };

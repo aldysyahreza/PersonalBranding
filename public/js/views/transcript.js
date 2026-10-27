@@ -5,6 +5,7 @@ import { store, edit, setProject } from '../store.js';
 import { go, runJob } from '../app.js';
 import { fmtTime, syncSegmentWords, makeSegment, tokenize, r3 } from '../../shared/core.js';
 
+const EMPH_LABEL = { true: 'otomatis (bergiliran)', box: 'kotak merah', arc: 'garis lengkung', script: 'huruf script' };
 const TIMING = { asr: ['Timestamp kata asli', 'ok'], estimated: ['Waktu kata diestimasi', 'warn'], imported: ['Diimpor (kata diestimasi)', 'warn'], manual: ['Manual', ''] };
 
 export function renderTranscript(main) {
@@ -116,7 +117,7 @@ function segmentsPanel(p, video) {
     ),
   );
   if (t.note) panel.append(h('p', { class: 'muted small' }, t.note));
-  panel.append(h('p', { class: 'muted small' }, 'Klik kata untuk menandai/menghapus penekanan (blok warna aksen). Ubah teks hanya untuk memperbaiki salah dengar — bukan menulis ulang makna.'));
+  panel.append(h('p', { class: 'muted small' }, 'Klik kata untuk mengganti penekanan: otomatis → kotak merah → garis lengkung → huruf script → mati. Ubah teks hanya untuk memperbaiki salah dengar — bukan menulis ulang makna.'));
 
   t.segments.forEach((seg, i) => {
     const overlap = i > 0 && seg.start < t.segments[i - 1].end - 0.01;
@@ -131,9 +132,11 @@ function segmentsPanel(p, video) {
       }),
     });
     const words = h('div', { class: 'words' }, ...(seg.words || []).map((w, wi) =>
-      h('button', { class: `word ${w.emph ? 'emph' : ''}`, title: `${w.start.toFixed(2)}–${w.end.toFixed(2)} dtk`, onclick: () => edit((x) => {
+      h('button', { class: `word ${w.emph ? 'emph' : ''} ${typeof w.emph === 'string' ? `emph-${w.emph}` : ''}`, title: `${w.start.toFixed(2)}–${w.end.toFixed(2)} dtk · penekanan: ${EMPH_LABEL[String(w.emph ?? '')] || 'tidak ada'}`, onclick: () => edit((x) => {
         const ww = x.transcript.segments[i].words[wi];
-        ww.emph = !ww.emph || undefined;
+        // Siklus: tidak ada → otomatis (bergiliran) → kotak → lengkung → script → tidak ada.
+        const order = [undefined, true, 'box', 'arc', 'script'];
+        ww.emph = order[(order.indexOf(ww.emph) + 1) % order.length];
       }) }, w.text)));
     const setTime = (k) => (v) => edit((x) => {
       const s = x.transcript.segments[i];
