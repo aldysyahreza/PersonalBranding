@@ -1,0 +1,62 @@
+{
+  "id": "r-harga-ditawar",
+  "title": "Reels: harga ditawar itu gejala",
+  "format": "reels",
+  "stage": "copy",
+  "dx": 3,
+  "job": "Share",
+  "pillar": "Brand Diagnosis",
+  "hue": "terracotta",
+  "caption": "Owner yang paling sering ditawar biasanya bukan yang paling mahal. Mereka yang paling cepat kasih diskon.\n\nDi video ini saya bahas kenapa harga yang ditawar itu gejala, dan satu pertanyaan yang perlu kamu jawab dulu sebelum turun harga lagi.\n\nSimpan supaya bisa dicek minggu depan. Kirim ke satu teman yang masih sering ditawar.",
+  "pinned": "Orang memilih bisnismu karena apa, selain murah? Tulis satu kalimat di sini.",
+  "story": "",
+  "reel": {
+    "coverH": "Ditawar terus?",
+    "coverHi": "bukan soal harga",
+    "beats": [
+      {
+        "say": "Yang paling sering ditawar, biasanya paling cepat kasih diskon.",
+        "txt": "Paling cepat *diskon*",
+        "shot": "walk",
+        "dur": ""
+      },
+      {
+        "say": "Chat masuk jam sembilan malam. “Kak, bisa kurang?” Kamu langsung balas, “Boleh, Kak.”",
+        "txt": "“Kak, bisa kurang?”",
+        "shot": "phone",
+        "dur": ""
+      },
+      {
+        "say": "Besoknya pelanggan lain minta hal yang sama. Margin makin tipis, capeknya makin tebal.",
+        "txt": "Margin makin *tipis*",
+        "shot": "med",
+        "dur": ""
+      },
+      {
+        "say": "Sering kali masalahnya bukan harga. Pelanggan belum punya alasan lain untuk memilih kamu.",
+        "txt": "Bukan soal *harga*",
+        "shot": "close",
+        "dur": ""
+      },
+      {
+        "say": "Harga yang ditawar itu gejala. Alasan dipilih yang belum jelas, itu akarnya.",
+        "txt": "Harga itu *gejala*",
+        "shot": "card",
+        "dur": ""
+      },
+      {
+        "say": "Coba jawab jujur. Orang memilih bisnismu karena apa, selain murah?",
+        "txt": "Karena apa, *selain murah?*",
+        "shot": "close",
+        "dur": ""
+      },
+      {
+        "say": "Simpan video ini. Kirim ke satu teman yang masih sering ditawar.",
+        "txt": "Simpan & *kirim*",
+        "shot": "med",
+        "dur": ""
+      }
+    ],
+    "prod": {}
+  }
+}

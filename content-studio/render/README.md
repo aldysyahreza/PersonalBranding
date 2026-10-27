@@ -28,6 +28,14 @@ Hasilnya ada di folder `out/<judul-post>/slide-01.png` sampai `slide-08.png`.
 
 Render tidak butuh internet, karena font dan semua aset sudah tertanam di dalam file.
 
+## Cover reels
+
+Post reels (contoh: `posts/reels-harga-ditawar.json`) menghasilkan satu file `reel-cover.png` berukuran 1080x1920:
+
+```
+npm run render -- posts/reels-harga-ditawar.json
+```
+
 ## Dari Studio ke skrip, dan sebaliknya
 
 - **Studio → skrip:** buka post di Studio, klik **Ekspor JSON**, lalu simpan file ke folder `posts/`. Foto yang sudah Anda unggah ikut tertanam di file, jadi langsung bisa dirender: `npm run render -- posts/nama-file.json`.

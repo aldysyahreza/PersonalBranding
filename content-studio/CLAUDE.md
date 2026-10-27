@@ -29,6 +29,14 @@ Dasbor web satu file (`content-studio.html`, vanilla JS, tanpa build) untuk memb
 - Impor TIDAK PERNAH menimpa: ID yang sudah ada -> post baru dengan judul '(impor)'. Foto berupa path file dilewati (dilaporkan di toast); data URL divalidasi ketat (`DATA_IMG`). Kolom divalidasi & dinormalisasi ke 8 slide ORDER.
 - Tes: tests/t24_json_roundtrip.js.
 
+## Reels Studio (v23)
+- Post format `reels` membuka Reels Studio di tab Studio: tab Cover + 7 langkah (BEATS: observasi, situasi relatable, ketegangan, diagnosis, reframe, pertanyaan reflektif, CTA lembut). Per langkah: `say` (ucapan), `txt` (teks layar, satu frasa Fraunces ditandai *bintang*), `shot` (kunci SHOTS), `dur` (kosong = 2,5 kata/detik + 0,4).
+- Data di `p.reel`: beats[7], prod{id:bool} (checklist PROD), coverH, coverHi. `reelInit(p)` menormalkan data lama (hook lama -> ucapan langkah 1; script lama tampil sebagai 'Catatan naskah lama'). Tidak mengubah SEED, jadi tanpa migrasi rev.
+- Pratinjau 9:16 `reelHTML(p,k,pv)`: k=0 cover (latar hero, teks zona y 400-1400), k=1..7 mockup frame (siluet A-roll / arsir B-roll / kartu teks). Arsir zona UI Instagram (`.rsafe`) dan label (`.rmeta`) hanya di pratinjau, dibuang saat ekspor.
+- Daftar shot dan durasi dihitung otomatis dari naskah; checklist produksi disimpan per post. Cek aturan: hook > 4 dtk, kalimat > 14 kata, teks layar > 4 kata, > 1 frasa Fraunces, kata terlarang, CTA kata kunci/DM (bad), total 30-45 dtk.
+- Unduh cover reels PNG 1080x1920 (`renderHTMLBlob`, fungsi ekspor umum). `render/render.js` pada JSON reels -> `reel-cover.png`. Contoh: posts/reels-harga-ditawar.json. Tes: tests/t25_reels.js.
+- Fix: bila data tersimpan tidak berisi p-harga-ditawar, Studio memilih post pertama (dulu kosong).
+
 ## Aturan desain (Style Bible v2)
 - Palet: Ink #0F0E0C, Paper #FBF8F3, Terakota #B84A2E, Amber #C8944A, Warm Gray #6B6560. Dominan per carousel: terakota atau amber.
 - Ritme latar: hero (terakota/amber) hanya cover, slide 6, slide 8. Slide 2-5 paper. Ink hanya slide 7.
@@ -53,6 +61,6 @@ CTA tanpa otomasi (tanpa komentar kata kunci).
 1. SELESAI (v19): font + pustaka ditanam; unduhan jalan offline. Tetap cek sekali di browser asli Aldy setelah publish ulang Artifact.
 2. Unggah ulang etching slide 2 dan foto cover, cek zoom/geser.
 3. Uji A/B etching vs foto nyata di slide 2.
-4. Reels Studio (format reels punya viewReels sederhana).
+4. SELESAI (v23): Reels Studio. Lanjutan: Brief -> naskah reels otomatis lewat claude.use('sample'), foto Aldy untuk cover reels.
 5. Jadwal Topic Radar mingguan, dokumen strategi (https://claude.ai/artifact/XUBf6jHwdpwkMs7QtTu5KA) belum diperbarui.
 6. Style Bible v2 sudah ditulis ke Project (`06_STYLE_BIBLE_V2_CAROUSEL.md`); sinkronkan bila aturan berubah.

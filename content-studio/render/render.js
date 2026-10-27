@@ -9,6 +9,7 @@
 // Foto: isi "photos" di JSON, kunci = nomor slide (1-8), nilai = path file relatif terhadap JSON,
 // atau data gambar tertanam (otomatis bila JSON berasal dari tombol "Ekspor JSON" di Studio).
 //   "photos": { "1": "../foto/cover.jpg", "2": "../foto/etching-s2.png" }
+// Post reels (format "reels") menghasilkan reel-cover.png 1080x1920.
 // Slide memakai kode desain yang sama dengan Studio (content-studio.html), jadi hasilnya identik.
 const fs = require('fs');
 const path = require('path');
@@ -30,12 +31,14 @@ function slug(s) {
 
 function readPost(file) {
   const post = JSON.parse(fs.readFileSync(file, 'utf8'));
-  if (!Array.isArray(post.slides) || !post.slides.length) throw new Error('JSON tidak punya "slides"');
+  const reels = post.format === 'reels';
+  if (!reels && (!Array.isArray(post.slides) || !post.slides.length)) throw new Error('JSON tidak punya "slides"');
+  if (reels && (!post.reel || typeof post.reel !== 'object')) throw new Error('JSON reels tidak punya "reel"');
   const photos = {};
   for (const [k, rel] of Object.entries(post.photos || {})) {
     if (k.startsWith('_') || !rel) continue;
     const n = parseInt(k, 10);
-    if (!(n >= 1 && n <= post.slides.length)) throw new Error('Nomor slide foto tidak valid: ' + k);
+    if (!(n >= 1 && n <= (post.slides || []).length)) throw new Error('Nomor slide foto tidak valid: ' + k);
     if (/^data:image\//.test(rel)) { photos[n - 1] = rel; continue; } // file hasil "Ekspor JSON" di Studio: foto sudah tertanam
     const p = path.resolve(path.dirname(file), rel);
     if (!fs.existsSync(p)) throw new Error('Foto slide ' + n + ' tidak ditemukan: ' + p);
@@ -76,16 +79,17 @@ function readPost(file) {
       await page.addInitScript(() => { window.__CS_RENDER__ = true; });
       await page.goto('file://' + APP);
 
-      const n = await page.evaluate(([p, ph]) => window.CSRender.load(p, ph), [data.post, data.photos]);
+      const info = await page.evaluate(([p, ph]) => window.CSRender.load(p, ph), [data.post, data.photos]);
+      if (info.h !== 1350) await page.setViewportSize({ width: info.w, height: info.h });
       const dir = path.join(out, slug(data.post.title));
       fs.mkdirSync(dir, { recursive: true });
-      for (let i = 0; i < n; i++) {
+      for (let i = 0; i < info.n; i++) {
         await page.evaluate((k) => window.CSRender.show(k), i);
-        await page.screenshot({ path: path.join(dir, 'slide-' + String(i + 1).padStart(2, '0') + '.png'), clip: { x: 0, y: 0, width: 1080, height: 1350 } });
+        await page.screenshot({ path: path.join(dir, info.names[i] + '.png'), clip: { x: 0, y: 0, width: info.w, height: info.h } });
       }
       await page.close();
       if (errs.length) { console.error('✗ ' + file + ': error di halaman: ' + errs.join(' | ')); failed++; continue; }
-      console.log('✓ ' + n + ' slide → ' + path.relative(process.cwd(), dir) + '  (' + ((Date.now() - t0) / 1000).toFixed(1) + ' dtk)');
+      console.log('✓ ' + (info.n === 1 && data.post.format === 'reels' ? 'cover reels' : info.n + ' slide') + ' → ' + path.relative(process.cwd(), dir) + '  (' + ((Date.now() - t0) / 1000).toFixed(1) + ' dtk)');
     }
   } finally {
     await browser.close();
