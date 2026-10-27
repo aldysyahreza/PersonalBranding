@@ -3,6 +3,7 @@
 // ffmpeg menyatukannya. Teknik yang sama dengan HyperFrames, tanpa paket tambahan.
 //
 // Pakai: node animatic/render-animatic.js [--file animatic-v3.html] [--fps 30] [--out out/animatic.mp4] [--audio vo.wav] [--stills 2.5]
+//   --beats   : timing.json dari vo_prep.py (durasi langkah + waktu kata mengikuti voice over)
 //   --audio   : voice over Anda, digabung ke video (durasi video mengikuti animatic)
 //   --stills  : simpan lembar kontak (still tiap N detik) untuk QC
 const fs = require('fs');
@@ -24,6 +25,10 @@ const STILLS = +arg('stills', 0);
   const errs = [];
   pg.on('pageerror', (e) => errs.push(e.message));
   await pg.route(/^https?:/, (r) => r.abort());
+  const BEATS = arg('beats', '');
+  if (BEATS) { const tl = JSON.parse(fs.readFileSync(BEATS, 'utf8')); await pg.addInitScript((b) => { window.ANIMATIC_BEATS = b; }, tl.beats); }
+  const ANCH = path.join(__dirname, arg('file', 'animatic.html').replace(/^animatic(-v\d+)?\.html$/, 'anchors$1.json'));
+  if (BEATS && fs.existsSync(ANCH)) await pg.addInitScript((a) => { window.ANIMATIC_ANCHORS = a; }, JSON.parse(fs.readFileSync(ANCH, 'utf8')));
   await pg.goto('file://' + path.join(__dirname, arg('file', 'animatic.html')));
   await pg.addStyleTag({ path: path.join(ROOT, 'assets', 'fonts-embed.css') });
   await pg.evaluate(() => Promise.all(['800 40px Archivo', 'italic 400 40px Fraunces', '600 40px Outfit', '600 40px Caveat', '500 40px "JetBrains Mono"'].map((f) => document.fonts.load(f))));

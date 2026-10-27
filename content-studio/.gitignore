@@ -3,3 +3,4 @@ out/
 tests/out_*/
 tests/out_*.png
 *.zip
+animatic/models/

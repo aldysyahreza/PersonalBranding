@@ -23,4 +23,18 @@ python3 animatic/sfx-v3.py out/sfx.wav
 node animatic/render-animatic.js --file animatic-v3.html --audio out/sfx.wav --out out/animatic-v3.mp4
 ```
 
+## Dari rekaman ke reels (satu perintah)
+
+```
+python3 animatic/build_reel.py rekaman.m4a posts/reels-harga-ditawar.json out/reel
+```
+
+1. `vo_prep.py` menjernihkan suara: buang dengung (high-pass 80 Hz), redam bising (RNNoise, model `models/sh.rnnn` diunduh otomatis; cadangan afftdn), jinakkan desis (EQ 6,5 kHz; filter deesser ffmpeg sengaja tidak dipakai karena terukur menimbulkan artefak), kompresor, -16 LUFS. Lalu buang napas/klik, cocokkan potongan bicara ke frasa naskah (kecepatan suku kata + intonasi naik untuk pertanyaan), dan atur jeda baku: koma 0,18 dtk, kalimat 0,35, antar langkah 0,55, awal 0,25, akhir 0,6. Hasil: `vo_clean.wav`, `timing.json` (waktu per kata), `laporan.txt`.
+2. `sfx-v3.py --timing` membuat musik dan efek yang mengikuti waktu suara.
+3. Campuran: musik mengecil saat Anda bicara (sidechain), -14 LUFS, puncak -1,5 dBTP.
+4. Pemeriksa tata letak (`tests/t30_animatic_layout.js`) berjalan dengan waktu suara.
+5. Render `reel.mp4`. Langkah yang lebih pendek dari rancangan animasinya otomatis dipercepat.
+
+Catatan: tanpa alat transkripsi, kata dicocokkan dari pola suara, bukan didengar. Bila Anda berimprovisasi jauh dari naskah, cek caption di hasil akhir.
+
 Status: prototipe. Durasi tiap adegan masih perkiraan dari naskah. Langkah berikutnya: durasi diambil otomatis dari voice over (stempel waktu per kata), subtitle kinetik per kata, dan efek suara buatan kode.

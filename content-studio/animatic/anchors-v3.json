@@ -1,0 +1,12 @@
+{
+  "_petunjuk": "Jangkar per langkah: [detik di rancangan animasi, awal kata yang memicunya]. Animasi dan efek suara diregangkan agar momen itu jatuh tepat saat kata diucapkan.",
+  "beats": [
+    [[0.95, "biasanya"], [1.9, "diskon"]],
+    [[0.35, "chat"], [1.35, "kak"], [3.0, "boleh"]],
+    [[0.15, "besoknya"], [1.8, "margin"], [3.4, "capeknya"]],
+    [[1.2, "bukan"], [2.6, "pelanggan"], [3.8, "alasan"]],
+    [[0.7, "harga"], [2.2, "alasan"], [3.1, "akarnya"]],
+    [[0.35, "orang"], [2.9, "selain"]],
+    [[0.1, "simpan"], [0.35, "kirim"], [2.1, "teman"], [2.7, "ditawar"]]
+  ]
+}

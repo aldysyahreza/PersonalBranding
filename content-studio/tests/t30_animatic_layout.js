@@ -1,9 +1,12 @@
 // Pemeriksa tata letak animatic: tiap 0,2 detik cek (1) teks bertabrakan dengan teks lain, (2) teks menimpa objek,
 // (3) objek menimpa caption, (4) teks keluar zona aman (x 60-1020, y 220-1540). Jeda transisi dan pindai dilewati.
+// Pakai: node tests/t30_animatic_layout.js [animatic-v3.html] [timing.json dari vo_prep.py]
 const {chromium}=require('playwright');const path=require('path');
 const FILE=process.argv[2]||'animatic-v3.html';
 (async()=>{const b=await chromium.launch();const pg=await b.newPage({viewport:{width:1080,height:1920}});
 await pg.route(/^https?:/,r=>r.abort());
+if(process.argv[3]){const fs=require('fs');const tl=JSON.parse(fs.readFileSync(process.argv[3],'utf8'));await pg.addInitScript(b=>{window.ANIMATIC_BEATS=b},tl.beats);
+  const an=path.join(__dirname,'..','animatic',FILE.replace(/^animatic(-v\d+)?\.html$/,'anchors$1.json'));if(fs.existsSync(an))await pg.addInitScript(a=>{window.ANIMATIC_ANCHORS=a},JSON.parse(fs.readFileSync(an,'utf8')))}
 await pg.goto('file://'+path.join(__dirname,'..','animatic',FILE));
 await pg.addStyleTag({path:path.join(__dirname,'..','assets','fonts-embed.css')});
 await pg.evaluate(()=>Promise.all(['800 40px Archivo','italic 400 40px Fraunces','600 40px Outfit','600 40px Caveat','500 40px "JetBrains Mono"'].map(f=>document.fonts.load(f))));
@@ -21,7 +24,7 @@ const res=await pg.evaluate(()=>{
   function clipRect(el,rc){let r={left:rc.left,right:rc.right,top:rc.top,bottom:rc.bottom};for(let e=el;e&&e.id!=='stage';e=e.parentElement){const cs=getComputedStyle(e);if(cs.overflow!=='visible'||cs.overflowY==='hidden'){const b=e.getBoundingClientRect();r.left=Math.max(r.left,b.left);r.right=Math.min(r.right,b.right);r.top=Math.max(r.top,b.top);r.bottom=Math.min(r.bottom,b.bottom)}}return (r.right-r.left>2&&r.bottom-r.top>2)?r:null}
   let chapPrev='',starts=[];
   for(let t=0;t<dur;t+=0.05){window.seek(t);const c=document.getElementById('chap').textContent;if(c!==chapPrev){starts.push(t);chapPrev=c}}
-  const skip=t=>starts.some(s=>t>=s-.05&&t<s+.6)||(t>=17.9&&t<19.1);
+  const sc0=starts[3]||15.4;const skip=t=>starts.some(s=>t>=s-.05&&t<s+.6)||(t>=sc0+2.2&&t<sc0+3.8);
   for(let t=0.1;t<dur;t+=0.2){if(skip(t))continue;window.seek(t);
     const texts=[];const w=document.createTreeWalker(document.getElementById('stage'),NodeFilter.SHOW_TEXT);let n;
     while(n=w.nextNode()){if(!n.textContent.trim())continue;const el=n.parentElement;if(hidden(el)||eff(el)<.5)continue;const r=document.createRange();r.selectNodeContents(n);
