@@ -29,7 +29,7 @@ html,body{margin:0;background:#000}
 .hand{font:600 64px/1 var(--f-hand);color:var(--terra)}
 .chip{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:12px 22px;font:500 24px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
 .card{background:#fff;border-radius:34px;box-shadow:var(--sh)}
-.ncard{position:absolute;left:0;width:520px;display:flex;align-items:center;gap:20px;padding:20px 24px;background:#fff;border-radius:28px;box-shadow:0 18px 30px rgba(15,14,12,.14),0 3px 8px rgba(15,14,12,.1)}
+.ncard{position:absolute;left:0;width:430px;display:flex;align-items:center;gap:20px;padding:20px 24px;background:#fff;border-radius:28px;box-shadow:0 18px 30px rgba(15,14,12,.14),0 3px 8px rgba(15,14,12,.1)}
 .ncard b{flex:none;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:800 28px/1 var(--f-display);color:#fff}
 .ncard div{flex:1;min-width:0}.ncard em{display:block;font:500 20px/1.2 var(--f-mono);font-style:normal;color:var(--gray);letter-spacing:.04em}.ncard span{display:block;font:700 30px/1.2 var(--f-body)}
 .odo{display:inline-flex;overflow:hidden;line-height:1}
@@ -63,7 +63,7 @@ html,body{margin:0;background:#000}
     <svg viewBox="0 0 500 760" width="500" height="760" style="position:absolute;inset:0;overflow:visible">
       <defs><linearGradient id="tg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D9A862"/><stop offset="1" stop-color="#B98238"/></linearGradient></defs>
       <path d="M250 0 L250 150" stroke="#0F0E0C" stroke-width="5"/>
-      <path d="M90 230 L250 140 L410 230 L410 700 Q410 735 375 735 L125 735 Q90 735 90 700 Z" fill="url(#tg)" stroke="#0F0E0C" stroke-width="8" stroke-linejoin="round" style="filter:drop-shadow(0 30px 30px rgba(15,14,12,.22))"/>
+      <path data-obj d="M90 230 L250 140 L410 230 L410 700 Q410 735 375 735 L125 735 Q90 735 90 700 Z" fill="url(#tg)" stroke="#0F0E0C" stroke-width="8" stroke-linejoin="round" style="filter:drop-shadow(0 30px 30px rgba(15,14,12,.22))"/>
       <circle cx="250" cy="215" r="20" fill="#F7F2E9" stroke="#0F0E0C" stroke-width="7"/>
     </svg>
     <div class="a mono" style="left:0;right:0;top:300px;text-align:center;font-size:24px">harga</div>
@@ -74,31 +74,31 @@ html,body{margin:0;background:#000}
       <path id="b1s0" d="M118 402 C 210 388, 300 410, 384 392"/><path id="b1s1" d="M128 502 C 220 492, 300 506, 374 494"/>
     </svg>
   </div>
-  <div class="a card" id="b1badge" style="left:760px;top:370px;width:240px;padding:22px 0 26px;text-align:center">
+  <div class="a card" data-obj id="b1badge" style="left:760px;top:370px;width:240px;padding:22px 0 26px;text-align:center">
     <div class="mono" style="font-size:20px;color:var(--terra)">diskon ke-</div><div class="disp odo" id="b1odo" style="font-size:120px;margin-top:8px"></div>
   </div>
-  <div class="a hand" id="b1note" style="left:110px;top:980px;transform:rotate(-5deg)">turun lagi…</div>
+  <div class="a hand" id="b1note" style="left:120px;top:1130px;transform:rotate(-4deg)">turun lagi…</div>
 </section>
 
 <!-- B2 situasi: HP jam 9 malam, notifikasi menumpuk -->
 <section class="sc" id="b2">
-  <div class="a" id="b2phone" style="left:120px;top:330px;width:500px;height:960px;border-radius:76px;background:linear-gradient(145deg,#2b2824,#0F0E0C);padding:16px;box-shadow:var(--sh)">
+  <div class="a" id="b2phone" data-obj style="left:84px;top:330px;width:450px;height:900px;border-radius:76px;background:linear-gradient(145deg,#2b2824,#0F0E0C);padding:16px;box-shadow:var(--sh)">
     <div style="position:relative;width:100%;height:100%;border-radius:62px;background:#F7F2E9;overflow:hidden">
       <div style="position:absolute;left:50%;top:18px;width:150px;height:40px;margin-left:-75px;border-radius:24px;background:#0F0E0C"></div>
-      <div style="position:absolute;left:44px;right:0;top:86px;text-align:left"><div class="disp" id="b2clock" style="font-size:104px;letter-spacing:-.06em">21.00</div><div class="mono" style="font-size:20px;color:var(--gray);margin-top:10px">senin · malam</div></div>
-      <div class="bub me" id="b2me" style="left:24px;top:720px;font-size:32px;max-width:380px">Boleh, Kak. Diskon 10%.</div>
+      <div style="position:absolute;left:44px;right:0;top:86px;text-align:left"><div class="disp" id="b2clock" style="font-size:96px;letter-spacing:-.06em">21.00</div><div class="mono" style="font-size:20px;color:var(--gray);margin-top:10px">senin · malam</div></div>
+      <div class="bub me" id="b2me" data-obj style="left:24px;top:660px;font-size:32px;max-width:360px">Boleh, Kak. Diskon 10%.</div>
     </div>
   </div>
-  <div class="a" id="b2stack" style="left:480px;top:400px;width:540px;height:760px"></div>
-  <div class="a hand" id="b2note" style="left:600px;top:1210px;transform:rotate(-4deg)">langsung dibalas</div>
+  <div class="a" id="b2stack" style="left:566px;top:400px;width:430px;height:760px"></div>
+  <div class="a hand" id="b2note" style="left:600px;top:960px;transform:rotate(-4deg)">langsung dibalas</div>
 </section>
 
 <!-- B3 ketegangan: struk margin -->
 <section class="sc" id="b3">
-  <div class="a" id="b3printer" style="left:200px;top:330px;width:680px;height:110px;border-radius:30px;background:linear-gradient(180deg,#3a3631,#151310);box-shadow:var(--sh)">
+  <div class="a" data-obj id="b3printer" style="left:200px;top:330px;width:680px;height:110px;border-radius:30px;background:linear-gradient(180deg,#3a3631,#151310);box-shadow:var(--sh)">
     <div style="position:absolute;left:60px;right:60px;bottom:22px;height:14px;border-radius:7px;background:#000"></div></div>
-  <div class="a" id="b3clip" style="left:250px;top:418px;width:580px;height:820px;overflow:hidden">
-    <div id="b3paper" style="position:absolute;left:0;top:0;width:580px;height:800px;background:#fff;box-shadow:0 20px 30px rgba(15,14,12,.12);padding:46px 50px;
+  <div class="a" id="b3clip" style="left:250px;top:440px;width:580px;height:800px;overflow:hidden">
+    <div id="b3paper" data-obj style="position:absolute;left:0;top:0;width:580px;height:800px;background:#fff;box-shadow:0 20px 30px rgba(15,14,12,.12);padding:46px 50px;
       -webkit-mask:linear-gradient(#000,#000) top/100% calc(100% - 24px) no-repeat,radial-gradient(circle at 18px 24px,transparent 13px,#000 14px) bottom/36px 24px repeat-x;
       mask:linear-gradient(#000,#000) top/100% calc(100% - 24px) no-repeat,radial-gradient(circle at 18px 24px,transparent 13px,#000 14px) bottom/36px 24px repeat-x">
       <div class="mono" style="text-align:center;font-size:22px;color:var(--gray)">struk minggu ini</div>
@@ -107,8 +107,8 @@ html,body{margin:0;background:#000}
         <span class="mono" style="font-size:28px">margin</span><span class="disp" style="font-size:120px;color:var(--terra)"><span class="odo" id="b3odo"></span>%</span></div>
     </div>
   </div>
-  <div class="a hand" id="b3note" style="left:90px;top:1120px;transform:rotate(-6deg)">makin tipis</div>
-  <svg class="a" id="b3arrow" viewBox="0 0 200 120" style="left:250px;top:1050px;width:200px;height:120px" fill="none" stroke="#B84A2E" stroke-width="7" stroke-linecap="round"><path id="b3ap" d="M10 100 C 70 90, 130 60, 180 20 M150 22 L182 18 L176 50"/></svg>
+  <div class="a hand" id="b3note" style="left:84px;top:1258px;transform:rotate(-4deg)">makin tipis</div>
+  <svg class="a" id="b3arrow" viewBox="0 0 200 120" style="left:340px;top:1150px;width:200px;height:120px;display:none" fill="none" stroke="#B84A2E" stroke-width="7" stroke-linecap="round"><path id="b3ap" d="M10 100 C 70 90, 130 60, 180 20 M150 22 L182 18 L176 50"/></svg>
 </section>
 
 <!-- B4 diagnosis: dua toko dibandingkan, lalu dipindai -->
@@ -124,15 +124,15 @@ html,body{margin:0;background:#000}
   <!-- lapisan diagnosis (setelah pindai) -->
   <div class="a" id="b4dx" style="inset:0;opacity:0">
     <div class="a chip" style="left:84px;top:330px;border:3px solid var(--amber);color:#FFE2B0">mode diagnosis</div>
-    <div class="a" id="b4dxbox" style="left:110px;top:460px;width:400px;height:720px"></div>
-    <div class="a" id="b4calls" style="left:520px;top:520px;width:480px;height:640px"></div>
+    <div class="a" id="b4dxbox" style="inset:0"></div>
+    <div class="a" id="b4calls" style="inset:0"></div>
   </div>
 </section>
 
 <!-- B5 reframe: kartu pelajaran disematkan -->
 <section class="sc" id="b5">
   <div class="a" id="b5card" style="left:110px;top:360px;width:860px;height:860px;transform-origin:430px 0">
-    <div class="a card" style="inset:0;border:5px solid var(--ink);box-shadow:0 40px 60px rgba(15,14,12,.18),0 10px 0 rgba(15,14,12,.9)"></div>
+    <div class="a card" data-obj style="inset:0;border:5px solid var(--ink);box-shadow:0 40px 60px rgba(15,14,12,.18),0 10px 0 rgba(15,14,12,.9)"></div>
     <div class="a" style="left:410px;top:-34px;width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#e0705a,#8d2f1a);box-shadow:0 8px 10px rgba(0,0,0,.3)"></div>
     <div class="a mono" style="left:0;right:0;top:80px;text-align:center;color:var(--terra)">pelajarannya</div>
     <div class="a" style="left:70px;right:70px;top:150px;text-align:center">
@@ -145,7 +145,7 @@ html,body{margin:0;background:#000}
 
 <!-- B6 pertanyaan: buku catatan, isian kosong -->
 <section class="sc" id="b6">
-  <div class="a card" id="b6card" style="left:110px;top:360px;width:860px;height:860px;background:linear-gradient(#fff,#fff) padding-box;overflow:hidden">
+  <div class="a card" data-obj id="b6card" style="left:110px;top:360px;width:860px;height:860px;background:linear-gradient(#fff,#fff) padding-box;overflow:hidden">
     <div class="a" style="inset:0;background:repeating-linear-gradient(#fff 0 88px,rgba(184,74,46,.14) 88px 91px);background-position:0 40px"></div>
     <div class="a" style="left:96px;top:0;bottom:0;width:4px;background:rgba(184,74,46,.35)"></div>
     <div class="a mono" style="left:140px;top:70px;color:var(--terra)">pertanyaan untuk kamu</div>
@@ -162,17 +162,17 @@ html,body{margin:0;background:#000}
 <!-- B7 CTA: simpan & kirim, stempel, logo -->
 <section class="sc" id="b7">
   <div class="a" id="b7icons" style="left:0;right:0;top:360px;display:flex;justify-content:center;gap:60px">
-    <div id="b7i1" style="width:220px;height:220px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:var(--sh)"><svg viewBox="0 0 24 24" width="100" height="100" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg></div>
-    <div id="b7i2" style="width:220px;height:220px;border-radius:50%;background:var(--terra);display:flex;align-items:center;justify-content:center;box-shadow:var(--sh)"><svg viewBox="0 0 24 24" width="96" height="96" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></svg></div>
+    <div id="b7i1" data-obj style="width:220px;height:220px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:var(--sh)"><svg viewBox="0 0 24 24" width="100" height="100" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg></div>
+    <div id="b7i2" data-obj style="width:220px;height:220px;border-radius:50%;background:var(--terra);display:flex;align-items:center;justify-content:center;box-shadow:var(--sh)"><svg viewBox="0 0 24 24" width="96" height="96" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></svg></div>
   </div>
-  <div class="a" id="b7lock" style="left:0;right:0;top:700px;text-align:center">
+  <div class="a" id="b7lock" style="left:0;right:0;top:750px;text-align:center">
     <div class="disp" style="font-size:150px">The Brand</div>
-    <div class="fr" style="font-size:190px;color:var(--terra);margin-top:-10px">Fixer</div>
+    <div class="fr" style="font-size:190px;color:var(--terra);margin-top:14px">Fixer</div>
     <div class="mono" style="margin-top:26px;color:var(--gray)">aldy syahreza · diagnosis brand tiap pekan</div>
   </div>
-  <div class="a" id="b7stamp" style="left:610px;top:600px;transform-origin:center">
+  <div class="a" id="b7stamp" style="left:0;right:0;top:604px;display:flex;justify-content:center;transform-origin:center">
     <div style="border:8px solid var(--terra);color:var(--terra);border-radius:16px;padding:14px 26px;font:800 54px/1 var(--f-display);letter-spacing:.02em;opacity:.92">DIDIAGNOSIS</div></div>
-  <div class="a" id="b7follow" style="left:0;right:0;top:1180px;text-align:center"><span class="chip" style="background:var(--ink);color:#fff;font:700 30px/1 var(--f-display);letter-spacing:.03em;padding:22px 38px">FOLLOW @ALDYSYAHREZA →</span></div>
+  <div class="a" id="b7follow" style="left:0;right:0;top:1215px;text-align:center"><span class="chip" style="background:var(--ink);color:#fff;font:700 30px/1 var(--f-display);letter-spacing:.03em;padding:22px 38px">FOLLOW @ALDYSYAHREZA →</span></div>
 </section>
 
 <div id="scan"></div><div id="scanlab">DIAGNOSIS · MEMINDAI</div>
@@ -220,23 +220,32 @@ function odoSet(el,v){var n=el.children.length,str=String(Math.max(0,v)).padStar
 /* ---------- bangun objek ---------- */
 odo($('b1odo'),1);odo($('b3odo'),2);
 var NOTIF=[['Kak, bisa kurang?','R','#B84A2E'],['Bisa nego, Kak?','D','#C8944A'],['Harga pas berapa?','S','#0F0E0C'],['Diskon dong, Kak','A','#6B6560']];
-$('b2stack').innerHTML=NOTIF.map(function(n,i){return '<div class="ncard" style="top:'+(i*128)+'px"><b style="background:'+n[2]+'">'+n[1]+'</b><div><em>pelanggan · baru saja</em><span>'+n[0]+'</span></div></div>'}).join('');
+$('b2stack').innerHTML=NOTIF.map(function(n,i){return '<div class="ncard" data-obj style="top:'+(i*128)+'px"><b style="background:'+n[2]+'">'+n[1]+'</b><div><em>pelanggan · baru saja</em><span>'+n[0]+'</span></div></div>'}).join('');
 var ROWS=[['harga normal','100.000'],['diskon','-10.000'],['diskon lagi','-9.000'],['ongkir ditanggung','-12.000']];
 $('b3rows').innerHTML=ROWS.map(function(r,i){return '<div style="display:flex;justify-content:space-between;'+(i?'color:var(--terra)':'')+'"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>'}).join('');
 function store(name,price,dark,dx){
   var body=dx?'background:transparent;border:5px solid #C8944A;box-shadow:0 0 30px rgba(200,148,74,.35) inset,0 0 24px rgba(200,148,74,.35)':(dark?'background:linear-gradient(160deg,#2b2824,#0F0E0C);box-shadow:var(--sh)':'background:linear-gradient(160deg,#E7D3B0,#CDB07F);box-shadow:var(--sh)');
   var fg=dx?'#FFE2B0':(dark?'#fff':'#0F0E0C');
-  return '<div class="a" style="left:40px;top:'+(dx?240:240)+'px;width:320px;height:300px;border-radius:26px;'+body+'">'
+  return '<div class="a" data-obj style="left:40px;top:240px;width:320px;height:300px;border-radius:26px;'+body+'">'
    +'<div class="a" style="left:0;right:0;top:-70px;height:80px;border-radius:26px 26px 0 0;'+(dx?'border:5px solid #C8944A;border-bottom:0':'background:repeating-linear-gradient(90deg,'+(dark?'#B84A2E 0 40px,#F4EBD9 40px 80px':'#0F0E0C 0 40px,#F4EBD9 40px 80px')+');box-shadow:0 10px 16px rgba(15,14,12,.15)')+'"></div>'
    +'<div class="a disp" style="left:0;right:0;top:110px;text-align:center;font-size:52px;color:'+fg+'">'+name+'</div>'
    +(dx?'':'<div class="a" style="left:110px;top:-230px;width:180px;height:170px"><div class="a" style="left:88px;top:0;width:4px;height:60px;background:#0F0E0C"></div><div class="a card" style="left:0;top:56px;width:180px;padding:16px 0;text-align:center;border:5px solid #0F0E0C;box-shadow:0 14px 20px rgba(15,14,12,.15)"><div class="mono" style="font-size:18px">harga</div><div class="disp" style="font-size:56px">'+price+'</div></div></div>')
    +'</div><div class="a" style="left:0;top:560px;width:400px;height:26px;border-radius:13px;'+(dx?'border:4px solid rgba(200,148,74,.6)':'background:rgba(15,14,12,.12);filter:blur(6px)')+'"></div>';
 }
 $('b4L').innerHTML=store('Kamu','95rb',false,false);$('b4R').innerHTML=store('Sebelah','90rb',true,false);
-$('b4dxbox').innerHTML=store('Kamu','',false,true)+
-  '<div class="a" style="left:80px;top:300px;width:240px;display:flex;flex-direction:column;gap:18px">'+['?','?','$'].map(function(x,i){return '<div data-slot style="height:54px;border-radius:14px;border:4px dashed rgba(255,226,176,.75);display:flex;align-items:center;justify-content:center;font:800 32px/1 var(--f-display);color:#FFE2B0">'+(i<2?'?':'Rp')+'</div>'}).join('')+'</div>';
-var CALLS=[['alasan dipilih','belum ada',0],['bukti','belum terlihat',1],['balasan pertama','langsung harga',2]];
-$('b4calls').innerHTML=CALLS.map(function(c,i){return '<div data-call style="position:absolute;left:60px;top:'+(i*150+40)+'px;width:420px"><div style="position:absolute;left:-150px;top:30px;width:150px;height:4px;background:#C8944A;transform-origin:left"></div><div class="chip" style="border:3px solid #C8944A;color:#FFE2B0;font-size:22px">'+c[0]+'</div><div class="disp" style="color:#fff;font-size:50px;margin-top:12px">'+c[1]+'</div></div>'}).join('');
+/* mode diagnosis: grid tegas. Baris i punya pusat ROWY[i]; slot, garis, label, dan nilai sejajar pada pusat itu. */
+var ROWY=[690,840,990],BX=110,BW=380,SLX=150,SLW=300,CX=600;
+$('b4dxbox').innerHTML='<div class="a mono" style="left:'+BX+'px;top:450px;font-size:22px;color:#FFE2B0">toko kamu</div>'
+  +'<div class="a" style="left:'+BX+'px;top:510px;width:'+BW+'px;height:60px;border:5px solid #C8944A;border-bottom:0;border-radius:24px 24px 0 0"></div>'
+  +'<div class="a" style="left:'+BX+'px;top:570px;width:'+BW+'px;height:520px;border:5px solid #C8944A;border-radius:0 0 26px 26px;box-shadow:0 0 30px rgba(200,148,74,.3) inset,0 0 24px rgba(200,148,74,.3)"></div>'
+  +'<div class="a" style="left:'+(BX-20)+'px;top:1120px;width:'+(BW+40)+'px;height:22px;border:4px solid rgba(200,148,74,.55);border-radius:11px"></div>'
+  +ROWY.map(function(y,i){return '<div data-slot class="a" style="left:'+SLX+'px;top:'+(y-35)+'px;width:'+SLW+'px;height:70px;border-radius:16px;border:4px dashed rgba(255,226,176,.8);display:flex;align-items:center;justify-content:center;font:800 34px/1 var(--f-display);color:#FFE2B0">'+(i<2?'?':'Rp')+'</div>'}).join('');
+var CALLS=[['alasan dipilih','belum ada'],['bukti','belum terlihat'],['balasan pertama','langsung harga']];
+$('b4calls').innerHTML=CALLS.map(function(c,i){var y=ROWY[i];return '<div data-call class="a" style="left:0;top:0;width:1080px;height:1920px">'
+  +'<div data-line class="a" style="left:'+(SLX+SLW)+'px;top:'+(y-2)+'px;width:'+(CX-SLX-SLW-16)+'px;height:4px;background:#C8944A;transform-origin:left center"></div>'
+  +'<div data-dot class="a" style="left:'+(CX-24)+'px;top:'+(y-8)+'px;width:16px;height:16px;border-radius:50%;background:#C8944A"></div>'
+  +'<div class="a" style="left:'+CX+'px;top:'+(y-24)+'px;height:48px;display:flex;align-items:center"><span class="chip" style="border:3px solid #C8944A;color:#FFE2B0;font-size:22px;padding:0 20px;height:48px">'+c[0]+'</span></div>'
+  +'<div class="a disp" style="left:'+CX+'px;top:'+(y+38)+'px;color:#fff;font-size:52px;white-space:nowrap">'+c[1]+'</div></div>'}).join('');
 
 /* ---------- caption karaoke: kata dibagi rata menurut panjangnya, maks 3 kata per tampilan ---------- */
 var CAP=BEATS.map(function(b,bi){
@@ -257,7 +266,7 @@ var S=[
  },
  function(t){ // B2 HP + tumpukan notifikasi
    tf($('b2phone'),'translateY('+(Math.sin(t*1.6)*6)+'px)');
-   Array.prototype.forEach.call($('b2stack').children,function(c,i){var k=pr(t,.35+i*.42,.4),e=E.out(k);op(c,cl(k*3));tf(c,'translateX('+((1-e)*320)+'px) scale('+(.92+.08*e)+')')});
+   Array.prototype.forEach.call($('b2stack').children,function(c,i){var k=pr(t,.35+i*.42,.4),e=E.out(k);op(c,cl(k*3));tf(c,'translateX('+((1-e)*24)+'px) scale('+(.94+.06*e)+')')});
    var m=Math.min(9,Math.floor(Math.max(0,t-.4)*2.2));$('b2clock').textContent='21.0'+m;
    pop($('b2me'),t,3.0,.45);var kn=pr(t,3.5,.35);op($('b2note'),kn);tf($('b2note'),'rotate(-4deg) translateY('+((1-E.out(kn))*20)+'px)');
  },
@@ -269,7 +278,7 @@ var S=[
  },
  function(t){ // B4 bandingkan, lalu pindai jadi mode diagnosis
    up($('b4q'),t,.1,.4);
-   [['b4L',.2],['b4R',.45]].forEach(function(x){var k=pr(t,x[1],.55);op($(x[0]),cl(k*3));tf($(x[0]),'translateY('+((1-E.bounce(k))*-420)+'px)')});
+   [['b4L',.2],['b4R',.45]].forEach(function(x){var k=pr(t,x[1],.55);op($(x[0]),cl(k*3));tf($(x[0]),'translateY('+((1-E.bounce(k))*-90)+'px)')});
    op($('b4vs'),pr(t,.9,.3));draw($('b4circ'),t,1.2,.6);var kn=pr(t,1.75,.35);op($('b4note'),kn);
    // pindai dimulai 2.6 dtk
    var ks=E.io(pr(t,2.6,.9)),dxOn=ks>0;
@@ -279,7 +288,8 @@ var S=[
    ['b4paperlayer','b4L','b4R','b4vs','b4note'].forEach(function(id){$(id).style.clipPath='inset('+(ks*100)+'% 0 0 0)'});
    $('b4circ').parentNode.style.clipPath='inset('+(ks*100)+'% 0 0 0)';
    Array.prototype.forEach.call(document.querySelectorAll('#b4dxbox [data-slot]'),function(s,i){var k=pr(t,3.5+i*.25,.3);op(s,k)});
-   Array.prototype.forEach.call(document.querySelectorAll('#b4calls [data-call]'),function(c,i){var a=3.8+i*.55,k=pr(t,a,.4);op(c,k);tf(c,'translateX('+((1-E.out(k))*40)+'px)');c.firstChild.style.transform='scaleX('+E.out(pr(t,a-.15,.3))+')'});
+   Array.prototype.forEach.call(document.querySelectorAll('#b4calls [data-call]'),function(c,i){var a=3.8+i*.55,k=pr(t,a,.4);op(c,pr(t,a-.2,.15));
+     c.querySelector('[data-line]').style.transform='scaleX('+E.out(pr(t,a-.2,.3))+')';Array.prototype.forEach.call(c.children,function(ch,j){if(j>1){op(ch,k);tf(ch,'translateX('+((1-E.out(k))*30)+'px)')}else if(j===1)op(ch,pr(t,a,.15))})});
  },
  function(t){ // B5 kartu pelajaran jatuh, disematkan, berayun
    var k=pr(t,0,.55);tf($('b5card'),'translateY('+((1-E.out(k))*-1300)+'px) rotate('+(swing(Math.max(0,t-.45),5,7,2.6))+'deg)');
@@ -289,13 +299,13 @@ var S=[
    var kc=E.out(pr(t,0,.5));tf($('b6card'),'translateY('+((1-kc)*140)+'px)');op($('b6card'),kc);
    up($('b6q'),t,.3,.45,30);$('b6line').style.width=(E.io(pr(t,1.0,.5))*560)+'px';
    draw($('b6scrib'),t,1.6,1.1);var pk=pr(t,1.6,1.1),p=$('b6scrib'),L=p.getTotalLength(),pt=p.getPointAtLength(L*E.io(pk));
-   var pen=$('b6pencil');op(pen,t>1.3&&t<3.0?1:0);tf(pen,'translate('+(110+150+pt.x)+'px,'+(360+440+pt.y-30)+'px) rotate(-35deg)');
+   var pen=$('b6pencil');op(pen,t>1.3&&t<3.0?1:0);tf(pen,'translate('+(110+150+pt.x)+'px,'+(360+440+pt.y-30)+'px) rotate(32deg) scale(.8)');
    pop($('b6c'),t,2.9,.5);
  },
  function(t){ // B7 ikon, logo, stempel, follow
    pop($('b7i1'),t,.1,.45);pop($('b7i2'),t,.35,.45);
    up($('b7lock'),t,1.0,.5,50);
-   var ks=pr(t,2.1,.22);op($('b7stamp'),ks?1:0);tf($('b7stamp'),'rotate(-12deg) scale('+(ks<1?2.4-1.4*E.out(ks):1)+')');
+   var ks=pr(t,2.1,.22);op($('b7stamp'),ks?1:0);tf($('b7stamp'),'rotate(-4deg) scale('+(ks<1?2.4-1.4*E.out(ks):1)+')');
    up($('b7follow'),t,2.7,.4,30);
  }];
 
