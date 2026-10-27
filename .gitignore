@@ -1,0 +1,7 @@
+node_modules/
+.env
+# Data pengguna: video, transkrip, dan hasil ekspor tidak pernah masuk repository
+projects/
+output/
+*.log
+.DS_Store

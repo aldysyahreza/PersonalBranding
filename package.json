@@ -1,0 +1,19 @@
+{
+  "name": "personal-branding-video-studio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Aplikasi lokal untuk mengubah video talking head raw menjadi video personal branding (subtitle, kartu visual, audio, warna, ekspor) memakai ffmpeg.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "check": "node server/check-env.js",
+    "test": "node --test test/*.test.js"
+  },
+  "optionalDependencies": {
+    "@anthropic-ai/sdk": "^1.3.0"
+  },
+  "license": "UNLICENSED"
+}

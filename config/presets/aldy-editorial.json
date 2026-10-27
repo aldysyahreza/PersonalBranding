@@ -1,0 +1,73 @@
+{
+  "id": "aldy-editorial",
+  "name": "Aldy — Editorial Talking Head",
+  "status": "konsep",
+  "note": "Konsep awal yang dapat dikonfigurasi. Diturunkan dari pengamatan video referensi (talking head gelap-hangat, kartu terang, subtitle dua tingkat, satu warna aksen). BELUM berdasarkan panduan visual Aldy yang terkonfirmasi — ganti warna, font, dan ukuran begitu identitas visual resmi tersedia.",
+  "output": { "aspect": "9:16", "fps": 30 },
+  "safeZone": { "top": 0.12, "bottom": 0.2, "side": 0.06 },
+  "faceZone": { "top": 0.14, "bottom": 0.5 },
+  "colors": {
+    "accent": "#D92A2A",
+    "text": "#FFFFFF",
+    "cardBg": "#F3F2EF",
+    "cardText": "#141414",
+    "cardMuted": "#6B6B6B"
+  },
+  "fonts": {
+    "lead": "Inter Medium",
+    "key": "Inter ExtraBold",
+    "card": "Inter Black"
+  },
+  "captions": {
+    "enabled": true,
+    "layout": "stack",
+    "maxWords": 4,
+    "maxChars": 26,
+    "position": 0.64,
+    "leadSize": 46,
+    "keySize": 84,
+    "emphasis": "box",
+    "uppercase": false,
+    "animation": "pop",
+    "shadow": 3
+  },
+  "cards": {
+    "titleSize": 104,
+    "numberSize": 300,
+    "labelSize": 48,
+    "fadeMs": 160,
+    "grid": true,
+    "shadow": 6
+  },
+  "color": {
+    "enabled": true,
+    "intensity": 0.6,
+    "brightness": 0.02,
+    "contrast": 1.08,
+    "saturation": 1.06,
+    "gamma": 1.0,
+    "warmth": 0.05,
+    "vignette": 0.25
+  },
+  "audio": {
+    "voiceGainDb": 0,
+    "normalize": true,
+    "highpass": true,
+    "musicDb": -24,
+    "ducking": true,
+    "sfxDb": -12
+  },
+  "styleLevels": {
+    "minimal": {
+      "captions": { "layout": "single", "maxWords": 6, "maxChars": 34, "emphasis": "color", "animation": "fade", "keySize": 64 },
+      "color": { "intensity": 0.35, "vignette": 0 },
+      "cards": { "grid": false }
+    },
+    "editorial": {},
+    "dinamis": {
+      "captions": { "layout": "karaoke", "maxWords": 3, "maxChars": 20, "animation": "pop", "keySize": 92, "uppercase": true },
+      "color": { "intensity": 0.8, "vignette": 0.35 },
+      "cards": { "fadeMs": 110 }
+    }
+  }
+}
