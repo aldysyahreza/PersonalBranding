@@ -1,0 +1,141 @@
+{
+ "id": "p-harga-ditawar",
+ "title": "uji etching",
+ "format": "carousel",
+ "stage": "visual",
+ "dx": 3,
+ "job": "Share",
+ "pillar": "Brand Diagnosis",
+ "scores": {
+  "t": 5,
+  "e": 4,
+  "f": 5,
+  "s": 5
+ },
+ "caption": "Jam 9 malam, chat masuk: “Kak, bisa kurang?”\nKamu sudah hafal jawabannya.\n\nPelanggan yang terus menawar biasanya bukan sedang menilai harga kamu. Mereka belum punya alasan lain untuk memilih.\n\nSurvei Penjualan Eceran Bank Indonesia memprakirakan penjualan September turun 2,3% dari Agustus. Orang makin berhitung, dan godaan ikut diskon makin besar menjelang 11.11 dan 12.12. Tapi diskon tanpa alasan dipilih hanya memindahkan masalah ke margin.\n\nGeser sampai slide terakhir, ada tiga hal kecil yang bisa kamu coba minggu ini. Simpan supaya bisa dicek lagi, dan kirim ke teman yang sering ditawar.",
+ "pinned": "Lengkapi kalimat ini: “Orang memilih kami karena ___.” Tulis jawabanmu di sini, saya bantu cek 10 jawaban pertama.",
+ "story": "Poll: Kamu lebih sering ditawar karena harga, waktu, atau jasa?",
+ "quality": [
+  9,
+  8,
+  8,
+  8,
+  9,
+  8,
+  8,
+  8
+ ],
+ "brief": "",
+ "rev": 5,
+ "hue": "terracotta",
+ "slides": [
+  {
+   "type": "cover",
+   "lead": "harga kamu",
+   "h": "Selalu",
+   "h2": "Ditawar",
+   "hi": "bukan karena mahal",
+   "body": "",
+   "items": "",
+   "word": "",
+   "note": "",
+   "pill": "BACA DIAGNOSISNYA →",
+   "narasi": ""
+  },
+  {
+   "scn": "A wide view of a ruko shop interior at 9 at night, the long counter running across the frame. An Indonesian male owner, age 34, slightly messy natural hair, light moustache, casual shirt with an overshirt, sits on a plastic stool behind the counter looking tired at a smartphone that glows with blank chat bubbles. A calculator, a stack of notes, a glass of iced tea on the counter. Warm light from one desk lamp.",
+   "type": "scene",
+   "lead": "",
+   "h": "Jam 9 malam,",
+   "h2": "",
+   "hi": "chat masuk lagi.",
+   "body": "“Kak, bisa kurang?” Kamu sudah hafal balasannya: “Boleh, Kak. Diskon 10%.” Minggu lalu juga begitu.",
+   "items": "",
+   "word": "",
+   "note": "Ilustrasi dari pola yang sering terjadi.",
+   "pill": "",
+   "narasi": ""
+  },
+  {
+   "type": "vertical",
+   "lead": "",
+   "h": "",
+   "h2": "",
+   "hi": "",
+   "body": "",
+   "items": "Pertanyaan pertama selalu “bisa kurang?”, bukan “bedanya apa?”\nKompetitor turun harga, kamu ikut turun.\nPelanggan kirim screenshot harga toko sebelah.\nKamu sudah menjelaskan panjang. Balasannya cuma: “oke, harganya?”",
+   "word": "Gejala",
+   "note": "",
+   "pill": "",
+   "narasi": ""
+  },
+  {
+   "type": "markup",
+   "lead": "",
+   "h": "Pelanggan hanya membandingkan",
+   "h2": "",
+   "hi": "yang bisa mereka bandingkan.",
+   "body": "Kalau bedanya tidak bisa kamu jelaskan dalam satu kalimat, tinggal satu hal yang bisa mereka bandingkan: harga.",
+   "items": "",
+   "word": "harga",
+   "note": "tinggal ini yang kelihatan",
+   "pill": "",
+   "narasi": ""
+  },
+  {
+   "type": "akar",
+   "lead": "",
+   "h": "Biasanya akarnya ada di tiga tempat.",
+   "h2": "",
+   "hi": "",
+   "body": "",
+   "items": "Alasan: belum ada satu kalimat kenapa orang harus pilih kamu.\nBukti: hasil kerja belum kelihatan sebelum pelanggan bertanya.\nBalasan pertama: chat pertama dari CS langsung berisi daftar harga.",
+   "word": "",
+   "note": "",
+   "pill": "",
+   "narasi": ""
+  },
+  {
+   "type": "statement",
+   "lead": "",
+   "h": "Harga yang ditawar itu cuma gejala.",
+   "h2": "",
+   "hi": "Alasan dipilihnya yang belum jelas.",
+   "body": "",
+   "items": "",
+   "word": "",
+   "note": "",
+   "pill": "",
+   "narasi": ""
+  },
+  {
+   "type": "action",
+   "lead": "",
+   "h": "Coba tiga hal ini minggu ini.",
+   "h2": "",
+   "hi": "",
+   "body": "",
+   "items": "Selesaikan kalimat ini: “Orang memilih kami karena ___.”\nBuka 10 chat terakhir. Hitung berapa yang membahas harga sebelum manfaat.\nMinta CS membuka dengan alasan dipilih, baru menyebut harga.",
+   "word": "",
+   "note": "",
+   "pill": "",
+   "narasi": ""
+  },
+  {
+   "type": "cta",
+   "lead": "",
+   "h": "Rapikan alasannya.",
+   "h2": "",
+   "hi": "Baru bicara harga.",
+   "body": "Simpan. Kirim ke owner yang lelah ditawar.\nFollow @aldysyahreza.",
+   "items": "",
+   "word": "",
+   "note": "",
+   "pill": "SIMPAN & KIRIM",
+   "narasi": ""
+  }
+ ],
+ "photos": {
+  "2": "cream_etch.png"
+ }
+}

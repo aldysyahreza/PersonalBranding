@@ -1,0 +1,12 @@
+{
+  "name": "content-studio-the-brand-fixer",
+  "private": true,
+  "description": "Content Studio The Brand Fixer: render carousel 1080x1350 dari JSON",
+  "scripts": {
+    "render": "node render/render.js",
+    "test": "node tests/t15.js && node tests/t16.js"
+  },
+  "dependencies": {
+    "playwright": "^1.48.0"
+  }
+}
