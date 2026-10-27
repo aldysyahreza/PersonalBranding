@@ -49,6 +49,7 @@ export const config = {
   whisperModel: env('WHISPER_MODEL', 'small'),
   whisperPython: env('WHISPER_PYTHON', 'python3'),
   whisperLanguage: env('WHISPER_LANGUAGE', ''),
+  whisperDevice: env('WHISPER_DEVICE', 'auto'),
   openaiTranscribeModel: env('OPENAI_TRANSCRIBE_MODEL', 'whisper-1'),
   anthropicModel: env('ANTHROPIC_MODEL', 'claude-opus-5-5'),
   fontsDir: path.join(ROOT, 'assets', 'fonts'),

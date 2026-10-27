@@ -48,7 +48,7 @@ export async function transcribeLocal(project, job) {
   job.message = 'Mengekstrak audio…';
   const wav = await extractAudio(project, { signal: job.controller.signal });
   job.message = `Mentranskripsi dengan model "${config.whisperModel}" (pertama kali dapat memakan waktu untuk mengunduh model)…`;
-  const r = await run(config.whisperPython, [path.join(ROOT, 'scripts', 'transcribe_local.py'), wav, config.whisperModel, config.whisperLanguage], {
+  const r = await run(config.whisperPython, [path.join(ROOT, 'scripts', 'transcribe_local.py'), wav, config.whisperModel, config.whisperLanguage, config.whisperDevice], {
     signal: job.controller.signal,
     onStderr: (s) => {
       const m = s.match(/PROGRESS ([\d.]+)/g);
@@ -58,7 +58,9 @@ export async function transcribeLocal(project, job) {
   fs.rmSync(wav, { force: true });
   if (r.code !== 0) {
     if (r.stderr.includes('ERROR_NO_FASTER_WHISPER')) throw new UserError('faster-whisper belum terpasang.', status.setup, 412);
-    const hint = /huggingface|connection|resolve|HTTPSConnection|offline/i.test(r.stderr)
+    const hint = /cublas|cudnn|cuda/i.test(r.stderr)
+      ? 'Library GPU (CUDA) tidak lengkap. Set WHISPER_DEVICE=cpu di file .env lalu jalankan ulang aplikasi.'
+      : /huggingface|connection|resolve|HTTPSConnection|offline/i.test(r.stderr)
       ? 'Model belum ada di cache dan tidak dapat diunduh. Sambungkan internet sekali untuk mengunduh model, atau gunakan transkrip manual.'
       : r.stderr.split('\n').filter(Boolean).slice(-2).join(' ');
     throw new UserError('Transkripsi lokal gagal.', hint, 500);
