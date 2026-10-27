@@ -485,6 +485,15 @@ for (const p of listProjects()) {
   saveProject(p);
 }
 
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${config.port} sudah dipakai aplikasi lain.`);
+    console.error(`Ubah PORT di file .env (mis. PORT=${config.port + 83}) lalu jalankan "npm start" lagi.`);
+    process.exit(1);
+  }
+  throw err;
+});
+
 server.listen(config.port, config.host, () => {
   console.log(`Personal Branding Video Studio berjalan di http://${config.host === '0.0.0.0' ? 'localhost' : config.host}:${config.port}`);
   console.log(`Proyek: ${config.projectsDir}`);
