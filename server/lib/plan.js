@@ -8,10 +8,25 @@ import { config, getSecret, hasSecret } from './config.js';
 import { UserError } from './media.js';
 
 const FILLERS = new Set(['eh', 'ehm', 'em', 'emm', 'hmm', 'mm', 'anu', 'um', 'uh', 'uhm', 'erm', 'ah']);
-const ORDINALS = /^(pertama|kedua|ketiga|keempat|kelima|keenam|ketujuh|first|second|third|fourth|fifth|satu|dua|tiga|empat|lima)[,.:]?$/i;
+const ORDINALS = /^(pertama|kedua|ketiga|keempat|kelima|keenam|ketujuh|first|second|third|fourth|fifth)[,.:]?$/i;
 const NUMBER_RE = /^[\p{P}]*(rp\.?\s?)?\d[\d.,]*(%|k|rb|jt|x)?[\p{P}]*$/iu;
 const SCALE_WORDS = /^(ribu|juta|miliar|triliun|persen|kali|thousand|million|billion|percent)[\p{P}]*$/iu;
-const TRAILING_STOP = new Set(['yang', 'dan', 'di', 'ke', 'dari', 'untuk', 'dengan', 'itu', 'ini', 'atau', 'kamu', 'saya', 'aku', 'kita', 'kami', 'bisa', 'akan', 'the', 'and', 'to', 'of', 'a', 'you', 'i', 'we', 'can', 'is']);
+const TRAILING_STOP = new Set(['yang', 'dan', 'di', 'ke', 'dari', 'untuk', 'dengan', 'itu', 'atau', 'kamu', 'saya', 'aku', 'kita', 'kami', 'bisa', 'akan', 'kalau', 'jika', 'agar', 'supaya', 'karena', 'tapi', 'juga', 'lebih', 'sangat', 'sedang', 'lagi', 'ya', 'sih', 'nih', 'deh', 'tanpa', 'oleh', 'pada', 'dalam', 'the', 'and', 'to', 'of', 'a', 'you', 'i', 'we', 'can', 'is']);
+
+// Penanda kalimat inti: frasa setelahnya biasanya poin utama ("…adalah brand yang jelas").
+const MARKERS = new Set(['adalah', 'yaitu', 'yakni', 'kuncinya', 'rahasianya', 'intinya', 'masalahnya', 'faktanya', 'artinya', 'solusinya', 'caranya', 'jawabannya', 'bukan']);
+const CTA = new Set(['simpan', 'save', 'follow', 'ikuti', 'komen', 'komentar', 'bagikan', 'share', 'kirim', 'klik', 'cek', 'dm', 'tag', 'subscribe', 'daftar']);
+const NUM_WORDS = { satu: 1, dua: 2, tiga: 3, empat: 4, lima: 5, enam: 6, tujuh: 7, delapan: 8, sembilan: 9, sepuluh: 10, sebelas: 11, seratus: 100, seribu: 1000, sejuta: 1e6 };
+const NUM_SCALE = { belas: 10, puluh: 10, ratus: 100, ribu: 1000, juta: 1e6, miliar: 1e9 };
+
+/** Angka yang diucapkan sebagai kata ("tiga", "lima puluh", "dua ribu") → { value, len }. */
+function spokenNumber(words, i) {
+  const a = NUM_WORDS[normWord(words[i]?.text)];
+  if (!a) return null;
+  const sc = NUM_SCALE[normWord(words[i + 1]?.text)];
+  if (sc && a < 10) return { value: sc === 10 && normWord(words[i + 1].text) === 'belas' ? 10 + a : a * sc, len: 2 };
+  return { value: a, len: 1 };
+}
 
 /** Ambil frasa pendek dari kata-kata yang diucapkan: berhenti di tanda baca, buang kata sambung di ujung. */
 function cleanPhrase(words, max) {
@@ -46,7 +61,8 @@ export function rulePlan(project) {
     if (closeSeg) out.structure.push({ part: 'Penutup / CTA', start: closeSeg.start, end: closeSeg.end, text: closeSeg.text, reason: 'Kalimat terakhir; cek apakah sudah ada ajakan yang jelas.' });
   }
 
-  // Penekanan kata + kartu angka + kartu poin.
+  // Penekanan kata + kandidat kartu (angka, poin, frasa inti, CTA, kata kunci).
+  const cand = [];
   for (const seg of segs) {
     const words = seg.words || [];
     let lastEmph = -10;
@@ -59,37 +75,46 @@ export function rulePlan(project) {
         out.emphasis.push({ segId: seg.id, wordIndex: i, word: w.text, reason });
         lastEmph = i;
       }
+      const before = (k) => words.slice(Math.max(0, k - 2), k).map((x) => x.text).join(' ').replace(/[.,!?;:…]+$/, '');
       if (NUMBER_RE.test(w.text)) {
         const next = words[i + 1];
         const unit = next && SCALE_WORDS.test(next.text) ? next.text.replace(/[\p{P}]+$/u, '') : '';
         const label = [unit, cleanPhrase(words.slice(i + (unit ? 2 : 1)), 2)].filter(Boolean).join(' ');
-        const before = words.slice(Math.max(0, i - 2), i).map((x) => x.text).join(' ').replace(/[.,!?;:…]+$/, '');
-        out.cards.push({
-          type: 'number',
-          start: r3(Math.max(seg.start, w.start - 0.15)),
-          end: r3(Math.min(seg.end + 0.3, w.start + 1.8)),
-          kicker: before,
-          title: w.text.replace(/[,.]$/, ''),
-          subtitle: label,
-          icon: '',
-          reason: 'Angka yang diucapkan lebih mudah diingat sebagai visual besar.',
-        });
+        cand.push({ prio: 3, type: 'number', start: r3(Math.max(seg.start, w.start - 0.15)), end: r3(Math.min(seg.end + 0.3, w.start + 1.8)), kicker: before(i), title: w.text.replace(/[,.]$/, ''), subtitle: label, icon: '', reason: 'Angka yang diucapkan lebih mudah diingat sebagai visual besar.' });
+      } else {
+        const sn = spokenNumber(words, i);
+        const after = sn && words[i + sn.len];
+        if (sn && sn.value >= 2 && after && !TRAILING_STOP.has(normWord(after.text)) && !/[.,!?]$/.test(words[i + sn.len - 1].text)) {
+          cand.push({ prio: 3, type: 'number', numberValue: sn.value, start: r3(Math.max(seg.start, w.start - 0.15)), end: r3(Math.min(seg.end + 0.3, w.start + 1.8)), kicker: before(i), title: sn.value.toLocaleString('id-ID'), subtitle: cleanPhrase(words.slice(i + sn.len), 2), icon: '', reason: `Angka yang diucapkan ("${words.slice(i, i + sn.len).map((x) => x.text).join(' ')}") ditampilkan sebagai angka besar.` });
+        }
       }
       if (ORDINALS.test(w.text) && i <= 1) {
-        const phrase = cleanPhrase(words.slice(i + 1), 5);
-        out.cards.push({
-          type: 'keyword',
-          start: r3(w.start),
-          end: r3(Math.min(seg.end, w.start + 2.2)),
-          kicker: w.text.replace(/[,.:]$/, ''),
-          title: phrase,
-          subtitle: '',
-          icon: 'check',
-          reason: 'Penanda poin berurutan; kartu poin membantu penonton mengikuti struktur.',
-        });
+        cand.push({ prio: 3, type: 'keyword', start: r3(w.start), end: r3(Math.min(seg.end, w.start + 2.2)), kicker: w.text.replace(/[,.:]$/, ''), title: cleanPhrase(words.slice(i + 1), 5), subtitle: '', icon: 'check', reason: 'Penanda poin berurutan; kartu poin membantu penonton mengikuti struktur.' });
+      }
+      if (MARKERS.has(n) && i < words.length - 1) {
+        const title = cleanPhrase(words.slice(i + 1), 4);
+        if (tokenize(title).length >= 1) cand.push({ prio: 2, type: 'keyword', start: r3(words[i + 1].start - 0.05), end: r3(Math.min(seg.end + 0.3, words[i + 1].start + 2)), kicker: words.slice(Math.max(0, i - 2), i + 1).map((x) => x.text).join(' ').replace(/[.,!?;:…]+$/, ''), title, subtitle: '', icon: '', reason: `Frasa setelah "${w.text}" biasanya poin utama kalimat.` });
+      }
+      if (CTA.has(n)) {
+        cand.push({ prio: 3, type: 'keyword', cta: true, start: r3(w.start - 0.05), end: r3(Math.min(seg.end + 0.5, w.start + 2.2)), kicker: '', title: cleanPhrase(words.slice(i), 4), subtitle: '', icon: 'arrow', reason: 'Ajakan (CTA) lebih kuat bila terlihat di layar.' });
+      }
+      if (reason === 'kata kunci brand (dapat diubah di Profil Brand)') {
+        cand.push({ prio: 1, type: 'keyword', start: r3(w.start - 0.05), end: r3(Math.min(seg.end + 0.3, w.start + 1.8)), kicker: before(i), title: cleanPhrase(words.slice(i), 2), subtitle: '', icon: '', reason: `Kata kunci "${w.text}" sebagai kartu tipografi (pola di video referensi).` });
       }
     });
   }
+
+  // Pilih kartu: prioritas tinggi dulu, tidak bertumpuk (jeda ≥ 0,5 dtk talking head di antaranya),
+  // maks ±1 kartu per 6 dtk agar wajah tetap dominan.
+  const maxCards = Math.max(2, Math.round(dur / 6));
+  for (const c of cand.sort((a, b) => b.prio - a.prio || a.start - b.start)) {
+    if (out.cards.length >= maxCards) break;
+    if (!c.title || out.cards.some((x) => c.start < x.end + 0.5 && c.end > x.start - 0.5)) continue;
+    if (out.cards.some((x) => normWord(x.title) === normWord(c.title))) continue; // hindari kartu kembar
+    const { prio, ...card } = c;
+    out.cards.push(card);
+  }
+  out.cards.sort((a, b) => a.start - b.start);
 
   // Potongan: jeda panjang, kata pengisi, dan pengulangan/awal yang diulang.
   for (const s of silences) {
@@ -153,8 +178,12 @@ function musicSuggestion(project) {
 function sfxForVisuals(cards, broll) {
   const out = [];
   for (const c of cards) {
-    const builtin = c.type === 'number' ? 'impact' : c.type === 'list' ? 'click' : 'swoosh';
-    out.push({ time: c.start, builtin, reason: c.type === 'number' ? 'Menegaskan angka besar.' : 'Menandai munculnya kartu.' });
+    const [builtin, reason] = c.type === 'number' ? ['impact', 'Menegaskan angka besar.']
+      : c.cta ? ['notif', 'Menarik perhatian ke ajakan (CTA).']
+      : c.icon === 'check' ? ['pop', 'Menandai poin berurutan.']
+      : c.type === 'list' ? ['click', 'Menandai daftar poin.']
+      : ['swoosh', 'Menandai munculnya kartu.'];
+    out.push({ time: c.start, builtin, reason });
   }
   for (const b of broll) out.push({ time: b.start, builtin: 'whoosh', reason: 'Transisi ke footage sisipan.' });
   return out;
@@ -246,8 +275,10 @@ export function verifyCardText(card, segments) {
       .filter((s) => s.end >= card.start - 1.5 && s.start <= card.end + 1.5)
       .flatMap((s) => tokenize(s.text).map(normWord)),
   );
+  const numeric = card.numberValue ? normWord(card.title) : null;
   const used = [card.kicker, card.title, card.subtitle].flatMap((t) => tokenize(String(t || '').replace(/[;|]/g, ' ')).map(normWord)).filter(Boolean);
-  const unknown = used.filter((w) => !spoken.has(w));
+  // Angka hasil konversi dari kata ("tiga" → "3") dihitung sebagai diucapkan.
+  const unknown = used.filter((w) => !spoken.has(w) && w !== numeric);
   return unknown;
 }
 

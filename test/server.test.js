@@ -76,3 +76,21 @@ test('pustaka audio sintetis menghasilkan WAV valid', async () => {
   assert.equal(buf.toString('ascii', 0, 4), 'RIFF');
   assert.equal(buf.toString('ascii', 8, 12), 'WAVE');
 });
+
+test('kartu dari ucapan: angka terucap, frasa inti, CTA — tanpa kata di luar ucapan', () => {
+  const style = resolveStyle(getPreset('aldy-editorial'), 'editorial');
+  const segs = [
+    makeSegment({ start: 0, end: 6, text: 'Brand yang mudah direkomendasikan adalah brand yang jelas posisinya.' }),
+    makeSegment({ start: 6.2, end: 12, text: 'Ada tiga hal yang membuat orang mau merekomendasikan.' }),
+    makeSegment({ start: 12.2, end: 18, text: 'Kalau berguna, simpan video ini sekarang.' }),
+  ];
+  const p = { style, styleLevel: 'editorial', source: { meta: { duration: 18 } }, analysis: { silences: [] }, transcript: { segments: segs }, brandKeywords: [] };
+  const items = planToItems(rulePlan(p), 'aturan', segs);
+  const titles = items.cards.map((c) => c.title);
+  assert.ok(titles.includes('brand yang jelas posisinya'));
+  const num = items.cards.find((c) => c.type === 'number');
+  assert.equal(num.title, '3');
+  assert.equal(num.needsReview, false); // "tiga" diucapkan → "3" tidak dianggap kata baru
+  assert.ok(items.cards.some((c) => c.cta && c.title.startsWith('simpan')));
+  assert.ok(items.sfx.some((s) => s.builtin === 'impact') && items.sfx.some((s) => s.builtin === 'notif'));
+});

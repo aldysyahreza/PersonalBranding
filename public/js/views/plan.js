@@ -12,7 +12,8 @@ export const CARD_TYPES = [['keyword', 'Kata kunci (blok aksen)'], ['number', 'A
 /** Kata pada kartu yang tidak ditemukan di ucapan sekitar rentang kartu. */
 export function unknownCardWords(card, segments) {
   const spoken = new Set(segments.filter((s) => s.end >= card.start - 1.5 && s.start <= card.end + 1.5).flatMap((s) => tokenize(s.text).map(normWord)));
-  return [card.kicker, card.title, card.subtitle].flatMap((t) => tokenize(String(t || '').replace(/[;|]/g, ' ')).map(normWord)).filter((w) => w && !spoken.has(w));
+  const numeric = card.numberValue ? normWord(card.title) : null;
+  return [card.kicker, card.title, card.subtitle].flatMap((t) => tokenize(String(t || '').replace(/[;|]/g, ' ')).map(normWord)).filter((w) => w && !spoken.has(w) && w !== numeric);
 }
 
 export function renderPlan(main) {
@@ -139,6 +140,20 @@ function assetOptions(p, kinds) {
   return [['', '— Belum ada aset —'], ...p.assets.filter((a) => kinds.includes(a.kind)).map((a) => [a.id, `${a.name}${a.missing ? ' (hilang)' : ''} · lisensi: ${a.license}`])];
 }
 
+/** Kartu kata kunci dari kata yang diucapkan pada rentang b-roll (pengganti footage). */
+function cardFromSpeech(p, b) {
+  const words = (p.transcript?.segments || []).flatMap((s) => s.words || []).filter((w) => w.start >= b.start - 0.2 && w.start < b.end);
+  const toks = [];
+  for (const w of words) {
+    toks.push(w.text);
+    if (toks.length >= 4 || /[.,!?;:…]$/.test(w.text)) break;
+  }
+  const STOP = new Set(['yang', 'dan', 'di', 'ke', 'dari', 'untuk', 'dengan', 'itu', 'atau', 'kalau', 'tapi', 'tanpa', 'kamu', 'saya']);
+  while (toks.length > 1 && STOP.has(normWord(toks[toks.length - 1]))) toks.pop();
+  const title = toks.join(' ').replace(/[.,!?;:…]+$/, '');
+  return { id: uid('card'), origin: 'pengguna', approved: true, type: 'keyword', layout: 'full', start: b.start, end: Math.min(b.end, b.start + 2), kicker: '', title: title || 'Judul', subtitle: '', icon: '', reason: 'Pengganti b-roll; diambil dari ucapan pada rentang ini — rapikan teksnya.' };
+}
+
 function brollPanel(p, seek) {
   const dur = p.source.meta.duration;
   const items = (p.broll || []).map((b, i) => {
@@ -147,7 +162,10 @@ function brollPanel(p, seek) {
       h('div', { class: 'row wrap' }, timeFields('broll', i, seek, dur), originBadge(b.origin), asset ? badge(asset.missing ? 'Aset hilang' : 'Aset tersedia', asset.missing ? 'error' : 'ok') : badge('Hanya saran — belum ada aset', 'warn'),
         approveToggle(b, (on) => edit((x) => (x.broll[i].approved = on))), h('button', { class: 'link danger', onclick: () => edit((x) => x.broll.splice(i, 1)) }, 'Hapus')),
       h('div', {}, h('strong', {}, b.idea || 'B-roll'), h('div', { class: 'muted small' }, b.reason || '')),
-      h('div', { class: 'row' }, h('span', { class: 'muted small' }, 'Aset:'), select(b.assetId || '', assetOptions(p, ['image', 'video']), (v) => edit((x) => (x.broll[i].assetId = v || null))), h('button', { class: 'link', onclick: () => go('editor') }, 'Kelola aset di Editor →')),
+      h('div', { class: 'row wrap' }, h('span', { class: 'muted small' }, 'Aset:'), select(b.assetId || '', assetOptions(p, ['image', 'video']), (v) => edit((x) => (x.broll[i].assetId = v || null))), h('button', { class: 'link', onclick: () => go('editor') }, 'Kelola aset di Editor →'),
+        !asset ? [h('span', { class: 'muted small' }, 'Tidak punya footage?'),
+          h('button', { class: 'btn ghost sm', onclick: () => edit((x) => { x.cards.push(cardFromSpeech(x, b)); x.broll.splice(i, 1); }) }, 'Jadikan kartu'),
+          h('button', { class: 'btn ghost sm', onclick: () => edit((x) => { x.zooms.push({ id: uid('zoom'), origin: 'pengguna', approved: true, start: b.start, end: b.end, zoom: x.style.zoom?.punchIn ?? 1.12, reason: 'Pengganti b-roll' }); x.broll.splice(i, 1); }) }, 'Jadikan zoom')] : null),
     );
   });
   return section('Footage sisipan (B-roll)', 'Aplikasi tidak menyediakan atau membuat footage stok/AI. Pilih footage milik Anda (Editor → Aset) dan catat lisensinya. Item tanpa aset dilewati saat ekspor.', items, [
