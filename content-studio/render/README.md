@@ -28,6 +28,11 @@ Hasilnya ada di folder `out/<judul-post>/slide-01.png` sampai `slide-08.png`.
 
 Render tidak butuh internet, karena font dan semua aset sudah tertanam di dalam file.
 
+## Dari Studio ke skrip, dan sebaliknya
+
+- **Studio → skrip:** buka post di Studio, klik **Ekspor JSON**, lalu simpan file ke folder `posts/`. Foto yang sudah Anda unggah ikut tertanam di file, jadi langsung bisa dirender: `npm run render -- posts/nama-file.json`.
+- **Skrip → Studio:** di Studio atau Pipeline, klik **Impor JSON** dan pilih satu atau beberapa file. Post lama tidak pernah ditimpa: kalau post yang sama sudah ada, hasil impor menjadi post baru berlabel "(impor)". Foto yang ditulis sebagai lokasi file tidak bisa dibaca browser, jadi unggah ulang di Studio.
+
 ## Menambahkan foto
 
 Di file JSON, isi bagian `"photos"`. Kuncinya nomor slide (1–8), nilainya lokasi file foto, ditulis relatif terhadap file JSON:

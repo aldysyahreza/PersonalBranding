@@ -24,6 +24,11 @@ Dasbor web satu file (`content-studio.html`, vanilla JS, tanpa build) untuk memb
 - JSON post: bentuk sama dengan objek post di SEED + `photos` {nomorSlide: path relatif JSON}. Contoh: `posts/harga-ditawar.json`.
 - Terbukti identik dengan unduhan Studio (beda 0,3-1,4%, tepi huruf). Fixture uji: tests/fixture_foto.json, tests/fixture_etching.json.
 
+## Impor/ekspor JSON (v22)
+- Studio: tombol Ekspor JSON (post aktif + foto tertanam sebagai data URL di `photos`) dan Impor JSON (Studio & Pipeline, bisa banyak file). Format = posts/*.json, jadi file ekspor langsung bisa dirender `render/render.js`.
+- Impor TIDAK PERNAH menimpa: ID yang sudah ada -> post baru dengan judul '(impor)'. Foto berupa path file dilewati (dilaporkan di toast); data URL divalidasi ketat (`DATA_IMG`). Kolom divalidasi & dinormalisasi ke 8 slide ORDER.
+- Tes: tests/t24_json_roundtrip.js.
+
 ## Aturan desain (Style Bible v2)
 - Palet: Ink #0F0E0C, Paper #FBF8F3, Terakota #B84A2E, Amber #C8944A, Warm Gray #6B6560. Dominan per carousel: terakota atau amber.
 - Ritme latar: hero (terakota/amber) hanya cover, slide 6, slide 8. Slide 2-5 paper. Ink hanya slide 7.

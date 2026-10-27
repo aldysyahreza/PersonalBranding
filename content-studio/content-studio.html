@@ -356,6 +356,38 @@ function dlAll(){var p=curPost();if(!p||busyDl)return;dlBusy(true);var blobs=[],
   next().then(function(){return window.JSZip?null:loadScript('https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js')}).then(function(){var z=new window.JSZip();blobs.forEach(function(b,i){z.file(slug(p.title)+'-slide-'+pad2(i+1)+'.png',b)});return z.generateAsync({type:'blob'})}).then(function(zb){return saveFile(slug(p.title)+'-carousel.zip',zb)}).catch(dlErr).then(function(){dlBusy(false)});
 }
 
+/* ---------- impor/ekspor JSON: format sama dengan posts/*.json, bisa langsung dirender render/render.js ---------- */
+var POST_KEYS=['id','title','format','stage','dx','job','pillar','hue','scores','caption','pinned','story','quality','brief','reel','rev'];
+var DATA_IMG=/^data:image\/(png|jpe?g|webp);base64,[A-Za-z0-9+\/=]+$/;
+function postJSON(p){var o={};POST_KEYS.forEach(function(k){if(p[k]!=null)o[k]=JSON.parse(JSON.stringify(p[k]))});o.slides=JSON.parse(JSON.stringify(p.slides));var ph={};p.slides.forEach(function(s,i){var d=PH[p.id+':'+i];if(d)ph[i+1]=d});o.photos=ph;return o}
+function exportJSON(){var p=curPost();if(!p)return;saveFile(slug(p.title)+'.json',new Blob([JSON.stringify(postJSON(p),null,2)],{type:'application/json'})).catch(dlErr)}
+/* impor tidak pernah menimpa: ID yang sudah ada dijadikan post salinan baru */
+function importPost(j){
+  if(!j||typeof j!=='object'||!Array.isArray(j.slides)||!j.slides.length)throw new Error('bukan file post (tidak ada "slides")');
+  var np=newPost(String(j.title||'Post impor').slice(0,120),j.format==='reels'?'reels':'carousel',Math.max(1,Math.min(7,+j.dx||3)));
+  var copy=typeof j.id==='string'&&!!S.posts[j.id];
+  if(typeof j.id==='string'&&/^[\w-]{1,60}$/.test(j.id)&&!copy)np.id=j.id;
+  if(copy)np.title=np.title+' (impor)';
+  ['stage','job','pillar','caption','pinned','story','brief'].forEach(function(k){if(typeof j[k]==='string')np[k]=j[k]});
+  if(!STAGES.some(function(s){return s[0]===np.stage}))np.stage='ide';
+  if(HUES[j.hue])np.hue=j.hue;
+  if(j.scores&&typeof j.scores==='object')['t','e','f','s'].forEach(function(k){if(+j.scores[k])np.scores[k]=Math.max(1,Math.min(5,+j.scores[k]))});
+  if(Array.isArray(j.quality))np.quality=np.quality.map(function(v,i){return Math.max(0,Math.min(10,+j.quality[i]||0))});
+  if(j.reel&&typeof j.reel==='object')np.reel={hook:String(j.reel.hook||''),script:String(j.reel.script||''),checks:[0,1,2,3,4,5].map(function(i){return (j.reel.checks||[])[i]?1:0})};
+  if(+j.rev)np.rev=+j.rev;
+  np.slides=ORDER.map(function(ty,k){var base=emptySlides()[k],q=j.slides[k]||{};if(q.type===ty)Object.keys(q).forEach(function(f){if(f!=='type'&&(typeof q[f]==='string'||typeof q[f]==='number'))base[f]=String(q[f])});return base});
+  var skipped=0;Object.keys(j.photos||{}).forEach(function(n){var v=j.photos[n],i=parseInt(n,10)-1;if(!(i>=0&&i<np.slides.length))return;if(typeof v==='string'&&DATA_IMG.test(v)){PH[np.id+':'+i]=v;idbPut(np.id+':'+i,v)}else if(v)skipped++});
+  S.posts[np.id]=np;save('posts',np);return {post:np,skipped:skipped};
+}
+function importJSON(files){
+  files=Array.prototype.slice.call(files||[]);if(!files.length)return;
+  var ok=[],bad=[],skipped=0;
+  Promise.all(files.map(function(f){return new Promise(function(done){var r=new FileReader();r.onload=function(){try{var res=importPost(JSON.parse(r.result));ok.push(res.post);skipped+=res.skipped}catch(e){bad.push(f.name+': '+e.message)}done()};r.onerror=function(){bad.push(f.name+': gagal dibaca');done()};r.readAsText(f)})})).then(function(){
+    if(ok.length){S.active=ok[ok.length-1].id;S.idx=0;S.tab='studio';try{localStorage.setItem('cs.active',S.active);localStorage.setItem('cs.tab','studio')}catch(e){}render();window.scrollTo(0,0)}
+    toast((ok.length?ok.length+' post diimpor':'Tidak ada post diimpor')+(skipped?'. '+skipped+' foto berupa lokasi file, unggah manual di Studio':'')+(bad.length?'. Gagal: '+bad.join('; '):''));
+  });
+}
+
 /* ---------- persistence ---------- */
 var timers={};
 function save(coll,obj){
@@ -583,7 +615,7 @@ function render(){
 
 function viewPipeline(){
   var ps=sorted(S.posts,function(a,b){return (b.updatedAt||0)-(a.updatedAt||0)});
-  var h='<div class="lede"><div><h2>Pipeline konten</h2><p>Setiap post bergerak dari ide sampai tayang. Kartu terbuka di Studio untuk menulis copy dan melihat slide langsung.</p></div></div>';
+  var h='<div class="lede"><div><h2>Pipeline konten</h2><p>Setiap post bergerak dari ide sampai tayang. Kartu terbuka di Studio untuk menulis copy dan melihat slide langsung.</p></div><button class="btn ghost" id="im-json-btn">Impor JSON</button><input type="file" id="im-json" accept=".json,application/json" multiple hidden></div>';
   h+='<div class="addbox"><div class="field"><label for="np-title">Judul post baru</label><input class="in" id="np-title" placeholder="Contoh: Tim jalan, arahnya beda-beda"></div><div class="field"><label for="np-format">Format</label><select class="sel" id="np-format"><option value="carousel">Carousel 8 slide</option><option value="reels">Reels</option></select></div><div class="field"><label for="np-dx">Lapisan diagnosis</label><select class="sel" id="np-dx">'+DXN.map(function(d,i){return '<option value="'+(i+1)+'"'+(i===2?' selected':'')+'>DX·0'+(i+1)+' '+d+'</option>'}).join('')+'</select></div><button class="btn accent" id="np-add">Tambah</button></div>';
   if(!ps.length){h+='<div class="empty">'+(S.loaded?'Belum ada post. Isi judul di atas lalu tekan Tambah.':'Memuat post dari penyimpanan bersama.')+'</div>';return h}
   h+='<div class="board">'+STAGES.map(function(st,si){
@@ -603,7 +635,7 @@ function opt(arr,val,fmt){return arr.map(function(x,i){var v=fmt?fmt(x,i)[0]:x,l
 function viewStudio(){
   var ps=sorted(S.posts,function(a,b){return (b.updatedAt||0)-(a.updatedAt||0)}),p=curPost();
   if(!p)return '<div class="lede"><div><h2>Studio</h2><p>Tulis copy dan lihat slide dalam gaya Editorial Diagnosis.</p></div></div><div class="empty">'+(S.loaded?'Belum ada post. Tambahkan satu di Pipeline.':'Memuat post.')+'</div>';
-  var h='<div class="lede"><div><h2>Studio</h2><p>Setiap ketikan langsung tersimpan dan tampil di slide.</p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn ghost" id="copyall">Salin semua copy</button>'+(p.format==='reels'?'':'<button class="btn" id="dl-one">Unduh slide ini (PNG)</button><button class="btn accent" id="dl-all">Unduh semua (ZIP)</button>')+'</div></div>';
+  var h='<div class="lede"><div><h2>Studio</h2><p>Setiap ketikan langsung tersimpan dan tampil di slide.</p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn ghost" id="copyall">Salin semua copy</button><button class="btn ghost" id="ex-json">Ekspor JSON</button><button class="btn ghost" id="im-json-btn">Impor JSON</button><input type="file" id="im-json" accept=".json,application/json" multiple hidden>'+(p.format==='reels'?'':'<button class="btn" id="dl-one">Unduh slide ini (PNG)</button><button class="btn accent" id="dl-all">Unduh semua (ZIP)</button>')+'</div></div>';
   h+='<div class="panel"><div class="meta"><div class="field wide"><label for="sel-post">Post</label><select class="sel" id="sel-post">'+opt(ps,p.id,function(x){return [x.id,x.title]})+'</select></div><div class="field wide"><label for="f-title">Judul</label><input class="in" id="f-title" data-p="title" value="'+esc(p.title)+'"></div><div class="field"><label for="f-stage">Tahap</label><select class="sel" id="f-stage" data-p="stage">'+opt(STAGES,p.stage,function(x){return [x[0],x[1]]})+'</select></div><div class="field"><label for="f-dx">Lapisan</label><select class="sel" id="f-dx" data-p="dx">'+opt(DXN,p.dx,function(x,i){return [i+1,'DX·0'+(i+1)+' '+x]})+'</select></div><div class="field"><label for="f-job">Tugas</label><select class="sel" id="f-job" data-p="job">'+opt(JOBS,p.job)+'</select></div><div class="field"><label for="f-format">Format</label><select class="sel" id="f-format" disabled><option>'+(p.format==='reels'?'Reels':'Carousel')+'</option></select></div><div class="field"><label for="f-hue">Warna carousel</label><select class="sel" id="f-hue" data-p="hue">'+Object.keys(HUES).map(function(k){return '<option value="'+k+'"'+((p.hue||'terracotta')===k?' selected':'')+'>'+HUES[k][3]+'</option>'}).join('')+'</select></div></div></div>';
   if(p.format==='reels')return h+viewReels(p);
   var an=analyze(p),s=p.slides[S.idx]||p.slides[0];
@@ -714,6 +746,8 @@ document.addEventListener('click',function(e){
   if(t.dataset.phdel){var cp2=curPost();if(cp2){var kk=cp2.id+':'+S.idx;delete PH[kk];delete ETC[kk];delete ETCP[kk];idbDel(kk);$('#fields').innerHTML=fieldsHTML(cp2.slides[S.idx]);updatePreview()}return}
   if(t.id==='dl-one'){dlOne();return}
   if(t.id==='dl-all'){dlAll();return}
+  if(t.id==='ex-json'){exportJSON();return}
+  if(t.id==='im-json-btn'){$('#im-json').click();return}
   if(t.id==='copyall'){copyText(exportText(curPost()),'Semua copy tersalin');return}
   if(t.id==='rd-add'){var tp=$('#rd-topic').value.trim();if(!tp){toast('Isi topik dulu');return}var r={id:uid('r'),topic:tp,type:$('#rd-type').value,note:'',t:3,e:3,f:3,s:3,status:'Kandidat'};S.radar[r.id]=r;save('radar',r);render();return}
   if(t.dataset.rdel){delete S.radar[t.dataset.rdel];remove('radar',t.dataset.rdel);render();return}
@@ -738,6 +772,7 @@ document.addEventListener('input',function(e){
 });
 document.addEventListener('change',function(e){
   var t=e.target;
+  if(t.id==='im-json'){importJSON(t.files);t.value='';return}
   if(t.id==='ph-file'){handlePhoto(t.files&&t.files[0]);return}
   if(t.id==='bf-job'){BF.job=t.value;return}
   if(t.id==='bf-pillar'){BF.pillar=t.value;return}

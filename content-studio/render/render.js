@@ -6,7 +6,8 @@
 //   node render/render.js posts/*.json              -> semua post sekaligus
 //   node render/render.js posts/a.json --out hasil  -> folder hasil lain (default: out/)
 //
-// Foto: isi "photos" di JSON, kunci = nomor slide (1-8), nilai = path file relatif terhadap JSON.
+// Foto: isi "photos" di JSON, kunci = nomor slide (1-8), nilai = path file relatif terhadap JSON,
+// atau data gambar tertanam (otomatis bila JSON berasal dari tombol "Ekspor JSON" di Studio).
 //   "photos": { "1": "../foto/cover.jpg", "2": "../foto/etching-s2.png" }
 // Slide memakai kode desain yang sama dengan Studio (content-studio.html), jadi hasilnya identik.
 const fs = require('fs');
@@ -35,6 +36,7 @@ function readPost(file) {
     if (k.startsWith('_') || !rel) continue;
     const n = parseInt(k, 10);
     if (!(n >= 1 && n <= post.slides.length)) throw new Error('Nomor slide foto tidak valid: ' + k);
+    if (/^data:image\//.test(rel)) { photos[n - 1] = rel; continue; } // file hasil "Ekspor JSON" di Studio: foto sudah tertanam
     const p = path.resolve(path.dirname(file), rel);
     if (!fs.existsSync(p)) throw new Error('Foto slide ' + n + ' tidak ditemukan: ' + p);
     const mime = MIME[path.extname(p).toLowerCase()];
