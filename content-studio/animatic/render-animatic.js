@@ -2,7 +2,7 @@
 // Render animatic.html jadi MP4 1080x1920 30 fps: Chromium (Playwright) memotret tiap frame lewat window.seek(t),
 // ffmpeg menyatukannya. Teknik yang sama dengan HyperFrames, tanpa paket tambahan.
 //
-// Pakai: node animatic/render-animatic.js [--fps 30] [--out out/animatic.mp4] [--audio vo.wav] [--stills 2.5]
+// Pakai: node animatic/render-animatic.js [--file animatic-v3.html] [--fps 30] [--out out/animatic.mp4] [--audio vo.wav] [--stills 2.5]
 //   --audio   : voice over Anda, digabung ke video (durasi video mengikuti animatic)
 //   --stills  : simpan lembar kontak (still tiap N detik) untuk QC
 const fs = require('fs');
@@ -24,7 +24,7 @@ const STILLS = +arg('stills', 0);
   const errs = [];
   pg.on('pageerror', (e) => errs.push(e.message));
   await pg.route(/^https?:/, (r) => r.abort());
-  await pg.goto('file://' + path.join(__dirname, 'animatic.html'));
+  await pg.goto('file://' + path.join(__dirname, arg('file', 'animatic.html')));
   await pg.addStyleTag({ path: path.join(ROOT, 'assets', 'fonts-embed.css') });
   await pg.evaluate(() => Promise.all(['800 40px Archivo', 'italic 400 40px Fraunces', '600 40px Outfit', '600 40px Caveat', '500 40px "JetBrains Mono"'].map((f) => document.fonts.load(f))));
   const dur = await pg.evaluate(() => window.ANIMATIC_DURATION);
