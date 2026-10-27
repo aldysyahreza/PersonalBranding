@@ -7,6 +7,7 @@ import { buildPhrases, r3, fmtTime } from '../shared/core.js';
 const TRACKS = [
   ['structure', 'Struktur'],
   ['cuts', 'Cut'],
+  ['zooms', 'Zoom'],
   ['captions', 'Subtitle'],
   ['cards', 'Kartu'],
   ['broll', 'B-roll'],
@@ -24,6 +25,7 @@ export function createTimeline({ onSeek, onSelect }) {
     switch (track) {
       case 'structure': return (p.plan?.structure || []).map((s, i) => ({ id: `st${i}`, start: s.start, end: s.end, label: s.part, cls: 'st', readonly: true }));
       case 'cuts': return (p.cuts || []).map((c) => ({ id: c.id, start: c.start, end: c.end, label: c.kind || 'cut', cls: c.enabled ? 'cut on' : 'cut', list: 'cuts' }));
+      case 'zooms': return (p.zooms || []).map((z) => ({ id: z.id, start: z.start, end: z.end, label: `${Number(z.zoom).toFixed(2)}×`, cls: z.approved ? 'zoom on' : 'zoom', list: 'zooms' }));
       case 'captions': return buildPhrases(p.transcript?.segments || [], { maxWords: p.style.captions.maxWords, maxChars: p.style.captions.maxChars }).map((ph, i) => ({ id: `ph${i}`, start: ph.start, end: ph.end, label: ph.words.map((w) => w.text).join(' '), cls: 'cap', readonly: true }));
       case 'cards': return (p.cards || []).map((c) => ({ id: c.id, start: c.start, end: c.end, label: c.title || c.type, cls: c.approved ? 'card on' : 'card', list: 'cards' }));
       case 'broll': return (p.broll || []).map((b) => ({ id: b.id, start: b.start, end: b.end, label: b.assetId ? (p.assets.find((a) => a.id === b.assetId)?.name || 'aset') : 'tanpa aset', cls: b.approved ? (b.assetId ? 'broll on' : 'broll warn') : 'broll', list: 'broll' }));

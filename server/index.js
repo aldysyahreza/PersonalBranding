@@ -14,6 +14,7 @@ import { providerStatus, transcribeLocal, transcribeOpenAI } from './lib/transcr
 import { rulePlan, claudePlan, planToItems } from './lib/plan.js';
 import { renderVideo, renderStill, preflight, estimateSize, QUALITY, CONTAINERS, BUILTIN_SFX_LIST } from './lib/render.js';
 import { BRAND_PROFILE } from './lib/brand.js';
+import { catalog, libraryFile, isLibraryItem, LICENSE_NOTE } from './lib/synth.js';
 import { distributeText, parseSubtitles, toSrt, projectStatus, OUTPUT_FORMATS, uid } from '../public/shared/core.js';
 
 const MIME = {
@@ -161,6 +162,7 @@ route('GET', '/api/status', async () => {
     qualities: Object.fromEntries(Object.entries(QUALITY).filter(([k]) => k !== 'pratinjau').map(([k, v]) => [k, v.label])),
     containers: Object.fromEntries(Object.entries(CONTAINERS).map(([k, v]) => [k, v.label])),
     builtinSfx: BUILTIN_SFX_LIST,
+    library: catalog(),
     brand: BRAND_PROFILE,
     paths: { projects: config.projectsDir, output: config.outputDir, presets: config.presetsDir },
     limits: { maxUploadMB: Math.round(config.maxUploadBytes / 1048576) },
@@ -251,6 +253,27 @@ route('GET', '/api/projects/:id/media/asset/:assetId', async ({ id, assetId, req
   if (!a) throw new UserError('Aset tidak ditemukan.', '', 404);
   serveFile(req, res, a.path);
   return null;
+});
+
+// Pustaka audio sintetis bawaan (dibuat on-demand, di-cache di library/).
+route('GET', '/api/library/:kind/:item/file', async ({ kind, item, req, res }) => {
+  if (!isLibraryItem(kind, item)) throw new UserError('Item pustaka tidak ditemukan.', '', 404);
+  serveFile(req, res, libraryFile(kind, item));
+  return null;
+});
+route('POST', '/api/projects/:id/library/music', async ({ id, req }) => {
+  const { item } = await readJson(req);
+  if (!isLibraryItem('music', item)) throw new UserError('Musik bawaan tidak ditemukan.', '', 404);
+  const p = loadProject(id);
+  const file = libraryFile('music', item);
+  let asset = p.assets.find((a) => a.builtin === `music:${item}`);
+  if (!asset) {
+    const meta = await probe(file);
+    asset = { id: uid('ast'), kind: 'audio', builtin: `music:${item}`, name: `Musik bawaan — ${catalog().music.find((m) => m.id === item).name}`, path: file, copied: false, license: LICENSE_NOTE, addedAt: new Date().toISOString(), meta: { duration: meta.duration } };
+    p.assets.push(asset);
+  }
+  Object.assign(p.music, { assetId: asset.id, enabled: true });
+  return full(saveProject(p));
 });
 
 route('POST', '/api/projects/:id/analyze', async ({ id }) => {
@@ -347,6 +370,7 @@ route('POST', '/api/projects/:id/plan', async ({ id, req }) => {
   p.broll = [...keepOld(p.broll), ...items.broll];
   p.sfx = [...keepOld(p.sfx), ...items.sfx];
   p.emphasisSuggestions = [...keepOld(p.emphasisSuggestions || []), ...items.emphasis];
+  p.zooms = [...keepOld(p.zooms || []), ...items.zooms];
   p.plan = { origin, at: new Date().toISOString(), structure: items.structure, music: items.music, notes: items.notes };
   return full(saveProject(p));
 });

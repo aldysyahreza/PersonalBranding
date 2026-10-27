@@ -2,7 +2,7 @@
 import { api } from './api.js';
 import { toast } from './ui.js';
 
-export const EDITABLE = ['name', 'style', 'styleLevel', 'output', 'transcript', 'cuts', 'emphasisSuggestions', 'cards', 'broll', 'sfx', 'music', 'brandKeywords', 'plan'];
+export const EDITABLE = ['name', 'style', 'styleLevel', 'output', 'transcript', 'cuts', 'zooms', 'emphasisSuggestions', 'cards', 'broll', 'sfx', 'music', 'brandKeywords', 'plan'];
 
 export const store = {
   status: null,

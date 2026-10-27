@@ -29,7 +29,7 @@ export function rulePlan(project) {
   const dur = project.source?.meta?.duration || 0;
   const silences = project.analysis?.silences || [];
   const keywords = new Set((project.brandKeywords || []).map(normWord).filter(Boolean));
-  const out = { structure: [], emphasis: [], cards: [], broll: [], sfx: [], cuts: [], music: null, notes: [] };
+  const out = { structure: [], emphasis: [], cards: [], broll: [], sfx: [], cuts: [], zooms: [], music: null, notes: [] };
   if (!segs.length) {
     out.notes.push('Belum ada transkrip; saran yang bergantung pada isi ucapan dilewati.');
   }
@@ -124,10 +124,39 @@ export function rulePlan(project) {
     }
   }
 
-  // SFX: pop sintetis di awal setiap kartu.
-  for (const c of out.cards) out.sfx.push({ time: c.start, builtin: 'pop', reason: 'Menandai munculnya kartu.' });
+  // SFX dari pustaka sintetis bawaan, disesuaikan jenis visualnya.
+  out.sfx.push(...sfxForVisuals(out.cards, out.broll));
 
-  out.music = { reason: 'Musik instrumental pelan sebagai dasar ritme. Belum ada aset — impor file musik berlisensi milik Anda.', volumeDb: project.style?.audio?.musicDb ?? -24 };
+  // Zoom punch-in bergantian antar kalimat (ritme visual seperti referensi, tanpa footage tambahan).
+  const level = project.style?.zoom?.punchIn ?? 1.12;
+  segs.forEach((seg, i) => {
+    if (i % 2 === 1 && seg.end - seg.start >= 1.5) {
+      out.zooms.push({ start: seg.start, end: seg.end, zoom: level, reason: 'Punch-in bergantian antar kalimat menjaga ritme visual (pola di video referensi).' });
+    }
+  });
+
+  out.music = musicSuggestion(project);
+  return out;
+}
+
+const MOOD_BY_LEVEL = { minimal: 'tenang', editorial: 'tenang', dinamis: 'energik' };
+
+function musicSuggestion(project) {
+  const mood = MOOD_BY_LEVEL[project.styleLevel] || 'tenang';
+  return {
+    builtin: mood,
+    reason: `Saran: musik bawaan "${mood}" (disintesis aplikasi, bebas royalti) — atau impor musik berlisensi Anda sendiri.`,
+    volumeDb: project.style?.audio?.musicDb ?? -24,
+  };
+}
+
+function sfxForVisuals(cards, broll) {
+  const out = [];
+  for (const c of cards) {
+    const builtin = c.type === 'number' ? 'impact' : c.type === 'list' ? 'click' : 'swoosh';
+    out.push({ time: c.start, builtin, reason: c.type === 'number' ? 'Menegaskan angka besar.' : 'Menandai munculnya kartu.' });
+  }
+  for (const b of broll) out.push({ time: b.start, builtin: 'whoosh', reason: 'Transisi ke footage sisipan.' });
   return out;
 }
 
@@ -204,8 +233,9 @@ export async function claudePlan(project) {
     const idx = seg ? (seg.words || []).findIndex((w) => normWord(w.text) === normWord(e.word)) : -1;
     return idx >= 0 ? [{ segId: seg.id, wordIndex: idx, word: seg.words[idx].text, reason: e.reason }] : [];
   });
-  plan.sfx = (plan.cards || []).map((c) => ({ time: c.start, builtin: 'pop', reason: 'Menandai munculnya kartu.' }));
-  plan.music = { reason: 'Musik instrumental pelan. Belum ada aset — impor file musik berlisensi milik Anda.', volumeDb: project.style?.audio?.musicDb ?? -24 };
+  plan.sfx = sfxForVisuals(plan.cards || [], plan.broll || []);
+  plan.zooms = [];
+  plan.music = musicSuggestion(project);
   return plan;
 }
 
@@ -234,6 +264,7 @@ export function planToItems(plan, origin, segments) {
     broll: (plan.broll || []).map((b) => ({ ...tag('broll'), ...b, assetId: null })),
     sfx: (plan.sfx || []).map((s) => ({ ...tag('sfx'), ...s, volumeDb: 0 })),
     cuts: (plan.cuts || []).map((c) => ({ ...tag('cut'), ...c, enabled: false })),
+    zooms: (plan.zooms || []).map((z) => ({ ...tag('zoom'), ...z })),
     music: plan.music || null,
     notes: plan.notes || [],
   };

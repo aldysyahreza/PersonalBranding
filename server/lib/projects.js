@@ -50,6 +50,7 @@ export function createProject({ name, presetId = 'aldy-editorial', level = 'edit
     transcript: null,
     plan: null,
     cuts: [],
+    zooms: [],
     emphasisSuggestions: [],
     cards: [],
     broll: [],
@@ -77,6 +78,9 @@ export function loadProject(id) {
   const f = file(id);
   if (!fs.existsSync(f)) throw new UserError('Proyek tidak ditemukan.', 'Mungkin sudah dihapus dari folder projects/.', 404);
   const p = JSON.parse(fs.readFileSync(f, 'utf8'));
+  // Proyek lama dibuat sebelum fitur zoom punch-in.
+  p.zooms ||= [];
+  if (p.style && !p.style.zoom) p.style.zoom = { punchIn: 1.12 };
   if (p.source) {
     const exists = fs.existsSync(p.source.path);
     p.source.missing = !exists;
@@ -104,7 +108,7 @@ export function listProjects() {
 }
 
 /** Field yang boleh diubah langsung dari UI lewat PUT. Field lain dikelola server. */
-export const EDITABLE = ['name', 'style', 'styleLevel', 'output', 'transcript', 'cuts', 'emphasisSuggestions', 'cards', 'broll', 'sfx', 'music', 'brandKeywords', 'plan'];
+export const EDITABLE = ['name', 'style', 'styleLevel', 'output', 'transcript', 'cuts', 'zooms', 'emphasisSuggestions', 'cards', 'broll', 'sfx', 'music', 'brandKeywords', 'plan'];
 
 export function applyEdits(p, body) {
   for (const k of EDITABLE) if (k in body) p[k] = body[k];

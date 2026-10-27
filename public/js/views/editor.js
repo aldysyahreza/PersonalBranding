@@ -7,6 +7,7 @@ import { createPreview } from '../preview.js';
 import { createTimeline } from '../timeline.js';
 import { OUTPUT_FORMATS, r3 } from '../../shared/core.js';
 import { CARD_TYPES, ICON_OPTIONS } from './plan.js';
+import { musicLibrary, sfxOptions, previewButton } from '../library.js';
 
 let preview = null;
 let timeline = null;
@@ -170,7 +171,9 @@ function renderInspector() {
       sel('Mode bingkai', 'output.framing', [['fill', 'Isi bingkai (crop)'], ['fit', 'Muat utuh + latar blur']]),
       sl('Posisi horizontal', 'output.reframe.x', { min: 0, max: 1, step: 0.01, fmt: (v) => `${Math.round(v * 100)}%` }),
       sl('Posisi vertikal', 'output.reframe.y', { min: 0, max: 1, step: 0.01, fmt: (v) => `${Math.round(v * 100)}%` }),
-      sl('Zoom', 'output.reframe.zoom', { min: 1, max: 2, step: 0.01, fmt: (v) => `${v.toFixed(2)}×` }),
+      sl('Zoom dasar', 'output.reframe.zoom', { min: 1, max: 2, step: 0.01, fmt: (v) => `${v.toFixed(2)}×` }),
+      sl('Kekuatan punch-in (saran baru)', 'style.zoom.punchIn', { min: 1, max: 1.4, step: 0.01, fmt: (v) => `${v.toFixed(2)}×` }),
+      h('p', { class: 'muted small' }, 'Item zoom punch-in diatur di Rencana edit atau pilih di timeline (trek "Zoom").'),
       h('h4', {}, 'Zona aman platform'),
       sl('Atas', 'style.safeZone.top', { min: 0, max: 0.3, step: 0.005, fmt: (v) => `${Math.round(v * 100)}%` }),
       sl('Bawah', 'style.safeZone.bottom', { min: 0, max: 0.35, step: 0.005, fmt: (v) => `${Math.round(v * 100)}%` }),
@@ -197,6 +200,7 @@ function renderInspector() {
       sl('Gain suara', 'style.audio.voiceGainDb', { min: -12, max: 12, step: 0.5, fmt: (v) => `${v} dB` }),
       h('h4', {}, 'Musik latar'),
       musicControls(p),
+      musicLibrary(p),
       h('h4', {}, 'Sound effect'),
       sl('Volume dasar SFX', 'style.audio.sfxDb', { min: -30, max: 0, step: 1, fmt: (v) => `${v} dB` }),
       h('p', { class: 'muted small' }, 'Preview browser memutar suara asli + musik (tanpa ducking/SFX). Dengarkan campuran lengkap lewat "Render pratinjau".'),
@@ -286,7 +290,7 @@ function itemInspector(p) {
   const it = p[list][i];
   const dur = p.source.meta.duration;
   const up = (k, key) => (v) => edit((x) => (x[list][i][k] = typeof v === 'number' ? r3(Math.max(0, Math.min(dur, v))) : v), { key: key ? `${it.id}.${k}` : null, rerender: false });
-  const title = { cards: 'Kartu', broll: 'B-roll', cuts: 'Cut', sfx: 'Sound effect' }[list];
+  const title = { cards: 'Kartu', broll: 'B-roll', cuts: 'Cut', sfx: 'Sound effect', zooms: 'Zoom punch-in' }[list];
   const out = [h('h3', {}, title), h('div', { class: 'row' }, h('button', { class: 'btn sm', onclick: () => preview.seek(it.start ?? it.time) }, '▶ Lompat ke item'))];
   if (list === 'sfx') out.push(field('Waktu (dtk sumber)', num(it.time, up('time'), { step: 0.05 })));
   else out.push(h('div', { class: 'grid2' }, field('Mulai (dtk sumber)', num(it.start, up('start'), { step: 0.05 })), field('Selesai', num(it.end, up('end'), { step: 0.05 }))));
@@ -302,6 +306,12 @@ function itemInspector(p) {
       field(it.type === 'list' ? 'Poin (pisahkan dengan ;)' : 'Label bawah', h('input', { value: it.subtitle || '', onchange: (e) => up('subtitle')(e.target.value) })),
     );
   }
+  if (list === 'zooms') out.push(field('Zoom', slider(it.zoom, (v) => edit((x) => (x.zooms[i].zoom = v), { key: `${it.id}.zoom`, rerender: false }), { min: 1, max: 1.5, step: 0.01, fmt: (v) => `${v.toFixed(2)}×` })));
+  if (list === 'sfx') out.push(field('Suara', h('div', { class: 'row' }, select(it.builtin ? `builtin:${it.builtin}` : `asset:${it.assetId}`, sfxOptions(p), (v) => edit((x) => {
+    const [k, id] = v.split(':');
+    x.sfx[i].builtin = k === 'builtin' ? id : null;
+    x.sfx[i].assetId = k === 'asset' ? id : null;
+  }, { rerender: false })), it.builtin ? previewButton('sfx', it.builtin) : null)));
   if (list === 'broll') out.push(field('Aset', select(it.assetId || '', [['', '— Belum ada aset —'], ...p.assets.filter((a) => a.kind !== 'audio').map((a) => [a.id, `${a.name} · ${a.license}`])], (v) => up('assetId')(v || null))));
   if (list === 'sfx') out.push(field('Volume tambahan (dB)', num(it.volumeDb || 0, (v) => edit((x) => (x.sfx[i].volumeDb = v), { rerender: false }), { step: 1 })));
   out.push(h('button', { class: 'link danger', onclick: () => { edit((x) => x[list].splice(i, 1)); store.selected = null; } }, 'Hapus item'));

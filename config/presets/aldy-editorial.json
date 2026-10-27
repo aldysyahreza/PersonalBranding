@@ -39,6 +39,7 @@
     "grid": true,
     "shadow": 6
   },
+  "zoom": { "punchIn": 1.12 },
   "color": {
     "enabled": true,
     "intensity": 0.6,
@@ -61,12 +62,14 @@
     "minimal": {
       "captions": { "layout": "single", "maxWords": 6, "maxChars": 34, "emphasis": "color", "animation": "fade", "keySize": 64 },
       "color": { "intensity": 0.35, "vignette": 0 },
+      "zoom": { "punchIn": 1.06 },
       "cards": { "grid": false }
     },
     "editorial": {},
     "dinamis": {
       "captions": { "layout": "karaoke", "maxWords": 3, "maxChars": 20, "animation": "pop", "keySize": 92, "uppercase": true },
       "color": { "intensity": 0.8, "vignette": 0.35 },
+      "zoom": { "punchIn": 1.18 },
       "cards": { "fadeMs": 110 }
     }
   }

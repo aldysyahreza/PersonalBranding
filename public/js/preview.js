@@ -3,7 +3,7 @@
 // tombol "Cek frame akurat" merender frame asli lewat ffmpeg.
 import { h } from './ui.js';
 import { store } from './store.js';
-import { buildPhrases, splitLeadKey, framing, isCut, OUTPUT_FORMATS, keepSegments, mapTime, fmtTime } from '../shared/core.js';
+import { buildPhrases, splitLeadKey, framing, isCut, OUTPUT_FORMATS, keepSegments, mapTime, fmtTime, zoomAt } from '../shared/core.js';
 
 const WEIGHTS = { Thin: 100, ExtraLight: 200, Light: 300, Regular: 400, Medium: 500, SemiBold: 600, Bold: 700, ExtraBold: 800, Black: 900 };
 export function fontCss(name = 'Inter') {
@@ -43,6 +43,17 @@ export function createPreview() {
     draw(true);
   }
 
+  let curZoom = 0;
+  /** Zoom punch-in = framing dengan faktor zoom dikalikan (sama dengan render). */
+  function applyZoom(z, force = false) {
+    const pr = store.project;
+    if (pr.output.framing === 'fit' || (!force && z === curZoom)) return;
+    curZoom = z;
+    const m = pr.source.meta, fr = pr.output.reframe || {};
+    const c = framing(m.width, m.height, W, H, { ...fr, zoom: (fr.zoom || 1) * z });
+    Object.assign(video.style, { width: `${c.sw}px`, height: `${c.sh}px`, left: `${-c.cx}px`, top: `${-c.cy}px` });
+  }
+
   function layout() {
     const pr = store.project;
     const fmt = OUTPUT_FORMATS[pr.output.aspect] || OUTPUT_FORMATS['9:16'];
@@ -63,8 +74,7 @@ export function createPreview() {
       Object.assign(bgVideo.style, { width: `${c.sw}px`, height: `${c.sh}px`, left: `${-c.cx}px`, top: `${-c.cy}px` });
       bgVideo.classList.remove('hidden');
     } else {
-      const c = framing(m.width, m.height, W, H, pr.output.reframe || {});
-      Object.assign(video.style, { width: `${c.sw}px`, height: `${c.sh}px`, left: `${-c.cx}px`, top: `${-c.cy}px` });
+      applyZoom(zoomAt(video.currentTime, pr.zooms), true);
       bgVideo.classList.add('hidden');
     }
     // Koreksi warna (perkiraan CSS dari parameter ffmpeg eq/colorbalance).
@@ -218,6 +228,7 @@ export function createPreview() {
     lastT = t;
     store.playhead = t;
     if (pr.output.framing === 'fit' && Math.abs(bgVideo.currentTime - t) > 0.25) bgVideo.currentTime = t;
+    applyZoom(zoomAt(t, pr.zooms));
     drawCaptions(pr, t);
     drawCards(pr, t);
     drawBroll(pr, t);

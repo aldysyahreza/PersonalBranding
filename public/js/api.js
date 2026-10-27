@@ -62,6 +62,7 @@ export const api = {
   assetFromPath: (id, path, license) => req('POST', `/api/projects/${id}/assets/path`, { path, license }),
   updateAsset: (id, aid, b) => req('PUT', `/api/projects/${id}/assets/${aid}`, b),
   deleteAsset: (id, aid) => req('DELETE', `/api/projects/${id}/assets/${aid}`),
+  useLibraryMusic: (id, item) => req('POST', `/api/projects/${id}/library/music`, { item }),
   analyze: (id) => req('POST', `/api/projects/${id}/analyze`),
   transcribe: (id, provider, consent) => req('POST', `/api/projects/${id}/transcribe`, { provider, consent }),
   manualTranscript: (id, text) => req('POST', `/api/projects/${id}/transcript/manual`, { text }),

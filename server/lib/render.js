@@ -7,7 +7,8 @@ import { config } from './config.js';
 import { run } from './proc.js';
 import { probe, UserError } from './media.js';
 import { buildAss } from './ass.js';
-import { keepSegments, outputDuration, mapSpan, mapTime, framing, OUTPUT_FORMATS, r3 } from '../../public/shared/core.js';
+import { keepSegments, outputDuration, mapSpan, mapTime, framing, zoomPieces, OUTPUT_FORMATS, r3 } from '../../public/shared/core.js';
+import { libraryFile, isLibraryItem, catalog } from './synth.js';
 import { workDir } from './projects.js';
 
 export const QUALITY = {
@@ -19,12 +20,7 @@ export const QUALITY = {
 
 export const CONTAINERS = { mp4: { ext: '.mp4', label: 'MP4 (H.264 + AAC)' }, mov: { ext: '.mov', label: 'MOV (H.264 + AAC)' } };
 
-const BUILTIN_SFX = {
-  pop: { src: 'sine=frequency=1150:sample_rate=48000', dur: 0.12, chain: 'afade=t=out:st=0.02:d=0.1,volume=0.6' },
-  click: { src: 'sine=frequency=2600:sample_rate=48000', dur: 0.035, chain: 'afade=t=out:st=0.005:d=0.03,volume=0.5' },
-  whoosh: { src: 'anoisesrc=color=pink:sample_rate=48000:amplitude=0.7', dur: 0.45, chain: 'bandpass=f=1800:width_type=o:w=2,afade=t=in:d=0.2,afade=t=out:st=0.2:d=0.25' },
-};
-export const BUILTIN_SFX_LIST = Object.keys(BUILTIN_SFX);
+export const BUILTIN_SFX_LIST = catalog().sfx.map((x) => x.id);
 
 function dbToLin(db) {
   return Math.pow(10, db / 20).toFixed(4);
@@ -80,30 +76,36 @@ export function buildCommand(project, o) {
   const withAudio = o.withAudio !== false;
   const hasAudio = meta.hasAudio;
 
-  // 1) Cut: pertahankan rentang keep lalu sambung.
-  const K = keep.length;
-  f.push(`[0:v]split=${K}${keep.map((_, i) => `[vs${i}]`).join('')}`);
-  if (withAudio && hasAudio) f.push(`[0:a]asplit=${K}${keep.map((_, i) => `[as${i}]`).join('')}`);
-  keep.forEach((k, i) => {
-    f.push(`[vs${i}]trim=start=${k.start}:end=${k.end},setpts=PTS-STARTPTS[v${i}]`);
-    if (withAudio && hasAudio) f.push(`[as${i}]atrim=start=${k.start}:end=${k.end},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo[a${i}]`);
-  });
-  if (withAudio && hasAudio) f.push(`${keep.map((_, i) => `[v${i}][a${i}]`).join('')}concat=n=${K}:v=1:a=1[vc][voice0]`);
-  else f.push(`${keep.map((_, i) => `[v${i}]`).join('')}concat=n=${K}:v=1:a=0[vc]`);
-
-  // 2) Bingkai (reframe) ke ukuran output.
+  // 1+2) Cut & bingkai. Rentang keep dipecah di batas zoom punch-in; tiap potongan
+  // di-trim, (pada mode isi) di-scale/crop dengan zoom-nya sendiri, lalu disambung.
   const fr = project.output.reframe || {};
-  if (project.output.framing === 'fit') {
-    const fit = Math.min(W / meta.width, H / meta.height);
-    const fw = Math.floor((meta.width * fit) / 2) * 2, fh = Math.floor((meta.height * fit) / 2) * 2;
+  const fit = project.output.framing === 'fit';
+  const pieces = fit ? keep.map((k) => ({ ...k, zoom: 1 })) : zoomPieces(keep, project.zooms);
+  const K = pieces.length;
+  const audio = withAudio && hasAudio;
+  f.push(`[0:v]split=${K}${pieces.map((_, i) => `[vs${i}]`).join('')}`);
+  if (audio) f.push(`[0:a]asplit=${K}${pieces.map((_, i) => `[as${i}]`).join('')}`);
+  pieces.forEach((k, i) => {
+    let frame = '';
+    if (!fit) {
+      const c = framing(meta.width, meta.height, W, H, { ...fr, zoom: (fr.zoom || 1) * k.zoom });
+      frame = `,fps=${fps},scale=${c.sw}:${c.sh}:flags=lanczos,crop=${W}:${H}:${c.cx}:${c.cy},setsar=1`;
+    }
+    f.push(`[vs${i}]trim=start=${k.start}:end=${k.end},setpts=PTS-STARTPTS${frame}[v${i}]`);
+    if (audio) f.push(`[as${i}]atrim=start=${k.start}:end=${k.end},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo[a${i}]`);
+  });
+  const joined = fit ? 'vc' : 'vf';
+  if (audio) f.push(`${pieces.map((_, i) => `[v${i}][a${i}]`).join('')}concat=n=${K}:v=1:a=1[${joined}][voice0]`);
+  else f.push(`${pieces.map((_, i) => `[v${i}]`).join('')}concat=n=${K}:v=1:a=0[${joined}]`);
+
+  if (fit) {
+    const fitScale = Math.min(W / meta.width, H / meta.height);
+    const fw = Math.floor((meta.width * fitScale) / 2) * 2, fh = Math.floor((meta.height * fitScale) / 2) * 2;
     const cover = framing(meta.width, meta.height, W, H, { x: 0.5, y: 0.5, zoom: 1 });
     f.push(`[vc]fps=${fps},split[bgsrc][fgsrc]`);
     f.push(`[bgsrc]scale=${cover.sw}:${cover.sh},crop=${W}:${H}:${cover.cx}:${cover.cy},boxblur=20:2,eq=brightness=-0.08[bg]`);
     f.push(`[fgsrc]scale=${fw}:${fh}[fg]`);
     f.push(`[bg][fg]overlay=(W-w)/2:(H-h)/2,setsar=1[vf]`);
-  } else {
-    const c = framing(meta.width, meta.height, W, H, fr);
-    f.push(`[vc]fps=${fps},scale=${c.sw}:${c.sh}:flags=lanczos,crop=${W}:${H}:${c.cx}:${c.cy},setsar=1[vf]`);
   }
 
   // 3) Koreksi warna terukur.
@@ -178,10 +180,9 @@ export function buildCommand(project, o) {
       const t = mapTime(s.time, keep);
       if (t === null) continue;
       const gain = dbToLin((project.style.audio?.sfxDb ?? -12) + (s.volumeDb || 0));
-      if (s.builtin && BUILTIN_SFX[s.builtin]) {
-        const b = BUILTIN_SFX[s.builtin];
-        inputs.push('-f', 'lavfi', '-t', String(b.dur), '-i', b.src);
-        f.push(`[${nextInput++}:a]${b.chain},aformat=sample_rates=48000:channel_layouts=stereo,volume=${gain},adelay=${Math.round(t * 1000)}:all=1[sfx${si}]`);
+      if (s.builtin && isLibraryItem('sfx', s.builtin)) {
+        inputs.push('-i', libraryFile('sfx', s.builtin));
+        f.push(`[${nextInput++}:a]aformat=sample_rates=48000:channel_layouts=stereo,volume=${gain},adelay=${Math.round(t * 1000)}:all=1[sfx${si}]`);
       } else {
         const a = s.assetId && assetById(project, s.assetId);
         if (!a || a.missing) continue;

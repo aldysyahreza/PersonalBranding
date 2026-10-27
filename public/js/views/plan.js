@@ -3,6 +3,7 @@ import { h, toast, consentDialog, badge, originBadge, num, select } from '../ui.
 import { api } from '../api.js';
 import { store, edit, setProject } from '../store.js';
 import { go } from '../app.js';
+import { musicLibrary, sfxOptions, previewButton } from '../library.js';
 import { fmtTime, uid, r3, tokenize, normWord } from '../../shared/core.js';
 
 export const ICON_OPTIONS = [['', 'Tanpa ikon'], ['check', '✓ Centang'], ['cross', '✕ Silang'], ['arrow', '→ Panah'], ['warning', '▲ Peringatan'], ['star', '★ Bintang']];
@@ -51,7 +52,7 @@ export function renderPlan(main) {
     ), ...(p.plan.notes || []).map((n) => h('p', { class: 'muted small' }, n))));
   }
 
-  col.append(emphasisPanel(p, seek), cardsPanel(p, seek), brollPanel(p, seek), audioPanel(p, seek), cutsPanel(p, seek));
+  col.append(emphasisPanel(p, seek), cardsPanel(p, seek), zoomPanel(p, seek), brollPanel(p, seek), audioPanel(p, seek), cutsPanel(p, seek));
   col.append(h('div', { class: 'row end' }, h('button', { class: 'btn primary', onclick: () => go('editor') }, 'Lanjut ke Editor →')));
 }
 
@@ -156,7 +157,7 @@ function brollPanel(p, seek) {
 
 function audioPanel(p, seek) {
   const dur = p.source.meta.duration;
-  const sfxOpts = [...store.status.builtinSfx.map((s) => [`builtin:${s}`, `Bawaan: ${s} (sintetis, bebas lisensi)`]), ...p.assets.filter((a) => a.kind === 'audio').map((a) => [`asset:${a.id}`, `${a.name} · ${a.license}`])];
+  const sfxOpts = sfxOptions(p);
   const items = (p.sfx || []).map((s, i) => h('div', { class: `item ${s.approved ? 'approved' : ''}` },
     h('div', { class: 'row wrap' }, timeFields('sfx', i, seek, dur),
       select(s.builtin ? `builtin:${s.builtin}` : `asset:${s.assetId}`, sfxOpts, (v) => edit((x) => {
@@ -164,6 +165,7 @@ function audioPanel(p, seek) {
         x.sfx[i].builtin = k === 'builtin' ? id : null;
         x.sfx[i].assetId = k === 'asset' ? id : null;
       })),
+      s.builtin ? previewButton('sfx', s.builtin) : null,
       h('span', { class: 'muted small' }, 'dB'), num(s.volumeDb || 0, (v) => edit((x) => (x.sfx[i].volumeDb = v)), { step: 1, width: '4em' }),
       originBadge(s.origin), approveToggle(s, (on) => edit((x) => (x.sfx[i].approved = on))), h('button', { class: 'link danger', onclick: () => edit((x) => x.sfx.splice(i, 1)) }, 'Hapus')),
     h('div', { class: 'muted small' }, s.reason || '')));
@@ -173,11 +175,25 @@ function audioPanel(p, seek) {
     h('div', { class: 'row wrap' }, h('strong', {}, 'Musik latar'), musicAsset ? badge('Aset tersedia', 'ok') : badge('Belum ada musik — placeholder', 'warn'),
       h('label', { class: 'check' }, h('input', { type: 'checkbox', checked: !!music.enabled, disabled: !musicAsset, onchange: (e) => edit((x) => (x.music.enabled = e.target.checked)) }), ' Aktifkan')),
     h('div', { class: 'row wrap' }, select(music.assetId || '', assetOptions(p, ['audio']), (v) => edit((x) => (x.music.assetId = v || null))), h('span', { class: 'muted small' }, 'Volume (dB)'), num(music.volumeDb, (v) => edit((x) => (x.music.volumeDb = v)), { step: 1, width: '4.5em' })),
-    h('div', { class: 'muted small' }, (!musicAsset && p.plan?.music?.reason) || 'Gunakan hanya musik yang Anda miliki lisensinya. Musik otomatis diredam (ducking) saat Anda berbicara.'),
+    h('div', { class: 'muted small' }, (!musicAsset && p.plan?.music?.reason) || 'Musik otomatis diredam (ducking) saat Anda berbicara. Musik milik sendiri bisa diimpor di Editor → Aset.'),
+    musicLibrary(p),
   );
-  return section('Audio: musik & sound effect', 'SFX bawaan dibuat secara sintetis oleh ffmpeg (bukan rekaman pihak lain). Musik tidak disertakan — impor file musik berlisensi Anda di Editor → Aset.', [musicBox, ...items], [
+  return section('Audio: musik & sound effect', 'Musik & SFX bawaan disintesis dari nol oleh aplikasi (bukan rekaman pihak lain) — bebas royalti. Anda juga bisa memakai file berlisensi milik sendiri.', [musicBox, ...items], [
     h('button', { class: 'btn ghost sm', onclick: () => edit((x) => x.sfx.push({ id: uid('sfx'), origin: 'pengguna', approved: true, time: r3(store.playhead || 0), builtin: 'pop', assetId: null, volumeDb: 0 })) }, '+ SFX'),
     items.length ? h('button', { class: 'btn ghost sm', onclick: () => edit((x) => x.sfx.forEach((s) => (s.approved = true))) }, 'Setujui semua SFX') : null,
+  ]);
+}
+
+function zoomPanel(p, seek) {
+  const dur = p.source.meta.duration;
+  const items = (p.zooms || []).map((z, i) => h('div', { class: `item ${z.approved ? 'approved' : ''}` },
+    h('div', { class: 'row wrap' }, timeFields('zooms', i, seek, dur),
+      h('span', { class: 'muted small' }, 'Zoom'), num(z.zoom, (v) => edit((x) => (x.zooms[i].zoom = Math.min(1.5, Math.max(1, v)))), { step: 0.01, width: '4.5em' }), h('span', { class: 'muted small' }, '×'),
+      originBadge(z.origin), h('span', { class: 'muted small grow' }, z.reason || ''),
+      approveToggle(z, (on) => edit((x) => (x.zooms[i].approved = on))), h('button', { class: 'link danger', onclick: () => edit((x) => x.zooms.splice(i, 1)) }, 'Hapus'))));
+  return section('Zoom punch-in', 'Framing berganti dekat–normal antar kalimat (jump-cut zoom), seperti di video referensi. Memakai video Anda sendiri, tanpa footage tambahan. Hanya berlaku pada mode bingkai "Isi".', items, [
+    h('button', { class: 'btn ghost sm', onclick: () => edit((x) => x.zooms.push({ id: uid('zoom'), origin: 'pengguna', approved: true, start: r3(store.playhead || 0), end: r3(Math.min(dur, (store.playhead || 0) + 2)), zoom: x.style.zoom?.punchIn ?? 1.12 })) }, '+ Zoom'),
+    items.length ? h('button', { class: 'btn ghost sm', onclick: () => edit((x) => x.zooms.forEach((z) => (z.approved = true))) }, 'Setujui semua') : null,
   ]);
 }
 

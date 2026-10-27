@@ -248,3 +248,7 @@ code.path { display: block; margin: 4px 0; }
 .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
 .pv-card-head { position: absolute; transform: translateY(-100%); display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
 .pv-card-foot { position: absolute; text-align: center; }
+.tl-item.zoom { background: var(--info-bg); }
+.tl-item.zoom.on { background: var(--info); color: #fff; }
+.lib { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; padding: 10px; background: var(--soft); border-radius: 8px; }
+.lib-row { display: flex; gap: 10px; align-items: center; }

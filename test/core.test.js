@@ -68,3 +68,15 @@ test('framing menutupi bingkai output', () => {
   assert.ok(f.sw >= 1080 && f.sh >= 1920);
   assert.equal(f.cy, 0);
 });
+
+test('zoomPieces memecah rentang keep di batas zoom yang disetujui', async () => {
+  const { zoomPieces } = await import('../public/shared/core.js');
+  const keep = keepSegments(10, [{ start: 4, end: 5, enabled: true }]);
+  const pieces = zoomPieces(keep, [{ start: 2, end: 6, zoom: 1.2, approved: true }, { start: 8, end: 9, zoom: 1.5, approved: false }]);
+  assert.deepEqual(pieces, [
+    { start: 0, end: 2, zoom: 1 },
+    { start: 2, end: 4, zoom: 1.2 },
+    { start: 5, end: 6, zoom: 1.2 },
+    { start: 6, end: 10, zoom: 1 },
+  ]);
+});

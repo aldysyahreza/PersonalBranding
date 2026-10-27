@@ -64,6 +64,36 @@ export function isCut(t, cuts = []) {
   return cuts.some((c) => c.enabled && t >= c.start && t < c.end);
 }
 
+/* ----------------------------- Zoom punch-in ----------------------------- */
+
+/** Faktor zoom (punch-in) yang disetujui pada waktu sumber t; 1 bila tidak ada. */
+export function zoomAt(t, zooms = []) {
+  const z = zooms.find((x) => x.approved && t >= x.start && t < x.end);
+  return z ? Math.max(1, Number(z.zoom) || 1) : 1;
+}
+
+/**
+ * Pecah rentang keep di batas zoom, sehingga tiap potongan punya satu faktor zoom.
+ * Dipakai render: tiap potongan di-scale/crop sendiri lalu disambung (jump-cut zoom).
+ */
+export function zoomPieces(keep, zooms = []) {
+  const active = zooms.filter((z) => z.approved);
+  const cuts = new Set(active.flatMap((z) => [z.start, z.end]));
+  const pieces = [];
+  for (const k of keep) {
+    const pts = [k.start, ...[...cuts].filter((x) => x > k.start + 0.02 && x < k.end - 0.02).sort((a, b) => a - b), k.end];
+    for (let i = 0; i < pts.length - 1; i++) {
+      const mid = (pts[i] + pts[i + 1]) / 2;
+      const zoom = zoomAt(mid, active);
+      const prev = pieces[pieces.length - 1];
+      // Gabungkan potongan bersebelahan dengan zoom sama (tanpa cut di antaranya).
+      if (prev && prev.zoom === zoom && Math.abs(prev.end - pts[i]) < 1e-6) prev.end = r3(pts[i + 1]);
+      else pieces.push({ start: r3(pts[i]), end: r3(pts[i + 1]), zoom });
+    }
+  }
+  return pieces;
+}
+
 /* ----------------------------- Transkrip ----------------------------- */
 
 export function tokenize(text) {

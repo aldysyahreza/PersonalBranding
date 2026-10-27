@@ -65,3 +65,14 @@ test('kartu dengan kata di luar ucapan ditandai perlu ditinjau', () => {
   assert.equal(items.cards[0].needsReview, true);
   assert.ok(items.cards[0].unknownWords.includes('omzet'));
 });
+
+test('pustaka audio sintetis menghasilkan WAV valid', async () => {
+  const fs = await import('node:fs');
+  const { catalog, libraryFile } = await import('../server/lib/synth.js');
+  const c = catalog();
+  assert.equal(c.music.length, 3);
+  assert.ok(c.sfx.length >= 8);
+  const buf = fs.readFileSync(libraryFile('sfx', 'pop'));
+  assert.equal(buf.toString('ascii', 0, 4), 'RIFF');
+  assert.equal(buf.toString('ascii', 8, 12), 'WAVE');
+});
