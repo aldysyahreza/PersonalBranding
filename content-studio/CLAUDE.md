@@ -37,6 +37,14 @@ Dasbor web satu file (`content-studio.html`, vanilla JS, tanpa build) untuk memb
 - Unduh cover reels PNG 1080x1920 (`renderHTMLBlob`, fungsi ekspor umum). `render/render.js` pada JSON reels -> `reel-cover.png`. Contoh: posts/reels-harga-ditawar.json. Tes: tests/t25_reels.js.
 - Fix: bila data tersimpan tidak berisi p-harga-ditawar, Studio memilih post pertama (dulu kosong).
 
+## Reels animatic (v4, DISETUJUI Aldy 28 Okt 2026, gaya TERKUNCI)
+- Satu perintah: `python3 animatic/build_reel.py rekaman.m4a posts/<reels>.json out/reel` -> reel.mp4. Aldy hanya mengirim voice over; visual dari kode.
+- Gaya: buku catatan diagnosis (kertas grid krem, objek semi-3D, coretan pena merah Caveat, mode Diagnosis ink+amber lewat pindai, caption karaoke pill ink, header bab, stempel DIDIAGNOSIS). Teknik gerak diadaptasi dari referensi @decoyreport, bukan disalin.
+- Audio: vo_prep.py (RNNoise + EQ desis, JANGAN deesser ffmpeg; jeda koma 0,18 / kalimat 0,35 / langkah 0,55), musik di-duck sidechain, -14 LUFS, limiter -2,5 dB (AAC menambah puncak).
+- Sinkron: anchors-v3.json mengikat momen visual ke kata; animasi + efek suara memakai peta waktu yang sama. Pencocokan kata tanpa ASR (DP suku kata + intonasi naik untuk tanya): cek caption bila Aldy improvisasi.
+- QC wajib sebelum kirim: tests/t30_animatic_layout.js (tanpa tabrakan) + cek frame visual (kesejajaran) + loudness.
+- Jangan pakai pkill -f dengan pola yang ada di baris perintah sendiri (membunuh shell). Jangan loudnorm di dalam filtergraph bersama asplit/sidechain (ffmpeg macet).
+
 ## Aturan desain (Style Bible v2)
 - Palet: Ink #0F0E0C, Paper #FBF8F3, Terakota #B84A2E, Amber #C8944A, Warm Gray #6B6560. Dominan per carousel: terakota atau amber.
 - Ritme latar: hero (terakota/amber) hanya cover, slide 6, slide 8. Slide 2-5 paper. Ink hanya slide 7.
