@@ -50,6 +50,8 @@ Dasbor web satu file (`content-studio.html`, vanilla JS, tanpa build) untuk memb
 - Tes tiap kalimat: owner paham dalam sekali baca tanpa penjelasan tambahan? Kalau belum, tulis ulang.
 - Kata kaku/bunyi AI yang dihindari: nyata, relevan, krusial, esensial, signifikan, optimal, holistik, sinergi, transformasi, lanskap, "di era digital ini", "mari kita", "pada dasarnya", "tidak hanya... tetapi juga". Ganti dengan bahasa owner saat membicarakan bisnisnya sendiri.
 - Istilah abstrak (sinyal, positioning yang kuat, value) wajib diterjemahkan jadi hal yang owner lihat/dengar/lakukan. Contoh: "AI membaca sinyal yang paling jelas" -> "AI memilih brand yang paling jelas: jualan apa, untuk siapa, dan kenapa harus dipilih."
+- STRUKTUR BAKU REELS: HRIRC = Hook – Relate – Insight – Reframe – CTA. Hook memakai sistem hook 2-lapis (angle psikologis × eksekusi khas brand).
+- Cek CTA (berlaku sampai Aldy mengubahnya): CTA hanya SATU dari save · share · follow; tanpa keyword, tanpa ajakan DM, tanpa otomasi; harus terhubung dengan isi (kenapa disimpan, dikirim ke siapa, apa yang didapat kalau follow). CTA komentar/keyword = pelanggaran. Diperiksa otomatis di Studio (ctaCheck, juga pinned comment).
 - Alur wajib lengkap: 1 Problem spesifik, 2 Studi kasus (brand/situasi konkret, JANGAN dikarang: pakai kasus klien yang disamarkan atau publik bersumber), 3 Solusi satu langkah, 4 Contoh wujudnya, 5 CTA. Dibungkus storytelling karakter Aldy ("saya", director yang mendiagnosis). Reels: kelima elemen masuk struktur HRIRC. Elemen hilang/kabur -> tulis di bagian "Temuan".
 
 ## Aturan desain (Style Bible v2)
@@ -61,7 +63,7 @@ Dasbor web satu file (`content-studio.html`, vanilla JS, tanpa build) untuk memb
 
 ## Aturan copy
 Natural, kalimat pendek (~14 kata), mulai dari adegan nyata, kata sehari-hari, "saya/kamu", diagnosis lembut. Hindari: Anda harus, wajib, rahasia, strategi jitu, auto, dijamin, hack, kesalahan fatal; istilah konsultan (fondasi, lapisan, ekosistem, sinergi); bunyi AI (pembuka klise, tanda pisah panjang, daftar tiga dipaksakan).
-CTA tanpa otomasi (tanpa komentar kata kunci).
+CTA: lihat 'Cek CTA' di Standar suara Aldy.
 
 ## Gotcha teknis
 - WAJIB ada `<meta charset="utf-8">` di baris 1. Tanpa itu, karena blok base64 besar di atas, browser salah menebak encoding (kutip “ ” dan → jadi rusak).
