@@ -45,6 +45,13 @@ Dasbor web satu file (`content-studio.html`, vanilla JS, tanpa build) untuk memb
 - QC wajib sebelum kirim: tests/t30_animatic_layout.js (tanpa tabrakan) + cek frame visual (kesejajaran) + loudness.
 - Jangan pakai pkill -f dengan pola yang ada di baris perintah sendiri (membunuh shell). Jangan loudnorm di dalam filtergraph bersama asplit/sidechain (ffmpeg macet).
 
+## Standar suara Aldy (WAJIB untuk semua copy, 28 Okt 2026)
+- Pembaca: business owner omzet > Rp100 juta/bulan. Nada profesional, berbeda, bernilai, tidak kaku: bicara dengan owner di satu meja, bukan seminar.
+- Tes tiap kalimat: owner paham dalam sekali baca tanpa penjelasan tambahan? Kalau belum, tulis ulang.
+- Kata kaku/bunyi AI yang dihindari: nyata, relevan, krusial, esensial, signifikan, optimal, holistik, sinergi, transformasi, lanskap, "di era digital ini", "mari kita", "pada dasarnya", "tidak hanya... tetapi juga". Ganti dengan bahasa owner saat membicarakan bisnisnya sendiri.
+- Istilah abstrak (sinyal, positioning yang kuat, value) wajib diterjemahkan jadi hal yang owner lihat/dengar/lakukan. Contoh: "AI membaca sinyal yang paling jelas" -> "AI memilih brand yang paling jelas: jualan apa, untuk siapa, dan kenapa harus dipilih."
+- Alur wajib lengkap: 1 Problem spesifik, 2 Studi kasus (brand/situasi konkret, JANGAN dikarang: pakai kasus klien yang disamarkan atau publik bersumber), 3 Solusi satu langkah, 4 Contoh wujudnya, 5 CTA. Dibungkus storytelling karakter Aldy ("saya", director yang mendiagnosis). Reels: kelima elemen masuk struktur HRIRC. Elemen hilang/kabur -> tulis di bagian "Temuan".
+
 ## Aturan desain (Style Bible v2)
 - Palet: Ink #0F0E0C, Paper #FBF8F3, Terakota #B84A2E, Amber #C8944A, Warm Gray #6B6560. Dominan per carousel: terakota atau amber.
 - Ritme latar: hero (terakota/amber) hanya cover, slide 6, slide 8. Slide 2-5 paper. Ink hanya slide 7.
