@@ -3,6 +3,7 @@ import { which } from './lib/proc.js';
 import { hasSecret, config } from './lib/config.js';
 import { providerStatus } from './lib/transcribe.js';
 import { run } from './lib/proc.js';
+import { hyperframesStatus } from './lib/hyperframes.js';
 
 const ok = (b) => (b ? '✔' : '✘');
 const node = process.versions.node;
@@ -27,5 +28,7 @@ console.log(`${ok(libass)} filter subtitle libass (ass) ${libass ? 'tersedia' : 
 console.log(`${ok(stt.local.available)} Transkripsi lokal: ${stt.local.detail}${stt.local.available ? ` (model ${config.whisperModel})` : ` — opsional: ${stt.local.setup}`}`);
 console.log(`${ok(hasSecret('OPENAI_API_KEY'))} Transkripsi cloud OpenAI: ${hasSecret('OPENAI_API_KEY') ? 'key terkonfigurasi' : 'tidak dikonfigurasi (opsional)'}`);
 console.log(`${ok(hasSecret('ANTHROPIC_API_KEY') && sdk)} Rencana edit Claude: ${hasSecret('ANTHROPIC_API_KEY') ? 'key terkonfigurasi' : 'key tidak dikonfigurasi'}; SDK ${sdk ? 'terpasang' : 'belum terpasang (npm install)'} (opsional)`);
+const hf = hyperframesStatus();
+console.log(`${ok(hf.ok)} Grafis kartu HyperFrames: ${hf.detail}${hf.ok ? ' — Chrome diunduh otomatis saat render pertama; cek dengan "npx hyperframes doctor"' : ' (opsional; tanpa ini kartu bawaan dipakai)'}`);
 console.log(`  Folder proyek: ${config.projectsDir}`);
 console.log(`  Folder output: ${config.outputDir}`);

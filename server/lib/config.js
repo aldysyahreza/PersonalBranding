@@ -52,6 +52,7 @@ export const config = {
   whisperDevice: env('WHISPER_DEVICE', 'auto'),
   openaiTranscribeModel: env('OPENAI_TRANSCRIBE_MODEL', 'whisper-1'),
   anthropicModel: env('ANTHROPIC_MODEL', 'claude-opus-5-5'),
+  hyperframesBrowser: env('HYPERFRAMES_BROWSER_PATH', ''),
   fontsDir: path.join(ROOT, 'assets', 'fonts'),
   presetsDir: path.join(ROOT, 'config', 'presets'),
 };

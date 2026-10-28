@@ -1,7 +1,7 @@
 // Membangun file subtitle ASS (libass) untuk caption + kartu visual.
 // Semua posisi dihitung dalam piksel output; semua waktu sudah dipetakan
 // ke timeline output (setelah cut).
-import { buildPhrases, splitLeadKey, mapSpan, mapTime, kineticLines, resolveEmphasis } from '../../public/shared/core.js';
+import { buildPhrases, splitLeadKey, mapSpan, mapTime, kineticLines, resolveEmphasis, subtractRanges } from '../../public/shared/core.js';
 import { measure } from './fontmetrics.js';
 
 export function assColor(hex, alpha = 0) {
@@ -109,7 +109,7 @@ function arcPath(w, h) {
   return `m 0 ${r(h * 0.9)} b ${r(w * 0.3)} ${r(h * 0.1)} ${r(w * 0.7)} 0 ${r(w)} ${r(h * 0.35)} l ${r(w)} ${r(h * 0.6)} b ${r(w * 0.7)} ${r(h * 0.32)} ${r(w * 0.3)} ${r(h * 0.42)} 0 ${r(h)}`;
 }
 
-export function buildAss(project, { width: W, height: H, keep, paper = false }) {
+export function buildAss(project, { width: W, height: H, keep, paper = false, skipCards = new Set() }) {
   const st = project.style;
   const cap = st.captions;
   const col = st.colors;
@@ -159,9 +159,17 @@ export function buildAss(project, { width: W, height: H, keep, paper = false }) 
     const segs = project.transcript?.segments || [];
     const phrases = buildPhrases(segs, { maxWords: cap.maxWords, maxChars: cap.maxChars });
     if (cap.layout === 'kinetic') resolveEmphasis(phrases, cap.emphasis);
+    // Selama kartu grafis tampil, subtitle disembunyikan (kartu sudah menampilkan kalimatnya),
+    // supaya teks tidak muncul dua kali.
+    const cardBlocks = (project.cards || []).filter((c) => c.approved).map((c) => mapSpan(c.start, c.end, keep)).filter(Boolean);
     for (const ph of phrases) {
-      const span = mapSpan(ph.start, ph.end, keep);
-      if (!span || span.end - span.start < 0.05) continue;
+      const whole = mapSpan(ph.start, ph.end, keep);
+      if (!whole || whole.end - whole.start < 0.05) continue;
+      for (const span of subtractRanges(whole, cardBlocks)) renderPhrase(ph, span);
+    }
+  }
+
+  function renderPhrase(ph, span) {
       const x = Math.round(W / 2);
       if (cap.layout === 'kinetic') {
         kineticPhrase(ph, span, x);
@@ -179,7 +187,6 @@ export function buildAss(project, { width: W, height: H, keep, paper = false }) 
       } else {
         ev(2, span.start, span.end, 'Key', `{\\an2\\pos(${x},${capY})${anim}}${line(ph.words, 'Key')}`);
       }
-    }
   }
 
   /**
@@ -235,7 +242,8 @@ export function buildAss(project, { width: W, height: H, keep, paper = false }) 
 
   // ---------------- Kartu visual (animasi bertahap) ----------------
   for (const card of project.cards || []) {
-    if (!card.approved) continue;
+    // Kartu yang sudah dirender HyperFrames ditumpuk sebagai video; jangan digambar ulang di ASS.
+    if (!card.approved || skipCards.has(card.id)) continue;
     const span = mapSpan(card.start, card.end, keep);
     if (!span || span.end - span.start < 0.1) continue;
     const dur = ms(span.end - span.start);

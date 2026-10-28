@@ -3,7 +3,7 @@ import { h, toast, consentDialog, badge, num } from '../ui.js';
 import { api } from '../api.js';
 import { store, edit, setProject } from '../store.js';
 import { go, runJob } from '../app.js';
-import { fmtTime, syncSegmentWords, makeSegment, tokenize, r3 } from '../../shared/core.js';
+import { fmtTime, syncSegmentWords, makeSegment, tokenize, r3, findDuplicateSegments } from '../../shared/core.js';
 
 const EMPH_LABEL = { true: 'otomatis (bergiliran)', box: 'kotak merah', arc: 'garis lengkung', script: 'huruf script' };
 const TIMING = { asr: ['Timestamp kata asli', 'ok'], estimated: ['Waktu kata diestimasi', 'warn'], imported: ['Diimpor (kata diestimasi)', 'warn'], manual: ['Manual', ''] };
@@ -102,11 +102,13 @@ function segmentsPanel(p, video) {
   const dur = p.source.meta.duration;
   const panel = h('section', { class: 'panel' });
   const edited = t.segments.filter((s) => s.text !== s.originalText).length;
+  const dups = new Set(findDuplicateSegments(t.segments));
   panel.append(
     h('div', { class: 'row between wrap' },
       h('div', {}, h('h2', {}, `Transkrip (${t.segments.length} segmen)`),
         h('div', { class: 'row wrap' }, badge({ 'local-whisper': 'Sumber: Whisper lokal', openai: 'Sumber: OpenAI (cloud)', manual: 'Sumber: ketikan manual', import: `Sumber: impor ${t.fileName || ''}` }[t.source] || t.source), t.language ? badge(`Bahasa: ${t.language}`) : null, edited ? badge(`${edited} segmen diubah dari asli`, 'warn') : null)),
       h('div', { class: 'row' },
+        dups.size ? h('button', { class: 'btn primary sm', title: 'Segmen yang teksnya sama/terkandung di segmen sebelumnya dan waktunya bertumpuk — biasanya pengulangan dari transkripsi otomatis.', onclick: () => { edit((x) => (x.transcript.segments = x.transcript.segments.filter((s) => !dups.has(s.id)))); toast(`${dups.size} segmen duplikat dihapus (bisa di-Urungkan).`, 'ok'); } }, `Hapus ${dups.size} duplikat`) : null,
         h('a', { class: 'btn ghost sm', href: `/api/projects/${p.id}/transcript.srt`, download: 'transkrip.srt' }, 'Unduh .srt'),
         h('button', { class: 'btn ghost sm', onclick: () => edit((x) => {
           const at = Math.min(dur - 0.5, video.currentTime || 0);
@@ -159,6 +161,7 @@ function segmentsPanel(p, video) {
           h('div', { class: 'row wrap small' },
             badge(tl, tk),
             overlap ? badge('Tumpang tindih dengan segmen sebelumnya', 'error') : null,
+            dups.has(seg.id) ? badge('Kemungkinan duplikat (pengulangan transkripsi)', 'error') : null,
             seg.text !== seg.originalText ? h('span', { class: 'muted', title: seg.originalText }, `Asli: “${seg.originalText.slice(0, 80)}${seg.originalText.length > 80 ? '…' : ''}”`) : null,
             h('input', { type: 'text', class: 'speaker', placeholder: 'Pembicara', value: seg.speaker || '', onchange: (e) => edit((x) => (x.transcript.segments[i].speaker = e.target.value)) }),
             h('button', { class: 'link', onclick: () => edit((x) => {

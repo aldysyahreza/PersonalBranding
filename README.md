@@ -52,6 +52,21 @@ Meniru ritme video referensi, lalu dikembangkan:
 - **Kartu**: latar kertas bertekstur dengan cahaya jendela diagonal, angka 3D merah yang "dibanting" masuk + blok merah transparan, judul kotak merah dengan bayangan blok yang terbuka dari kiri, ikon berputar masuk, poin daftar muncul bergantian, dan zoom-out pelan sepanjang kartu.
 - Posisi ornamen dihitung dari **lebar huruf asli** file font (`server/lib/fontmetrics.js`), jadi tetap rapi saat font diganti.
 
+## Grafis kartu dengan HyperFrames
+
+Kartu layar penuh dirender dengan [HyperFrames](https://www.npmjs.com/package/hyperframes) (HeyGen, Apache-2.0): tiap kartu ditulis sebagai komposisi HTML + GSAP (`server/lib/hyperframes.js`), dirender Chrome headless ke MP4, lalu ditumpuk ffmpeg di waktu kartu. Isinya:
+- **Ikon Lucide** (ISC, `assets/icons/`) dipilih otomatis dari isi kartu (mis. "brand" → lencana, "pelanggan" → orang, "simpan" → bookmark) atau dipilih manual; ikon muncul berputar dan garisnya "tergambar".
+- **Angka menghitung naik** (1 → 2 → 3, 0 → 10K), ekstrusi 3D, blok aksen.
+- Judul kotak merah terbuka dari kiri + garis lengkung tergambar, daftar dengan centang bertahap, partikel melayang, kilau cahaya, zoom-out pelan.
+- Preview di Editor memutar komposisi yang sama (iframe disinkronkan ke video) — sama dengan hasil render.
+- Hasil di-cache per isi kartu. Render pertama tiap kartu ±5–15 dtk. Chrome diunduh otomatis saat pertama (butuh internet sekali); cek dengan `npx hyperframes doctor`.
+- Telemetri HyperFrames dimatikan (`HYPERFRAMES_NO_TELEMETRY=1`). Tanpa HyperFrames/Chrome, kartu bawaan (ASS) dipakai dan alasannya dicatat di riwayat ekspor.
+- Ganti mesin di **Editor → Kartu → Mesin grafis kartu**.
+
+## Ritme & subtitle
+- **Subtitle tidak muncul dua kali**: selama kartu tampil subtitle disembunyikan (kartu sudah menampilkan kalimatnya); frasa kembar hasil transkripsi dibuang dan frasa bertumpuk dipotong. Segmen duplikat ditandai di Transkrip (tombol "Hapus duplikat").
+- **Adegan wajah tidak terlalu cepat** (`pacing` di preset): jeda wajah minimal 2,5 dtk antar kartu, kartu 2–3,5 dtk, zoom minimal 2 dtk, kartu pertama ≥ 1 dtk. Saran otomatis mematuhi aturan ini; proyek lama bisa dirapikan dengan tombol **"Rapikan ritme"** (Rencana edit / Editor, bisa di-Urungkan). Ekspor memberi peringatan bila ritme terlalu rapat.
+
 ## Preset gaya
 
 `config/presets/aldy-editorial.json` berisi semua nilai yang dapat diubah: warna, font, ukuran & posisi subtitle, layout (`stack`/`single`/`karaoke`), penekanan (`box`/`color`/`none`), animasi, kartu, zona aman & wajah, koreksi warna (dengan `intensity`), level audio. `styleLevels` mendefinisikan **minimal / editorial / dinamis** sebagai override. Gaya disalin ke tiap proyek, jadi perubahan di Editor tidak mengubah preset; gunakan "Simpan sebagai preset" untuk membuat preset baru.

@@ -10,12 +10,12 @@ function project() {
   const segs = [
     makeSegment({ start: 0, end: 3, text: 'Banyak bisnis sibuk posting tanpa positioning.' }),
     makeSegment({ start: 3.2, end: 6, text: 'Pertama, pilih satu masalah utama.' }),
-    makeSegment({ start: 6.1, end: 9, text: 'Dalam 90 hari hasilnya terlihat.' }),
+    makeSegment({ start: 11, end: 14, text: 'Dalam 90 hari hasilnya terlihat.' }),
   ];
   return {
     style,
-    source: { meta: { duration: 10 } },
-    analysis: { silences: [{ start: 9.2, end: 10 }] },
+    source: { meta: { duration: 20 } },
+    analysis: { silences: [{ start: 19.2, end: 20 }] },
     transcript: { segments: segs },
     cards: [],
     brandKeywords: ['positioning'],
@@ -83,10 +83,10 @@ test('kartu dari ucapan: angka terucap, frasa inti, CTA — tanpa kata di luar u
   const style = resolveStyle(getPreset('aldy-editorial'), 'editorial');
   const segs = [
     makeSegment({ start: 0, end: 6, text: 'Brand yang mudah direkomendasikan adalah brand yang jelas posisinya.' }),
-    makeSegment({ start: 6.2, end: 12, text: 'Ada tiga hal yang membuat orang mau merekomendasikan.' }),
-    makeSegment({ start: 12.2, end: 18, text: 'Kalau berguna, simpan video ini sekarang.' }),
+    makeSegment({ start: 10, end: 16, text: 'Ada tiga hal yang membuat orang mau merekomendasikan.' }),
+    makeSegment({ start: 22, end: 28, text: 'Kalau berguna, simpan video ini sekarang.' }),
   ];
-  const p = { style, styleLevel: 'editorial', source: { meta: { duration: 18 } }, analysis: { silences: [] }, transcript: { segments: segs }, brandKeywords: [] };
+  const p = { style, styleLevel: 'editorial', source: { meta: { duration: 28 } }, analysis: { silences: [] }, transcript: { segments: segs }, brandKeywords: [] };
   const items = planToItems(rulePlan(p), 'aturan', segs);
   const titles = items.cards.map((c) => c.title);
   assert.ok(titles.includes('brand yang jelas posisinya'));
@@ -100,10 +100,53 @@ test('kartu dari ucapan: angka terucap, frasa inti, CTA — tanpa kata di luar u
 test('caption kinetik: kata muncul pada timestamp-nya & ornamen lengkung untuk aksen arc', () => {
   const p = project();
   p.transcript.segments[1].words[1].emph = 'arc';
-  const keep = keepSegments(10, []);
+  const keep = keepSegments(20, []);
   const ass = buildAss(p, { width: 1080, height: 1920, keep });
   // Tiap kata punya animasi muncul (transparan → penuh) dengan waktu relatif sendiri.
   assert.match(ass, /\\alpha&HFF&\\blur\d+\\t\(\d+,\d+,\\alpha&H00&\\blur0\)\}pilih/);
   assert.match(ass, /\\clip\(\d+,\d+,\d+,\d+\)\\t\(\d+,\d+,\\clip/); // lengkung tergambar (clip beranimasi)
   assert.match(ass, /Style: Accent,Great Vibes/);
+});
+
+test('ritme: kartu rapat dinonaktifkan, kartu singkat diperpanjang, zoom singkat dibuang', async () => {
+  const { enforcePacing } = await import('../public/shared/core.js');
+  const r = enforcePacing({
+    cards: [
+      { id: 'a', approved: true, start: 2, end: 3, title: 'satu' },
+      { id: 'b', approved: true, start: 4, end: 6, title: 'dua' },
+      { id: 'c', approved: true, start: 9, end: 15, title: 'tiga' },
+    ],
+    zooms: [{ id: 'z', approved: true, start: 20, end: 21, zoom: 1.1 }],
+    duration: 30,
+  });
+  const [a, b, c] = r.cards;
+  assert.equal(a.end - a.start, 2); // diperpanjang ke minimal 2 dtk
+  assert.equal(b.approved, false); // hanya 0 dtk wajah setelah kartu a
+  assert.equal(c.end - c.start, 3.5); // dipendekkan ke maksimal
+  assert.equal(r.zooms[0].approved, false);
+  assert.ok(r.changes.length >= 4);
+});
+
+test('subtitle: frasa kembar ASR & frasa bertumpuk tidak tampil dua kali', async () => {
+  const { buildPhrases } = await import('../public/shared/core.js');
+  const segs = [
+    makeSegment({ start: 0, end: 2, text: 'Halo semua apa kabar' }),
+    makeSegment({ start: 1.8, end: 3.6, text: 'Halo semua apa kabar' }),
+    makeSegment({ start: 3.0, end: 5, text: 'ini lanjutan' }),
+  ];
+  const ph = buildPhrases(segs, { maxWords: 5, maxChars: 40 });
+  assert.equal(ph.length, 2);
+  for (let i = 1; i < ph.length; i++) assert.ok(ph[i].start >= ph[i - 1].end);
+});
+
+test('subtitle disembunyikan selama kartu tampil', () => {
+  const p = project();
+  p.cards = [{ id: 'k', approved: true, type: 'keyword', start: 3.2, end: 6, title: 'pilih satu masalah', kicker: '', subtitle: '' }];
+  const ass = buildAss(p, { width: 1080, height: 1920, keep: keepSegments(20, []) });
+  const capLines = ass.split('\n').filter((l) => /^Dialogue: 3,/.test(l));
+  for (const l of capLines) {
+    const [, st, en] = l.match(/^Dialogue: 3,([^,]+),([^,]+)/);
+    const sec = (x) => x.split(':').reduce((a, v) => a * 60 + Number(v), 0);
+    assert.ok(sec(en) <= 3.2 + 0.01 || sec(st) >= 6 - 0.01, `caption bertumpuk dengan kartu: ${l.slice(0, 60)}`);
+  }
 });

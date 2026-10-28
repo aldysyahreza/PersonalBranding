@@ -281,3 +281,5 @@ code.path { display: block; margin: 4px 0; }
 .word.emph-box { background: var(--accent); }
 .word.emph-arc { background: transparent; color: var(--accent); border-color: var(--accent); text-decoration: underline wavy; }
 .word.emph-script { background: transparent; color: var(--ink); border-color: var(--accent); font-family: 'Great Vibes', cursive; font-size: 1.05rem; font-weight: 400; }
+
+.pv-hf { position: absolute; left: 0; top: 0; border: 0; pointer-events: none; background: #F3F2EF; }

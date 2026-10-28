@@ -29,6 +29,21 @@ export function outputDuration(keep) {
   return r3(keep.reduce((s, k) => s + (k.end - k.start), 0));
 }
 
+/** Kurangi rentang [start,end] dengan blok-blok (mis. waktu kartu); hasil: sisa rentang ≥ minLen. */
+export function subtractRanges(range, blocks, minLen = 0.15) {
+  let parts = [{ start: range.start, end: range.end }];
+  for (const b of blocks) {
+    parts = parts.flatMap((p) => {
+      if (b.end <= p.start || b.start >= p.end) return [p];
+      const out = [];
+      if (b.start > p.start) out.push({ start: p.start, end: b.start });
+      if (b.end < p.end) out.push({ start: b.end, end: p.end });
+      return out;
+    });
+  }
+  return parts.filter((p) => p.end - p.start >= minLen);
+}
+
 /** Waktu sumber -> waktu output. Waktu di dalam bagian yang dipotong mengembalikan null. */
 export function mapTime(t, keep) {
   let acc = 0;
@@ -92,6 +107,70 @@ export function zoomPieces(keep, zooms = []) {
     }
   }
   return pieces;
+}
+
+/* ----------------------------- Ritme (pacing) ----------------------------- */
+
+export const DEFAULT_PACING = { minFaceGap: 2.5, minCard: 2.0, maxCard: 3.5, minZoom: 2.0, firstCardAt: 1.0 };
+
+/**
+ * Rapikan ritme agar adegan wajah tidak terlalu cepat:
+ *  - kartu yang terlalu rapat dengan kartu sebelumnya dinonaktifkan (bukan dihapus — bisa disetujui lagi);
+ *  - kartu terlalu singkat diperpanjang (tanpa melanggar jeda wajah), terlalu lama dipendekkan;
+ *  - zoom terlalu singkat dibuang, zoom yang hampir bersambung digabung.
+ * Mengembalikan salinan baru + daftar perubahan yang bisa ditampilkan ke pengguna.
+ */
+export function enforcePacing({ cards = [], zooms = [], duration = Infinity, pacing = {}, approvedOnly = true }) {
+  const P = { ...DEFAULT_PACING, ...pacing };
+  const changes = [];
+  const label = (c) => `"${c.title || c.type}" (${fmtTime(c.start)})`;
+  const out = cards.map((c) => ({ ...c })).sort((a, b) => a.start - b.start);
+  const live = (c) => (approvedOnly ? c.approved : !c.rejected);
+  let prevEnd = -Infinity;
+  for (const c of out) {
+    if (!live(c)) continue;
+    if (c.start < P.firstCardAt) {
+      const d = c.end - c.start;
+      c.start = r3(P.firstCardAt);
+      c.end = r3(c.start + d);
+      changes.push(`Kartu ${label(c)} digeser agar video dibuka dengan wajah.`);
+    }
+    if (c.start - prevEnd < P.minFaceGap) {
+      if (approvedOnly) c.approved = false;
+      else c.rejected = true;
+      c.pacingNote = `Dinonaktifkan: hanya ${(Math.max(0, c.start - prevEnd)).toFixed(1)} dtk wajah setelah kartu sebelumnya (min ${P.minFaceGap} dtk).`;
+      changes.push(`Kartu ${label(c)} dinonaktifkan — terlalu rapat dengan kartu sebelumnya.`);
+      continue;
+    }
+    const len = c.end - c.start;
+    if (len < P.minCard) {
+      c.end = r3(Math.min(duration, c.start + P.minCard));
+      changes.push(`Kartu ${label(c)} diperpanjang menjadi ${(c.end - c.start).toFixed(1)} dtk.`);
+    } else if (len > P.maxCard) {
+      c.end = r3(c.start + P.maxCard);
+      changes.push(`Kartu ${label(c)} dipendekkan menjadi ${P.maxCard} dtk.`);
+    }
+    prevEnd = c.end;
+  }
+  // Zoom: gabungkan yang hampir bersambung, buang yang terlalu singkat.
+  const zs = zooms.map((z) => ({ ...z })).sort((a, b) => a.start - b.start);
+  const merged = [];
+  for (const z of zs) {
+    const prev = merged[merged.length - 1];
+    if (prev && z.approved && prev.approved && z.start - prev.end < P.minZoom) {
+      prev.end = Math.max(prev.end, z.end);
+      changes.push(`Zoom ${fmtTime(z.start)} digabung dengan zoom sebelumnya (pergantian terlalu cepat).`);
+      continue;
+    }
+    merged.push(z);
+  }
+  for (const z of merged) {
+    if (z.approved && z.end - z.start < P.minZoom) {
+      z.approved = false;
+      changes.push(`Zoom ${fmtTime(z.start)} dinonaktifkan — kurang dari ${P.minZoom} dtk.`);
+    }
+  }
+  return { cards: out, zooms: merged, changes };
 }
 
 /* ----------------------------- Transkrip ----------------------------- */
@@ -230,8 +309,8 @@ export function toSrt(segments) {
  */
 export function buildPhrases(segments, { maxWords = 4, maxChars = 26, pauseBreak = 0.35 } = {}) {
   const phrases = [];
-  for (const seg of segments) {
-    if (seg.hidden) continue;
+  const ordered = [...segments].filter((s) => !s.hidden).sort((a, b) => a.start - b.start);
+  for (const seg of ordered) {
     const words = seg.words || [];
     let cur = [];
     const flush = () => {
@@ -251,12 +330,50 @@ export function buildPhrases(segments, { maxWords = 4, maxChars = 26, pauseBreak
     });
     flush();
   }
-  // Rapatkan celah kecil antar frasa agar subtitle tidak berkedip.
-  for (let i = 0; i < phrases.length - 1; i++) {
-    const gap = phrases[i + 1].start - phrases[i].end;
-    if (gap > 0 && gap < 0.25) phrases[i].end = phrases[i + 1].start;
+  phrases.sort((a, b) => a.start - b.start);
+  return dedupePhrases(phrases);
+}
+
+const phraseKey = (ph) => ph.words.map((w) => normWord(w.text)).join(' ');
+
+/**
+ * Cegah subtitle berulang:
+ *  - frasa kembar berurutan (ASR kadang menulis kalimat yang sama dua kali) dibuang;
+ *  - frasa yang seluruh katanya sudah tampil di frasa sebelumnya pada waktu yang bertumpuk dibuang;
+ *  - waktu yang bertumpuk dipotong sehingga tidak pernah ada dua frasa tampil bersamaan.
+ */
+export function dedupePhrases(phrases) {
+  const out = [];
+  for (const ph of phrases) {
+    const prev = out[out.length - 1];
+    if (prev) {
+      const same = phraseKey(prev) === phraseKey(ph);
+      const contained = ph.start < prev.end - 0.05 && phraseKey(prev).includes(phraseKey(ph));
+      if ((same && ph.start - prev.end < 1.5) || contained) continue;
+      if (prev.end > ph.start) prev.end = ph.start;
+    }
+    out.push({ ...ph });
   }
-  return phrases;
+  // Rapatkan celah kecil antar frasa agar subtitle tidak berkedip; buang frasa yang jadi terlalu pendek.
+  for (let i = 0; i < out.length - 1; i++) {
+    const gap = out[i + 1].start - out[i].end;
+    if (gap > 0 && gap < 0.25) out[i].end = out[i + 1].start;
+  }
+  return out.filter((ph) => ph.end - ph.start >= 0.12);
+}
+
+/** Segmen transkrip yang kemungkinan duplikat ASR (teks sama/terkandung & waktunya bertumpuk/berdekatan). */
+export function findDuplicateSegments(segments) {
+  const ordered = [...segments].sort((a, b) => a.start - b.start);
+  const dup = [];
+  const key = (s) => tokenize(s.text).map(normWord).join(' ');
+  for (let i = 1; i < ordered.length; i++) {
+    const a = ordered[i - 1], b = ordered[i];
+    const ka = key(a), kb = key(b);
+    if (!kb) continue;
+    if ((ka === kb && b.start - a.end < 1.5) || (b.start < a.end - 0.1 && ka.includes(kb))) dup.push(b.id);
+  }
+  return dup;
 }
 
 /* ------------------------- Caption kinetik (gaya referensi) ------------------------- */

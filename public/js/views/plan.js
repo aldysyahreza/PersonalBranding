@@ -4,9 +4,11 @@ import { api } from '../api.js';
 import { store, edit, setProject } from '../store.js';
 import { go } from '../app.js';
 import { musicLibrary, sfxOptions, previewButton } from '../library.js';
+import { pacingButton, pacingIssues } from '../pacing.js';
+import { ICON_NAMES, LEGACY_ICON } from '../../shared/icons.js';
 import { fmtTime, uid, r3, tokenize, normWord } from '../../shared/core.js';
 
-export const ICON_OPTIONS = [['', 'Tanpa ikon'], ['check', '✓ Centang'], ['cross', '✕ Silang'], ['arrow', '→ Panah'], ['warning', '▲ Peringatan'], ['star', '★ Bintang']];
+export const ICON_OPTIONS = [['auto', 'Ikon otomatis (sesuai isi)'], ['', 'Tanpa ikon'], ...ICON_NAMES.map((n) => [n, `Ikon: ${n}`])];
 export const CARD_TYPES = [['keyword', 'Kata kunci (blok aksen)'], ['number', 'Angka besar'], ['list', 'Daftar poin']];
 
 /** Kata pada kartu yang tidak ditemukan di ucapan sekitar rentang kartu. */
@@ -33,7 +35,8 @@ export function renderPlan(main) {
   const claude = store.status.claude;
   col.append(
     h('section', { class: 'panel' },
-      h('h2', {}, 'Buat saran'),
+      h('div', { class: 'row between wrap' }, h('h2', {}, 'Buat saran'), pacingButton()),
+      pacingIssues(p).length ? h('div', { class: 'alert warn small' }, `Ritme: ${pacingIssues(p).length} kartu/zoom terlalu rapat atau terlalu singkat — adegan wajah bisa terasa terlalu cepat. Klik "Rapikan ritme".`) : null,
       !segs.length ? h('div', { class: 'alert warn' }, 'Belum ada transkrip: saran penekanan, kartu, dan struktur membutuhkan transkrip. Saran cut dari jeda tetap bisa dibuat.') : null,
       p.transcript && !p.transcript.reviewed ? h('div', { class: 'alert warn' }, 'Transkrip belum ditandai sudah dikoreksi. Saran mengikuti teks saat ini.') : null,
       h('div', { class: 'provider' }, h('div', {}, h('strong', {}, 'Saran berbasis aturan (lokal)'), h('div', { class: 'muted small' }, 'Heuristik transparan: angka → kartu angka, "pertama/kedua" → kartu poin, kata kunci brand → penekanan, jeda > 0,5 dtk → cut, segmen > 6 dtk → ide b-roll.')),
@@ -119,7 +122,7 @@ function cardsPanel(p, seek) {
       x.cards[i].needsReview = unknownCardWords(x.cards[i], segs).length > 0;
     });
     return h('div', { class: `item card-item ${c.approved ? 'approved' : ''}` },
-      h('div', { class: 'row wrap' }, timeFields('cards', i, seek, dur), select(c.type, CARD_TYPES, (v) => edit((x) => (x.cards[i].type = v))), select(c.layout || 'full', [['full', 'Layar penuh'], ['panel', 'Panel bawah (wajah terlihat)']], (v) => edit((x) => (x.cards[i].layout = v))), select(c.icon || '', ICON_OPTIONS, (v) => edit((x) => (x.cards[i].icon = v))), originBadge(c.origin),
+      h('div', { class: 'row wrap' }, timeFields('cards', i, seek, dur), select(c.type, CARD_TYPES, (v) => edit((x) => (x.cards[i].type = v))), select(c.layout || 'full', [['full', 'Layar penuh'], ['panel', 'Panel bawah (wajah terlihat)']], (v) => edit((x) => (x.cards[i].layout = v))), select(LEGACY_ICON[c.icon] || (c.icon ?? 'auto'), ICON_OPTIONS, (v) => edit((x) => (x.cards[i].icon = v))), originBadge(c.origin),
         approveToggle(c, (on) => edit((x) => (x.cards[i].approved = on))), h('button', { class: 'link danger', onclick: () => edit((x) => x.cards.splice(i, 1)) }, 'Hapus')),
       h('div', { class: 'grid3' },
         h('label', { class: 'field' }, h('span', { class: 'field-label' }, 'Label atas'), h('input', { value: c.kicker || '', onchange: set('kicker') })),
@@ -127,6 +130,7 @@ function cardsPanel(p, seek) {
         h('label', { class: 'field' }, h('span', { class: 'field-label' }, c.type === 'list' ? 'Poin (pisahkan dengan ;)' : 'Label bawah'), h('input', { value: c.subtitle || '', onchange: set('subtitle') })),
       ),
       h('div', { class: 'muted small' }, c.reason || ''),
+      c.pacingNote && !c.approved ? h('div', { class: 'alert warn small' }, c.pacingNote) : null,
       unknown.length ? h('div', { class: 'alert warn small' }, `Kata tidak ditemukan di ucapan sekitar kartu: ${unknown.join(', ')}. Pastikan tidak menambah klaim/fakta baru.`) : null,
     );
   });

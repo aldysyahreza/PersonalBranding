@@ -7,7 +7,9 @@ import { createPreview } from '../preview.js';
 import { createTimeline } from '../timeline.js';
 import { OUTPUT_FORMATS, r3 } from '../../shared/core.js';
 import { CARD_TYPES, ICON_OPTIONS } from './plan.js';
+import { LEGACY_ICON } from '../../shared/icons.js';
 import { musicLibrary, sfxOptions, previewButton } from '../library.js';
+import { pacingButton } from '../pacing.js';
 
 let preview = null;
 let timeline = null;
@@ -67,6 +69,7 @@ export function renderEditor(main) {
 
   const frameOut = h('div', { class: 'accurate' });
   const tools = h('div', { class: 'row wrap' },
+    pacingButton(),
     h('button', { class: 'btn', onclick: async (e) => {
       const b = e.currentTarget;
       b.disabled = true;
@@ -75,7 +78,7 @@ export function renderEditor(main) {
         const { saveNow } = await import('../store.js');
         await saveNow();
         const r = await api.still(p.id, { sourceTime: preview.video.currentTime, aspect: p.output.aspect });
-        frameOut.replaceChildren(h('div', { class: 'muted small' }, `Frame ffmpeg pada output ${r.outputTime.toFixed(2)} dtk (setengah resolusi)`), h('img', { src: r.url, alt: 'Frame hasil render' }));
+        frameOut.replaceChildren(h('div', { class: 'muted small' }, `Frame ffmpeg pada output ${r.outputTime.toFixed(2)} dtk (setengah resolusi)`), r.note ? h('div', { class: 'alert warn small' }, r.note) : null, h('img', { src: r.url, alt: 'Frame hasil render' }));
       } catch (err) {
         toast(err.message, 'error', err.hint);
       } finally {
@@ -158,6 +161,8 @@ function renderInspector() {
       h('p', { class: 'muted small' }, 'Ukuran dalam piksel untuk lebar 1080. Subtitle dijaga di dalam zona aman. Hidupkan "Zona aman & wajah" di bawah preview untuk memastikan wajah tidak tertutup.'),
     ],
     kartu: () => [
+      sel('Mesin grafis kartu layar penuh', 'style.cards.engine', [['hyperframes', 'HyperFrames — animasi kaya, ikon, hitung angka'], ['ass', 'Bawaan — lebih cepat, lebih sederhana']]),
+      h('p', { class: `small ${store.status.hyperframes?.ok ? 'muted' : 'alert warn'}` }, store.status.hyperframes?.ok ? `${store.status.hyperframes.detail}. Render pertama tiap kartu memakan beberapa detik (Chrome headless); hasilnya di-cache. Chrome diunduh otomatis sekali saat render pertama.` : `HyperFrames tidak tersedia: ${store.status.hyperframes?.detail || '-'} Kartu bawaan dipakai.`),
       sl('Ukuran judul', 'style.cards.titleSize', { min: 50, max: 180, step: 1, fmt: (v) => `${v}px` }),
       sl('Ukuran angka', 'style.cards.numberSize', { min: 120, max: 420, step: 2, fmt: (v) => `${v}px` }),
       sl('Ukuran label', 'style.cards.labelSize', { min: 24, max: 90, step: 1, fmt: (v) => `${v}px` }),
@@ -300,7 +305,7 @@ function itemInspector(p) {
     out.push(
       field('Tipe', select(it.type, CARD_TYPES, up('type'))),
       field('Tata letak', select(it.layout || 'full', [['full', 'Layar penuh'], ['panel', 'Panel bawah (wajah terlihat)']], up('layout'))),
-      field('Ikon', select(it.icon || '', ICON_OPTIONS, up('icon'))),
+      field('Ikon', select(LEGACY_ICON[it.icon] || (it.icon ?? 'auto'), ICON_OPTIONS, up('icon'))),
       field('Label atas', h('input', { value: it.kicker || '', onchange: (e) => up('kicker')(e.target.value) })),
       field(it.type === 'number' ? 'Angka' : 'Judul', h('input', { value: it.title || '', onchange: (e) => up('title')(e.target.value) })),
       field(it.type === 'list' ? 'Poin (pisahkan dengan ;)' : 'Label bawah', h('input', { value: it.subtitle || '', onchange: (e) => up('subtitle')(e.target.value) })),

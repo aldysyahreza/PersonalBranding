@@ -3,7 +3,7 @@
 //  2) "claude"  — opsional, hanya TEKS transkrip yang dikirim, hanya dengan persetujuan.
 // Semua saran masuk dengan approved=false; pengguna yang menyetujui.
 // Teks kartu wajib berasal dari ucapan; yang tidak cocok ditandai needsReview.
-import { uid, r3, normWord, tokenize } from '../../public/shared/core.js';
+import { uid, r3, normWord, tokenize, DEFAULT_PACING, enforcePacing } from '../../public/shared/core.js';
 import { config, getSecret, hasSecret } from './config.js';
 import { UserError } from './media.js';
 
@@ -80,12 +80,12 @@ export function rulePlan(project) {
         const next = words[i + 1];
         const unit = next && SCALE_WORDS.test(next.text) ? next.text.replace(/[\p{P}]+$/u, '') : '';
         const label = [unit, cleanPhrase(words.slice(i + (unit ? 2 : 1)), 2)].filter(Boolean).join(' ');
-        cand.push({ prio: 3, type: 'number', start: r3(Math.max(seg.start, w.start - 0.15)), end: r3(Math.min(seg.end + 0.3, w.start + 1.8)), kicker: before(i), title: w.text.replace(/[,.]$/, ''), subtitle: label, icon: '', reason: 'Angka yang diucapkan lebih mudah diingat sebagai visual besar.' });
+        cand.push({ prio: 3, type: 'number', start: r3(Math.max(seg.start, w.start - 0.15)), end: r3(Math.min(seg.end + 0.3, w.start + 1.8)), kicker: before(i), title: w.text.replace(/[,.]$/, ''), subtitle: label, icon: 'auto', reason: 'Angka yang diucapkan lebih mudah diingat sebagai visual besar.' });
       } else {
         const sn = spokenNumber(words, i);
         const after = sn && words[i + sn.len];
         if (sn && sn.value >= 2 && after && !TRAILING_STOP.has(normWord(after.text)) && !/[.,!?]$/.test(words[i + sn.len - 1].text)) {
-          cand.push({ prio: 3, type: 'number', numberValue: sn.value, start: r3(Math.max(seg.start, w.start - 0.15)), end: r3(Math.min(seg.end + 0.3, w.start + 1.8)), kicker: before(i), title: sn.value.toLocaleString('id-ID'), subtitle: cleanPhrase(words.slice(i + sn.len), 2), icon: '', reason: `Angka yang diucapkan ("${words.slice(i, i + sn.len).map((x) => x.text).join(' ')}") ditampilkan sebagai angka besar.` });
+          cand.push({ prio: 3, type: 'number', numberValue: sn.value, start: r3(Math.max(seg.start, w.start - 0.15)), end: r3(Math.min(seg.end + 0.3, w.start + 1.8)), kicker: before(i), title: sn.value.toLocaleString('id-ID'), subtitle: cleanPhrase(words.slice(i + sn.len), 2), icon: 'auto', reason: `Angka yang diucapkan ("${words.slice(i, i + sn.len).map((x) => x.text).join(' ')}") ditampilkan sebagai angka besar.` });
         }
       }
       if (ORDINALS.test(w.text) && i <= 1) {
@@ -93,23 +93,28 @@ export function rulePlan(project) {
       }
       if (MARKERS.has(n) && i < words.length - 1) {
         const title = cleanPhrase(words.slice(i + 1), 4);
-        if (tokenize(title).length >= 1) cand.push({ prio: 2, type: 'keyword', start: r3(words[i + 1].start - 0.05), end: r3(Math.min(seg.end + 0.3, words[i + 1].start + 2)), kicker: words.slice(Math.max(0, i - 2), i + 1).map((x) => x.text).join(' ').replace(/[.,!?;:…]+$/, ''), title, subtitle: '', icon: '', reason: `Frasa setelah "${w.text}" biasanya poin utama kalimat.` });
+        if (tokenize(title).length >= 1) cand.push({ prio: 2, type: 'keyword', start: r3(words[i + 1].start - 0.05), end: r3(Math.min(seg.end + 0.3, words[i + 1].start + 2)), kicker: words.slice(Math.max(0, i - 2), i + 1).map((x) => x.text).join(' ').replace(/[.,!?;:…]+$/, ''), title, subtitle: '', icon: 'auto', reason: `Frasa setelah "${w.text}" biasanya poin utama kalimat.` });
       }
       if (CTA.has(n)) {
-        cand.push({ prio: 3, type: 'keyword', cta: true, start: r3(w.start - 0.05), end: r3(Math.min(seg.end + 0.5, w.start + 2.2)), kicker: '', title: cleanPhrase(words.slice(i), 4), subtitle: '', icon: 'arrow', reason: 'Ajakan (CTA) lebih kuat bila terlihat di layar.' });
+        cand.push({ prio: 3, type: 'keyword', cta: true, start: r3(w.start - 0.05), end: r3(Math.min(seg.end + 0.5, w.start + 2.2)), kicker: '', title: cleanPhrase(words.slice(i), 4), subtitle: '', icon: 'auto', reason: 'Ajakan (CTA) lebih kuat bila terlihat di layar.' });
       }
       if (reason === 'kata kunci brand (dapat diubah di Profil Brand)') {
-        cand.push({ prio: 1, type: 'keyword', start: r3(w.start - 0.05), end: r3(Math.min(seg.end + 0.3, w.start + 1.8)), kicker: before(i), title: cleanPhrase(words.slice(i), 2), subtitle: '', icon: '', reason: `Kata kunci "${w.text}" sebagai kartu tipografi (pola di video referensi).` });
+        cand.push({ prio: 1, type: 'keyword', start: r3(w.start - 0.05), end: r3(Math.min(seg.end + 0.3, w.start + 1.8)), kicker: before(i), title: cleanPhrase(words.slice(i), 2), subtitle: '', icon: 'auto', reason: `Kata kunci "${w.text}" sebagai kartu tipografi (pola di video referensi).` });
       }
     });
   }
 
-  // Pilih kartu: prioritas tinggi dulu, tidak bertumpuk (jeda ≥ 0,5 dtk talking head di antaranya),
-  // maks ±1 kartu per 6 dtk agar wajah tetap dominan.
-  const maxCards = Math.max(2, Math.round(dur / 6));
+  // Pilih kartu: prioritas tinggi dulu, dengan jeda wajah minimal di antara kartu dan
+  // maks ±1 kartu per 8 dtk agar wajah tetap dominan (keluhan "adegan wajah terlalu cepat").
+  const P = { ...DEFAULT_PACING, ...(project.style?.pacing || {}) };
+  const maxCards = Math.max(2, Math.round(dur / 8));
   for (const c of cand.sort((a, b) => b.prio - a.prio || a.start - b.start)) {
     if (out.cards.length >= maxCards) break;
-    if (!c.title || out.cards.some((x) => c.start < x.end + 0.5 && c.end > x.start - 0.5)) continue;
+    // Durasi kartu mengikuti waktu baca (±0,35 dtk/kata + 1,2 dtk), dalam batas min–maks.
+    const words = tokenize([c.kicker, c.title, c.subtitle].join(' ')).length;
+    c.start = r3(Math.max(c.start, P.firstCardAt));
+    c.end = r3(Math.min(dur, c.start + Math.min(P.maxCard, Math.max(P.minCard, 1.2 + words * 0.35))));
+    if (!c.title || out.cards.some((x) => c.start < x.end + P.minFaceGap && c.end > x.start - P.minFaceGap)) continue;
     if (out.cards.some((x) => normWord(x.title) === normWord(c.title))) continue; // hindari kartu kembar
     const { prio, ...card } = c;
     out.cards.push(card);
@@ -155,10 +160,11 @@ export function rulePlan(project) {
   // Zoom punch-in bergantian antar kalimat (ritme visual seperti referensi, tanpa footage tambahan).
   const level = project.style?.zoom?.punchIn ?? 1.12;
   segs.forEach((seg, i) => {
-    if (i % 2 === 1 && seg.end - seg.start >= 1.5) {
-      out.zooms.push({ start: seg.start, end: seg.end, zoom: level, reason: 'Punch-in bergantian antar kalimat menjaga ritme visual (pola di video referensi).' });
+    if (i % 2 === 1 && seg.end - seg.start >= Math.max(2.5, P.minZoom)) {
+      out.zooms.push({ start: seg.start, end: seg.end, zoom: level, approved: true, reason: 'Punch-in bergantian antar kalimat menjaga ritme visual (pola di video referensi).' });
     }
   });
+  out.zooms = enforcePacing({ zooms: out.zooms, pacing: P }).zooms.filter((z) => z.approved).map(({ approved, ...z }) => z);
 
   out.music = musicSuggestion(project);
   return out;

@@ -162,7 +162,9 @@ export function createPreview() {
 
   function drawCaptions(pr, t) {
     const cap = pr.style.captions;
-    const ph = cap.enabled ? phrasesFor(pr).find((x) => t >= x.start && t < x.end) : null;
+    // Saat kartu grafis tampil, subtitle disembunyikan (sama dengan render).
+    const onCard = (pr.cards || []).some((c) => c.approved && t >= c.start && t < c.end);
+    const ph = cap.enabled && !onCard ? phrasesFor(pr).find((x) => t >= x.start && t < x.end) : null;
     if (ph && cap.layout === 'kinetic') return drawKinetic(pr, t, ph);
     capState = { key: null, words: [] };
     capLayer.replaceChildren();
@@ -198,10 +200,25 @@ export function createPreview() {
   function drawCards(pr, t) {
     const card = (pr.cards || []).find((c) => c.approved && t >= c.start && t < c.end);
     const key = card ? `${JSON.stringify(card)}|${W}|${JSON.stringify(pr.style.cards)}|${JSON.stringify(pr.style.colors)}|${JSON.stringify(pr.style.fonts)}` : null;
-    if (key === cardKey) return;
+    if (key === cardKey) {
+      // Kartu HyperFrames: geser timeline GSAP di iframe ke waktu kartu (sama dengan render).
+      const fr = cardLayer.querySelector('iframe');
+      if (fr && card) {
+        try {
+          fr.contentWindow.__timelines?.root?.seek(Math.max(0, t - card.start), false);
+        } catch {}
+      }
+      return;
+    }
     cardKey = key;
     cardLayer.replaceChildren();
     if (!card) return;
+    if ((pr.style.cards?.engine ?? 'hyperframes') === 'hyperframes' && store.status.hyperframes?.ok && card.layout !== 'panel') {
+      const fr = h('iframe', { class: 'pv-hf', src: `/api/projects/${pr.id}/hf/preview/${card.id}?w=${W}&h=${H}&v=${encodeURIComponent(key.length + ':' + card.title)}`, style: { width: `${W}px`, height: `${H}px` }, scrolling: 'no' });
+      fr.addEventListener('load', () => { try { fr.contentWindow.__timelines?.root?.seek(Math.max(0, store.playhead - card.start), false); } catch {} });
+      cardLayer.append(fr);
+      return;
+    }
     cardLayer.style.setProperty('--card-dur', `${Math.max(0.3, card.end - card.start)}s`);
     const st = pr.style, col = st.colors, k = Math.min(W, H) / 1080;
     const side = W * st.safeZone.side;

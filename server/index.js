@@ -15,6 +15,7 @@ import { rulePlan, claudePlan, planToItems } from './lib/plan.js';
 import { renderVideo, renderStill, preflight, estimateSize, QUALITY, CONTAINERS, BUILTIN_SFX_LIST } from './lib/render.js';
 import { BRAND_PROFILE } from './lib/brand.js';
 import { catalog, libraryFile, isLibraryItem, LICENSE_NOTE, paperFile } from './lib/synth.js';
+import { hyperframesStatus, hfDir, cardHtml } from './lib/hyperframes.js';
 import { distributeText, parseSubtitles, toSrt, projectStatus, OUTPUT_FORMATS, uid } from '../public/shared/core.js';
 
 const MIME = {
@@ -156,6 +157,7 @@ route('GET', '/api/status', async () => {
     ffmpeg, ffprobe,
     transcription: await providerStatus(),
     claude: { configured: hasSecret('ANTHROPIC_API_KEY'), model: config.anthropicModel, cloud: true },
+    hyperframes: { ok: hyperframesStatus().ok, detail: hyperframesStatus().detail },
     presets: listPresets().map(({ id, name, status, note }) => ({ id, name, status, note })),
     styleLevels: STYLE_LEVELS,
     formats: OUTPUT_FORMATS,
@@ -267,6 +269,28 @@ route('GET', '/api/library/paper/:w/:h/file', async ({ w, h, req, res, url }) =>
   const c = /^#[0-9a-fA-F]{6}$/.test(url.searchParams.get('c') || '') ? url.searchParams.get('c') : '#F2F1ED';
   if (!(Hh > 0 && Hh <= 4096)) throw new UserError('Ukuran tidak valid.', '', 400);
   serveFile(req, res, paperFile(W, Hh, c));
+  return null;
+});
+// Preview kartu HyperFrames: komposisi HTML yang sama dengan render, diputar di iframe browser.
+route('GET', '/api/projects/:id/hf/preview/:cardId', async ({ id, cardId, res, url }) => {
+  const p = loadProject(id);
+  const card = (p.cards || []).find((c) => c.id === cardId);
+  if (!card) throw new UserError('Kartu tidak ditemukan.', '', 404);
+  if (!hyperframesStatus().ok) throw new UserError('HyperFrames belum terpasang.', 'Jalankan "npm install".', 412);
+  const W = Math.min(4096, Number(url.searchParams.get('w')) || 1080), Hh = Math.min(4096, Number(url.searchParams.get('h')) || 1920);
+  hfDir(id);
+  const html = cardHtml(card, p.style, { W, H: Hh, dur: Math.max(0.3, card.end - card.start) }).replace('<head>', `<head><base href="/api/projects/${id}/hf/">`);
+  send(res, 200, html, { 'Content-Type': 'text/html; charset=utf-8' });
+  return null;
+});
+route('GET', '/api/projects/:id/hf/:file', async ({ id, file, req, res }) => {
+  if (file !== 'gsap.min.js') throw new UserError('File tidak tersedia.', '', 404);
+  serveFile(req, res, path.join(hfDir(id), file));
+  return null;
+});
+route('GET', '/api/projects/:id/hf/fonts/:file', async ({ id, file, req, res }) => {
+  if (!/^[\w.-]+\.ttf$/.test(file)) throw new UserError('File tidak tersedia.', '', 404);
+  serveFile(req, res, path.join(hfDir(id), 'fonts', file));
   return null;
 });
 route('POST', '/api/projects/:id/library/music', async ({ id, req }) => {
@@ -410,7 +434,7 @@ route('POST', '/api/projects/:id/still', async ({ id, req }) => {
   const pf = preflight(p);
   if (!pf.ok) throw new UserError(pf.problems.join(' '), '', 409);
   const r = await renderStill(p, { aspect: body.aspect || p.output.aspect, sourceTime: Number(body.sourceTime) || 0 });
-  return { url: `/api/projects/${id}/frame/${path.basename(r.file)}`, outputTime: r.outputTime };
+  return { url: `/api/projects/${id}/frame/${path.basename(r.file)}`, outputTime: r.outputTime, note: r.note };
 });
 route('GET', '/api/projects/:id/frame/:name', async ({ id, name, req, res }) => {
   if (!/^frame_\d+\.png$/.test(name)) throw new UserError('Nama frame tidak valid.', '', 400);

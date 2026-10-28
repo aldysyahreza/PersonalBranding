@@ -8,8 +8,9 @@ import { config } from './config.js';
 import { run } from './proc.js';
 import { probe, UserError } from './media.js';
 import { buildAss } from './ass.js';
-import { keepSegments, outputDuration, mapSpan, mapTime, framing, zoomPieces, OUTPUT_FORMATS, r3 } from '../../public/shared/core.js';
+import { keepSegments, outputDuration, mapSpan, mapTime, framing, zoomPieces, enforcePacing, OUTPUT_FORMATS, r3 } from '../../public/shared/core.js';
 import { libraryFile, isLibraryItem, catalog, paperFile } from './synth.js';
+import { hyperframesStatus, prepareCardClips } from './hyperframes.js';
 import { workDir } from './projects.js';
 
 export const QUALITY = {
@@ -63,6 +64,8 @@ export function preflight(project) {
     else if (a.missing) warnings.push(`File musik "${a.name}" hilang — dilewati.`);
   }
   for (const c of project.cards || []) if (c.approved && c.needsReview) warnings.push(`Kartu "${c.title}" berisi kata yang tidak ditemukan di ucapan.`);
+  const pace = enforcePacing({ cards: project.cards, zooms: project.zooms, duration: project.source?.meta?.duration, pacing: project.style?.pacing }).changes;
+  if (pace.length) warnings.push(`Ritme: ${pace.length} kartu/zoom terlalu rapat atau singkat (adegan wajah terasa terlalu cepat). Gunakan "Rapikan ritme" di Rencana edit.`);
   if (!project.source?.meta?.hasAudio) warnings.push('Video sumber tidak memiliki audio.');
   return { ok: problems.length === 0, problems, warnings };
 }
@@ -81,9 +84,10 @@ export function buildCommand(project, o) {
   const dir = workDir(project.id);
   const assName = `subs_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.ass`;
   // Kartu layar penuh memakai latar kertas bertekstur (overlay PNG) di bawah teks ASS.
-  const fullCards = (project.cards || []).filter((c) => c.approved && c.layout !== 'panel').map((c) => mapSpan(c.start, c.end, keep)).filter(Boolean);
+  const hfClips = o.hfClips || new Map();
+  const fullCards = (project.cards || []).filter((c) => c.approved && c.layout !== 'panel' && !hfClips.has(c.id)).map((c) => mapSpan(c.start, c.end, keep)).filter(Boolean);
   const usePaper = project.style.cards?.paper !== false && fullCards.length > 0;
-  fs.writeFileSync(path.join(dir, assName), buildAss(project, { width: W, height: H, keep, paper: usePaper }));
+  fs.writeFileSync(path.join(dir, assName), buildAss(project, { width: W, height: H, keep, paper: usePaper, skipCards: new Set(hfClips.keys()) }));
 
   const inputs = ['-i', project.source.path];
   let nextInput = 1;
@@ -163,6 +167,17 @@ export function buildCommand(project, o) {
     f.push(`[${pi}:v]format=yuv420p,setsar=1[paper]`);
     f.push(`[${cur}][paper]overlay=0:0:eof_action=pass:enable='${enable}'[vpaper]`);
     cur = 'vpaper';
+  }
+
+  // 4c) Kartu grafis HyperFrames (klip MP4 per kartu) — potong keras di waktu kartu.
+  let hi = 0;
+  for (const clip of hfClips.values()) {
+    inputs.push('-i', clip.file);
+    const idx = nextInput++;
+    f.push(`[${idx}:v]fps=${fps},scale=${W}:${H},setsar=1,format=yuv420p,setpts=PTS-STARTPTS+${r3(clip.start)}/TB[hf${hi}]`);
+    f.push(`[${cur}][hf${hi}]overlay=0:0:eof_action=pass:enable='between(t,${r3(clip.start)},${r3(clip.end)})'[vhf${hi}]`);
+    cur = `vhf${hi}`;
+    hi++;
   }
 
   // 5) Subtitle + kartu (ASS).
@@ -291,6 +306,31 @@ export function resolveOutputDir(project, customDir) {
   return dir;
 }
 
+/**
+ * Siapkan klip HyperFrames untuk kartu layar penuh (bila mesin grafis = hyperframes).
+ * Gagal → kartu bawaan (ASS) dipakai dan alasannya dicatat; render tidak dibatalkan.
+ * onlyAt: hanya kartu yang tampil pada waktu output itu (untuk frame pratinjau).
+ */
+async function cardClips(project, { W, H, job, onlyAt } = {}) {
+  if ((project.style.cards?.engine ?? 'hyperframes') !== 'hyperframes') return { clips: new Map(), note: null };
+  const st = hyperframesStatus();
+  if (!st.ok) return { clips: new Map(), note: `Grafis HyperFrames tidak dipakai: ${st.detail} Kartu bawaan dipakai.` };
+  const keep = keepSegments(project.source.meta.duration, project.cuts);
+  const spans = (project.cards || [])
+    .filter((c) => c.approved && c.layout !== 'panel')
+    .map((card) => ({ card, span: mapSpan(card.start, card.end, keep) }))
+    .filter((x) => x.span && x.span.end - x.span.start >= 0.3 && (onlyAt === undefined || (onlyAt >= x.span.start && onlyAt < x.span.end)));
+  if (!spans.length) return { clips: new Map(), note: null };
+  try {
+    const clips = await prepareCardClips(project, { W, H, fps: project.style?.output?.fps || 30, spans, job, signal: job?.controller?.signal });
+    return { clips, note: null };
+  } catch (e) {
+    if (job?.controller?.signal?.aborted) throw e;
+    console.error('[hyperframes]', e.message);
+    return { clips: new Map(), note: `Grafis HyperFrames gagal dirender (${e.message.slice(0, 200)}). Kartu bawaan dipakai. Jalankan "npx hyperframes doctor" untuk memeriksa Chrome.` };
+  }
+}
+
 /** Render penuh (ekspor atau pratinjau cepat). Status sukses hanya setelah file diverifikasi. */
 export async function renderVideo(project, job, { aspect = '9:16', quality = 'standar', container = 'mp4', outDir, preview = false }) {
   const fmt = OUTPUT_FORMATS[aspect];
@@ -304,7 +344,8 @@ export async function renderVideo(project, job, { aspect = '9:16', quality = 'st
   for (let n = 2; fs.existsSync(outFile); n++) outFile = path.join(dir, `${base}_${n}${ext}`);
   const tmpFile = outFile.replace(ext, `.part${ext}`);
 
-  const cmd = buildCommand(project, { width: W, height: H, quality: preview ? 'pratinjau' : quality, container, outFile: tmpFile });
+  const { clips, note } = await cardClips(project, { W, H, job });
+  const cmd = buildCommand(project, { width: W, height: H, quality: preview ? 'pratinjau' : quality, container, outFile: tmpFile, hfClips: clips });
   job.message = 'Merender…';
   const res = await ffmpegInDir(cmd.args, cmd.cwd, { outDur: cmd.outDur, signal: job.controller.signal, onProgress: (p) => (job.progress = p) });
   for (const t of cmd.tempFiles) fs.rmSync(t, { force: true });
@@ -323,7 +364,7 @@ export async function renderVideo(project, job, { aspect = '9:16', quality = 'st
   const dec = await run('ffmpeg', ['-v', 'error', '-ss', String(Math.max(0, meta.duration / 2)), '-i', tmpFile, '-frames:v', '1', '-f', 'null', '-'], { timeoutMs: 60000 });
   if (dec.code !== 0) throw new UserError('File output tidak dapat didekode.', 'Coba render ulang.', 500);
   fs.renameSync(tmpFile, outFile);
-  return { path: outFile, size: fs.statSync(outFile).size, duration: meta.duration, width: meta.width, height: meta.height, aspect, quality: preview ? 'pratinjau' : quality, container };
+  return { path: outFile, size: fs.statSync(outFile).size, duration: meta.duration, width: meta.width, height: meta.height, aspect, quality: preview ? 'pratinjau' : quality, container, graphics: clips.size ? `HyperFrames (${clips.size} kartu)` : 'bawaan', note };
 }
 
 /** Render satu frame PNG pada waktu output tertentu — pipeline identik dengan ekspor. */
@@ -337,11 +378,12 @@ export async function renderStill(project, { aspect = '9:16', sourceTime = 0 }) 
   }
   const W = Math.round(fmt.width / 2 / 2) * 2, H = Math.round(fmt.height / 2 / 2) * 2;
   const outFile = path.join(workDir(project.id), `frame_${Date.now()}.png`);
-  const cmd = buildCommand(project, { width: W, height: H, stillAt: t, withAudio: false, outFile });
+  const { clips, note } = await cardClips(project, { W, H, onlyAt: t });
+  const cmd = buildCommand(project, { width: W, height: H, stillAt: t, withAudio: false, outFile, hfClips: clips });
   const res = await ffmpegInDir(cmd.args, cmd.cwd, {});
   for (const f of cmd.tempFiles) fs.rmSync(f, { force: true });
   if (res.code !== 0 || !fs.existsSync(outFile)) throw new UserError('Frame pratinjau gagal dirender.', explainFfmpegError(res.stderr), 500);
-  return { file: outFile, outputTime: t };
+  return { file: outFile, outputTime: t, note };
 }
 
 export function estimateSize(project, quality, aspect) {

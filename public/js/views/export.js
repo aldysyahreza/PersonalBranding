@@ -70,12 +70,13 @@ function historyPanel(p) {
   const rows = (p.exports || []).map((e) => h('div', { class: 'item' },
     h('div', { class: 'row wrap' },
       e.state === 'done' ? badge(e.missing ? 'File sudah dipindah/dihapus' : 'Ekspor selesai', e.missing ? 'warn' : 'ok') : e.state === 'running' ? badge('Sedang diekspor', 'info') : e.state === 'canceled' ? badge('Dibatalkan', 'warn') : badge('Ekspor gagal', 'error'),
-      h('span', {}, `${e.aspect} · ${e.quality} · ${e.container}`),
+      h('span', {}, `${e.aspect} · ${e.quality} · ${e.container}${e.graphics ? ` · grafis: ${e.graphics}` : ''}`),
       h('span', { class: 'muted small' }, fmtDate(e.finishedAt || e.requestedAt)),
     ),
     e.state === 'done' ? h('div', {}, h('code', { class: 'path' }, e.path), h('div', { class: 'muted small' }, `${e.width}×${e.height} · ${fmtTime(e.duration)} · ${fmtBytes(e.size)}`),
       !e.missing ? h('div', { class: 'row' }, h('a', { class: 'btn sm', href: `/api/projects/${p.id}/exports/${e.id}/file`, target: '_blank' }, 'Putar'), h('a', { class: 'btn ghost sm', href: `/api/projects/${p.id}/exports/${e.id}/file?download=1` }, 'Unduh')) : null) : null,
     e.state === 'failed' ? h('div', { class: 'alert error small' }, e.error, e.hint ? h('div', { class: 'muted' }, e.hint) : null) : null,
+    e.note ? h('div', { class: 'alert warn small' }, e.note) : null,
   ));
   return h('section', { class: 'panel' }, h('h2', {}, 'Riwayat ekspor'), ...(rows.length ? rows : [h('p', { class: 'muted' }, 'Belum ada ekspor.')]));
 }

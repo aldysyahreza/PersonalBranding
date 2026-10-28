@@ -50,7 +50,8 @@
     "fadeMs": 150,
     "grid": true,
     "shadow": 6,
-    "paper": true
+    "paper": true,
+    "engine": "hyperframes"
   },
   "zoom": {
     "punchIn": 1.12
@@ -92,6 +93,9 @@
       },
       "cards": {
         "grid": false
+      },
+      "pacing": {
+        "minFaceGap": 4.0
       }
     },
     "editorial": {},
@@ -112,7 +116,18 @@
       },
       "cards": {
         "fadeMs": 110
+      },
+      "pacing": {
+        "minFaceGap": 1.8,
+        "maxCard": 3.0
       }
     }
+  },
+  "pacing": {
+    "minFaceGap": 2.5,
+    "minCard": 2.0,
+    "maxCard": 3.5,
+    "minZoom": 2.0,
+    "firstCardAt": 1.0
   }
 }
