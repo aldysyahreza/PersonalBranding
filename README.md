@@ -19,6 +19,21 @@ Opsional:
 - **Transkripsi lokal (disarankan, data tidak keluar):** `pip install faster-whisper`. Model (default `small`) diunduh otomatis dari Hugging Face saat pertama dipakai — butuh internet sekali.
 - **Cloud:** salin `.env.example` → `.env`, isi `OPENAI_API_KEY` (transkripsi) dan/atau `ANTHROPIC_API_KEY` (rencana edit Claude). Jalankan ulang aplikasi.
 
+### Menyalakan tanpa terminal & auto-start (Windows)
+
+File di folder aplikasi, cukup klik dua kali:
+
+| File | Fungsi |
+|---|---|
+| `Mulai-Studio.cmd` | Menyalakan server di latar belakang (tanpa jendela) lalu membuka browser. Jika sudah berjalan, hanya membuka browser. |
+| `Hentikan-Studio.cmd` | Mematikan server. |
+| `Pasang-Autostart.cmd` | Server menyala sendiri setiap login Windows (file `.vbs` di folder Startup pengguna; tanpa hak admin). |
+| `Hapus-Autostart.cmd` | Mencabut auto-start. |
+
+Setara di terminal: `npm run studio`, `npm run stop`, `npm run autostart:on`, `npm run autostart:off`; `node scripts/launcher.mjs --status` untuk mengecek. Log server: `logs/server.log`.
+
+Catatan: lokasi Node dicatat saat auto-start dipasang — jalankan ulang `Pasang-Autostart.cmd` setelah memindah folder aplikasi atau memasang ulang Node. Auto-start memakai VBScript (masih aktif bawaan di Windows 11; Microsoft berencana menghapusnya bertahap).
+
 ## Alur kerja
 
 | Langkah | Yang dilakukan | Catatan |

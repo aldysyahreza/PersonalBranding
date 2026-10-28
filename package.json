@@ -10,7 +10,11 @@
   "scripts": {
     "start": "node server/index.js",
     "check": "node server/check-env.js",
-    "test": "node --test test/*.test.js"
+    "test": "node --test test/*.test.js",
+    "studio": "node scripts/launcher.mjs",
+    "stop": "node scripts/launcher.mjs --stop",
+    "autostart:on": "node scripts/launcher.mjs --install-autostart",
+    "autostart:off": "node scripts/launcher.mjs --uninstall-autostart"
   },
   "optionalDependencies": {
     "@anthropic-ai/sdk": "^1.3.0",

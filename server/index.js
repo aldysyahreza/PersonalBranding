@@ -154,6 +154,7 @@ const route = (method, pattern, handler) => routes.push({ method, re: new RegExp
 route('GET', '/api/status', async () => {
   const [ffmpeg, ffprobe] = await Promise.all([which('ffmpeg'), which('ffprobe')]);
   return {
+    app: 'personal-branding-video-studio',
     ffmpeg, ffprobe,
     transcription: await providerStatus(),
     claude: { configured: hasSecret('ANTHROPIC_API_KEY'), model: config.anthropicModel, cloud: true },
@@ -554,4 +555,17 @@ server.listen(config.port, config.host, () => {
   console.log(`Personal Branding Video Studio berjalan di http://${config.host === '0.0.0.0' ? 'localhost' : config.host}:${config.port}`);
   console.log(`Proyek: ${config.projectsDir}`);
   console.log(`Output: ${config.outputDir}`);
+  // PID dipakai peluncur (scripts/launcher.mjs --stop) untuk mematikan server yang berjalan tersembunyi.
+  const pidFile = path.join(ROOT, 'logs', 'server.pid');
+  try {
+    fs.mkdirSync(path.dirname(pidFile), { recursive: true });
+    fs.writeFileSync(pidFile, String(process.pid));
+  } catch {}
+  const cleanup = () => {
+    try {
+      if (fs.readFileSync(pidFile, 'utf8') === String(process.pid)) fs.rmSync(pidFile);
+    } catch {}
+  };
+  process.on('exit', cleanup);
+  for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => process.exit(0));
 });
