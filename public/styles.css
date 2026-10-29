@@ -298,3 +298,7 @@ code.path { display: block; margin: 4px 0; }
 .pv-hook-acc { animation: pv-hook-rise .3s ease-out .26s both; }
 @keyframes pv-hook-slam { from { transform: scale(1.12); } to { transform: scale(1); } }
 @keyframes pv-hook-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+.quick-card { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; border-left: 3px solid var(--accent); }
+.quick-card input { width: 100%; }
+.nav-version { padding: 10px 16px; }

@@ -86,3 +86,11 @@ test('template HyperFrames tema bible: semua jenis kartu menghasilkan HTML + tim
     if (type === 'chat') assert.match(html, /background:transparent/);
   }
 });
+
+test('teks kartu otomatis tidak terpotong menggantung ("…ditemukan belum")', () => {
+  const p = project(['Banyak owner sibuk bikin konten setiap hari.', 'Faktanya, brand yang ditemukan belum tentu dipilih.', 'Isi.', 'Isi lagi.']);
+  const c = rulePlan(p).cards.find((x) => x.kicker === 'Faktanya');
+  assert.ok(c, 'kartu Faktanya ada');
+  assert.equal(c.title, 'brand yang ditemukan');
+  assert.equal(c.subtitle, 'belum tentu dipilih');
+});

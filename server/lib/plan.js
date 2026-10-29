@@ -31,15 +31,59 @@ function spokenNumber(words, i) {
   return { value: a, len: 1 };
 }
 
-/** Ambil frasa pendek dari kata-kata yang diucapkan: berhenti di tanda baca, buang kata sambung di ujung. */
+// Kata yang tidak boleh menjadi akhir teks kartu (kalimat terasa terpotong: "…ditemukan belum").
+const DANGLING = new Set(['belum', 'tidak', 'tak', 'bukan', 'sudah', 'masih', 'harus', 'perlu', 'paling', 'cukup', 'terlalu', 'para', 'si', 'sang', 'se', 'semua', 'setiap', 'tiap', 'banyak', 'sering', 'selalu', 'hanya', 'cuma', 'baru', 'mau', 'ingin', 'punya', 'ada', 'jadi', 'adalah', 'yaitu', 'seperti', 'sebagai', 'tentang', 'not', 'just', 'only', 'very', 'more', 'most', 'have', 'has', 'be', 'are', 'was']);
+const CLAUSE_BREAK = new Set(['dan', 'tapi', 'tetapi', 'namun', 'karena', 'jadi', 'supaya', 'agar', 'sehingga', 'kalau', 'jika', 'padahal', 'sedangkan', 'lalu', 'terus', 'and', 'but', 'because', 'so']);
+const isDangling = (t) => TRAILING_STOP.has(normWord(t)) || DANGLING.has(normWord(t));
+
+/**
+ * Klausa utuh dari kata-kata yang diucapkan: berhenti di tanda baca atau sebelum kata sambung
+ * klausa baru; kata menggantung di ujung dibuang. complete=false bila terpaksa dipotong.
+ */
+function clause(words, max = 7) {
+  const out = [];
+  let complete = false;
+  for (let k = 0; k < words.length && out.length < max; k++) {
+    const w = words[k];
+    if (out.length && CLAUSE_BREAK.has(normWord(w.text))) { complete = true; break; }
+    out.push(w.text);
+    if (/[.,!?;:…]$/.test(w.text)) { complete = true; break; }
+    if (k === words.length - 1) complete = true;
+  }
+  while (out.length && isDangling(out[out.length - 1].replace(/[.,!?;:…]+$/, ''))) out.pop();
+  return { text: out.join(' ').replace(/[.,!?;:…]+$/, ''), n: out.length, complete };
+}
+
+/** Frasa pendek (maks kata); tetap membuang kata menggantung di ujung. */
 function cleanPhrase(words, max) {
   const out = [];
   for (const w of words) {
     out.push(w.text);
     if (out.length >= max || /[.,!?;:…]$/.test(w.text)) break;
   }
-  while (out.length && TRAILING_STOP.has(normWord(out[out.length - 1]))) out.pop();
+  while (out.length && isDangling(out[out.length - 1].replace(/[.,!?;:…]+$/, ''))) out.pop();
   return out.join(' ').replace(/[.,!?;:…]+$/, '');
+}
+
+/** Pola bible: fakta (Archivo) → rasa (Fraunces). Klausa ≥4 kata dibagi dua di batas yang wajar. */
+function factFeel(text) {
+  const t = text.split(/\s+/).filter(Boolean);
+  if (t.length < 4) return { title: text, subtitle: '' };
+  let cut = Math.ceil(t.length / 2);
+  while (cut > 1 && isDangling(t[cut - 1])) cut--;
+  return { title: t.slice(0, cut).join(' '), subtitle: t.slice(cut).join(' ') };
+}
+
+/** Gerbang kualitas kartu otomatis: teks utuh, tidak menggantung, panjang wajar. */
+export function cardQuality(c) {
+  const words = (x) => String(x || '').split(/\s+/).filter(Boolean);
+  const all = [c.title, c.subtitle].filter(Boolean).join(' ');
+  if (c.type === 'number' || c.type === 'list' || c.type === 'chat' || c.type === 'quote') return true;
+  if (!c.title) return false;
+  const last = words(all).pop() || '';
+  if (isDangling(last.replace(/[.,!?;:…]+$/, ''))) return false;
+  const n = words(all).length;
+  return n >= (c.type === 'compare' || c.type === 'flow' ? 2 : 2) && n <= 9;
 }
 
 export function rulePlan(project) {
@@ -92,7 +136,7 @@ export function rulePlan(project) {
         }
       }
       if (ORDINALS.test(w.text) && i <= 1) {
-        cand.push({ prio: 3, type: 'keyword', start: r3(w.start), end: r3(Math.min(seg.end, w.start + 2.2)), kicker: w.text.replace(/[,.:]$/, ''), title: cleanPhrase(words.slice(i + 1), 5), subtitle: '', icon: 'check', reason: 'Penanda poin berurutan; kartu poin membantu penonton mengikuti struktur.' });
+        cand.push({ prio: 3, type: 'keyword', start: r3(w.start), end: r3(Math.min(seg.end, w.start + 2.2)), kicker: w.text.replace(/[,.:]$/, ''), title: clause(words.slice(i + 1), 6).text, subtitle: '', icon: 'check', reason: 'Penanda poin berurutan; kartu poin membantu penonton mengikuti struktur.' });
       }
       // "bukan X, tapi Y" → kartu banding: X dicoret, Y dalam Fraunces (bible: coret yang salah).
       if (n === 'bukan' && i < words.length - 2) {
@@ -120,14 +164,20 @@ export function rulePlan(project) {
         return;
       }
       if (MARKERS.has(n) && n !== 'bukan' && i < words.length - 1) {
-        const title = cleanPhrase(words.slice(i + 1), 4);
-        if (tokenize(title).length >= 1) cand.push({ prio: 2, type: 'keyword', start: r3(words[i + 1].start - 0.05), end: r3(Math.min(seg.end + 0.3, words[i + 1].start + 2)), kicker: words.slice(Math.max(0, i - 2), i + 1).map((x) => x.text).join(' ').replace(/[.,!?;:…]+$/, ''), title, subtitle: '', icon: 'auto', reason: `Frasa setelah "${w.text}" biasanya poin utama kalimat.` });
+        const cl = clause(words.slice(i + 1), 7);
+        if (cl.n >= 2 && (cl.complete || cl.n >= 4)) cand.push({ prio: 2, type: 'keyword', start: r3(words[i + 1].start - 0.05), end: r3(Math.min(seg.end + 0.3, words[i + 1].start + 2.4)), kicker: w.text.replace(/[.,!?;:…]+$/, ''), ...factFeel(cl.text), icon: 'auto', reason: `Klausa utuh setelah "${w.text}" (poin utama kalimat), dibagi fakta → rasa.` });
       }
       if (CTA.has(n)) {
-        cand.push({ prio: 3, type: 'keyword', cta: true, start: r3(w.start - 0.05), end: r3(Math.min(seg.end + 0.5, w.start + 2.2)), kicker: '', title: cleanPhrase(words.slice(i), 4), subtitle: '', icon: 'auto', reason: 'Ajakan (CTA) lebih kuat bila terlihat di layar.' });
+        const cl = clause(words.slice(i), 6);
+        if (cl.n >= 2) cand.push({ prio: 3, type: 'keyword', cta: true, start: r3(w.start - 0.05), end: r3(Math.min(seg.end + 0.5, w.start + 2.2)), kicker: '', title: cl.text, subtitle: '', icon: 'auto', reason: 'Ajakan (CTA) lebih kuat bila terlihat di layar.' });
       }
       if (reason === 'kata kunci brand (dapat diubah di Profil Brand)') {
-        cand.push({ prio: 1, type: 'keyword', start: r3(w.start - 0.05), end: r3(Math.min(seg.end + 0.3, w.start + 1.8)), kicker: before(i), title: cleanPhrase(words.slice(i), 2), subtitle: '', icon: 'auto', reason: `Kata kunci "${w.text}" sebagai kartu tipografi (pola di video referensi).` });
+        // Klausa utuh yang memuat kata kunci (dari tanda baca sebelumnya), maks 6 kata.
+        let a = i;
+        while (a > 0 && !/[.,!?;:…]$/.test(words[a - 1].text) && !CLAUSE_BREAK.has(normWord(words[a].text)) && i - a < 3) a--;
+        if (CLAUSE_BREAK.has(normWord(words[a].text))) a++;
+        const cl = clause(words.slice(a), 6);
+        if (cl.n >= 2 && cl.complete) cand.push({ prio: 1, type: 'keyword', start: r3(words[a].start - 0.05), end: r3(Math.min(seg.end + 0.3, words[a].start + 2.2)), kicker: '', ...factFeel(cl.text), icon: 'auto', reason: `Klausa dengan kata kunci "${w.text}", dibagi fakta → rasa.` });
       }
     });
   }
@@ -153,6 +203,7 @@ export function rulePlan(project) {
     c.start = r3(Math.max(c.start, P.firstCardAt));
     const extra = c.type === 'chat' || c.type === 'list' || c.type === 'compare' ? 0.8 : 0;
     c.end = r3(Math.min(dur, c.start + Math.min(P.maxCard, Math.max(P.minCard, 1.2 + extra + words * 0.35))));
+    if (!cardQuality(c)) continue;
     if ((!c.title && c.type !== 'list') || out.cards.some((x) => c.start < x.end + P.minFaceGap && c.end > x.start - P.minFaceGap)) continue;
     if (c.title && out.cards.some((x) => normWord(x.title) === normWord(c.title))) continue; // hindari kartu kembar
     const { prio, ...card } = c;

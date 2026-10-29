@@ -67,7 +67,7 @@ export const api = {
   transcribe: (id, provider, consent) => req('POST', `/api/projects/${id}/transcribe`, { provider, consent }),
   manualTranscript: (id, text) => req('POST', `/api/projects/${id}/transcript/manual`, { text }),
   importTranscript: (id, content, name) => req('POST', `/api/projects/${id}/transcript/import`, { content, name }),
-  plan: (id, source, consent, autoApprove = false) => req('POST', `/api/projects/${id}/plan`, { source, consent, autoApprove }),
+  plan: (id, source, consent, autoApprove = false, replaceAuto = false) => req('POST', `/api/projects/${id}/plan`, { source, consent, autoApprove, replaceAuto }),
   applyPreset: (id, presetId, level) => req('POST', `/api/projects/${id}/apply-preset`, { presetId, level }),
   savePreset: (b) => req('POST', '/api/presets', b),
   preflight: (id, q) => req('GET', `/api/projects/${id}/preflight`, undefined, { query: q }),

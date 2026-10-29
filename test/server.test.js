@@ -88,7 +88,7 @@ test('kartu dari ucapan: angka terucap, frasa inti, CTA — tanpa kata di luar u
   ];
   const p = { style, styleLevel: 'editorial', source: { meta: { duration: 28 } }, analysis: { silences: [] }, transcript: { segments: segs }, brandKeywords: [] };
   const items = planToItems(rulePlan(p), 'aturan', segs);
-  const titles = items.cards.map((c) => c.title);
+  const titles = items.cards.map((c) => [c.title, c.subtitle].filter(Boolean).join(' '));
   assert.ok(titles.includes('brand yang jelas posisinya'));
   const num = items.cards.find((c) => c.type === 'number');
   assert.equal(num.title, '3');

@@ -5,13 +5,14 @@ import { store, edit, setProject } from '../store.js';
 import { go } from '../app.js';
 import { musicLibrary, sfxOptions, previewButton } from '../library.js';
 import { pacingButton, pacingIssues } from '../pacing.js';
+import { upgradeBanner } from '../upgrade.js';
 import { ICON_NAMES, LEGACY_ICON } from '../../shared/icons.js';
 import { fmtTime, uid, r3, tokenize, normWord } from '../../shared/core.js';
 
 export const ICON_OPTIONS = [['auto', 'Ikon otomatis (sesuai isi)'], ['', 'Tanpa ikon'], ...ICON_NAMES.map((n) => [n, `Ikon: ${n}`])];
 export const CARD_TYPES = [['keyword', 'Pernyataan (fakta → rasa)'], ['number', 'Angka besar + lingkaran'], ['list', 'Checklist poin'], ['compare', 'Banding: yang keliru dicoret → yang benar'], ['quote', 'Kutipan (Fraunces)'], ['flow', 'Alur langkah (panah)'], ['chat', 'Mockup chat di atas footage']];
 export const CASE_TAGS = [['', 'Tanpa case tag'], ...['01 — Brand Foundation', '02 — Brand Character', '03 — Brand Trust', '04 — Brand Experience', '05 — Internal Alignment', '06 — Marketing System', '07 — AI-Era Visibility'].map((t) => [`DX·${t}`, `DX·${t}`])];
-const FIELD_LABELS = {
+export const FIELD_LABELS = {
   keyword: ['Lead kecil (Outfit)', 'Kata tegas (Archivo)', 'Frasa rasa (Fraunces)'],
   number: ['Lead kecil', 'Angka', 'Frasa di bawah angka'],
   list: ['Lead kecil', 'Judul (opsional)', 'Poin (pisahkan dengan ;)'],
@@ -32,6 +33,8 @@ export function renderPlan(main) {
   const p = store.project;
   main.append(h('div', { class: 'view-head' }, h('h1', {}, 'Rencana edit'), h('p', { class: 'muted' }, 'Semua saran berstatus "Disarankan" sampai Anda setujui. Hanya item yang disetujui yang masuk preview & ekspor.')));
   if (!p.source) return main.append(h('div', { class: 'panel' }, 'Impor video terlebih dahulu.'));
+  const banner = upgradeBanner(p, () => go('plan'));
+  if (banner) main.append(banner);
   const video = h('video', { src: `/api/projects/${p.id}/media/source`, controls: true, preload: 'metadata', class: 'side-video' });
   const seek = (t) => {
     video.currentTime = Math.max(0, t - 0.5);
@@ -156,7 +159,7 @@ function assetOptions(p, kinds) {
 }
 
 /** Kartu kata kunci dari kata yang diucapkan pada rentang b-roll (pengganti footage). */
-function cardFromSpeech(p, b) {
+export function cardFromSpeech(p, b) {
   const words = (p.transcript?.segments || []).flatMap((s) => s.words || []).filter((w) => w.start >= b.start - 0.2 && w.start < b.end);
   const toks = [];
   for (const w of words) {

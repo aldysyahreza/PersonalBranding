@@ -6,7 +6,8 @@ import { go, runJob, onJob } from '../app.js';
 import { createPreview } from '../preview.js';
 import { createTimeline } from '../timeline.js';
 import { OUTPUT_FORMATS, r3 } from '../../shared/core.js';
-import { CARD_TYPES, ICON_OPTIONS } from './plan.js';
+import { CARD_TYPES, ICON_OPTIONS, FIELD_LABELS, CASE_TAGS, cardFromSpeech } from './plan.js';
+import { upgradeBanner } from '../upgrade.js';
 import { LEGACY_ICON } from '../../shared/icons.js';
 import { musicLibrary, sfxOptions, previewButton } from '../library.js';
 import { pacingButton } from '../pacing.js';
@@ -63,9 +64,24 @@ export function renderEditor(main) {
   if (!p.source) return main.append(h('div', { class: 'panel' }, 'Impor video terlebih dahulu.'));
   if (p.source.missing) return main.append(h('div', { class: 'alert error' }, `File sumber tidak ditemukan: ${p.source.path}`));
 
+  const banner = upgradeBanner(p, () => go('editor'));
+  if (banner) main.append(banner);
   preview = createPreview();
   timeline = createTimeline({ onSeek: (t) => preview.seek(t), onSelect: (s) => { store.selected = s; tab = 'item'; renderTabs(); timeline.draw(); } });
   preview.el.addEventListener('time', (e) => timeline.setTime(e.detail));
+  // Edit cepat: kartu/hook yang sedang tampil di preview langsung bisa diubah di bawah preview.
+  const quick = h('div', { class: 'panel quick-card' });
+  let quickKey = null;
+  const refreshQuick = (t, force = false) => {
+    const pr = store.project;
+    const card = (pr.cards || []).find((c) => t >= c.start && t < c.end);
+    const hook = pr.hook && t >= pr.hook.start && t < pr.hook.end ? pr.hook : null;
+    const key = card ? `card:${card.id}` : hook ? 'hook' : 'none';
+    if (key === quickKey && !force) return;
+    quickKey = key;
+    quick.replaceChildren(...quickEditor(pr, card, hook, t));
+  };
+  preview.el.addEventListener('time', (e) => refreshQuick(e.detail));
 
   const frameOut = h('div', { class: 'accurate' });
   const tools = h('div', { class: 'row wrap' },
@@ -103,7 +119,7 @@ export function renderEditor(main) {
   const tabsHead = h('div', { class: 'tabs' });
   main.append(
     h('div', { class: 'editor' },
-      h('div', { class: 'ed-left' }, preview.el, tools, frameOut),
+      h('div', { class: 'ed-left' }, preview.el, quick, tools, frameOut),
       h('div', { class: 'ed-right panel' }, tabsHead, inspector),
     ),
     timeline.el,
@@ -327,4 +343,54 @@ function itemInspector(p) {
   if (list === 'sfx') out.push(field('Volume tambahan (dB)', num(it.volumeDb || 0, (v) => edit((x) => (x.sfx[i].volumeDb = v), { rerender: false }), { step: 1 })));
   out.push(h('button', { class: 'link danger', onclick: () => { edit((x) => x[list].splice(i, 1)); store.selected = null; } }, 'Hapus item'));
   return out;
+}
+
+/** Panel edit cepat untuk kartu / hook yang sedang tampil. Perubahan langsung terlihat di preview. */
+function quickEditor(p, card, hook, t) {
+  const live = (fn, key) => {
+    let timer = 0;
+    return (e) => {
+      const v = e.target.value;
+      clearTimeout(timer);
+      timer = setTimeout(() => edit((x) => fn(x, v), { key, rerender: false }), 350);
+    };
+  };
+  if (card) {
+    const i = p.cards.findIndex((c) => c.id === card.id);
+    const labels = FIELD_LABELS[card.type] || FIELD_LABELS.keyword;
+    const setC = (k) => live((x, v) => { x.cards[i][k] = v; x.cards[i].origin = x.cards[i].origin === 'pengguna' ? 'pengguna' : x.cards[i].origin; x.cards[i].edited = true; }, `${card.id}.${k}`);
+    const nudge = (k, d) => edit((x) => (x.cards[i][k] = r3(Math.max(0, x.cards[i][k] + d))), { rerender: false });
+    return [
+      h('div', { class: 'row between wrap' },
+        h('strong', {}, `✎ Kartu di layar · ${card.start.toFixed(1)}–${card.end.toFixed(1)} dtk`),
+        h('label', { class: 'check small' }, h('input', { type: 'checkbox', checked: !!card.approved, onchange: (e) => edit((x) => { x.cards[i].approved = e.target.checked; x.cards[i].autoApproved = false; }, { rerender: false }) }), ' Tampil di video')),
+      card.needsReview ? h('div', { class: 'alert warn small' }, 'Ada kata di luar ucapan — pastikan tidak menambah klaim baru.') : null,
+      h('div', { class: 'grid3' },
+        field('Tipe', select(card.type, CARD_TYPES, (v) => edit((x) => (x.cards[i].type = v)))),
+        field('Case tag', select(card.caseTag || '', CASE_TAGS, (v) => edit((x) => (x.cards[i].caseTag = v)))),
+        field('Foto', select(card.image || '', [['', 'Tanpa foto'], ...p.assets.filter((a) => a.kind === 'image').map((a) => [a.id, a.name])], (v) => edit((x) => (x.cards[i].image = v))))),
+      ...['kicker', 'title', 'subtitle'].filter((k, j) => labels[j] !== '—').map((k) => field(labels[['kicker', 'title', 'subtitle'].indexOf(k)], h('input', { value: card[k] || '', oninput: setC(k) }))),
+      h('div', { class: 'row wrap' },
+        h('span', { class: 'muted small' }, 'Waktu:'),
+        h('button', { class: 'btn ghost sm', onclick: () => nudge('start', -0.2) }, 'mulai −0,2'),
+        h('button', { class: 'btn ghost sm', onclick: () => nudge('start', 0.2) }, 'mulai +0,2'),
+        h('button', { class: 'btn ghost sm', onclick: () => nudge('end', -0.2) }, 'akhir −0,2'),
+        h('button', { class: 'btn ghost sm', onclick: () => nudge('end', 0.2) }, 'akhir +0,2'),
+        h('button', { class: 'link danger', onclick: () => edit((x) => x.cards.splice(i, 1)) }, 'Hapus kartu')),
+    ];
+  }
+  if (hook) {
+    const setH = (k) => live((x, v) => { x.hook[k] = v; x.hook.origin = 'pengguna'; }, `hook.${k}`);
+    return [
+      h('div', { class: 'row between wrap' }, h('strong', {}, '✎ Hook di layar'),
+        h('label', { class: 'check small' }, h('input', { type: 'checkbox', checked: !!hook.approved, onchange: (e) => edit((x) => (x.hook.approved = e.target.checked), { rerender: false }) }), ' Tampil di video')),
+      h('div', { class: 'grid3' },
+        field('Lead kecil', h('input', { value: hook.lead || '', oninput: setH('lead') })),
+        field('Kata besar', h('input', { value: hook.big || '', oninput: setH('big') })),
+        field('Frasa rasa', h('input', { value: hook.accent || '', oninput: setH('accent') }))),
+    ];
+  }
+  return [h('div', { class: 'row between wrap' },
+    h('span', { class: 'muted small' }, 'Geser/putar ke kartu atau hook untuk mengeditnya langsung di sini.'),
+    h('button', { class: 'btn ghost sm', onclick: () => edit((x) => x.cards.push({ ...cardFromSpeech(x, { start: r3(t), end: r3(t + 2.4) }), layout: 'full' })) }, '+ Kartu dari ucapan di sini'))];
 }

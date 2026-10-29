@@ -242,8 +242,14 @@ export function createPreview() {
     cardLayer.replaceChildren();
     if (!card) return;
     if ((pr.style.cards?.engine ?? 'hyperframes') === 'hyperframes' && store.status.hyperframes?.ok && card.layout !== 'panel') {
-      const fr = h('iframe', { class: 'pv-hf', allowTransparency: 'true', src: `/api/projects/${pr.id}/hf/preview/${card.id}?w=${W}&h=${H}&v=${encodeURIComponent(key.length + ':' + card.title)}`, style: { width: `${W}px`, height: `${H}px` }, scrolling: 'no' });
+      const fr = h('iframe', { class: 'pv-hf', allowTransparency: 'true', style: { width: `${W}px`, height: `${H}px` }, scrolling: 'no' });
       fr.addEventListener('load', () => { try { fr.contentWindow.__timelines?.root?.seek(Math.max(0, store.playhead - card.start), false); } catch {} });
+      // HTML dibuat dari kartu yang sedang diedit (bukan dari file tersimpan) → edit langsung terlihat.
+      const reqKey = key;
+      fetch(`/api/projects/${pr.id}/hf/preview-html`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-PB-App': '1' }, body: JSON.stringify({ card, style: pr.style, w: W, h: H }) })
+        .then((r) => (r.ok ? r.text() : Promise.reject(new Error(r.status))))
+        .then((html) => { if (cardKey === reqKey) fr.srcdoc = html.replace('<base href="/', `<base href="${location.origin}/`); })
+        .catch(() => { if (cardKey === reqKey) fr.src = `/api/projects/${pr.id}/hf/preview/${card.id}?w=${W}&h=${H}`; });
       cardLayer.append(fr);
       return;
     }

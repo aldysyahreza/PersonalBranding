@@ -102,6 +102,7 @@ function renderNav() {
     ),
     h('div', { class: 'nav-sep' }),
     h('button', { class: `step ${store.view === 'brand' ? 'active' : ''}`, onclick: () => go('brand') }, h('span', { class: 'n' }, 'i'), h('span', {}, h('strong', {}, 'Profil brand & sistem'), h('small', {}, 'Fakta, asumsi, status layanan'))),
+    store.status?.version ? h('div', { class: 'muted small nav-version' }, `Versi ${store.status.version.commit} · ${store.status.version.date}`) : null,
   );
 }
 

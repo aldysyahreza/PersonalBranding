@@ -1,6 +1,7 @@
 // Server lokal Personal Branding Video Studio.
 // Hanya modul bawaan Node; mendengarkan di 127.0.0.1 secara default.
 import http from 'node:http';
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pipeline } from 'node:stream/promises';
@@ -151,10 +152,22 @@ async function addAsset(p, filePath, name, copied, license) {
 const routes = [];
 const route = (method, pattern, handler) => routes.push({ method, re: new RegExp(`^${pattern.replace(/:(\w+)/g, '(?<$1>[^/]+)')}$`), handler });
 
+// Versi kode yang sedang berjalan (commit git), agar mudah memastikan update sudah terpasang.
+const APP_VERSION = (() => {
+  try {
+    const r = spawnSync('git', ['log', '-1', '--format=%h|%cs'], { cwd: ROOT, encoding: 'utf8' });
+    const [commit, date] = String(r.stdout || '').trim().split('|');
+    return commit ? { commit, date } : null;
+  } catch {
+    return null;
+  }
+})();
+
 route('GET', '/api/status', async () => {
   const [ffmpeg, ffprobe] = await Promise.all([which('ffmpeg'), which('ffprobe')]);
   return {
     app: 'personal-branding-video-studio',
+    version: APP_VERSION,
     ffmpeg, ffprobe,
     transcription: await providerStatus(),
     claude: { configured: hasSecret('ANTHROPIC_API_KEY'), model: config.anthropicModel, cloud: true },
@@ -284,6 +297,20 @@ route('GET', '/api/projects/:id/hf/preview/:cardId', async ({ id, cardId, res, u
   send(res, 200, html, { 'Content-Type': 'text/html; charset=utf-8' });
   return null;
 });
+// Sama dengan di atas, tetapi memakai kartu & gaya yang dikirim browser (belum tersimpan) agar
+// edit langsung terlihat tanpa menunggu simpan otomatis.
+route('POST', '/api/projects/:id/hf/preview-html', async ({ id, req, res }) => {
+  const { card, style, w, h } = await readJson(req);
+  const p = loadProject(id);
+  if (!card || typeof card !== 'object') throw new UserError('Kartu tidak valid.', '', 400);
+  if (!hyperframesStatus().ok) throw new UserError('HyperFrames belum terpasang.', 'Jalankan "npm install".', 412);
+  const W = Math.min(4096, Number(w) || 1080), Hh = Math.min(4096, Number(h) || 1920);
+  const st = style && typeof style === 'object' ? style : p.style;
+  const dir = hfDir(id);
+  const html = cardHtml(card, st, { W, H: Hh, dur: Math.max(0.3, (Number(card.end) || 0) - (Number(card.start) || 0)), image: cardImage(p, card, dir) }).replace('<head>', `<head><base href="/api/projects/${id}/hf/">`);
+  send(res, 200, html, { 'Content-Type': 'text/html; charset=utf-8' });
+  return null;
+});
 route('GET', '/api/projects/:id/hf/:file', async ({ id, file, req, res }) => {
   if (file !== 'gsap.min.js' && !/^img-[\w-]+\.(jpe?g|png|webp)$/i.test(file)) throw new UserError('File tidak tersedia.', '', 404);
   serveFile(req, res, path.join(hfDir(id), file));
@@ -397,7 +424,9 @@ route('POST', '/api/projects/:id/plan', async ({ id, req }) => {
   }
   const items = planToItems(plan, origin, p.transcript?.segments || [], { autoApprove: body.autoApprove === true });
   // Ganti saran lama yang belum disetujui; pertahankan yang disetujui/dibuat pengguna.
-  const keepOld = (arr) => arr.filter((x) => x.origin === 'pengguna' || (x.approved && !x.autoApproved) || x.enabled);
+  // replaceAuto: ganti semua saran buatan aturan/AI (juga yang sudah disetujui) — dipakai saat
+  // memperbarui proyek lama ke gaya baru. Item buatan pengguna selalu dipertahankan.
+  const keepOld = (arr) => arr.filter((x) => x.origin === 'pengguna' || (!body.replaceAuto && ((x.approved && !x.autoApproved) || x.enabled)));
   p.cuts = [...keepOld(p.cuts), ...items.cuts];
   p.cards = [...keepOld(p.cards), ...items.cards];
   p.broll = [...keepOld(p.broll), ...items.broll];
