@@ -61,8 +61,9 @@ test('planner: "bukan X, tapi Y" → kartu banding; poin berurutan → checklist
 test('hook diambil dari kata pembuka yang diucapkan', () => {
   const seg = makeSegment({ start: 0, end: 3, text: 'Kenapa brand kamu belum dipilih?' });
   const hk = hookSuggestion([seg], new Set(['brand']), 1.6);
-  assert.equal(hk.big, 'Brand');
-  assert.equal(hk.lead, 'kenapa');
+  // Pola lockup bible: "kenapa brand kamu / Belum / dipilih".
+  assert.equal(hk.big, 'Belum');
+  assert.equal(hk.lead, 'kenapa brand kamu');
   assert.ok(hk.end <= 3.5);
 });
 
@@ -93,4 +94,26 @@ test('teks kartu otomatis tidak terpotong menggantung ("…ditemukan belum")', (
   assert.ok(c, 'kartu Faktanya ada');
   assert.equal(c.title, 'brand yang ditemukan');
   assert.equal(c.subtitle, 'belum tentu dipilih');
+});
+
+test('pola dari transkrip asli: hook "belum tentu", enumerasi → alur/checklist, potongan kata terulang', () => {
+  const p = project([
+    'Faktanya, brand yang ditemukan belum tentu direkomendasikan.',
+    'Buka Instagram, cek Google, tanya teman, lalu bandingin satu per satu.',
+    'Biasanya, brand yang lebih mudah direkomendasikan adalah brand yang signalnya jelas, jelas kategorinya, jelas untuk siapa, pesannya konsisten dan ada bukti yang bikin orang merasa aman.',
+    'Karena, brand bukan cuma harus ditemukan, brand harus punya alasan untuk direkomendasikan.',
+    'Komendasikan, simpan ini kalau kamu sedang ngebangun brand.',
+  ]);
+  // Beri jarak antar kalimat seperti video asli (±65 dtk) agar ritme kartu tidak memotong saran.
+  p.transcript.segments = p.transcript.segments.map((sg, i) => makeSegment({ start: i * 9 + (i ? 0 : 1), end: i * 9 + 7.5, text: sg.text }));
+  p.source.meta.duration = 50;
+  const plan = rulePlan(p);
+  assert.deepEqual([plan.hook.lead, plan.hook.big, plan.hook.accent], ['brand yang ditemukan', 'Belum Tentu', 'direkomendasikan']);
+  const flow = plan.cards.find((c) => c.type === 'flow');
+  assert.equal(flow?.title, 'Buka Instagram');
+  const list = plan.cards.find((c) => c.type === 'list');
+  assert.equal(list?.title, 'brand yang lebih mudah direkomendasikan');
+  assert.ok(list.subtitle.startsWith('signalnya jelas; jelas kategorinya'));
+  assert.ok(plan.cuts.some((c) => c.kind === 'pengulangan' && c.start === p.transcript.segments[4].words[0].start));
+  assert.ok(!plan.cards.some((c) => c.cta && /cek/i.test(c.title)));
 });

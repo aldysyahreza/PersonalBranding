@@ -78,7 +78,8 @@ function factFeel(text) {
 export function cardQuality(c) {
   const words = (x) => String(x || '').split(/\s+/).filter(Boolean);
   const all = [c.title, c.subtitle].filter(Boolean).join(' ');
-  if (c.type === 'number' || c.type === 'list' || c.type === 'chat' || c.type === 'quote') return true;
+  if (c.type === 'flow' || c.type === 'list') return String(c.subtitle || '').split(';').every((x) => x.trim() && !isDangling(x.trim().split(/\s+/).pop()));
+  if (c.type === 'number' || c.type === 'chat' || c.type === 'quote') return true;
   if (!c.title) return false;
   const last = words(all).pop() || '';
   if (isDangling(last.replace(/[.,!?;:…]+$/, ''))) return false;
@@ -110,6 +111,7 @@ export function rulePlan(project) {
 
   // Penekanan kata + kandidat kartu (angka, poin, frasa inti, CTA, kata kunci).
   const cand = [];
+  const emphCount = new Map(); // kata yang sama maksimal 2× ditonjolkan per video
   for (const seg of segs) {
     const words = seg.words || [];
     let lastEmph = -10;
@@ -118,7 +120,8 @@ export function rulePlan(project) {
       let reason = null;
       if (NUMBER_RE.test(w.text)) reason = 'angka';
       else if (keywords.has(n)) reason = 'kata kunci brand (dapat diubah di Profil Brand)';
-      if (reason && i - lastEmph >= 3) {
+      if (reason && i - lastEmph >= 3 && (emphCount.get(n) || 0) < 2) {
+        emphCount.set(n, (emphCount.get(n) || 0) + 1);
         out.emphasis.push({ segId: seg.id, wordIndex: i, word: w.text, reason });
         lastEmph = i;
       }
@@ -140,9 +143,18 @@ export function rulePlan(project) {
       }
       // "bukan X, tapi Y" → kartu banding: X dicoret, Y dalam Fraunces (bible: coret yang salah).
       if (n === 'bukan' && i < words.length - 2) {
-        const j = words.findIndex((x, k) => k > i + 1 && CONTRAST.has(normWord(x.text)));
-        if (j > i + 1 && j - i <= 6) {
-          const x = cleanPhrase(words.slice(i + 1, j), 4), y = cleanPhrase(words.slice(j + 1), 4);
+        let j = words.findIndex((x, k) => k > i + 1 && CONTRAST.has(normWord(x.text)));
+        // Tanpa "tapi": "bukan cuma X, brand harus Y" → klausa sesudah koma menjadi sisi yang benar.
+        if (j < 0) {
+          const c = words.findIndex((x, k) => k > i + 1 && k - i <= 6 && /,$/.test(x.text));
+          if (c > 0 && c < words.length - 2) {
+            const subj = normWord(words[i - 1]?.text || '');
+            j = normWord(words[c + 1].text) === subj && subj ? c + 1 : c;
+          }
+        }
+        if (j > i + 1 && j - i <= 7) {
+          const lead = (t) => t.replace(/^(cuma|hanya|sekadar|sekedar|juga|cuman)\s+/i, '');
+          const x = lead(cleanPhrase(words.slice(i + 1, j), 5)), y = lead(cleanPhrase(words.slice(j + 1), 5));
           if (x && y) cand.push({ prio: 4, type: 'compare', start: r3(w.start - 0.05), end: r3(words[Math.min(words.length - 1, j + 2)].end + 0.4), kicker: '', title: x, subtitle: y, icon: '', reason: `Pola "bukan … ${words[j].text} …": yang keliru dicoret, yang benar ditonjolkan.` });
         }
       }
@@ -167,20 +179,24 @@ export function rulePlan(project) {
         const cl = clause(words.slice(i + 1), 7);
         if (cl.n >= 2 && (cl.complete || cl.n >= 4)) cand.push({ prio: 2, type: 'keyword', start: r3(words[i + 1].start - 0.05), end: r3(Math.min(seg.end + 0.3, words[i + 1].start + 2.4)), kicker: w.text.replace(/[.,!?;:…]+$/, ''), ...factFeel(cl.text), icon: 'auto', reason: `Klausa utuh setelah "${w.text}" (poin utama kalimat), dibagi fakta → rasa.` });
       }
-      if (CTA.has(n)) {
+      if (CTA.has(n) && (w.start >= dur * 0.6 || ['simpan', 'save', 'follow', 'ikuti', 'subscribe'].includes(n))) {
         const cl = clause(words.slice(i), 6);
         if (cl.n >= 2) cand.push({ prio: 3, type: 'keyword', cta: true, start: r3(w.start - 0.05), end: r3(Math.min(seg.end + 0.5, w.start + 2.2)), kicker: '', title: cl.text, subtitle: '', icon: 'auto', reason: 'Ajakan (CTA) lebih kuat bila terlihat di layar.' });
       }
       if (reason === 'kata kunci brand (dapat diubah di Profil Brand)') {
         // Klausa utuh yang memuat kata kunci (dari tanda baca sebelumnya), maks 6 kata.
         let a = i;
-        while (a > 0 && !/[.,!?;:…]$/.test(words[a - 1].text) && !CLAUSE_BREAK.has(normWord(words[a].text)) && i - a < 3) a--;
+        while (a > 0 && !/[.,!?;:…]$/.test(words[a - 1].text) && !CLAUSE_BREAK.has(normWord(words[a].text)) && i - a < 6) a--;
         if (CLAUSE_BREAK.has(normWord(words[a].text))) a++;
-        const cl = clause(words.slice(a), 6);
+        const cl = clause(words.slice(a), 8);
         if (cl.n >= 2 && cl.complete) cand.push({ prio: 1, type: 'keyword', start: r3(words[a].start - 0.05), end: r3(Math.min(seg.end + 0.3, words[a].start + 2.2)), kicker: '', ...factFeel(cl.text), icon: 'auto', reason: `Klausa dengan kata kunci "${w.text}", dibagi fakta → rasa.` });
       }
     });
   }
+
+  // Enumerasi dalam satu kalimat ("buka Instagram, cek Google, tanya teman, lalu bandingin…")
+  // → alur langkah (berurutan) atau checklist (ciri/syarat). Teks item = ucapan, dipersingkat.
+  for (const seg of segs) for (const e of enumerations(seg)) cand.push(e);
 
   // Tiga poin berurutan atau lebih → satu kartu checklist rangkuman (menggantikan kartu poin satuan).
   const ords = cand.filter((c) => c.icon === 'check' && ORDINALS.test(c.kicker || ''));
@@ -226,6 +242,15 @@ export function rulePlan(project) {
     (seg.words || []).forEach((w) => {
       if (FILLERS.has(normWord(w.text))) out.cuts.push({ start: r3(w.start), end: r3(w.end), kind: 'pengisi', reason: `Kata pengisi "${w.text}".` });
     });
+  }
+  // Potongan kata yang terulang di awal kalimat ("…direkomendasikan. Komendasikan, simpan…").
+  for (let i = 1; i < segs.length; i++) {
+    const prevLast = normWord((segs[i - 1].words || []).at(-1)?.text || '');
+    const w0 = (segs[i].words || [])[0];
+    const n0 = normWord(w0?.text || '');
+    if (w0 && n0.length >= 5 && prevLast.length > n0.length && prevLast.endsWith(n0)) {
+      out.cuts.push({ start: r3(w0.start), end: r3(Math.min(w0.end + 0.05, segs[i].words[1]?.start ?? w0.end)), kind: 'pengulangan', reason: `"${w0.text}" mengulang potongan kata sebelumnya ("${segs[i - 1].words.at(-1).text}").` });
+    }
   }
   for (let i = 0; i < segs.length - 1; i++) {
     const a = tokenize(segs[i].text).slice(0, 3).map(normWord).join(' ');
@@ -281,8 +306,96 @@ function musicSuggestion(project) {
 }
 
 /** Hook lockup dari kata-kata pembuka (semuanya diucapkan): lead kecil → 1–2 kata besar → frasa rasa. */
+const ENUM_STRIP = /^(lalu|terus|kemudian|dan|atau|bahkan|mulai dari|mulai|serta|juga|plus)\s+/i;
+
+/** Daftar dalam satu kalimat (≥3 klausa pendek dipisah koma/"dan"). */
+function enumerations(seg) {
+  const words = seg.words || [];
+  const parts = [];
+  let cur = [];
+  for (const w of words) {
+    if (cur.length && /^(dan|lalu|terus)$/i.test(w.text) && cur.length >= 2) { parts.push(cur); cur = []; }
+    cur.push(w);
+    if (/[,;]$/.test(w.text)) { parts.push(cur); cur = []; }
+  }
+  if (cur.length) parts.push(cur);
+  const items = parts.map((ws) => {
+    let t = ws.map((w) => w.text).join(' ').replace(/[.,!?;:…]+$/, '');
+    for (let r = 0; r < 2; r++) t = t.replace(ENUM_STRIP, '');
+    let tok = t.split(/\s+/).filter(Boolean);
+    const yi = tok.findIndex((x, i) => i >= 2 && normWord(x) === 'yang');
+    if (tok.length > 4 && yi > 0) tok = tok.slice(0, yi);
+    while (tok.length && isDangling(tok.at(-1))) tok.pop();
+    return { text: tok.join(' '), n: tok.length, ws, long: ws.length > 6 };
+  });
+  const out = [];
+  let run = [];
+  const flush = () => {
+    if (run.length >= 3) {
+      const first = run[0], prevIdx = items.indexOf(first) - 1, prev = items[prevIdx];
+      let list = run.map((x) => x.text);
+      let title = '';
+      // Klausa panjang sebelum daftar: "brand yang … adalah brand yang signalnya jelas" → judul + item pertama.
+      if (prev && prev.long) {
+        const ws = prev.ws.map((w) => w.text.replace(/[.,!?;:…]+$/, ''));
+        const ad = ws.findIndex((x) => /^(adalah|yaitu|yakni)$/i.test(x));
+        const ly = ws.map((x) => x.toLowerCase()).lastIndexOf('yang');
+        if (ly >= 0 && ws.length - ly - 1 <= 3) list = [ws.slice(ly + 1).join(' '), ...list];
+        if (ad > 0) title = ws.slice(0, ad).join(' ').replace(/^(biasanya|jadi|nah)\s+/i, '');
+      }
+      const allKe = run.every((x) => /^ke\s/i.test(x.text));
+      if (allKe) list = list.map((x) => x.replace(/^ke\s+/i, ''));
+      const seq = allKe || run.some((x) => /^(lalu|terus|kemudian)\b/i.test(x.ws[0].text) || /^(lalu|terus)\b/i.test(x.ws.map((w) => w.text).join(' ')));
+      const startW = (prev && prev.long ? prev.ws[Math.max(0, prev.ws.length - 3)] : first.ws[0]);
+      const endW = run.at(-1).ws.at(-1);
+      list = list.filter(Boolean).slice(0, seq ? 4 : 5);
+      const tW = title.split(' ').filter(Boolean).length;
+      out.push({
+        prio: 3.5, type: seq ? 'flow' : 'list', start: r3(startW.start - 0.05), end: r3(Math.max(endW.end + 0.3, startW.start + 2.6)),
+        kicker: '', title: seq ? list[0] : tW >= 2 && tW <= 6 ? title : '', subtitle: (seq ? list.slice(1) : list).join('; '), icon: '',
+        reason: seq ? 'Urutan langkah dalam satu kalimat → alur dengan panah.' : 'Beberapa ciri/syarat dalam satu kalimat → checklist (layak disimpan).',
+        verifyFrom: r3(seg.start),
+      });
+    }
+    run = [];
+  };
+  for (const it of items) {
+    if (it.n >= 1 && it.n <= 4 && it.ws.length <= 9 && !(it.long && !run.length)) run.push(it);
+    else flush();
+  }
+  flush();
+  return out;
+}
+
+const NEGATION = new Set(['belum', 'bukan', 'tidak', 'nggak', 'gak', 'enggak', 'ga', 'jangan', 'tak']);
+const NEG_NEXT = new Set(['tentu', 'cukup', 'pernah', 'selalu', 'cuma', 'hanya', 'lagi']);
+const OPENERS = new Set(['faktanya', 'jadi', 'nah', 'sebenarnya', 'ternyata', 'oke', 'ok', 'gini', 'begini', 'intinya', 'kadang', 'banyak']);
+
 export function hookSuggestion(segs, keywords = new Set(), maxSec = 1.6) {
   const first = segs[0];
+  // Pola terkuat di kalimat pembuka: "<subjek> BELUM TENTU <hasil>" → lockup lead / kata besar / Fraunces.
+  const sent = [];
+  for (const w of first?.words || []) {
+    sent.push(w);
+    if (/[.!?]$/.test(w.text)) break;
+  }
+  if (sent.length >= 3 && sent.length <= 12 && sent.at(-1).end - sent[0].start <= 7) {
+    let a = 0;
+    if (OPENERS.has(normWord(sent[0].text)) && /,$/.test(sent[0].text)) a = 1;
+    const k = sent.findIndex((w, idx) => idx > a && NEGATION.has(normWord(w.text)));
+    if (k > a && k < sent.length - 1) {
+      const clean = (t) => t.replace(/[.,!?;:…]+$/, '');
+      let bEnd = k;
+      if (NEG_NEXT.has(normWord(sent[k + 1]?.text)) && k + 1 < sent.length - 1) bEnd = k + 1;
+      const big = sent.slice(k, bEnd + 1).map((w) => clean(w.text)).join(' ');
+      const lead = sent.slice(a, k).map((w) => clean(w.text)).join(' ').toLowerCase();
+      const acc = sent.slice(bEnd + 1, bEnd + 4);
+      if (lead.split(' ').length <= 5 && acc.length) {
+        const title = (t) => t.replace(/(^|\s)\S/g, (c) => c.toUpperCase());
+        return { start: r3(first.start), end: r3(acc.at(-1).end + 0.25), lead, big: title(big), accent: clean(acc.map((w) => w.text).join(' ')), reason: `Hook dari kalimat pembuka: "${lead} / ${big} / …" (pola kontras, diambil dari ucapan).` };
+      }
+    }
+  }
   const words = (first?.words || []).filter((w) => w.start - first.start <= Math.max(2.5, maxSec + 0.8));
   if (words.length < 2) return null;
   const score = (w, i) => {

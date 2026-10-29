@@ -14,7 +14,7 @@ import { createJob, runJob, getJob, listJobs, cancelJob, publicJob } from './lib
 import { providerStatus, transcribeLocal, transcribeOpenAI } from './lib/transcribe.js';
 import { rulePlan, claudePlan, planToItems } from './lib/plan.js';
 import { renderVideo, renderStill, preflight, estimateSize, QUALITY, CONTAINERS, BUILTIN_SFX_LIST } from './lib/render.js';
-import { BRAND_PROFILE } from './lib/brand.js';
+import { BRAND_PROFILE, DEFAULT_BRAND_KEYWORDS } from './lib/brand.js';
 import { catalog, libraryFile, isLibraryItem, LICENSE_NOTE, paperFile } from './lib/synth.js';
 import { hyperframesStatus, hfDir, cardHtml, cardImage } from './lib/hyperframes.js';
 import { distributeText, parseSubtitles, toSrt, projectStatus, OUTPUT_FORMATS, uid } from '../public/shared/core.js';
@@ -455,6 +455,8 @@ route('POST', '/api/projects/:id/apply-preset', async ({ id, req }) => {
   p.presetId = preset.id;
   p.styleLevel = STYLE_LEVELS.includes(level) ? level : 'editorial';
   p.style = resolveStyle(preset, p.styleLevel);
+  // Gaya bible memakai kosakata bible untuk penekanan; kata kunci milik pengguna tetap dipertahankan.
+  if (preset.id === 'brand-fixer') p.brandKeywords = [...new Set([...(p.brandKeywords || []), ...DEFAULT_BRAND_KEYWORDS])];
   return full(saveProject(p));
 });
 
