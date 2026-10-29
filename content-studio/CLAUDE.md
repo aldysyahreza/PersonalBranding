@@ -91,3 +91,8 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 4. SELESAI (v23): Reels Studio. Lanjutan: Brief -> naskah reels otomatis lewat claude.use('sample'), foto Aldy untuk cover reels.
 5. Jadwal Topic Radar mingguan, dokumen strategi (https://claude.ai/artifact/XUBf6jHwdpwkMs7QtTu5KA) belum diperbarui.
 6. Style Bible v2 sudah ditulis ke Project (`06_STYLE_BIBLE_V2_CAROUSEL.md`); sinkronkan bila aturan berubah.
+
+## Reels topik 2 (29 Okt 2026): set adegan "omzet"
+- Set adegan = animatic-<nama>.html + anchors-<nama>.json + sfx-<nama>.py, dipilih lewat argumen ke-4 build_reel.py: `python3 animatic/build_reel.py rekaman.mp4 posts/reels-omzet-marketplace.json out/reel2 omzet` (default `v3` = topik harga ditawar).
+- Hasil: out/reel2/reel.mp4 (49,8 dtk, -14,5 LUFS, puncak -2,2 dBFS). Hook 6,3 dtk (> 4) dan total > 45 dtk: terbuka untuk dipangkas.
+- Terbuka: tarif admin per sumber belum diverifikasi di Seller Centre, aturan marketplace soal kartu/voucher belum dicek, angka 30-50% dari Aldy.

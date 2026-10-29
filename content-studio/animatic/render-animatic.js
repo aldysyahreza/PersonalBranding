@@ -27,7 +27,7 @@ const STILLS = +arg('stills', 0);
   await pg.route(/^https?:/, (r) => r.abort());
   const BEATS = arg('beats', '');
   if (BEATS) { const tl = JSON.parse(fs.readFileSync(BEATS, 'utf8')); await pg.addInitScript((b) => { window.ANIMATIC_BEATS = b; }, tl.beats); }
-  const ANCH = path.join(__dirname, arg('file', 'animatic.html').replace(/^animatic(-v\d+)?\.html$/, 'anchors$1.json'));
+  const ANCH = path.join(__dirname, arg('file', 'animatic.html').replace(/^animatic/, 'anchors').replace(/\.html$/, '.json'));
   if (BEATS && fs.existsSync(ANCH)) await pg.addInitScript((a) => { window.ANIMATIC_ANCHORS = a; }, JSON.parse(fs.readFileSync(ANCH, 'utf8')));
   await pg.goto('file://' + path.join(__dirname, arg('file', 'animatic.html')));
   await pg.addStyleTag({ path: path.join(ROOT, 'assets', 'fonts-embed.css') });

@@ -1,0 +1,207 @@
+{
+ "_petunjuk": "Adegan visual tidak harus sama jumlahnya dengan babak HRIRC. Tiap adegan dimulai pada kata pembukanya (dicari hanya di babak chap). beats[i] = jangkar [detik rancangan, awal kata] untuk adegan i.",
+ "scenes": [
+  {
+   "start": "laporan",
+   "act": "HOOK",
+   "chap": 1
+  },
+  {
+   "start": "selisihnya",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "mereka",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "marketplace",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "di",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "satu",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "coba",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "kirim",
+   "act": "CTA",
+   "chap": 5
+  }
+ ],
+ "beats": [
+  [
+   [
+    0.45,
+    "laporan"
+   ],
+   [
+    2.0,
+    "rp100"
+   ],
+   [
+    3.3,
+    "rekening"
+   ],
+   [
+    4.5,
+    "rp79"
+   ]
+  ],
+  [
+   [
+    0.25,
+    "selisihnya"
+   ],
+   [
+    1.1,
+    "admin"
+   ],
+   [
+    1.9,
+    "iklan"
+   ],
+   [
+    3.0,
+    "tapi"
+   ],
+   [
+    4.2,
+    "pembelinya"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "mereka"
+   ],
+   [
+    2.2,
+    "bintang"
+   ],
+   [
+    3.7,
+    "lupa"
+   ],
+   [
+    5.3,
+    "bulan"
+   ],
+   [
+    7.2,
+    "toko"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "marketplace"
+   ],
+   [
+    1.4,
+    "produkmu"
+   ],
+   [
+    2.1,
+    "bukan"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "di"
+   ],
+   [
+    3.2,
+    "beli"
+   ],
+   [
+    4.4,
+    "30"
+   ],
+   [
+    6.2,
+    "sisanya"
+   ],
+   [
+    7.8,
+    "lalu"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "satu"
+   ],
+   [
+    1.4,
+    "selipkan"
+   ],
+   [
+    2.9,
+    "paket"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "coba"
+   ],
+   [
+    2.3,
+    "nama"
+   ],
+   [
+    3.3,
+    "cara"
+   ],
+   [
+    4.9,
+    "bonus"
+   ],
+   [
+    6.5,
+    "pembeli"
+   ],
+   [
+    8.2,
+    "sekarang"
+   ],
+   [
+    9.2,
+    "kembali"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "kirim"
+   ],
+   [
+    2.55,
+    "minta"
+   ],
+   [
+    3.7,
+    "hitung"
+   ],
+   [
+    4.5,
+    "hari"
+   ]
+  ]
+ ]
+}

@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Animatic: laporan marketplace vs rekening</title>
+<!-- Animatic reels 1080x1920, gaya "buku catatan diagnosis": kertas grid krem, objek semi-3D, coretan pena merah,
+     mode Diagnosis (ink + garis amber) lewat pindai, caption karaoke per kata. Semua gerak = fungsi waktu: window.seek(t). -->
+<style>
+:root{--ink:#0F0E0C;--paper:#FBF8F3;--terra:#B84A2E;--amber:#C8944A;--cream:#F4EBD9;--gray:#6B6560;
+  --f-display:Archivo,"Helvetica Neue",Arial,sans-serif;--f-serif:Fraunces,Georgia,serif;--f-body:Outfit,system-ui,sans-serif;--f-hand:Caveat,cursive;--f-mono:"JetBrains Mono",monospace;
+  --sh:0 34px 46px rgba(15,14,12,.16),0 8px 14px rgba(15,14,12,.12)}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:var(--f-body);color:var(--ink);background:var(--paper)}
+.bgpaper,.bgdx{position:absolute;inset:-40px}
+.bgpaper{background:
+  radial-gradient(ellipse 75% 60% at 50% 42%,rgba(255,255,255,.65),rgba(255,255,255,0) 70%),
+  linear-gradient(rgba(15,14,12,.055) 2px,transparent 2px) 0 0/60px 60px,
+  linear-gradient(90deg,rgba(15,14,12,.055) 2px,transparent 2px) 0 0/60px 60px,#F7F2E9}
+.bgdx{background:radial-gradient(ellipse 70% 55% at 50% 40%,#2a231c,#110f0c 75%),#110f0c;opacity:0}
+.bgdx::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(200,148,74,.12) 2px,transparent 2px) 0 0/60px 60px,linear-gradient(90deg,rgba(200,148,74,.12) 2px,transparent 2px) 0 0/60px 60px}
+.grain{position:absolute;inset:0;opacity:.22;mix-blend-mode:multiply;pointer-events:none;z-index:40;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.vig{position:absolute;inset:0;pointer-events:none;z-index:39;background:radial-gradient(ellipse 85% 70% at 50% 45%,transparent 60%,rgba(15,14,12,.16))}
+.sc{position:absolute;inset:0;visibility:hidden;transform-origin:540px 800px}
+.a{position:absolute}
+.disp{font-family:var(--f-display);font-weight:800;letter-spacing:-.045em;line-height:.95}
+.fr{font-family:var(--f-serif);font-style:italic;font-weight:400;letter-spacing:-.02em;line-height:.95}
+.mono{font:500 26px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.hand{font:600 64px/1 var(--f-hand);color:var(--terra)}
+.chip{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:12px 22px;font:500 24px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.card{background:#fff;border-radius:34px;box-shadow:var(--sh)}
+.ncard{position:absolute;left:0;width:430px;display:flex;align-items:center;gap:20px;padding:20px 24px;background:#fff;border-radius:28px;box-shadow:0 18px 30px rgba(15,14,12,.14),0 3px 8px rgba(15,14,12,.1)}
+.ncard b{flex:none;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:800 28px/1 var(--f-display);color:#fff}
+.ncard div{flex:1;min-width:0}.ncard em{display:block;font:500 20px/1.2 var(--f-mono);font-style:normal;color:var(--gray);letter-spacing:.04em}.ncard span{display:block;font:700 30px/1.2 var(--f-body)}
+.odo{display:inline-flex;overflow:hidden;line-height:1}
+.odo i{display:block;font-style:normal;height:1em;overflow:hidden}
+.odo i s{display:block;text-decoration:none;line-height:1em;will-change:transform}
+.bub{position:absolute;max-width:430px;padding:22px 28px;border-radius:32px 32px 32px 10px;background:#fff;font:700 34px/1.15 var(--f-body);box-shadow:0 8px 0 rgba(15,14,12,.9)}
+.bub.me{border-radius:32px 32px 10px 32px;background:var(--ink);color:#fff;box-shadow:0 8px 0 var(--terra)}
+.hl{background-image:linear-gradient(var(--amber),var(--amber));background-repeat:no-repeat;background-position:0 90%;background-size:0% 36%;padding:0 6px}
+#hud{position:absolute;inset:0;z-index:30;pointer-events:none}
+#hdl{position:absolute;left:84px;top:236px;font:700 26px/1 var(--f-mono);letter-spacing:.1em}
+#hdl i{font-style:normal;font-weight:500;opacity:.55}
+#hdr{position:absolute;right:84px;top:226px;display:flex;gap:14px;align-items:center}
+#chap{font:500 24px/1 var(--f-mono);letter-spacing:.08em;color:var(--terra)}
+#topic{background:var(--amber);color:var(--ink)}
+#cap{position:absolute;left:0;right:0;top:1360px;display:flex;justify-content:center}
+#cap span{display:inline-block;background:var(--ink);color:#fff;border-radius:18px;padding:16px 28px 18px;font:800 52px/1.1 var(--f-display);letter-spacing:-.02em;box-shadow:0 10px 24px rgba(15,14,12,.22)}
+#cap span u{text-decoration:none}
+#scan{position:absolute;left:-40px;right:-40px;height:6px;background:#FFE2B0;box-shadow:0 0 18px 6px rgba(200,148,74,.9),0 0 60px 20px rgba(200,148,74,.45);z-index:35;opacity:0}
+#scanlab{position:absolute;right:84px;font:500 22px/1 var(--f-mono);letter-spacing:.1em;color:#FFE2B0;z-index:35;opacity:0}
+#flash{position:absolute;inset:0;background:#fff;z-index:36;opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="stage">
+<div class="bgpaper" id="bgp"></div><div class="bgdx" id="bgd"></div>
+
+<!-- 1 HOOK: laporan marketplace -> rekening -->
+<section class="sc" id="b1">
+  <div class="a card" data-obj id="d1card" style="left:84px;top:380px;width:912px;height:400px">
+    <div class="a mono" style="left:44px;top:40px;color:var(--gray)">laporan penjualan · marketplace</div>
+    <div class="a" style="left:44px;top:110px;font:500 34px/1 var(--f-body);color:var(--gray)">Total penjualan bulan ini</div>
+    <div class="a disp" style="left:44px;top:185px;font-size:150px;white-space:nowrap">Rp<span class="odo" id="d1odo"></span><span style="font-size:72px;letter-spacing:-.02em"> juta</span></div>
+  </div>
+  <div class="a" data-obj id="d1bank" style="left:84px;top:870px;width:912px;height:380px;border-radius:34px;background:linear-gradient(150deg,#2b2824,#0F0E0C);box-shadow:var(--sh);color:#fff">
+    <div class="a mono" style="left:44px;top:40px;color:#FFE2B0">rekening · saldo yang cair</div>
+    <div class="a disp" style="left:44px;top:150px;font-size:150px;white-space:nowrap">Rp<span class="odo" id="d1odo2"></span><span style="font-size:72px;letter-spacing:-.02em"> juta</span></div>
+    <span id="d1chip" class="chip a" style="right:44px;top:34px;background:var(--amber);color:var(--ink)">contoh hitungan</span>
+    <div id="d1gap" class="a disp" style="left:660px;top:250px;font-size:56px;color:#fff;background:var(--terra);border-radius:20px;padding:14px 24px;white-space:nowrap">−Rp21 juta</div>
+  </div>
+</section>
+
+<!-- 2 RELATE a: struk potongan -->
+<section class="sc" id="b2">
+  <div class="a" data-obj id="d2printer" style="left:150px;top:330px;width:780px;height:110px;border-radius:30px;background:linear-gradient(180deg,#3a3631,#151310);box-shadow:var(--sh)"><div style="position:absolute;left:60px;right:60px;bottom:22px;height:14px;border-radius:7px;background:#000"></div></div>
+  <div class="a" id="d2wrap" style="left:0;top:0;width:1080px;height:1920px">
+    <div class="a" id="d2clip" style="left:190px;top:440px;width:700px;height:830px;overflow:hidden">
+      <div id="d2paper" data-obj style="position:absolute;left:0;top:0;width:700px;height:815px;background:#fff;box-shadow:0 20px 30px rgba(15,14,12,.12);padding:36px 48px;
+        -webkit-mask:linear-gradient(#000,#000) top/100% calc(100% - 24px) no-repeat,radial-gradient(circle at 18px 24px,transparent 13px,#000 14px) bottom/36px 24px repeat-x;
+        mask:linear-gradient(#000,#000) top/100% calc(100% - 24px) no-repeat,radial-gradient(circle at 18px 24px,transparent 13px,#000 14px) bottom/36px 24px repeat-x">
+        <div class="mono" style="text-align:center;font-size:22px;color:var(--gray)">dari laporan ke rekening</div>
+        <div id="d2rows" style="margin-top:14px"></div>
+        <div id="d2total" style="margin-top:22px;display:flex;justify-content:space-between;align-items:baseline">
+          <span class="mono" style="font-size:26px">cair</span>
+          <span class="disp" style="font-size:78px;color:var(--terra);white-space:nowrap">≈ Rp79,2 jt</span>
+        </div>
+      </div>
+    </div>
+    <div class="a" id="d2buyer" data-obj style="left:810px;top:700px;width:190px;padding:22px 0;border-radius:28px;background:#fff;box-shadow:var(--sh);text-align:center">
+      <svg viewBox="0 0 80 80" width="96" height="96" style="display:block;margin:0 auto"><circle cx="40" cy="40" r="38" fill="#C8944A"/><circle cx="40" cy="31" r="13" fill="#0F0E0C"/><path d="M14 68 C16 50 64 50 66 68" fill="#0F0E0C"/></svg>
+      <div class="mono" style="font-size:22px;margin-top:12px">pembeli</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 RELATE b: bintang lima, lupa brand, toko lain -->
+<section class="sc" id="b3">
+  <div class="a card" data-obj id="d3review" style="left:84px;top:360px;width:912px;height:290px">
+    <svg class="a" viewBox="0 0 80 80" width="96" height="96" style="left:40px;top:36px"><circle cx="40" cy="40" r="38" fill="#C8944A"/><circle cx="40" cy="31" r="13" fill="#0F0E0C"/><path d="M14 68 C16 50 64 50 66 68" fill="#0F0E0C"/></svg>
+    <div class="a" style="left:160px;top:42px;font:700 36px/1 var(--f-body)">Pembeli</div>
+    <div class="a" id="d3stars" style="left:160px;top:96px;display:flex;gap:10px"></div>
+    <div class="a" style="left:44px;top:176px;font:600 38px/1.2 var(--f-body);color:var(--ink-soft,#2A2824)">“Barangnya bagus, sesuai foto.”</div>
+  </div>
+  <div class="a card" data-obj id="d3brand" style="left:84px;top:700px;width:912px;height:210px">
+    <div class="a mono" style="left:44px;top:34px;color:var(--gray)">nama brand-mu</div>
+    <div class="a disp" id="d3brandtxt" style="left:44px;top:86px;font-size:96px;white-space:nowrap">Brand-mu</div>
+    <div class="a hand" id="d3q" style="right:60px;top:70px;font-size:110px">?</div>
+  </div>
+  <div class="a card" data-obj id="d3cal" style="left:84px;top:960px;width:380px;height:280px;overflow:hidden">
+    <div style="height:84px;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center"><span class="mono" style="font-size:26px;color:#fff">bulan depan</span></div>
+    <div class="disp" style="text-align:center;font-size:64px;margin-top:30px;line-height:1.05">beli<br>lagi</div>
+  </div>
+  <div class="a card" data-obj id="d3order" style="left:500px;top:960px;width:496px;height:280px">
+    <div class="a" style="left:36px;top:40px;width:90px;height:90px;border-radius:50%;background:#6B6560;color:#fff;display:flex;align-items:center;justify-content:center;font:800 44px/1 var(--f-display)">T</div>
+    <div class="a mono" style="left:150px;top:46px;font-size:22px;color:var(--gray)">pesanan baru</div>
+    <div class="a disp" style="left:150px;top:86px;font-size:52px;white-space:nowrap">Toko lain</div>
+    <div class="a mono" style="left:36px;top:190px;font-size:22px;color:var(--terra)">bukan toko kamu</div>
+  </div>
+</section>
+
+<!-- 4 INSIGHT a: produk terjual, brand tertinggal -->
+<section class="sc" id="b4">
+  <div class="a chip" id="d4sold" style="left:250px;top:440px;background:var(--ink);color:#fff">dijual: produk ✓</div>
+  <div class="a" id="d4box" data-obj style="left:250px;top:530px;width:440px;height:360px"></div>
+  <div class="a" id="d4tag" style="left:740px;top:560px;width:230px;height:150px;transform-origin:115px 0"></div>
+  <div class="a hand" id="d4note" style="left:250px;top:960px;transform:rotate(-3deg)">brand-mu tertinggal</div>
+</section>
+
+<!-- 5 INSIGHT b: 100 pembeli (mode diagnosis lewat pindai) -->
+<section class="sc" id="b5">
+  <div class="a mono" id="d5chip" style="left:160px;top:380px;font-size:28px">100 pembeli</div>
+  <div class="a" id="d5grid" data-obj style="left:160px;top:450px;width:760px;height:760px"></div>
+  <div class="a" id="d5big" style="left:160px;top:1230px;white-space:nowrap"><span class="disp" id="d5pct" style="font-size:84px">30–50%</span><span class="mono" id="d5lab" style="font-size:26px;margin-left:22px">beli lagi</span></div>
+  <div class="a chip" id="d5once" style="right:84px;top:1250px;border:3px solid currentColor">sisanya beli 1×</div>
+</section>
+
+<!-- 6 INSIGHT c: kartu kecil di tiap paket -->
+<section class="sc" id="b6">
+  <div class="a chip" id="d6chip" style="left:84px;top:470px;background:var(--ink);color:#fff">langkah 1</div>
+  <div class="a" id="d6boxes"></div>
+  <div class="a chip" id="d6ok" style="right:84px;top:470px;background:var(--terra);color:#fff">tiap paket ✓</div>
+</section>
+
+<!-- 7 REFRAME: isi kartu -->
+<section class="sc" id="b7">
+  <div class="a" id="d7card" data-obj style="left:110px;top:360px;width:860px;height:740px;background:#fff;border:5px solid var(--ink);border-radius:34px;box-shadow:0 40px 60px rgba(15,14,12,.18),0 10px 0 rgba(15,14,12,.9)">
+    <div class="a mono" style="left:0;right:0;top:44px;text-align:center;color:var(--terra)">isi kartunya</div>
+    <div id="d7rows"></div>
+  </div>
+  <div class="a" id="d7lane" style="left:0;top:0;width:1080px;height:1920px">
+    <svg class="a" viewBox="0 0 1080 1920" style="left:0;top:0;width:1080px;height:1920px" fill="none" stroke-linecap="round">
+      <path id="d7p1" d="M170 1195 L900 1195" stroke="#6B6560" stroke-width="5" stroke-dasharray="4 16"/>
+      <path id="d7p2" d="M900 1195 C990 1195 990 1255 900 1255 L600 1255" stroke="#B84A2E" stroke-width="8"/>
+    </svg>
+    <div class="a" id="d7buyer" style="left:84px;top:1150px;width:90px;height:90px"><svg viewBox="0 0 80 80" width="90" height="90"><circle cx="40" cy="40" r="38" fill="#C8944A"/><circle cx="40" cy="31" r="13" fill="#0F0E0C"/><path d="M14 68 C16 50 64 50 66 68" fill="#0F0E0C"/></svg></div>
+    <div class="a" id="d7stamp" style="left:560px;top:1150px;transform-origin:center"><div style="border:7px solid var(--terra);color:var(--terra);border-radius:14px;padding:10px 20px;font:800 38px/1 var(--f-display);letter-spacing:.02em;white-space:nowrap">ALASAN KEMBALI</div></div>
+  </div>
+</section>
+
+<!-- 8 CTA: kirim ke tim toko, hitung selisih -->
+<section class="sc" id="b8">
+  <div class="a" id="d8share" data-obj style="left:84px;top:400px;width:200px;height:200px;border-radius:50%;background:var(--terra);display:flex;align-items:center;justify-content:center;box-shadow:var(--sh)"><svg viewBox="0 0 24 24" width="96" height="96" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></svg></div>
+  <svg class="a" viewBox="0 0 1080 300" style="left:0;top:380px;width:1080px;height:300px" fill="none"><path id="d8arrow" d="M300 100 L480 100" stroke="#0F0E0C" stroke-width="6" stroke-dasharray="4 14" stroke-linecap="round"/></svg>
+  <div class="a" id="d8team" style="left:500px;top:430px;width:500px;height:150px"></div>
+  <div class="a chip" id="d8teamlab" style="left:500px;top:600px;background:var(--ink);color:#fff">tim toko</div>
+  <div class="a" id="d8card" data-obj style="left:84px;top:700px;width:912px;height:540px;background:#fff;border-radius:34px;box-shadow:var(--sh)">
+    <div class="a mono" style="left:44px;top:36px;color:var(--gray)">hitung selisihnya</div>
+    <div class="a" id="d8l1" style="left:44px;top:100px;font:700 34px/1.1 var(--f-mono)">omzet di laporan marketplace</div>
+    <div class="a" id="d8l2" style="left:44px;top:180px;font:700 34px/1.1 var(--f-mono);color:var(--terra)">− saldo yang cair</div>
+    <div class="a" id="d8l3" style="left:44px;top:260px;font:700 34px/1.1 var(--f-mono)">÷ omzet di laporan marketplace</div>
+    <div class="a" style="left:44px;top:340px;width:824px;height:0;border-top:5px dashed rgba(15,14,12,.25)"></div>
+    <div class="a" id="d8res" style="left:44px;top:372px;white-space:nowrap"><span class="mono" style="font-size:28px;color:var(--gray)">contoh: </span><span class="disp" style="font-size:110px;color:var(--terra)">≈ <span class="odo" id="d8odo"></span>%</span></div>
+    <div class="a" id="d8stamp" style="left:610px;top:392px;transform-origin:center"><div style="border:7px solid var(--ink);color:var(--ink);border-radius:14px;padding:10px 20px;font:800 38px/1 var(--f-display);white-space:nowrap">HARI INI</div></div>
+  </div>
+</section>
+
+<div id="scan"></div><div id="scanlab">DIAGNOSIS · MEMINDAI</div>
+<div id="hud">
+  <div id="hdl">THE BRAND FIXER</div>
+  <div id="hdr"><span id="chap">// 01 · OBSERVASI</span></div>
+  <div id="cap"><span></span></div>
+</div>
+<div id="flash"></div>
+<div class="vig"></div><div class="grain"></div>
+</div>
+
+
+<script>
+(function(){
+'use strict';
+/* ---------- naskah & waktu (rancangan). Waktu nyata dari voice over (timing_scenes.json) menimpa. ---------- */
+var DEF=[
+  {dur:6.3,name:'HOOK',chap:1,say:'Laporan marketplace bilang Rp100 juta. Rekening bilang Rp79 juta.'},
+  {dur:4.6,name:'RELATE',chap:2,say:'Selisihnya admin dan iklan. Tapi yang lebih mahal itu pembelinya.'},
+  {dur:7.9,name:'RELATE',chap:2,say:'Mereka suka produkmu, kasih bintang lima, lalu lupa nama brand-mu. Bulan depan beli lagi, dari toko lain.'},
+  {dur:3.3,name:'INSIGHT',chap:3,say:'Marketplace menjual produkmu, bukan brand-mu.'},
+  {dur:8.9,name:'INSIGHT',chap:3,say:'Di brand yang saya dampingi, yang beli lagi sekitar 30 sampai 50 persen. Sisanya beli sekali, lalu hilang.'},
+  {dur:3.3,name:'INSIGHT',chap:3,say:'Satu langkah: selipkan kartu kecil di tiap paket.'},
+  {dur:10.0,name:'REFRAME',chap:4,say:'Coba isi tiga hal di kartunya. Nama brand-mu, cara pakai yang benar, dan bonus kalau beli lagi. Pembeli yang tadinya cuma lewat, sekarang punya alasan kembali.'},
+  {dur:5.5,name:'CTA',chap:5,say:'Kirim ke tim yang pegang toko marketplace-mu. Minta mereka hitung selisihnya hari ini.'}];
+var BEATS=window.ANIMATIC_BEATS?DEF.map(function(d,i){return Object.assign({},d,window.ANIMATIC_BEATS[i]||{})}):DEF;
+var SPEED=BEATS.map(function(b,i){return Math.max(1,DEF[i].dur/b.dur)});
+var T0=[],acc=0;BEATS.forEach(function(b){T0.push(acc);acc+=b.dur});window.ANIMATIC_DURATION=acc;
+var ANCH=(window.ANIMATIC_ANCHORS||{}).beats||[];
+function nrm(s){return String(s).toLowerCase().replace(/[^a-z0-9]/g,'')}
+var WARP=BEATS.map(function(b,i){var pts=[[0,0]];if(!b.words||!ANCH[i])return null;var from=0;
+  ANCH[i].forEach(function(a){for(var k=from;k<b.words.length;k++){if(nrm(b.words[k].w).indexOf(a[1])===0){var r=b.words[k].t-T0[i],l=pts[pts.length-1];if(r>l[1]+.05&&a[0]>l[0])pts.push([a[0],r]);from=k+1;break}}});
+  return pts.length>1?pts:null});
+function LOCAL(i,lt){var p=WARP[i];if(!p)return lt*SPEED[i];
+  for(var k=1;k<p.length;k++)if(lt<=p[k][1])return p[k-1][0]+(lt-p[k-1][1])*(p[k][0]-p[k-1][0])/(p[k][1]-p[k-1][1]);
+  var L=p[p.length-1],tail=Math.max(1,(DEF[i].dur-L[0])/Math.max(.3,BEATS[i].dur-L[1]));return L[0]+(lt-L[1])*tail}
+
+/* ---------- alat gerak ---------- */
+function $(id){return document.getElementById(id)}
+function cl(x){return x<0?0:x>1?1:x}
+function pr(t,a,d){return cl((t-a)/d)}
+var E={out:function(t){return 1-Math.pow(1-t,3)},io:function(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2},
+  back:function(t){var c=1.70158;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2)},
+  bounce:function(t){var n=7.5625,d=2.75;if(t<1/d)return n*t*t;if(t<2/d)return n*(t-=1.5/d)*t+.75;if(t<2.5/d)return n*(t-=2.25/d)*t+.9375;return n*(t-=2.625/d)*t+.984375}};
+function op(el,v){el.style.opacity=v}
+function tf(el,s){el.style.transform=s}
+function up(el,t,a,d,dist){var k=E.out(pr(t,a,d||.45));op(el,k);tf(el,'translateY('+((1-k)*(dist==null?60:dist))+'px)')}
+function pop(el,t,a,d,extra){var k=pr(t,a,d||.5);op(el,cl(k*4));tf(el,'scale('+(k?E.back(k):.4)+')'+(extra||''))}
+function draw(p,t,a,d){var L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L*(1-E.io(pr(t,a,d)))}
+function swing(x,amp,f,damp){return amp*Math.exp(-damp*x)*Math.sin(f*x)}
+function odo(el,digits){el.innerHTML='';for(var i=0;i<digits;i++){var c=document.createElement('i'),s=document.createElement('s');s.innerHTML='0<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>0';c.appendChild(s);el.appendChild(c)}}
+function odoSet(el,v){var n=el.children.length,str=String(Math.max(0,Math.round(v))).padStart(n,' ');v=Math.max(0,Math.round(v));for(var i=0;i<n;i++){var ch=str[i],c=el.children[i];if(ch===' '){c.style.display='none';continue}c.style.display='block';
+  var place=Math.pow(10,n-1-i),d=Math.floor(v/place)%10;tf(c.firstChild,'translateY('+(-d*100/11)+'%)')}}
+
+/* ---------- bangun objek ---------- */
+odo($('d1odo'),3);odo($('d1odo2'),3);odo($('d8odo'),2);
+var ROWS=[['penjualan','laporan marketplace','Rp100.000.000',0],['admin marketplace','10% (contoh)','−Rp10.000.000',1],['biaya proses','±667 pesanan × Rp1.250','−Rp833.750',1],['iklan','ROAS 10x (contoh)','−Rp10.000.000',1]];
+$('d2rows').innerHTML=ROWS.map(function(r){return '<div class="rw" style="display:flex;justify-content:space-between;align-items:center;height:108px;border-bottom:3px dashed rgba(15,14,12,.15);padding:0 6px"><div><div style="font:700 30px/1.1 var(--f-mono);text-transform:uppercase">'+r[0]+'</div><div style="font:500 22px/1.3 var(--f-mono);color:var(--gray);margin-top:6px">'+r[1]+'</div></div><div style="font:700 32px/1 var(--f-mono);'+(r[3]?'color:var(--terra)':'')+'">'+r[2]+'</div></div>'}).join('');
+var STAR='<svg viewBox="0 0 24 24" width="52" height="52"><polygon points="12,2 15,9 22,9.3 16.5,14 18.2,21 12,17 5.8,21 7.5,14 2,9.3 9,9" fill="#D5CDBF" stroke="#0F0E0C" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+$('d3stars').innerHTML=[0,1,2,3,4].map(function(){return '<span class="st" style="display:inline-block">'+STAR+'</span>'}).join('');
+function boxSvg(w){var h=Math.round(w*360/440);return '<svg viewBox="0 0 440 360" width="'+w+'" height="'+h+'" style="display:block;overflow:visible"><path d="M30 120 L220 60 L410 120 L220 180Z" fill="#E2C592" stroke="#0F0E0C" stroke-width="7" stroke-linejoin="round"/><path d="M30 120 L30 290 L220 350 L220 180Z" fill="#C79A5E" stroke="#0F0E0C" stroke-width="7" stroke-linejoin="round"/><path d="M410 120 L410 290 L220 350 L220 180Z" fill="#B98238" stroke="#0F0E0C" stroke-width="7" stroke-linejoin="round"/><path d="M196 70 L244 56 L244 188 L196 178Z" fill="#F4EBD9" opacity=".85"/></svg>'}
+$('d4box').innerHTML=boxSvg(440)+'<div class="a mono" style="left:262px;top:230px;font-size:24px;font-weight:700;background:#fff;border:3px solid #0F0E0C;border-radius:8px;padding:8px 14px;transform:rotate(-7deg)">PRODUK</div>';
+$('d4tag').innerHTML='<svg viewBox="0 0 230 150" width="230" height="150" style="overflow:visible"><path d="M115 0 L115 40" stroke="#0F0E0C" stroke-width="5"/><path d="M30 60 L115 40 L200 60 L200 130 Q200 146 184 146 L46 146 Q30 146 30 130Z" fill="#C8944A" stroke="#0F0E0C" stroke-width="6" stroke-linejoin="round"/><circle cx="115" cy="62" r="9" fill="#F7F2E9" stroke="#0F0E0C" stroke-width="4"/></svg><div class="a mono" style="left:0;right:0;top:92px;text-align:center;font-size:24px;font-weight:700;color:#0F0E0C">brand-mu</div>';
+/* grid 100 pembeli */
+var DOTS=[];(function(){var g=$('d5grid'),h='';for(var i=0;i<100;i++){var r=Math.floor(i/10),c=i%10;h+='<i class="dot" style="position:absolute;left:'+(c*76+12)+'px;top:'+(r*76+12)+'px;width:52px;height:52px;border-radius:50%;background:rgba(15,14,12,.25)"></i>'}g.innerHTML=h;DOTS=Array.prototype.slice.call(g.children)})();
+/* tiga paket */
+$('d6boxes').innerHTML=[84,392,700].map(function(x,k){return '<div class="a" id="d6c'+k+'" style="left:'+(x+78)+'px;top:610px;width:140px;height:190px;background:#fff;border:4px solid #0F0E0C;border-radius:14px;box-shadow:0 8px 14px rgba(15,14,12,.18);padding:16px 12px"><div style="height:12px;background:#B84A2E;border-radius:6px;width:70%"></div><div style="height:8px;background:#D5CDBF;border-radius:4px;margin-top:14px"></div><div style="height:8px;background:#D5CDBF;border-radius:4px;margin-top:10px;width:80%"></div><div style="height:8px;background:#D5CDBF;border-radius:4px;margin-top:10px;width:60%"></div></div><div class="a" id="d6b'+k+'" data-obj style="left:'+x+'px;top:700px;width:296px">'+boxSvg(296)+'</div>'}).join('');
+var D7=[['1','Nama brand-mu','jualan apa, untuk siapa','#B84A2E'],['2','Cara pakai yang benar','2–3 langkah, mudah diikuti','#0F0E0C'],['3','Bonus kalau beli lagi','contoh: voucher toko untuk pesanan berikutnya','#C8944A']];
+$('d7rows').innerHTML=D7.map(function(r,k){return '<div class="a rw7" style="left:44px;right:44px;top:'+(120+k*196)+'px;height:170px;display:flex;align-items:center;gap:28px"><div style="flex:none;width:96px;height:96px;border-radius:50%;background:'+r[3]+';color:'+(k===2?'#0F0E0C':'#fff')+';display:flex;align-items:center;justify-content:center;font:800 48px/1 var(--f-display)">'+r[0]+'</div><div><div style="font:800 52px/1.05 var(--f-display);letter-spacing:-.03em">'+r[1]+'</div><div style="font:500 26px/1.3 var(--f-body);color:var(--gray);margin-top:8px">'+r[2]+'</div></div></div>'}).join('');
+$('d8team').innerHTML=[0,1,2].map(function(k){return '<div class="a av8" style="left:'+(k*150)+'px;top:20px;width:120px;height:120px;border-radius:50%;background:'+['#C8944A','#B84A2E','#6B6560'][k]+';box-shadow:var(--sh);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 80 80" width="84" height="84"><circle cx="40" cy="30" r="14" fill="#fff"/><path d="M12 70 C14 48 66 48 68 70" fill="#fff"/></svg></div>'}).join('');
+
+/* ---------- caption karaoke ---------- */
+var CAP=BEATS.map(function(b,bi){
+  if(b.words&&b.words.length){var out=[],chunk=[];b.words.forEach(function(w,i){chunk.push({w:w.w.replace(/[“”"]/g,''),t:w.t});
+    if(chunk.length===3||/[.,?!]["”]?$/.test(w.w)||i===b.words.length-1){var nx=b.words[i+1];out.push({words:chunk,end:nx?Math.min(nx.t,w.t+1.2):w.t+.9});chunk=[]}});return out}
+  var ws=b.say.replace(/[“”"]/g,'').split(/\s+/).filter(Boolean),tot=0;ws.forEach(function(w){tot+=w.length+2});
+  var t=T0[bi]+.15,span=b.dur-.35,out=[],chunk=[];
+  ws.forEach(function(w,i){var d=span*(w.length+2)/tot;chunk.push({w:w,t:t});t+=d;if(chunk.length===3||/[.,?!]$/.test(w)||i===ws.length-1){out.push({words:chunk,end:t});chunk=[]}});
+  return out});
+
+/* ---------- adegan (t = detik rancangan di dalam adegan) ---------- */
+var DI=4,SCAN_A=1.7,SCAN_B=2.7;  /* adegan 5 memakai mode diagnosis: pindai tiap titik */
+window.ANIMATIC_SCAN={i:DI,a:SCAN_A+.4,b:SCAN_B+1.0};
+var S=[
+ function(t){ // 1 hook
+   pop($('d1card'),t,.15,.5);var k=E.io(pr(t,.5,1.5));odoSet($('d1odo'),100*k);
+   var kb=E.out(pr(t,3.2,.6));op($('d1bank'),cl(kb*3));tf($('d1bank'),'translateX('+((1-kb)*1080)+'px)');
+   odoSet($('d1odo2'),100-21*E.io(pr(t,4.5,.9)));
+   up($('d1chip'),t,4.4,.35,20);pop($('d1gap'),t,5.5,.45);
+ },
+ function(t){ // 2 struk
+   var k=E.io(pr(t,.1,1.2));tf($('d2paper'),'translateY('+(-815+k*815)+'px)');tf($('d2printer'),'translateY('+(t>.1&&t<1.3?Math.sin(t*60)*1.5:0)+'px)');
+   var rows=$('d2rows').children,at=[.5,1.1,1.5,1.9];
+   for(var i=0;i<4;i++){var kk=pr(t,at[i],.35);rows[i].style.opacity=kk;rows[i].style.transform='translateX('+((1-E.out(kk))*30)+'px)';
+     rows[i].style.background=(i===1||i===3)&&t>3.0?'rgba(200,148,74,.28)':'transparent'}
+   up($('d2total'),t,2.4,.5,30);
+   var ks=E.io(pr(t,3.0,.5));tf($('d2clip'),'translateX('+(-120*ks)+'px) scale('+(1-.06*ks)+')');tf($('d2printer'),'translateX('+(-120*ks)+'px)');
+   pop($('d2buyer'),t,4.2,.45);
+ },
+ function(t){ // 3 bintang, lupa brand, toko lain
+   pop($('d3review'),t,.3,.5);
+   Array.prototype.forEach.call($('d3stars').children,function(s,i){var k=pr(t,2.2+i*.17,.3);s.style.transform='scale('+(k?E.back(k):1)+')';var p=s.querySelector('polygon');p.setAttribute('fill',k>.3?'#C8944A':'#D5CDBF')});
+   pop($('d3brand'),t,3.3,.5);
+   var f=E.io(pr(t,3.9,.9));$('d3brandtxt').style.filter='blur('+(f*9)+'px)';$('d3brandtxt').style.opacity=1-.6*f;pop($('d3q'),t,4.4,.4);
+   pop($('d3cal'),t,5.3,.5);
+   var ko=E.out(pr(t,7.15,.5));op($('d3order'),cl(ko*3));tf($('d3order'),'translateX('+((1-ko)*600)+'px)');
+ },
+ function(t){ // 4 produk terjual, brand tertinggal
+   pop($('d4box'),t,.2,.5);up($('d4sold'),t,1.3,.35,20);
+   var tg=$('d4tag'),kt=pr(t,.5,.4),kf=pr(t,2.1,.9);op(tg,cl(kt*3));
+   tf(tg,'translateY('+(E.out(kt)*0+E.back(kf>0?kf:0)*0+(kf*kf)*420)+'px) rotate('+(swing(Math.max(0,t-.5),4,6,1.6)*(1-kf)+kf*38)+'deg)');
+   tg.style.opacity=kt>0?(1-.55*kf):0;
+   up($('d4note'),t,2.5,.4,20);
+ },
+ function(t){ // 5 seratus pembeli, pindai, 30-50% kembali
+   var ks=E.io(pr(t,SCAN_A,SCAN_B-SCAN_A+.9)),dark=ks>.5;
+   var scan=$('scan'),lab=$('scanlab');op(scan,ks>0&&ks<1?1:0);scan.style.top=(ks*1920)+'px';op(lab,ks>0&&ks<1?1:0);lab.style.top=(ks*1920-40)+'px';
+   $('bgd').style.opacity=ks>0?1:0;$('bgd').style.clipPath='inset(0 0 '+((1-ks)*100)+'% 0)';
+   var fg=dark?'#FFE2B0':'#0F0E0C';$('d5chip').style.color=dark?'#FFE2B0':'#6B6560';$('d5pct').style.color=dark?'#FFE2B0':'#B84A2E';$('d5lab').style.color=fg;
+   op($('d5chip'),pr(t,.1,.3));
+   DOTS.forEach(function(d,i){var r=Math.floor(i/10),c=i%10,ki=pr(t,.2+(r+c)*.07,.3),y=450+r*76+38,isd=y<ks*1920;
+     var ret30=i<30,ret50=i>=30&&i<50,rest=i>=50,col,sc=ki?E.back(ki):.3,o=cl(ki*3),dy=0;
+     col=isd?'rgba(255,226,176,.28)':'rgba(15,14,12,.25)';
+     if(ret30&&t>3.3+i*.03)col=isd?'#C8944A':'#B84A2E';
+     if(ret50&&t>4.6+(i-30)*.04)col=isd?'rgba(200,148,74,.65)':'rgba(184,74,46,.55)';
+     if(rest&&t>6.3)col=isd?'rgba(255,255,255,.55)':'rgba(15,14,12,.55)';
+     if(rest&&t>7.8){var kg=E.out(pr(t,7.8+(i-50)*.012,.6));o=o*(1-.92*kg);dy=-18*kg}
+     d.style.background=col;d.style.opacity=o;d.style.transform='translateY('+dy+'px) scale('+sc+')'});
+   up($('d5big'),t,4.3,.4,24);$('d5pct').style.opacity=1;
+   pop($('d5once'),t,6.3,.4);$('d5once').style.color=dark?'#FFE2B0':'#0F0E0C';
+ },
+ function(t){ // 6 satu kartu di tiap paket
+   pop($('d6chip'),t,.2,.4);
+   [0,1,2].forEach(function(k){var kb=E.out(pr(t,.45+k*.12,.45));var b=$('d6b'+k);op(b,cl(kb*3));tf(b,'translateY('+((1-kb)*60)+'px)');
+     var c=$('d6c'+k),kc=E.io(pr(t,1.4+k*.3,.6));op(c,cl(kb*3));tf(c,'translateY('+(-420+kc*400)+'px) rotate('+((1-kc)*8)+'deg)')});
+   pop($('d6ok'),t,2.7,.4);
+ },
+ function(t){ // 7 isi kartu
+   var kc=E.out(pr(t,.2,.55));tf($('d7card'),'translateY('+((1-kc)*-700)+'px) rotate('+swing(Math.max(0,t-.5),5,7,2.6)+'deg)');op($('d7card'),cl(kc*3));
+   var rows=$('d7rows').children,at=[2.3,3.3,4.9];
+   for(var i=0;i<3;i++){var k=pr(t,at[i],.4);rows[i].style.opacity=k;rows[i].style.transform='translateX('+((1-E.out(k))*60)+'px)'}
+   var bx=pr(t,6.5,1.3),bk=pr(t,8.2,.9);
+   draw($('d7p1'),t,6.5,1.3);draw($('d7p2'),t,8.2,.9);
+   var buy=$('d7buyer'),x=84+E.io(bx)*750,y=0;if(bk>0){x=816-E.io(bk)*300;y=60*Math.sin(Math.min(1,bk*1.5)*Math.PI/2)}
+   tf(buy,'translate('+(x-84)+'px,'+y+'px)');op(buy,t<6.3?pr(t,6.2,.2)*0:(bk>0?1:1-.55*E.io(bx)));
+   var ks=pr(t,9.2,.25);op($('d7stamp'),ks?1:0);tf($('d7stamp'),'rotate(-5deg) scale('+(ks<1?1.4-.4*E.out(ks):1)+')');
+ },
+ function(t){ // 8 kirim ke tim, hitung selisih
+   pop($('d8share'),t,.2,.5);draw($('d8arrow'),t,.7,.45);
+   Array.prototype.forEach.call($('d8team').children,function(a,i){pop(a,t,.9+i*.2,.45)});up($('d8teamlab'),t,1.5,.35,20);
+   var kc=E.out(pr(t,2.55,.5));op($('d8card'),cl(kc*3));tf($('d8card'),'translateY('+((1-kc)*80)+'px)');
+   up($('d8l1'),t,2.7,.3,18);up($('d8l2'),t,3.3,.3,18);up($('d8l3'),t,3.8,.3,18);
+   up($('d8res'),t,4.2,.35,18);odoSet($('d8odo'),21*E.io(pr(t,4.3,.7)));
+   var ks=pr(t,4.6,.25);op($('d8stamp'),ks?1:0);tf($('d8stamp'),'rotate(-5deg) scale('+(ks<1?2.2-1.2*E.out(ks):1)+')');
+ }];
+
+/* ---------- transisi antar adegan ---------- */
+var TR=[null,'zoom','whip','drop','whip','drop','up','whip'],TD=.42;
+function apply(i,t){
+  var sec=$('b'+(i+1)),start=T0[i],end=start+BEATS[i].dur,inK=i?pr(t,start,TD):1,outK=i<BEATS.length-1?pr(t,end,TD):0;
+  var vis=t>=start&&(i===BEATS.length-1||t<end+TD);sec.style.visibility=vis?'visible':'hidden';if(!vis)return;
+  var tx=0,sc=1+.03*pr(t,start,BEATS[i].dur),blur=0,o=1,ty=0;
+  var ti=TR[i];if(inK<1){var e=E.io(inK);if(ti==='zoom'){sc*=.82+.18*e;o=e}else if(ti==='whip'){tx=(1-e)*1080;blur=(1-e)*14}else if(ti==='up'){ty=(1-e)*1920}else if(ti==='drop'){o=e}}
+  var to=TR[i+1];if(outK>0){var e2=E.io(outK);if(to==='zoom'){sc*=1+e2*1.2;o=1-e2;blur=e2*10}else if(to==='whip'){tx=-e2*1080;blur=e2*14}else if(to==='up'){ty=-e2*1920}else if(to==='drop'){o=1-e2}}
+  tf(sec,'translate('+tx+'px,'+ty+'px) scale('+sc+')');sec.style.filter=blur>.3?'blur('+blur.toFixed(1)+'px)':'none';op(sec,o);sec.style.zIndex=i+1;
+  S[i](LOCAL(i,t-start));
+}
+window.ANIMATIC_T0=T0;window.ANIMATIC_LOCAL=function(i,lt){return LOCAL(i,lt)};
+window.seek=function(t){
+  var cur=0;for(var i=0;i<BEATS.length;i++)if(t>=T0[i])cur=i;
+  for(var j=0;j<BEATS.length;j++)apply(j,t);
+  if(cur!==DI&&!(cur===DI+1&&t<T0[DI+1]+TD)){$('bgd').style.opacity=0;$('scan').style.opacity=0;$('scanlab').style.opacity=0}
+  var fl=pr(t,T0[DI+1]-.05,.35);op($('flash'),fl>0&&fl<1?(1-fl)*.85:0);
+  var dark=cur===DI&&LOCAL(DI,t-T0[DI])>SCAN_A+.7;
+  $('hdl').style.color=dark?'#FFE2B0':'#0F0E0C';
+  $('chap').textContent='// 0'+(BEATS[cur].chap||cur+1)+' · '+BEATS[cur].name;$('chap').style.color=dark?'#FFE2B0':'#B84A2E';
+  var span=$('cap').firstChild,list=CAP[cur],c=null;for(var k=0;k<list.length;k++)if(t>=list[k].words[0].t-.05)c=list[k];
+  if(!c||t>list[list.length-1].end+.1){op(span,0)}else{op(span,1);span.innerHTML=c.words.map(function(w){return '<u style="color:'+(t>=w.t?'#fff':'rgba(255,255,255,.38)')+'">'+w.w+'</u>'}).join(' ');
+    var kk=pr(t,c.words[0].t-.05,.12);tf(span,'scale('+(.92+.08*E.back(kk))+')')}
+};
+window.seek(0);
+})();
+</script>
+</body>
+</html>

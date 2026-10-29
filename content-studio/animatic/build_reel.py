@@ -1,11 +1,11 @@
 """Satu perintah: rekaman voice over -> reels animatic siap tayang.
 
 Pakai (dari folder proyek):
-  python3 animatic/build_reel.py rekaman.m4a posts/reels-harga-ditawar.json out/reel
+  python3 animatic/build_reel.py rekaman.m4a posts/reels-harga-ditawar.json out/reel [v3|omzet]
 
 Langkah:
   1. vo_prep.py   jernihkan suara, buang napas/klik, atur jeda per kalimat, waktu per kata
-  2. sfx-v3.py    musik latar + efek suara mengikuti waktu voice over
+  2. sfx-*.py     musik latar + efek suara mengikuti waktu voice over
   3. campur       musik mengecil saat Anda bicara (sidechain), lalu -14 LUFS, puncak -1,5 dBTP
   4. cek tata letak (tests/t30_animatic_layout.js) dengan waktu voice over
   5. render MP4 1080x1920 30 fps
@@ -59,11 +59,16 @@ def to_scenes(timing_path, anchors_path, out_path):
     return out_path
 
 
-def main(rec, script, outdir):
+SETS = {'v3': ('animatic-v3.html', 'anchors-v3.json', 'sfx-v3.py'),
+        'omzet': ('animatic-omzet.html', 'anchors-omzet.json', 'sfx-omzet.py')}
+
+
+def main(rec, script, outdir, setname='v3'):
+    html, anchors, sfx = SETS[setname]
     os.makedirs(outdir, exist_ok=True)
     run([sys.executable, os.path.join(HERE, 'vo_prep.py'), rec, script, outdir])
-    timing = to_scenes(os.path.join(outdir, 'timing.json'), os.path.join(HERE, 'anchors-v3.json'), os.path.join(outdir, 'timing_scenes.json'))
-    run([sys.executable, os.path.join(HERE, 'sfx-v3.py'), outdir, '--timing', timing])
+    timing = to_scenes(os.path.join(outdir, 'timing.json'), os.path.join(HERE, anchors), os.path.join(outdir, 'timing_scenes.json'))
+    run([sys.executable, os.path.join(HERE, sfx), outdir, '--timing', timing])
     vo, mu, fx = (os.path.join(outdir, n) for n in ('vo_clean.wav', 'music.wav', 'fx.wav'))
     pre = os.path.join(outdir, '_mix.wav'); mix = os.path.join(outdir, 'mix.wav')
     # musik ±-30 LUFS di bawah suara, efek ±-24 LUFS. Dinormalkan di langkah terpisah: loudnorm di dalam graph
@@ -82,13 +87,13 @@ def main(rec, script, outdir):
     os.remove(pre)
     i1, p1 = loudness(mix)
     print('   campuran: %.1f LUFS, puncak %.1f dBFS' % (i1, p1))
-    run(['node', os.path.join(ROOT, 'tests', 't30_animatic_layout.js'), 'animatic-v3.html', timing])
+    run(['node', os.path.join(ROOT, 'tests', 't30_animatic_layout.js'), html, timing])
     mp4 = os.path.join(outdir, 'reel.mp4')
-    run(['node', os.path.join(HERE, 'render-animatic.js'), '--file', 'animatic-v3.html', '--beats', timing, '--audio', mix, '--stills', '1', '--out', mp4])
+    run(['node', os.path.join(HERE, 'render-animatic.js'), '--file', html, '--beats', timing, '--audio', mix, '--stills', '1', '--out', mp4])
     print('✓ selesai: ' + os.path.relpath(mp4, os.getcwd()))
 
 
 if __name__ == '__main__':
     if len(sys.argv) < 4:
         print(__doc__); sys.exit(1)
-    main(*sys.argv[1:4])
+    main(*sys.argv[1:5])

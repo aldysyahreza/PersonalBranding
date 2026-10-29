@@ -6,7 +6,7 @@ const FILE=process.argv[2]||'animatic-v3.html';
 (async()=>{const b=await chromium.launch();const pg=await b.newPage({viewport:{width:1080,height:1920}});
 await pg.route(/^https?:/,r=>r.abort());
 if(process.argv[3]){const fs=require('fs');const tl=JSON.parse(fs.readFileSync(process.argv[3],'utf8'));await pg.addInitScript(b=>{window.ANIMATIC_BEATS=b},tl.beats);
-  const an=path.join(__dirname,'..','animatic',FILE.replace(/^animatic(-v\d+)?\.html$/,'anchors$1.json'));if(fs.existsSync(an))await pg.addInitScript(a=>{window.ANIMATIC_ANCHORS=a},JSON.parse(fs.readFileSync(an,'utf8')))}
+  const an=path.join(__dirname,'..','animatic',FILE.replace(/^animatic/,'anchors').replace(/\.html$/,'.json'));if(fs.existsSync(an))await pg.addInitScript(a=>{window.ANIMATIC_ANCHORS=a},JSON.parse(fs.readFileSync(an,'utf8')))}
 await pg.goto('file://'+path.join(__dirname,'..','animatic',FILE));
 await pg.addStyleTag({path:path.join(__dirname,'..','assets','fonts-embed.css')});
 await pg.evaluate(()=>Promise.all(['800 40px Archivo','italic 400 40px Fraunces','600 40px Outfit','600 40px Caveat','500 40px "JetBrains Mono"'].map(f=>document.fonts.load(f))));
@@ -24,7 +24,7 @@ const res=await pg.evaluate(()=>{
   function clipRect(el,rc){let r={left:rc.left,right:rc.right,top:rc.top,bottom:rc.bottom};for(let e=el;e&&e.id!=='stage';e=e.parentElement){const cs=getComputedStyle(e);if(cs.overflow!=='visible'||cs.overflowY==='hidden'){const b=e.getBoundingClientRect();r.left=Math.max(r.left,b.left);r.right=Math.min(r.right,b.right);r.top=Math.max(r.top,b.top);r.bottom=Math.min(r.bottom,b.bottom)}}return (r.right-r.left>2&&r.bottom-r.top>2)?r:null}
   // jeda transisi tiap adegan + jendela pindai (adegan 4, detik rancangan 2,2-3,8) dibaca langsung dari animasi
   const starts=window.ANIMATIC_T0||[];
-  const skip=t=>starts.some(s=>t>=s-.05&&t<s+.6)||(starts.length>3&&t>=starts[3]&&t<(starts[4]||dur)&&(l=>l>=2.2&&l<3.8)(window.ANIMATIC_LOCAL(3,t-starts[3])));
+  const sc=window.ANIMATIC_SCAN||{i:3,a:2.2,b:3.8};const skip=t=>starts.some(s=>t>=s-.05&&t<s+.6)||(starts.length>sc.i&&t>=starts[sc.i]&&t<(starts[sc.i+1]||dur)&&(l=>l>=sc.a&&l<sc.b)(window.ANIMATIC_LOCAL(sc.i,t-starts[sc.i])));
   for(let t=0.1;t<dur;t+=0.2){if(skip(t))continue;window.seek(t);
     const texts=[];const w=document.createTreeWalker(document.getElementById('stage'),NodeFilter.SHOW_TEXT);let n;
     while(n=w.nextNode()){if(!n.textContent.trim())continue;const el=n.parentElement;if(hidden(el)||eff(el)<.5)continue;const r=document.createRange();r.selectNodeContents(n);
