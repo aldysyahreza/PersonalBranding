@@ -55,6 +55,12 @@ Dasbor web satu file (`content-studio.html`, vanilla JS, tanpa build) untuk memb
 - Cek CTA (berlaku sampai Aldy mengubahnya): CTA hanya SATU dari save · share · follow; tanpa keyword, tanpa ajakan DM, tanpa otomasi; harus terhubung dengan isi (kenapa disimpan, dikirim ke siapa, apa yang didapat kalau follow). CTA komentar/keyword = pelanggaran. Diperiksa otomatis di Studio (ctaCheck, juga pinned comment).
 - Alur wajib lengkap: 1 Problem spesifik, 2 Studi kasus (brand/situasi konkret, JANGAN dikarang: pakai kasus klien yang disamarkan atau publik bersumber), 3 Solusi satu langkah, 4 Contoh wujudnya, 5 CTA. Dibungkus storytelling karakter Aldy ("saya", director yang mendiagnosis). Reels: kelima elemen masuk struktur HRIRC. Elemen hilang/kabur -> tulis di bagian "Temuan".
 
+## Keputusan topik (29 Okt 2026)
+- DISETUJUI: topik 2 "Aplikasi bilang Rp100 juta, rekening bilang Rp79 juta" (selisih marketplace >21%, biaya terbesar admin + iklan, beli ulang 20-30%, hit and run). Naskah: posts/reels-omzet-marketplace.json.
+- DITOLAK Aldy: topik 1 (AI tidak menyebut bisnismu) dan topik 3 (barang impor murah, belum pernah menangani). Jangan diangkat lagi tanpa diminta.
+- Studi kasus: tidak punya kasus klien yang boleh diceritakan sebelum ada pemicu topik. Boleh pakai kasus publik tanpa nama brand (syarat: sumber bisa dicek, nama diganti deskripsi, tidak dibingkai sebagai klien, sumber disimpan, detail identitas dihapus bila negatif). Per 29 Okt belum ada kasus publik terverifikasi untuk topik 2; compas.co.id dan ecommercefastlane.com tidak bisa dibuka dari sesi cloud (perlu diizinkan di pengaturan jaringan).
+- Jenis bisnis yang pernah didampingi Aldy: jasa, skincare, vape, herbal, fashion, F&B, personal branding; omzet Rp100 juta sampai di atas Rp1 miliar. Masalah dominan: manajemen tim, strategi marketing dan sosial media, brand belum kuat/hilang arah dan positioning. Metodenya: assessment dan analisis dulu, baru strategi. Hasil terlihat paling cepat 6 bulan.
+
 ## Aturan desain (Style Bible v2)
 - Palet: Ink #0F0E0C, Paper #FBF8F3, Terakota #B84A2E, Amber #C8944A, Warm Gray #6B6560. Dominan per carousel: terakota atau amber.
 - Ritme latar: hero (terakota/amber) hanya cover, slide 6, slide 8. Slide 2-5 paper. Ink hanya slide 7.

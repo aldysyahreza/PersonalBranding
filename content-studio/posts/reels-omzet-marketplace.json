@@ -1,0 +1,68 @@
+{
+  "id": "r-omzet-marketplace",
+  "title": "Reels: omzet di aplikasi besar, yang cair kecil",
+  "format": "reels",
+  "stage": "copy",
+  "dx": 6,
+  "job": "Share",
+  "pillar": "Brand Diagnosis",
+  "hue": "terracotta",
+  "caption": "Aplikasi bilang Rp100 juta, rekening bilang Rp79 juta.\n\nAdmin dan iklan memang memotong. Tapi yang lebih mahal adalah pembeli yang suka produkmu, lalu lupa nama brand-mu dan beli lagi dari toko lain.\n\nSatu langkah kecil: selipkan kartu di tiap paket. Isinya nama brand, kenapa produk ini dibuat, dan kapan sebaiknya isi ulang.\n\nKirim ke satu owner yang omzet di aplikasinya besar tapi uangnya tipis, biar dia hitung selisihnya malam ini.",
+  "pinned": "Cara hitung selisihnya: omzet di aplikasi dikurangi saldo yang cair, lalu dibagi omzet di aplikasi.",
+  "story": "",
+  "reel": {
+    "v": 2,
+    "angle": "kontradiksi",
+    "exec": "angka",
+    "coverH": "Omzet Rp100 juta",
+    "coverHi": "cair Rp79 juta",
+    "beats": [
+      {
+        "say": "Aplikasi bilang Rp100 juta. Rekening bilang Rp79 juta.",
+        "txt": "Cair cuma *Rp79 juta*",
+        "shot": "phone",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Selisihnya admin dan iklan. Tapi yang lebih mahal itu pembelinya. Mereka suka produkmu, kasih bintang lima, lalu lupa nama brand-mu. Bulan depan beli lagi, dari toko lain.",
+        "txt": "Suka produk, lupa *brand*",
+        "shot": "med",
+        "dur": "",
+        "case": "PENDING: pola dari brand yang Aldy dampingi (selisih >21%, beli ulang 20-30%, hit and run). Belum ada kasus bersumber/publik terverifikasi. Perlu konfirmasi Aldy: angka ini boleh diucapkan sebagai 'yang saya temui'.",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Marketplace menjual produkmu, bukan brand-mu. Yang beli lagi cuma 20 sampai 30 persen. Satu langkah: selipkan kartu kecil di tiap paket.",
+        "txt": "Satu *kartu* per paket",
+        "shot": "close",
+        "dur": "",
+        "case": "",
+        "solusi": "Selipkan kartu kecil di tiap paket yang memberi pembeli alasan mengingat nama brand dan cara bertemu lagi di luar aplikasi.",
+        "contoh": ""
+      },
+      {
+        "say": "Isinya tiga baris. Nama brand-mu, kenapa produk ini dibuat, dan kapan sebaiknya isi ulang. Pembeli yang tadinya cuma lewat, sekarang tahu siapa yang jualan.",
+        "txt": "Dari lewat jadi *kenal*",
+        "shot": "card",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": "Kartu 3 baris: (1) nama brand + satu kalimat jualan apa untuk siapa, (2) kenapa produk ini dibuat, (3) kapan biasanya perlu isi ulang + akun untuk info isi ulang."
+      },
+      {
+        "say": "Kirim ke satu owner yang omzet di aplikasinya besar, tapi uangnya tipis. Biar dia hitung selisihnya malam ini.",
+        "txt": "Kirim ke *satu owner*",
+        "shot": "med",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      }
+    ],
+    "prod": {}
+  }
+}
