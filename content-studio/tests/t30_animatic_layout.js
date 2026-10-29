@@ -22,9 +22,9 @@ const res=await pg.evaluate(()=>{
   function inter(a,b){const w=Math.min(a.right,b.right)-Math.max(a.left,b.left),h=Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top);return w>6&&h>Math.max(10,.18*Math.min(a.bottom-a.top,b.bottom-b.top))}
   function inside(a,b){return a.left>=b.left-2&&a.right<=b.right+2&&a.top>=b.top-2&&a.bottom<=b.bottom+2}
   function clipRect(el,rc){let r={left:rc.left,right:rc.right,top:rc.top,bottom:rc.bottom};for(let e=el;e&&e.id!=='stage';e=e.parentElement){const cs=getComputedStyle(e);if(cs.overflow!=='visible'||cs.overflowY==='hidden'){const b=e.getBoundingClientRect();r.left=Math.max(r.left,b.left);r.right=Math.min(r.right,b.right);r.top=Math.max(r.top,b.top);r.bottom=Math.min(r.bottom,b.bottom)}}return (r.right-r.left>2&&r.bottom-r.top>2)?r:null}
-  let chapPrev='',starts=[];
-  for(let t=0;t<dur;t+=0.05){window.seek(t);const c=document.getElementById('chap').textContent;if(c!==chapPrev){starts.push(t);chapPrev=c}}
-  const sc0=starts[3]||15.4;const skip=t=>starts.some(s=>t>=s-.05&&t<s+.6)||(t>=sc0+2.2&&t<sc0+3.8);
+  // jeda transisi tiap adegan + jendela pindai (adegan 4, detik rancangan 2,2-3,8) dibaca langsung dari animasi
+  const starts=window.ANIMATIC_T0||[];
+  const skip=t=>starts.some(s=>t>=s-.05&&t<s+.6)||(starts.length>3&&t>=starts[3]&&t<(starts[4]||dur)&&(l=>l>=2.2&&l<3.8)(window.ANIMATIC_LOCAL(3,t-starts[3])));
   for(let t=0.1;t<dur;t+=0.2){if(skip(t))continue;window.seek(t);
     const texts=[];const w=document.createTreeWalker(document.getElementById('stage'),NodeFilter.SHOW_TEXT);let n;
     while(n=w.nextNode()){if(!n.textContent.trim())continue;const el=n.parentElement;if(hidden(el)||eff(el)<.5)continue;const r=document.createRange();r.selectNodeContents(n);

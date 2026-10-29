@@ -29,18 +29,19 @@ Dasbor web satu file (`content-studio.html`, vanilla JS, tanpa build) untuk memb
 - Impor TIDAK PERNAH menimpa: ID yang sudah ada -> post baru dengan judul '(impor)'. Foto berupa path file dilewati (dilaporkan di toast); data URL divalidasi ketat (`DATA_IMG`). Kolom divalidasi & dinormalisasi ke 8 slide ORDER.
 - Tes: tests/t24_json_roundtrip.js.
 
-## Reels Studio (v23)
-- Post format `reels` membuka Reels Studio di tab Studio: tab Cover + 7 langkah (BEATS: observasi, situasi relatable, ketegangan, diagnosis, reframe, pertanyaan reflektif, CTA lembut). Per langkah: `say` (ucapan), `txt` (teks layar, satu frasa Fraunces ditandai *bintang*), `shot` (kunci SHOTS), `dur` (kosong = 2,5 kata/detik + 0,4).
-- Data di `p.reel`: beats[7], prod{id:bool} (checklist PROD), coverH, coverHi. `reelInit(p)` menormalkan data lama (hook lama -> ucapan langkah 1; script lama tampil sebagai 'Catatan naskah lama'). Tidak mengubah SEED, jadi tanpa migrasi rev.
-- Pratinjau 9:16 `reelHTML(p,k,pv)`: k=0 cover (latar hero, teks zona y 400-1400), k=1..7 mockup frame (siluet A-roll / arsir B-roll / kartu teks). Arsir zona UI Instagram (`.rsafe`) dan label (`.rmeta`) hanya di pratinjau, dibuang saat ekspor.
-- Daftar shot dan durasi dihitung otomatis dari naskah; checklist produksi disimpan per post. Cek aturan: hook > 4 dtk, kalimat > 14 kata, teks layar > 4 kata, > 1 frasa Fraunces, kata terlarang, CTA kata kunci/DM (bad), total 30-45 dtk.
-- Unduh cover reels PNG 1080x1920 (`renderHTMLBlob`, fungsi ekspor umum). `render/render.js` pada JSON reels -> `reel-cover.png`. Contoh: posts/reels-harga-ditawar.json. Tes: tests/t25_reels.js.
-- Fix: bila data tersimpan tidak berisi p-harga-ditawar, Studio memilih post pertama (dulu kosong).
+## Reels Studio (v25, struktur HRIRC)
+- Post format `reels` membuka Reels Studio: tab Cover + 5 babak HRIRC (Hook, Relate, Insight, Reframe, CTA). Per babak: `say` (ucapan), `txt` (teks layar, satu frasa Fraunces ditandai *bintang*), `shot` (kunci SHOTS), `dur` (kosong = 2,5 kata/detik + 0,4).
+- Elemen alur wajib = kolom perencanaan per babak (BEAT_REQ): Relate `case` (studi kasus, jangan dikarang), Insight `solusi` (satu langkah), Reframe `contoh` (wujudnya). Kosong -> "Temuan" di panel cek.
+- Hook 2 lapis: `reel.angle` (HOOK_ANGLE: kontradiksi, angka, rugi, cermin, tes, tanya) × `reel.exec` (HOOK_EXEC: coretan, layar, angka, chat, pindai, banding). Rancangan Claude, disetujui Aldy 29 Okt 2026 sebagai titik awal; ubah di kode bila Aldy menambah/mencoret.
+- Data `p.reel`: v=2, beats[5], angle, exec, prod{}, coverH, coverHi. `reelInit` memigrasi data 7 langkah lama otomatis (Observasi->Hook, Situasi+Ketegangan->Relate, Diagnosis->Insight, Reframe+Pertanyaan->Reframe, CTA->CTA), cadangan di `reel.legacy7`. Tidak mengubah SEED.
+- Pratinjau 9:16, daftar shot otomatis, checklist produksi, unduh cover 1080x1920 tetap seperti v23. Cek: hook > 4 dtk, hook belum 2 lapis, kolom wajib kosong, kalimat > 14 kata, teks layar > 4 kata, > 1 frasa Fraunces, kata terlarang/kaku, ctaCheck di babak CTA, total 30-45 dtk.
+- Tes: tests/t25_reels.js (termasuk migrasi). Contoh: posts/reels-harga-ditawar.json (HRIRC v2; studi kasus/solusi/contoh sengaja kosong = Temuan terbuka).
 
 ## Reels animatic (v4, DISETUJUI Aldy 28 Okt 2026, gaya TERKUNCI)
 - Satu perintah: `python3 animatic/build_reel.py rekaman.m4a posts/<reels>.json out/reel` -> reel.mp4. Aldy hanya mengirim voice over; visual dari kode.
 - Gaya: buku catatan diagnosis (kertas grid krem, objek semi-3D, coretan pena merah Caveat, mode Diagnosis ink+amber lewat pindai, caption karaoke pill ink, header bab, stempel DIDIAGNOSIS). Teknik gerak diadaptasi dari referensi @decoyreport, bukan disalin.
 - Audio: vo_prep.py (RNNoise + EQ desis, JANGAN deesser ffmpeg; jeda koma 0,18 / kalimat 0,35 / langkah 0,55), musik di-duck sidechain, -14 LUFS, limiter -2,5 dB (AAC menambah puncak).
+- Babak narasi (HRIRC, 5) terpisah dari adegan visual (7 di v3): anchors-v3.json `scenes` = kata pembuka tiap adegan + babaknya; build_reel.to_scenes memetakan timing per babak ke per adegan (kata pembuka dicari hanya di babaknya). Label bab di video = babak HRIRC.
 - Sinkron: anchors-v3.json mengikat momen visual ke kata; animasi + efek suara memakai peta waktu yang sama. Pencocokan kata tanpa ASR (DP suku kata + intonasi naik untuk tanya): cek caption bila Aldy improvisasi.
 - QC wajib sebelum kirim: tests/t30_animatic_layout.js (tanpa tabrakan) + cek frame visual (kesejajaran) + loudness.
 - Jangan pakai pkill -f dengan pola yang ada di baris perintah sendiri (membunuh shell). Jangan loudnorm di dalam filtergraph bersama asplit/sidechain (ffmpeg macet).

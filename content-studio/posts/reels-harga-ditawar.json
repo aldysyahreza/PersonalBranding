@@ -18,6 +18,54 @@
         "say": "Yang paling sering ditawar, biasanya paling cepat kasih diskon.",
         "txt": "Paling cepat *diskon*",
         "shot": "walk",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Chat masuk jam sembilan malam. “Kak, bisa kurang?” Kamu langsung balas, “Boleh, Kak.” Besoknya pelanggan lain minta hal yang sama. Margin makin tipis, capeknya makin tebal.",
+        "txt": "“Kak, bisa kurang?”",
+        "shot": "phone",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Sering kali masalahnya bukan harga. Pelanggan belum punya alasan lain untuk memilih kamu.",
+        "txt": "Bukan soal *harga*",
+        "shot": "close",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Harga yang ditawar itu gejala. Alasan dipilih yang belum jelas, itu akarnya. Coba jawab jujur. Orang memilih bisnismu karena apa, selain murah?",
+        "txt": "Harga itu *gejala*",
+        "shot": "card",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Simpan video ini. Kirim ke satu teman yang masih sering ditawar.",
+        "txt": "Simpan & *kirim*",
+        "shot": "med",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      }
+    ],
+    "prod": {},
+    "legacy7": [
+      {
+        "say": "Yang paling sering ditawar, biasanya paling cepat kasih diskon.",
+        "txt": "Paling cepat *diskon*",
+        "shot": "walk",
         "dur": ""
       },
       {
@@ -57,6 +105,8 @@
         "dur": ""
       }
     ],
-    "prod": {}
+    "v": 2,
+    "angle": "kontradiksi",
+    "exec": "coretan"
   }
 }

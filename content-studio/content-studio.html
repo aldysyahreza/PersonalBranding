@@ -404,7 +404,8 @@ function importPost(j){
   if(j.scores&&typeof j.scores==='object')['t','e','f','s'].forEach(function(k){if(+j.scores[k])np.scores[k]=Math.max(1,Math.min(5,+j.scores[k]))});
   if(Array.isArray(j.quality))np.quality=np.quality.map(function(v,i){return Math.max(0,Math.min(10,+j.quality[i]||0))});
   if(j.reel&&typeof j.reel==='object'){var jr=j.reel;np.reel={hook:String(jr.hook||''),script:String(jr.script||''),checks:[0,1,2,3,4,5].map(function(i){return (jr.checks||[])[i]?1:0}),coverH:String(jr.coverH||''),coverHi:String(jr.coverHi||''),prod:{}};
-    if(Array.isArray(jr.beats))np.reel.beats=jr.beats.slice(0,7).map(function(b,k){b=b&&typeof b==='object'?b:{};return {say:String(b.say||''),txt:String(b.txt||''),shot:isShot(b.shot)?b.shot:DEFSHOT[k],dur:b.dur==null?'':String(b.dur)}});
+    if(Array.isArray(jr.beats))np.reel.beats=jr.beats.slice(0,7).map(function(b,k){b=b&&typeof b==='object'?b:{};return {say:String(b.say||''),txt:String(b.txt||''),shot:isShot(b.shot)?b.shot:undefined,dur:b.dur==null?'':String(b.dur),case:String(b.case||''),solusi:String(b.solusi||''),contoh:String(b.contoh||'')}});
+    if(jr.v===2)np.reel.v=2;if(isKey(HOOK_ANGLE,jr.angle))np.reel.angle=jr.angle;if(isKey(HOOK_EXEC,jr.exec))np.reel.exec=jr.exec;
     if(jr.prod&&typeof jr.prod==='object')Object.keys(jr.prod).forEach(function(k){if(/^\w{1,8}$/.test(k))np.reel.prod[k]=!!jr.prod[k]})}
   if(+j.rev)np.rev=+j.rev;
   np.slides=ORDER.map(function(ty,k){var base=emptySlides()[k],q=(j.slides||[])[k]||{};if(q.type===ty)Object.keys(q).forEach(function(f){if(f!=='type'&&(typeof q[f]==='string'||typeof q[f]==='number'))base[f]=String(q[f])});return base});
@@ -705,14 +706,31 @@ function updatePreview(){
   document.querySelectorAll('.sb').forEach(function(b,i){var w=worst(an.slides[i]);var d=b.querySelector('i');if(d)d.className=w==='ok'?'':w});
 }
 /* ---------- reels studio: face reels 7 langkah, daftar shot otomatis, checklist produksi ---------- */
+/* struktur baku reels: HRIRC. Elemen alur wajib: Problem (Hook), Studi kasus (Relate), Solusi (Insight), Contoh (Reframe), CTA. */
 var BEATS=[
- ['Observasi','Hal yang Anda perhatikan dari klien atau pasar. Ini hook: harus terucap dalam 1,5 detik pertama.'],
- ['Situasi relatable','Adegan nyata yang membuat penonton berpikir: ini saya banget.'],
- ['Ketegangan','Akibatnya kalau dibiarkan. Kecil, nyata, terasa.'],
- ['Diagnosis','Masalah sebenarnya, disampaikan lembut. Bukan vonis.'],
- ['Reframe','Cara pandang baru dalam satu kalimat.'],
- ['Pertanyaan reflektif','Satu pertanyaan yang membuat penonton berhenti dan berpikir.'],
- ['CTA lembut','Satu ajakan saja: save, share, atau follow, dengan alasan yang nyambung dengan isi. Tanpa komentar, kata kunci, atau DM.']];
+ ['Hook','Problem spesifik dalam 1,5 detik pertama. Pilih satu angle psikologis × satu eksekusi khas brand.'],
+ ['Relate','Studi kasus: brand atau situasi konkret yang membuat owner berpikir "ini saya banget". Jangan dikarang.'],
+ ['Insight','Diagnosis akar masalahnya, lalu satu langkah solusi yang jelas.'],
+ ['Reframe','Contoh wujudnya kalau diterapkan, sampai cara pandang owner berubah saat melihatnya.'],
+ ['CTA','Satu ajakan saja: save, share, atau follow, dengan alasan yang nyambung dengan isi. Tanpa komentar, kata kunci, atau DM.']];
+/* elemen wajib per babak (kolom perencanaan, tidak diucapkan terpisah) */
+var BEAT_REQ={1:['case','Studi kasus','brand atau situasi konkret, sebut sumbernya (klien disamarkan, data publik). Jangan dikarang'],2:['solusi','Satu langkah solusi','satu tindakan yang bisa owner lakukan minggu ini'],3:['contoh','Contoh wujudnya','seperti apa hasilnya kalau diterapkan: kalimat, foto, tabel, atau balasan chat']};
+/* sistem hook 2 lapis: lapis 1 angle psikologis (kenapa orang berhenti), lapis 2 eksekusi khas Brand Fixer (cara kita menunjukkannya) */
+var HOOK_ANGLE={
+ kontradiksi:['Kontradiksi','Membalik anggapan umum owner.','Harga kamu ditawar bukan karena mahal.'],
+ angka:['Angka spesifik','Satu angka yang membuat berhenti, dengan sumber.','90% produk di marketplace itu barang impor.'],
+ rugi:['Kerugian diam-diam','Kerugian yang sedang terjadi tanpa disadari.','Setiap diskon 10% memakan sepertiga untungmu.'],
+ cermin:['Cermin owner','Owner mengenali kebiasaannya sendiri.','Owner yang masih balas chat jam 9 malam.'],
+ tes:['Tes langsung','Tes yang bisa dicoba saat itu juga.','Coba ketik nama bisnismu di ChatGPT.'],
+ tanya:['Pertanyaan diagnosis','Pertanyaan yang owner tidak bisa jawab cepat.','Orang memilih bisnismu karena apa, selain murah?']};
+var HOOK_EXEC={
+ coretan:['Coretan diagnosis','Kata kunci dilingkari atau dicoret pena merah.'],
+ layar:['Tes di layar HP','Rekam layar: chat, ChatGPT, atau halaman marketplace.'],
+ angka:['Angka dari struk','Angka bergulir, struk, atau tabel sederhana.'],
+ chat:['Kutipan chat pelanggan','Bubble chat dengan kalimat pelanggan apa adanya.'],
+ pindai:['Mode Diagnosis','Pindai X-ray yang membuka isi masalah.'],
+ banding:['Bandingkan berdampingan','Dua pilihan atau sebelum/sesudah dalam satu layar.']};
+function isKey(o,k){return typeof k==='string'&&Object.prototype.hasOwnProperty.call(o,k)}
 var SHOTS={
  walk:['Jalan ke kamera','Anda berjalan mendekat sambil bicara, kamera setinggi mata'],
  med:['A-roll medium','Wajah ke kamera, setinggi dada, mata di sepertiga atas'],
@@ -720,7 +738,7 @@ var SHOTS={
  phone:['B-roll HP','Tangan memegang HP, layar chat kosong tanpa teks terbaca'],
  place:['B-roll suasana','Suasana toko atau meja kerja, tanpa wajah orang lain'],
  card:['Teks layar penuh','Latar warna brand dengan teks besar, tanpa wajah']};
-var DEFSHOT=['walk','phone','med','close','card','close','med'];
+var DEFSHOT=['walk','phone','close','card','med'];
 function isShot(k){return typeof k==='string'&&Object.prototype.hasOwnProperty.call(SHOTS,k)}
 var PROD=[
  ['Pra-produksi',[['p1','Naskah dibaca keras, tidak ada kalimat yang canggung'],['p2','Hook terucap dalam 1,5 detik pertama'],['p3','Lokasi tenang, cahaya jendela dari depan wajah'],['p4','Baju polos netral, atau terakota/amber sesuai warna post']]],
@@ -730,8 +748,17 @@ var PROD=[
 function reelInit(p){
   var r=p.reel&&typeof p.reel==='object'?p.reel:(p.reel={hook:'',script:'',checks:[0,0,0,0,0,0]});
   if(!Array.isArray(r.beats))r.beats=[];
-  for(var k=0;k<7;k++){var b=r.beats[k]&&typeof r.beats[k]==='object'?r.beats[k]:(r.beats[k]={});['say','txt','dur'].forEach(function(f){if(b[f]==null)b[f]=''});if(!isShot(b.shot))b.shot=DEFSHOT[k]}
-  r.beats.length=7;
+  /* migrasi 7 langkah lama -> HRIRC (cadangan disimpan di r.legacy7):
+     Observasi->Hook, Situasi+Ketegangan->Relate, Diagnosis->Insight, Reframe+Pertanyaan->Reframe, CTA->CTA */
+  if(r.v!==2&&r.beats.length>5){
+    var L=r.beats;r.legacy7=JSON.parse(JSON.stringify(L));
+    var join=function(a,b){a=a||{};b=b||{};var j=function(f,sep){return [a[f],b[f]].filter(function(x){return x&&String(x).trim()}).join(sep)};
+      var da=parseFloat(a.dur),db=parseFloat(b.dur);return {say:j('say',' '),txt:a.txt||b.txt||'',shot:a.shot,dur:(da>0&&db>0)?String(da+db):''}};
+    r.beats=[L[0]||{},join(L[1],L[2]),L[3]||{},join(L[4],L[5]),L[6]||{}].map(function(b){return {say:b.say||'',txt:b.txt||'',shot:b.shot,dur:b.dur||''}});
+  }
+  for(var k=0;k<5;k++){var b=r.beats[k]&&typeof r.beats[k]==='object'?r.beats[k]:(r.beats[k]={});['say','txt','dur','case','solusi','contoh'].forEach(function(f){if(b[f]==null)b[f]=''});if(!isShot(b.shot))b.shot=DEFSHOT[k]}
+  r.beats.length=5;r.v=2;
+  if(!isKey(HOOK_ANGLE,r.angle))r.angle='';if(!isKey(HOOK_EXEC,r.exec))r.exec='';
   if(r.hook&&!r.beats[0].say)r.beats[0].say=r.hook;
   if(!r.prod||typeof r.prod!=='object')r.prod={};
   if(r.coverH==null)r.coverH='';if(r.coverHi==null)r.coverHi='';
@@ -753,7 +780,7 @@ function reelHTML(p,k,pv){
   var vis=card?'':broll?'<div class="rbroll"><span>'+esc(sh[0])+'</span></div>':'<div class="rface"><i></i><b></b></div>';
   var tw=words(String(b.txt).replace(/\*/g,'')),tz=card?(tw<=2?170:130):(tw<=2?120:96);
   var txt=b.txt?'<div class="lock" style="top:'+(card?'720':'1060')+'px"><div class="rtxt" style="font-size:'+tz+'px;'+(card?'color:var(--hon)':'')+'">'+frRich(b.txt)+'</div></div>':'';
-  var meta=pv?'<div class="rmeta"'+(card?' style="color:var(--hon);opacity:.75"':'')+'>'+pad2(k)+'/07 · '+esc(BEATS[k-1][0])+' · '+esc(sh[0])+' · '+beatSec(b)+' dtk</div>':'';
+  var meta=pv?'<div class="rmeta"'+(card?' style="color:var(--hon);opacity:.75"':'')+'>'+pad2(k)+'/05 · '+esc(BEATS[k-1][0])+' · '+esc(sh[0])+' · '+beatSec(b)+' dtk</div>':'';
   return '<div class="sl reel '+(card?'hero':'ink')+'" style="'+vars+'">'+vis+(card?'':'<div class="scrim"></div>')+meta+txt+(b.say&&!card?'<div class="rsub">'+escn(b.say)+'</div>':'')+safe+'</div>';
 }
 function reelAnalyze(p){
@@ -767,7 +794,9 @@ function reelAnalyze(p){
     if((String(b.txt).match(/\*[^*]+\*/g)||[]).length>1)c.push(['warn','Lebih dari satu frasa Fraunces']);
     var bn=(b.say+' '+b.txt).match(BANNED);if(bn)c.push(['bad','Kata terlarang: '+bn.join(', ')]);
     c=c.concat(stiffCheck(b.say+' '+b.txt));
-    if(k===6)c=c.concat(ctaCheck(b.say+' '+b.txt));
+    if(k===4)c=c.concat(ctaCheck(b.say+' '+b.txt));
+    if(k===0){if(!r.angle||!r.exec)c.push(['warn','Temuan: hook belum 2 lapis. Pilih angle psikologis dan eksekusi khas brand']);else c.push(['ok','Hook: '+HOOK_ANGLE[r.angle][0]+' × '+HOOK_EXEC[r.exec][0]])}
+    var rq=BEAT_REQ[k];if(rq){if(!String(b[rq[0]]).trim())c.push(['warn','Temuan: '+rq[1].toLowerCase()+' belum diisi']);else c.push(['ok',rq[1]+' terisi'])}
     out.beats.push(c);
   });
   var t=Math.round(out.total);out.global.push(t>=30&&t<=45?['ok','Total sekitar '+t+' detik']:['warn','Total sekitar '+t+' detik, target 30 sampai 45']);
@@ -781,8 +810,12 @@ function coverChecks(r){var H=reelCoverText(r);return [H?['ok','Teks cover: '+H]
 function reelFields(p){
   var r=reelInit(p),k=S.ridx||0;
   if(!k)return '<div class="rguide">Cover reels tampil di grid profil. Pakai kata besar yang sama dengan hook supaya orang tahu isinya dalam sekali lihat.</div><div class="field"><label for="rc-h">Teks cover (Archivo)</label><textarea class="ta" rows="2" style="min-height:62px" id="rc-h" data-rcv="coverH" placeholder="'+esc(reelCoverText(r)||'contoh: Ditawar terus?')+'">'+esc(r.coverH)+'</textarea><span class="hint">Kosong berarti memakai teks layar langkah 1.</span></div><div class="field"><label for="rc-hi">Frasa Fraunces</label><textarea class="ta" rows="2" style="min-height:62px" id="rc-hi" data-rcv="coverHi">'+esc(r.coverHi)+'</textarea></div><div><button class="btn" id="dl-reel">Unduh cover reels (PNG 1080×1920)</button></div>';
-  var b=r.beats[k-1];
-  return '<div class="rguide"><b>'+k+'. '+esc(BEATS[k-1][0])+'.</b> '+esc(BEATS[k-1][1])+'</div>'
+  var b=r.beats[k-1],rq=BEAT_REQ[k-1],hk='';
+  if(k===1){var A=HOOK_ANGLE[r.angle],X=HOOK_EXEC[r.exec];
+    hk='<div class="two"><div class="field"><label for="rh-angle">Lapis 1: angle psikologis</label><select class="sel" id="rh-angle" data-rh="angle"><option value="">Pilih angle</option>'+Object.keys(HOOK_ANGLE).map(function(x){return '<option value="'+x+'"'+(r.angle===x?' selected':'')+'>'+esc(HOOK_ANGLE[x][0])+'</option>'}).join('')+'</select><span class="hint">'+(A?esc(A[1])+' Contoh: “'+esc(A[2])+'”':'Kenapa owner berhenti menggulir.')+'</span></div>'
+      +'<div class="field"><label for="rh-exec">Lapis 2: eksekusi khas brand</label><select class="sel" id="rh-exec" data-rh="exec"><option value="">Pilih eksekusi</option>'+Object.keys(HOOK_EXEC).map(function(x){return '<option value="'+x+'"'+(r.exec===x?' selected':'')+'>'+esc(HOOK_EXEC[x][0])+'</option>'}).join('')+'</select><span class="hint">'+(X?esc(X[1]):'Cara The Brand Fixer menunjukkannya di layar.')+'</span></div></div>'}
+  var req=rq?'<div class="field"><label for="rb-'+rq[0]+'">'+esc(rq[1])+' (wajib)</label><textarea class="ta" id="rb-'+rq[0]+'" data-rb="'+rq[0]+'" style="min-height:70px">'+esc(b[rq[0]])+'</textarea><span class="hint">'+esc(rq[2])+'. Kolom perencanaan, tidak tampil di video.</span></div>':'';
+  return '<div class="rguide"><b>'+esc(BEATS[k-1][0])+'.</b> '+esc(BEATS[k-1][1])+'</div>'+hk+req
   +'<div class="field"><label for="rb-say">Yang Anda ucapkan</label><textarea class="ta" id="rb-say" data-rb="say" style="min-height:110px">'+esc(b.say)+'</textarea><span class="hint">Kalimat pendek, maksimal sekitar 14 kata. Baca keras sebelum rekam.</span></div>'
   +'<div class="field"><label for="rb-txt">Teks di layar</label><textarea class="ta" rows="2" style="min-height:62px" id="rb-txt" data-rb="txt">'+esc(b.txt)+'</textarea><span class="hint">2 sampai 4 kata. Tandai satu frasa Fraunces dengan bintang, contoh: Bukan soal *harga*.</span></div>'
   +'<div class="two"><div class="field"><label for="rb-shot">Shot</label><select class="sel" id="rb-shot" data-rb="shot">'+Object.keys(SHOTS).map(function(s){return '<option value="'+s+'"'+(b.shot===s?' selected':'')+'>'+esc(SHOTS[s][0])+'</option>'}).join('')+'</select><span class="hint">'+esc(SHOTS[b.shot][1])+'</span></div>'
@@ -794,11 +827,11 @@ function shotTableHTML(p){
   +r.beats.map(function(b,k){var s=beatSec(b),a=t;t+=s;return '<tr><td>'+(k+1)+'</td><td style="white-space:nowrap">'+mmss(a)+'–'+mmss(t)+'</td><td>'+esc(BEATS[k][0])+'</td><td>'+esc(SHOTS[b.shot][0])+'</td><td>'+esc(b.say)+'</td><td>'+esc(String(b.txt).replace(/\*/g,''))+'</td></tr>'}).join('')
   +'</tbody></table></div><span class="hint">Total sekitar '+Math.round(t)+' detik. Perkiraan 2,5 kata per detik; isi durasi manual bila perlu.</span>';
 }
-function reelScript(p){var r=reelInit(p);return r.beats.map(function(b,k){return (k+1)+'. '+BEATS[k][0]+' ('+beatSec(b)+' dtk, '+SHOTS[b.shot][0]+')\n'+b.say+(b.txt?'\n[Teks layar: '+String(b.txt).replace(/\*/g,'')+']':'')}).join('\n\n')}
+function reelScript(p){var r=reelInit(p);return (r.angle&&r.exec?'Hook: '+HOOK_ANGLE[r.angle][0]+' × '+HOOK_EXEC[r.exec][0]+'\n\n':'')+r.beats.map(function(b,k){var rq=BEAT_REQ[k];return BEATS[k][0].toUpperCase()+' ('+beatSec(b)+' dtk, '+SHOTS[b.shot][0]+')\n'+b.say+(b.txt?'\n[Teks layar: '+String(b.txt).replace(/\*/g,'')+']':'')+(rq&&b[rq[0]]?'\n['+rq[1]+': '+b[rq[0]]+']':'')}).join('\n\n')}
 function reelShotText(p){var r=reelInit(p),t=0;return 'Cover: '+reelCoverText(r)+(r.coverHi?' / '+r.coverHi:'')+'\n'+r.beats.map(function(b,k){var a=t;t+=beatSec(b);return mmss(a)+'–'+mmss(t)+' | '+(k+1)+'. '+BEATS[k][0]+' | '+SHOTS[b.shot][0]+' ('+SHOTS[b.shot][1]+') | '+String(b.txt).replace(/\*/g,'')}).join('\n')}
 function viewReels(p){
   var r=reelInit(p),an=reelAnalyze(p),k=S.ridx||0;
-  var tabs='<button class="sb" data-beat="0" aria-current="'+(k===0)+'"><b>C</b><span>Cover</span><i class="'+(worst(coverChecks(r))==='ok'?'':worst(coverChecks(r)))+'"></i></button>'+BEATS.map(function(b,i){var w=worst(an.beats[i]);return '<button class="sb" data-beat="'+(i+1)+'" aria-current="'+(k===i+1)+'"><b>'+(i+1)+'</b><span>'+esc(b[0])+'</span><i class="'+(w==='ok'?'':w)+'"></i></button>'}).join('');
+  var tabs='<button class="sb" data-beat="0" aria-current="'+(k===0)+'"><b>C</b><span>Cover</span><i class="'+(worst(coverChecks(r))==='ok'?'':worst(coverChecks(r)))+'"></i></button>'+BEATS.map(function(b,i){var w=worst(an.beats[i]);return '<button class="sb" data-beat="'+(i+1)+'" aria-current="'+(k===i+1)+'"><b>'+b[0].charAt(0)+'</b><span>'+esc(b[0])+'</span><i class="'+(w==='ok'?'':w)+'"></i></button>'}).join('');
   var h='<div class="desk"><div style="display:flex;flex-direction:column;gap:24px;min-width:0">';
   h+='<div class="panel"><div class="slidebar" role="tablist" aria-label="Langkah reels">'+tabs+'</div><div id="rfields">'+reelFields(p)+'</div></div>';
   h+='<div class="panel" id="rshots">'+shotTableHTML(p)+'</div>';
@@ -910,6 +943,7 @@ document.addEventListener('input',function(e){
   var t=e.target,p=curPost();
   if(t.id==='bf-text'){BF.draft=t.value;try{localStorage.setItem('cs.brief',t.value)}catch(x){}return}
   if(t.dataset.rb&&p&&S.ridx>0){reelInit(p).beats[S.ridx-1][t.dataset.rb]=t.value;save('posts',p);updateReel();if(t.dataset.rb==='shot'){var sh=t.parentNode.querySelector('.hint');if(sh)sh.textContent=SHOTS[t.value][1]}return}
+  if(t.dataset.rh&&p){reelInit(p)[t.dataset.rh]=t.value;save('posts',p);$('#rfields').innerHTML=reelFields(p);updateReel();return}
   if(t.dataset.rcv&&p){reelInit(p)[t.dataset.rcv]=t.value;save('posts',p);updateReel();return}
   if(t.dataset.rp&&p){reelInit(p).prod[t.dataset.rp]=t.checked;save('posts',p);updateReel();return}
   if(t.dataset.f&&p){p.slides[S.idx][t.dataset.f]=t.value;save('posts',p);updatePreview();return}

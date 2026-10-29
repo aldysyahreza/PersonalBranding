@@ -29,10 +29,40 @@ def loudness(path):
     return float(re.search(r'I:\s+(-?[\d.]+) LUFS', s).group(1)), float(re.search(r'Peak:\s+(-?[\d.]+) dBFS', s).group(1))
 
 
+def to_scenes(timing_path, anchors_path, out_path):
+    """Babak narasi (HRIRC, dari vo_prep) -> adegan visual animatic. Tiap adegan mulai pada kata pembukanya
+    (anchors 'scenes'); kata-kata ikut adegan tempat ia diucapkan."""
+    import json
+    tl = json.load(open(timing_path, encoding='utf-8')); an = json.load(open(anchors_path, encoding='utf-8'))
+    sc = an.get('scenes')
+    if not sc: return timing_path
+    nrm = lambda s: ''.join(c for c in s.lower() if c.isalnum())
+    words, beat_of = [], []
+    for bi, b in enumerate(tl['beats']):
+        for w in b['words']: words.append(w); beat_of.append(bi)
+    starts, k = [], 0
+    for s in sc:   # kata pembuka dicari hanya di dalam babak HRIRC adegan itu (chap), supaya "harga." di babak lain tidak tertangkap
+        bi = s['chap'] - 1
+        while k < len(words) and not (beat_of[k] == bi and nrm(words[k]['w']).startswith(s['start'])): k += 1
+        if k >= len(words): raise SystemExit('Kata pembuka adegan "%s" tidak ditemukan di babak %d naskah' % (s['start'], s['chap']))
+        starts.append(k); k += 1
+    out = []
+    for i, s in enumerate(sc):
+        a = starts[i]; b = starts[i + 1] if i + 1 < len(sc) else len(words)
+        t0 = 0.0 if i == 0 else max(0.0, words[a]['t'] - 0.2)
+        out.append({'start': round(t0, 3), 'name': s['act'], 'chap': s['chap'], 'words': words[a:b]})
+    for i, s in enumerate(out):
+        end = out[i + 1]['start'] if i + 1 < len(out) else tl['duration']
+        s['dur'] = round(end - s['start'], 3)
+    tl2 = dict(tl, beats=out)
+    json.dump(tl2, open(out_path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    return out_path
+
+
 def main(rec, script, outdir):
     os.makedirs(outdir, exist_ok=True)
     run([sys.executable, os.path.join(HERE, 'vo_prep.py'), rec, script, outdir])
-    timing = os.path.join(outdir, 'timing.json')
+    timing = to_scenes(os.path.join(outdir, 'timing.json'), os.path.join(HERE, 'anchors-v3.json'), os.path.join(outdir, 'timing_scenes.json'))
     run([sys.executable, os.path.join(HERE, 'sfx-v3.py'), outdir, '--timing', timing])
     vo, mu, fx = (os.path.join(outdir, n) for n in ('vo_clean.wav', 'music.wav', 'fx.wav'))
     pre = os.path.join(outdir, '_mix.wav'); mix = os.path.join(outdir, 'mix.wav')

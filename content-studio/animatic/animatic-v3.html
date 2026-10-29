@@ -334,6 +334,8 @@ function apply(i,t){ // posisi + efek masuk/keluar adegan i pada waktu global t
   tf(sec,'translate('+tx+'px,'+ty+'px) scale('+sc+')');sec.style.filter=blur>.3?'blur('+blur.toFixed(1)+'px)':'none';op(sec,o);sec.style.zIndex=i+1;
   S[i](LOCAL(i,t-start));
 }
+/* untuk pemeriksa tata letak: awal tiap adegan + waktu lokal animasi */
+window.ANIMATIC_T0=T0;window.ANIMATIC_LOCAL=function(i,lt){return LOCAL(i,lt)};
 window.seek=function(t){
   var cur=0;for(var i=0;i<BEATS.length;i++)if(t>=T0[i])cur=i;
   for(var j=0;j<BEATS.length;j++)apply(j,t);
@@ -342,7 +344,7 @@ window.seek=function(t){
   var fl=pr(t,T0[4]-.05,.35);op($('flash'),fl>0&&fl<1?(1-fl)*.85:0);
   var dark=cur===3&&LOCAL(3,t-T0[3])>3.0;
   $('hdl').style.color=dark?'#FFE2B0':'#0F0E0C';
-  $('chap').textContent='// 0'+(cur+1)+' · '+BEATS[cur].name;$('chap').style.color=dark?'#FFE2B0':'#B84A2E';
+  $('chap').textContent='// 0'+(BEATS[cur].chap||cur+1)+' · '+BEATS[cur].name;$('chap').style.color=dark?'#FFE2B0':'#B84A2E';
   // caption karaoke
   var span=$('cap').firstChild,list=CAP[cur],c=null;for(var k=0;k<list.length;k++)if(t>=list[k].words[0].t-.05)c=list[k];
   if(!c||t>list[list.length-1].end+.1){op(span,0)}else{op(span,1);span.innerHTML=c.words.map(function(w){return '<u style="color:'+(t>=w.t?'#fff':'rgba(255,255,255,.38)')+'">'+w.w+'</u>'}).join(' ');
