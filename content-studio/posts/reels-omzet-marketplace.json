@@ -7,7 +7,7 @@
   "job": "Share",
   "pillar": "Brand Diagnosis",
   "hue": "terracotta",
-  "caption": "Laporan marketplace bilang Rp100 juta, rekening bilang Rp79 juta (contoh hitungan: admin 10% + biaya proses + iklan).\n\nAdmin dan iklan memang memotong. Tapi yang lebih mahal adalah pembeli yang suka produkmu, lalu lupa nama brand-mu dan beli lagi dari toko lain.\n\nSatu langkah kecil yang bisa dicoba: selipkan kartu di tiap paket. Isinya nama brand, kenapa produk ini dibuat, dan kapan sebaiknya isi ulang.\n\nKirim ke satu owner yang laporan marketplace-nya besar tapi uang di rekeningnya tipis, biar dia hitung selisihnya malam ini.",
+  "caption": "Laporan marketplace bilang Rp100 juta, rekening bilang Rp79 juta (contoh hitungan: admin 10% + biaya proses + iklan).\n\nAdmin dan iklan memang memotong. Tapi yang lebih mahal adalah pembeli yang suka produkmu, lalu lupa nama brand-mu dan beli lagi dari toko lain.\n\nSatu langkah kecil yang bisa dicoba: selipkan kartu di tiap paket. Isinya nama brand, cara pakai yang benar, dan bonus kalau beli lagi.\n\nKirim ke tim yang pegang toko marketplace-mu, minta mereka hitung selisihnya hari ini.",
   "pinned": "Cara hitung selisihnya: omzet di laporan marketplace dikurangi saldo yang cair, lalu dibagi omzet di laporan marketplace.",
   "story": "",
   "reel": {
@@ -36,26 +36,26 @@
         "contoh": ""
       },
       {
-        "say": "Marketplace menjual produkmu, bukan brand-mu. Di brand yang saya dampingi, yang beli lagi sekitar 20 sampai 30 persen. Satu langkah: selipkan kartu kecil di tiap paket.",
+        "say": "Marketplace menjual produkmu, bukan brand-mu. Di brand yang saya dampingi, yang beli lagi sekitar 30 sampai 50 persen. Sisanya beli sekali, lalu hilang. Satu langkah: selipkan kartu kecil di tiap paket.",
         "txt": "Satu *kartu* per paket",
         "shot": "close",
         "dur": "",
         "case": "",
-        "solusi": "Selipkan kartu kecil di tiap paket yang memberi pembeli alasan mengingat nama brand dan cara bertemu lagi di luar aplikasi.",
+        "solusi": "Selipkan kartu kecil di tiap paket yang memberi pembeli alasan mengingat nama brand dan alasan beli lagi.",
         "contoh": ""
       },
       {
-        "say": "Coba isi tiga baris. Nama brand-mu, kenapa produk ini dibuat, dan kapan sebaiknya isi ulang. Pembeli yang tadinya cuma lewat, jadi tahu siapa yang jualan.",
+        "say": "Coba isi tiga hal di kartunya. Nama brand-mu, cara pakai yang benar, dan bonus kalau beli lagi. Pembeli yang tadinya cuma lewat, sekarang tahu siapa kamu dan punya alasan kembali.",
         "txt": "Dari lewat jadi *kenal*",
         "shot": "card",
         "dur": "",
         "case": "",
         "solusi": "",
-        "contoh": "Contoh yang bisa dicoba (belum klaim hasil): kartu 3 baris: (1) nama brand + satu kalimat jualan apa untuk siapa, (2) kenapa produk ini dibuat, (3) kapan biasanya perlu isi ulang + akun untuk info isi ulang."
+        "contoh": "Contoh yang bisa dicoba (belum klaim hasil): kartu 3 hal: (1) nama brand + satu kalimat jualan apa untuk siapa, (2) cara pakai yang benar (fashion: cara merawat), (3) bonus kalau beli lagi, mis. voucher toko untuk pembelian berikutnya. Cek aturan marketplace dulu."
       },
       {
-        "say": "Kirim ke satu owner yang laporan marketplace-nya besar, tapi uang di rekeningnya tipis. Biar dia hitung selisihnya malam ini.",
-        "txt": "Kirim ke *satu owner*",
+        "say": "Kirim ke tim yang pegang toko marketplace-mu. Minta mereka hitung selisihnya hari ini.",
+        "txt": "Kirim ke *tim toko*",
         "shot": "med",
         "dur": "",
         "case": "",
