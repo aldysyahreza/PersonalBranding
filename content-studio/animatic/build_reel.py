@@ -73,10 +73,10 @@ def main(rec, script, outdir, setname='v3', take='auto'):
     run([sys.executable, os.path.join(HERE, sfx), outdir, '--timing', timing])
     vo, mu, fx = (os.path.join(outdir, n) for n in ('vo_clean.wav', 'music.wav', 'fx.wav'))
     pre = os.path.join(outdir, '_mix.wav'); mix = os.path.join(outdir, 'mix.wav')
-    # musik ±-30 LUFS di bawah suara, efek ±-24 LUFS. Dinormalkan di langkah terpisah: loudnorm di dalam graph
+    # musik ±-30 LUFS di bawah suara, efek ±-28 LUFS. Dinormalkan di langkah terpisah: loudnorm di dalam graph
     # bersama asplit/sidechain membuat ffmpeg macet (saling tunggu buffer).
     lv = {}
-    for name, src, tgt in (('m', mu, -30.0), ('f', fx, -24.0)):
+    for name, src, tgt in (('m', mu, -30.0), ('f', fx, -28.0)):
         i, _ = loudness(src); lv[name] = os.path.join(outdir, '_%s.wav' % name)
         run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', src, '-af', 'volume=%.2fdB' % (tgt - i), lv[name]])
     graph = ('[0:a]asplit=2[v1][v2];[1:a][v1]sidechaincompress=threshold=0.015:ratio=8:attack=20:release=400[md];'

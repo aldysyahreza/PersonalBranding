@@ -214,14 +214,23 @@ def main(src, script, outdir, take='auto'):
     os.makedirs(outdir, exist_ok=True)
     post = json.load(open(script, encoding='utf-8'))
     beats = [b['say'] for b in post['reel']['beats']] if 'reel' in post else [b['say'] for b in post['beats']]
-    dn, dn_name = denoise_filter()
     raw = os.path.join(outdir, '_raw.wav'); clean = os.path.join(outdir, '_clean.wav')
     ff('-i', src, '-ac', '1', '-ar', str(SR), raw)
-    # catatan: filter deesser bawaan ffmpeg menimbulkan artefak >16 kHz (terukur), jadi desis dijinakkan dengan EQ statis
-    chain = ','.join(['highpass=f=80', 'lowpass=f=15000', dn,
-                      'equalizer=f=6500:t=q:w=1.4:g=-2.5', 'equalizer=f=180:t=q:w=1:g=-1.5',
-                      'acompressor=threshold=-21dB:ratio=3:attack=6:release=90:makeup=2',
-                      'loudnorm=I=-16:TP=-1.5:LRA=7', 'lowpass=f=14500'])
+    xr = read_wav(raw); hop = int(0.02 * SR); fr = xr[:len(xr) // hop * hop].reshape(-1, hop)
+    lantai = float(np.percentile(20 * np.log10(np.sqrt((fr ** 2).mean(1)) + 1e-9), 20))   # lantai bising: 20% bingkai terpelan
+    if lantai < -55:
+        # rekaman sudah bersih (mis. voice note HP): peredam bising justru menimbulkan suara "robot" (terukur: jarak spektrum 10 dB dari asli
+        # dan HF kasar), jadi dilewati. Hanya filter dasar + kompresi lembut.
+        dn_name = 'tidak dipakai (rekaman bersih, lantai %.0f dB)' % lantai
+        chain = ','.join(['highpass=f=70', 'lowpass=f=15000',
+                          'acompressor=threshold=-24dB:ratio=2:attack=15:release=160:makeup=1', 'loudnorm=I=-16:TP=-1.5:LRA=11'])
+    else:
+        dn, dn_name = denoise_filter(); dn_name += ' (lantai bising %.0f dB)' % lantai
+        # catatan: filter deesser bawaan ffmpeg menimbulkan artefak >16 kHz (terukur), jadi desis dijinakkan dengan EQ statis
+        chain = ','.join(['highpass=f=80', 'lowpass=f=15000', dn,
+                          'equalizer=f=6500:t=q:w=1.4:g=-2.5', 'equalizer=f=180:t=q:w=1:g=-1.5',
+                          'acompressor=threshold=-21dB:ratio=3:attack=6:release=90:makeup=2',
+                          'loudnorm=I=-16:TP=-1.5:LRA=7', 'lowpass=f=14500'])
     ff('-i', raw, '-af', chain, '-ar', str(SR), clean)
     x = read_wav(clean)
     segs = speech_segments(x)

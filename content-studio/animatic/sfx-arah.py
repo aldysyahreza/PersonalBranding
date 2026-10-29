@@ -59,9 +59,9 @@ def lowpass(x, cut0, cut1):  # filter satu kutub dengan frekuensi potong yang be
 def add(t, sig, gain):
     i = int(t * SR); out[i:i + len(sig)] += sig[:len(out) - i] * gain
 
-def whoosh(t, up=True, d=0.42, g=0.55):
+def whoosh(t, up=True, d=0.42, g=0.4):
     n = int(d * SR); x = rng.standard_normal(n)
-    y = lowpass(x, 300, 3200) if up else lowpass(x, 3200, 300)
+    y = lowpass(lowpass(x, 250, 1800), 250, 1800) if up else lowpass(lowpass(x, 1800, 250), 1800, 250)  # dua kutub: lebih lembut, tanpa desis
     w = np.sin(np.linspace(0, np.pi, n)) ** 2
     add(t - d * 0.4, y * w, g)
 
@@ -70,15 +70,15 @@ def pop(t, f0=700, f1=320, g=0.35):
     add(t, np.sin(ph) * env(n, 0.002, 0.03), g)
 
 def tick(t, g=0.18):
-    n = int(0.018 * SR); add(t, rng.standard_normal(n) * env(n, 0.0005, 0.004), g)
+    n = int(0.03 * SR); tt = np.arange(n) / SR; add(t, np.sin(2 * np.pi * 1700 * tt) * env(n, 0.0008, 0.006), g * 0.8)  # klik bernada, bukan derau
 
 def thud(t, g=0.8):
     n = int(0.35 * SR); tt = np.arange(n) / SR
-    s = np.sin(2 * np.pi * (95 - 40 * tt / 0.35) * tt) * np.exp(-tt / 0.09) + 0.25 * rng.standard_normal(n) * np.exp(-tt / 0.02)
+    s = np.sin(2 * np.pi * (95 - 40 * tt / 0.35) * tt) * np.exp(-tt / 0.09) + 0.12 * rng.standard_normal(n) * np.exp(-tt / 0.02)
     add(t, s, g)
 
-def scratch(t, d=0.25, g=0.22):
-    n = int(d * SR); x = rng.standard_normal(n); y = x - lowpass(x, 2500, 2500)
+def scratch(t, d=0.25, g=0.16):
+    n = int(d * SR); x = rng.standard_normal(n); y = lowpass(x, 2200, 2200) - lowpass(x, 700, 700)  # pita 0,7-2,2 kHz, tanpa desis tinggi
     am = 0.6 + 0.4 * np.sin(np.linspace(0, d * 2 * np.pi * 18, n))
     add(t, y * am * np.sin(np.linspace(0, np.pi, n)), g)
 

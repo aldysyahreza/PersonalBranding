@@ -113,3 +113,7 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 - Naskah v6: posts/reels-konten-ramai.json (cerita brand baju ilustrasi, Reframe = bedah content pillar P produk vs S solusi, problem-solution fit lalu product-market fit, contoh S "baju yang tidak bikin perut terlihat buncit", CTA follow + value message). Aldy menolak contoh skincare dan komentar "harganya berapa".
 - Build: `python3 animatic/build_reel.py /home/user/vo/vo4_raw.ogg posts/reels-konten-ramai.json out/reel4 pillar auto` (argumen ke-5 = take: auto|akhir|awal). Hasil out/reel4/reel.mp4 (59,9 dtk).
 - vo_prep.py sekarang mengenali take ulang (kalimat yang diulang Aldy untuk opsi intonasi) lewat jarak MFCC+DTW, memilih satu take per blok (auto = variasi nada terbesar; selisih <10% -> yang terakhir) dan membuang potongan batal di antara dua take. Laporan di out/reel4/laporan.txt. Tanpa ASR, jadi cek caption bila ragu.
+
+## Suara robot / noise (29 Okt 2026)
+- Penyebab: RNNoise pada rekaman yang sudah bersih (voice note HP, lantai bising -64 dB) menggeser spektrum 10 dB dari asli dan membuat HF kasar (suara robot). vo_prep.py sekarang mengukur lantai bising dan MELEWATI RNNoise bila < -55 dB (hanya highpass + kompresi 2:1 + loudnorm). Rekaman berisik tetap pakai RNNoise.
+- SFX berbasis desis dilembutkan di semua sfx-*.py: whoosh dua kutub lowpass 1,8 kHz, scratch pita 0,7-2,2 kHz, tick klik bernada 1,7 kHz; efek -28 LUFS (sebelumnya -24).
