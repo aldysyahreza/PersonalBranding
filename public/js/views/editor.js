@@ -30,20 +30,20 @@ export function refreshPreview() {
   renderInspector();
 }
 
-const FONTS = ['Montserrat Medium', 'Montserrat Bold', 'Montserrat ExtraBold', 'Montserrat Black', 'Great Vibes', 'Inter Medium', 'Inter SemiBold', 'Inter Bold', 'Inter ExtraBold', 'Inter Black'].map((f) => [f, f]);
+const FONTS = ['Archivo ExtraBold', 'Archivo Bold', 'Fraunces Italic', 'Outfit Medium', 'Outfit SemiBold', 'Caveat SemiBold', 'JetBrains Mono Medium', 'Montserrat Medium', 'Montserrat Bold', 'Montserrat ExtraBold', 'Montserrat Black', 'Great Vibes', 'Inter Medium', 'Inter SemiBold', 'Inter Bold', 'Inter ExtraBold', 'Inter Black'].map((f) => [f, f]);
 
 /** Ubah gaya tanpa merender ulang seluruh halaman (preview diperbarui langsung). */
 const setStyle = (path, key) => (v) => edit((x) => {
   const parts = path.split('.');
   let o = x;
-  for (const k of parts.slice(0, -1)) o = o[k];
+  for (const k of parts.slice(0, -1)) o = o[k] ??= {};
   o[parts.at(-1)] = v;
 }, { key: key || path, rerender: false });
 
 const get = (path) => path.split('.').reduce((o, k) => o?.[k], store.project);
 
 function sl(label, path, opts) {
-  return field(label, slider(get(path), (v) => setStyle(path)(v), opts));
+  return field(label, slider(get(path) ?? opts.min ?? 0, (v) => setStyle(path)(v), opts));
 }
 function chk(label, path) {
   return h('label', { class: 'check' }, h('input', { type: 'checkbox', checked: !!get(path), onchange: (e) => setStyle(path)(e.target.checked) }), ` ${label}`);
@@ -130,7 +130,7 @@ function renderInspector() {
   const st = p.style;
   const views = {
     gaya: () => [
-      h('div', { class: 'alert info small' }, `Preset: ${store.status.presets.find((x) => x.id === p.presetId)?.name || p.presetId} — status: konsep yang dapat diubah. Lihat Profil brand untuk asumsi.`),
+      h('div', { class: 'alert info small' }, (() => { const pr = store.status.presets.find((x) => x.id === p.presetId); return `Preset: ${pr?.name || p.presetId} — status: ${pr?.status || 'konsep'}. ${pr?.note || ''}`; })()),
       field('Level gaya', h('div', { class: 'row' }, ...store.status.styleLevels.map((l) => h('button', { class: `chip ${p.styleLevel === l ? 'on' : ''}`, onclick: async () => {
         const ok = await modal(`Terapkan level "${l}"?`, h('p', {}, 'Semua pengaturan gaya (subtitle, kartu, warna, audio) diganti dengan nilai preset untuk level ini. Bisa dibatalkan dengan Urungkan.'), [{ label: 'Terapkan', kind: 'primary' }]);
         if (!ok) return;
@@ -140,16 +140,16 @@ function renderInspector() {
         } catch (e) { toast(e.message, 'error', e.hint); }
       } }, l)))),
       h('h4', {}, 'Warna'),
-      h('div', { class: 'grid2' }, color('Aksen', 'style.colors.accent'), color('Teks subtitle', 'style.colors.text'), color('Latar kartu', 'style.colors.cardBg'), color('Teks kartu', 'style.colors.cardText'), color('Teks label kartu', 'style.colors.cardMuted')),
-      h('h4', {}, 'Font (bundel Inter, lisensi OFL)'),
-      sel('Baris kecil / label', 'style.fonts.lead', FONTS), sel('Baris utama & penekanan', 'style.fonts.key', FONTS), sel('Judul kartu', 'style.fonts.card', FONTS),
+      h('div', { class: 'grid2' }, color('Aksen', 'style.colors.accent'), color('Teks subtitle', 'style.colors.text'), color('Latar kartu', 'style.colors.cardBg'), color('Teks kartu', 'style.colors.cardText'), color('Teks label kartu', 'style.colors.cardMuted'), color('Latar pasir (sand)', 'style.colors.sand'), color('Latar akhir (ink-soft)', 'style.colors.inkSoft')),
+      h('h4', {}, 'Font (dibundel, lisensi OFL)'),
+      sel('Baris kecil / label', 'style.fonts.lead', FONTS), sel('Baris utama', 'style.fonts.key', FONTS), sel('Kata rasa (aksen)', 'style.fonts.accent', FONTS), sel('Judul kartu', 'style.fonts.card', FONTS),
       h('h4', {}, 'Simpan sebagai preset'),
       savePresetForm(p),
     ],
     subtitle: () => [
       chk('Tampilkan subtitle', 'style.captions.enabled'),
-      sel('Tata letak', 'style.captions.layout', [['stack', 'Dua tingkat (kecil + besar)'], ['single', 'Satu baris'], ['karaoke', 'Kata aktif disorot']]),
-      sel('Penekanan kata', 'style.captions.emphasis', [['box', 'Blok warna aksen'], ['color', 'Teks warna aksen'], ['none', 'Tanpa penekanan']]),
+      sel('Tata letak', 'style.captions.layout', [['kinetic', 'Kinetik kata-per-kata (bertingkat)'], ['stack', 'Dua tingkat (kecil + besar)'], ['single', 'Satu baris'], ['karaoke', 'Kata aktif disorot']]),
+      sel('Penekanan kata', 'style.captions.emphasis', [['serif', 'Satu kata rasa (Fraunces Italic) per layar — bible'], ['mix', 'Bergiliran kotak/lengkung/script (referensi)'], ['box', 'Blok warna aksen'], ['color', 'Teks warna aksen'], ['none', 'Tanpa penekanan']]),
       sel('Animasi', 'style.captions.animation', [['pop', 'Pop ringan'], ['fade', 'Fade'], ['none', 'Tanpa animasi']]),
       chk('HURUF KAPITAL', 'style.captions.uppercase'),
       sl('Posisi vertikal (dari atas)', 'style.captions.position', { min: 0.3, max: 0.85, step: 0.005, fmt: (v) => `${Math.round(v * 100)}%` }),
@@ -158,9 +158,13 @@ function renderInspector() {
       sl('Maks kata per frasa', 'style.captions.maxWords', { min: 1, max: 8, step: 1 }),
       sl('Maks karakter per frasa', 'style.captions.maxChars', { min: 10, max: 50, step: 1 }),
       sl('Bayangan teks', 'style.captions.shadow', { min: 0, max: 10, step: 0.5 }),
+      sl('Scrim gelap di bawah caption', 'style.captions.scrim', { min: 0, max: 1, step: 0.05, fmt: (v) => `${Math.round(v * 100)}%` }),
+      chk('Hook lockup (kata besar di 0–1,6 dtk)', 'style.hook.enabled'),
       h('p', { class: 'muted small' }, 'Ukuran dalam piksel untuk lebar 1080. Subtitle dijaga di dalam zona aman. Hidupkan "Zona aman & wajah" di bawah preview untuk memastikan wajah tidak tertutup.'),
     ],
     kartu: () => [
+      sel('Tema kartu', 'style.cards.theme', [['brandfixer', 'Editorial Diagnosis (bible The Brand Fixer)'], ['reference', 'Kertas + blok merah (video referensi)']]),
+      chk('Signature "aldy syahreza / the brand fixer" di kartu', 'style.cards.signature'),
       sel('Mesin grafis kartu layar penuh', 'style.cards.engine', [['hyperframes', 'HyperFrames — animasi kaya, ikon, hitung angka'], ['ass', 'Bawaan — lebih cepat, lebih sederhana']]),
       h('p', { class: `small ${store.status.hyperframes?.ok ? 'muted' : 'alert warn'}` }, store.status.hyperframes?.ok ? `${store.status.hyperframes.detail}. Render pertama tiap kartu memakan beberapa detik (Chrome headless); hasilnya di-cache. Chrome diunduh otomatis sekali saat render pertama.` : `HyperFrames tidak tersedia: ${store.status.hyperframes?.detail || '-'} Kartu bawaan dipakai.`),
       sl('Ukuran judul', 'style.cards.titleSize', { min: 50, max: 180, step: 1, fmt: (v) => `${v}px` }),
@@ -197,6 +201,8 @@ function renderInspector() {
       sl('Gamma', 'style.color.gamma', { min: 0.8, max: 1.2, step: 0.01 }),
       sl('Kehangatan', 'style.color.warmth', { min: -0.15, max: 0.15, step: 0.005 }),
       sl('Vignette', 'style.color.vignette', { min: 0, max: 1, step: 0.01 }),
+      sl('Angkat hitam (lift)', 'style.color.lift', { min: 0, max: 0.08, step: 0.005 }),
+      sl('Grain halus', 'style.color.grain', { min: 0, max: 0.12, step: 0.005, fmt: (v) => `${Math.round(v * 100)}%` }),
       h('p', { class: 'muted small' }, 'Batas slider sengaja sempit agar warna kulit tetap natural. Preview browser adalah perkiraan; cek dengan "Cek frame akurat". Tidak ada efek yang mengubah bentuk wajah.'),
     ],
     audio: () => [

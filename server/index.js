@@ -15,7 +15,7 @@ import { rulePlan, claudePlan, planToItems } from './lib/plan.js';
 import { renderVideo, renderStill, preflight, estimateSize, QUALITY, CONTAINERS, BUILTIN_SFX_LIST } from './lib/render.js';
 import { BRAND_PROFILE } from './lib/brand.js';
 import { catalog, libraryFile, isLibraryItem, LICENSE_NOTE, paperFile } from './lib/synth.js';
-import { hyperframesStatus, hfDir, cardHtml } from './lib/hyperframes.js';
+import { hyperframesStatus, hfDir, cardHtml, cardImage } from './lib/hyperframes.js';
 import { distributeText, parseSubtitles, toSrt, projectStatus, OUTPUT_FORMATS, uid } from '../public/shared/core.js';
 
 const MIME = {
@@ -275,17 +275,17 @@ route('GET', '/api/library/paper/:w/:h/file', async ({ w, h, req, res, url }) =>
 // Preview kartu HyperFrames: komposisi HTML yang sama dengan render, diputar di iframe browser.
 route('GET', '/api/projects/:id/hf/preview/:cardId', async ({ id, cardId, res, url }) => {
   const p = loadProject(id);
-  const card = (p.cards || []).find((c) => c.id === cardId);
+  const card = cardId === 'endcard' ? { id: 'endcard', type: 'endcard', start: 0, end: p.style.endcard?.seconds ?? 2, endcard: p.endcard || {} } : (p.cards || []).find((c) => c.id === cardId);
   if (!card) throw new UserError('Kartu tidak ditemukan.', '', 404);
   if (!hyperframesStatus().ok) throw new UserError('HyperFrames belum terpasang.', 'Jalankan "npm install".', 412);
   const W = Math.min(4096, Number(url.searchParams.get('w')) || 1080), Hh = Math.min(4096, Number(url.searchParams.get('h')) || 1920);
-  hfDir(id);
-  const html = cardHtml(card, p.style, { W, H: Hh, dur: Math.max(0.3, card.end - card.start) }).replace('<head>', `<head><base href="/api/projects/${id}/hf/">`);
+  const dir = hfDir(id);
+  const html = cardHtml(card, p.style, { W, H: Hh, dur: Math.max(0.3, card.end - card.start), image: cardImage(p, card, dir) }).replace('<head>', `<head><base href="/api/projects/${id}/hf/">`);
   send(res, 200, html, { 'Content-Type': 'text/html; charset=utf-8' });
   return null;
 });
 route('GET', '/api/projects/:id/hf/:file', async ({ id, file, req, res }) => {
-  if (file !== 'gsap.min.js') throw new UserError('File tidak tersedia.', '', 404);
+  if (file !== 'gsap.min.js' && !/^img-[\w-]+\.(jpe?g|png|webp)$/i.test(file)) throw new UserError('File tidak tersedia.', '', 404);
   serveFile(req, res, path.join(hfDir(id), file));
   return null;
 });
@@ -395,9 +395,9 @@ route('POST', '/api/projects/:id/plan', async ({ id, req }) => {
     plan = rulePlan(p);
     origin = 'aturan';
   }
-  const items = planToItems(plan, origin, p.transcript?.segments || []);
+  const items = planToItems(plan, origin, p.transcript?.segments || [], { autoApprove: body.autoApprove === true });
   // Ganti saran lama yang belum disetujui; pertahankan yang disetujui/dibuat pengguna.
-  const keepOld = (arr) => arr.filter((x) => x.origin === 'pengguna' || x.approved || x.enabled);
+  const keepOld = (arr) => arr.filter((x) => x.origin === 'pengguna' || (x.approved && !x.autoApproved) || x.enabled);
   p.cuts = [...keepOld(p.cuts), ...items.cuts];
   p.cards = [...keepOld(p.cards), ...items.cards];
   p.broll = [...keepOld(p.broll), ...items.broll];
@@ -405,6 +405,17 @@ route('POST', '/api/projects/:id/plan', async ({ id, req }) => {
   p.emphasisSuggestions = [...keepOld(p.emphasisSuggestions || []), ...items.emphasis];
   p.zooms = [...keepOld(p.zooms || []), ...items.zooms];
   p.plan = { origin, at: new Date().toISOString(), structure: items.structure, music: items.music, notes: items.notes };
+  // Penekanan yang disetujui otomatis langsung diterapkan ke kata transkrip.
+  for (const e of items.emphasis.filter((x) => x.approved)) {
+    const w = p.transcript?.segments?.find((sg) => sg.id === e.segId)?.words?.[e.wordIndex];
+    if (w && !w.emph) w.emph = true;
+  }
+  if (items.hook && !(p.hook?.origin === 'pengguna' || (p.hook?.approved && !p.hook?.autoApproved))) p.hook = items.hook;
+  // End card dari bible (bukan ucapan) → hanya saran; tetap perlu disetujui pengguna.
+  if (!p.endcard) {
+    const ec = p.style?.endcard;
+    if (ec?.big) p.endcard = { approved: false, lead: ec.lead || '', big: ec.big, accent: ec.accent || '', pill: ec.pill || '', reason: 'Kalimat inti dari bible The Brand Fixer ("brand kamu sudah jalan. Tapi belum naik kelas."). Bukan ucapan di video — setujui bila ingin dipakai. Ditambahkan 2 dtk SETELAH video.' };
+  }
   return full(saveProject(p));
 });
 

@@ -1,8 +1,8 @@
 {
   "id": "aldy-editorial",
-  "name": "Aldy — Editorial Talking Head",
+  "name": "Referensi video — Editorial Talking Head (lama)",
   "status": "konsep",
-  "note": "Konsep awal yang dapat dikonfigurasi, diturunkan dari video referensi: caption kinetik kata-per-kata, hierarki sans tebal + sans tipis + script, aksen merah (kotak/lengkung/script bergiliran), kartu kertas bertekstur dengan angka 3D & zoom-out pelan. BELUM berdasarkan panduan visual Aldy yang terkonfirmasi.",
+  "note": "Preset awal yang diturunkan dari video referensi (bukan dari bible brand Aldy). Disimpan untuk perbandingan; preset utama sekarang \"Aldy — The Brand Fixer\".",
   "output": {
     "aspect": "9:16",
     "fps": 30

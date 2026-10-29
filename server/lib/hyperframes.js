@@ -12,9 +12,10 @@ import { workDir } from './projects.js';
 import { resolveIcon } from '../../public/shared/icons.js';
 import { shade } from './ass.js';
 import { measure } from './fontmetrics.js';
+import { brandFixerHtml, BF_FONTS } from './hf-brandfixer.js';
 
 const require = createRequire(import.meta.url);
-const TEMPLATE_VERSION = 3;
+const TEMPLATE_VERSION = 4;
 const ICON_DIR = path.join(ROOT, 'assets', 'icons');
 
 let availability = null;
@@ -58,7 +59,7 @@ function rgba(hex, a) {
 export function hfDir(projectId) {
   const dir = path.join(workDir(projectId), 'hf');
   fs.mkdirSync(path.join(dir, 'fonts'), { recursive: true });
-  for (const f of ['Montserrat-Medium.ttf', 'Montserrat-Bold.ttf', 'Montserrat-ExtraBold.ttf', 'Montserrat-Black.ttf', 'GreatVibes-Regular.ttf']) {
+  for (const f of ['Montserrat-Medium.ttf', 'Montserrat-Bold.ttf', 'Montserrat-ExtraBold.ttf', 'Montserrat-Black.ttf', 'GreatVibes-Regular.ttf', ...BF_FONTS.map((x) => x[1])]) {
     const dst = path.join(dir, 'fonts', f);
     if (!fs.existsSync(dst)) fs.copyFileSync(path.join(config.fontsDir, f), dst);
   }
@@ -68,8 +69,8 @@ export function hfDir(projectId) {
   return dir;
 }
 
-function hashOf(card, style, W, H, fps, dur) {
-  const key = JSON.stringify([TEMPLATE_VERSION, card.type, card.kicker, card.title, card.subtitle, card.icon, card.cta, resolveIcon(card), style.colors, style.cards, W, H, fps, Math.round(dur * 100)]);
+function hashOf(card, style, W, H, fps, dur, image = '') {
+  const key = JSON.stringify([TEMPLATE_VERSION, card.type, card.layout, card.kicker, card.title, card.subtitle, card.icon, card.cta, card.caseTag, card.endcard, image, resolveIcon(card), style.colors, style.cards, style.endcard, W, H, fps, Math.round(dur * 100)]);
   return crypto.createHash('sha1').update(key).digest('hex').slice(0, 12);
 }
 
@@ -85,7 +86,11 @@ function parseNumber(title) {
 }
 
 /** HTML komposisi HyperFrames untuk satu kartu layar penuh. */
-export function cardHtml(card, style, { W, H, dur }) {
+export function cardHtml(card, style, { W, H, dur, image = '' }) {
+  if ((style.cards?.theme ?? 'reference') === 'brandfixer') {
+    const icon = resolveIcon(card);
+    return brandFixerHtml(card, style, { W, H, dur, image, icon: icon ? iconSvg(icon, 'draw') : '' });
+  }
   const k = Math.min(W, H) / 1080;
   const px = (n) => `${Math.round(n * k)}px`;
   const col = style.colors;
@@ -258,18 +263,35 @@ export async function prepareCardClips(project, { W, H, fps, spans, job, signal 
   for (const { card, span } of spans) {
     i++;
     const dur = Math.max(0.3, span.end - span.start);
-    const hash = hashOf(card, project.style, W, H, fps, dur);
+    const image = cardImage(project, card, dir);
+    // Kartu overlay (mis. chat melayang di atas footage) dirender dengan alpha (ProRes 4444).
+    const alpha = isOverlay(card);
+    const hash = hashOf(card, project.style, W, H, fps, dur, image);
     const html = path.join(dir, `card-${hash}.html`);
-    const mp4 = path.join(dir, `card-${hash}.mp4`);
-    if (!fs.existsSync(mp4)) {
-      fs.writeFileSync(html, cardHtml(card, project.style, { W, H, dur }));
+    const file = path.join(dir, `card-${hash}.${alpha ? 'mov' : 'mp4'}`);
+    if (!fs.existsSync(file)) {
+      fs.writeFileSync(html, cardHtml(card, project.style, { W, H, dur, image }));
       if (job) job.message = `Merender grafis HyperFrames ${i}/${spans.length}…`;
-      await runHyperframes(st.bin, ['render', '.', '-c', path.basename(html), '-o', path.basename(mp4) + '.part.mp4', '-f', String(fps), '-q', 'standard'], dir, signal);
-      fs.renameSync(path.join(dir, path.basename(mp4) + '.part.mp4'), mp4);
+      const part = `${path.basename(file)}.part.${alpha ? 'mov' : 'mp4'}`;
+      const fmt = alpha ? ['--format', 'mov'] : ['-q', 'standard'];
+      await runHyperframes(st.bin, ['render', '.', '-c', path.basename(html), '-o', part, '-f', String(fps), ...fmt], dir, signal);
+      fs.renameSync(path.join(dir, part), file);
     }
-    out.set(card.id, { file: mp4, start: span.start, end: span.end });
+    out.set(card.id, { file, start: span.start, end: span.end, alpha });
   }
   return out;
+}
+
+export const isOverlay = (card) => card.layout === 'overlay' || card.type === 'chat';
+
+/** Foto milik pengguna untuk tile kartu: disalin ke folder HyperFrames (nama per id aset). */
+export function cardImage(project, card, dir) {
+  const a = card.image && (project.assets || []).find((x) => x.id === card.image && x.kind === 'image' && !x.missing);
+  if (!a || !fs.existsSync(a.path)) return '';
+  const name = `img-${a.id}${path.extname(a.path).toLowerCase() || '.jpg'}`;
+  const dst = path.join(dir, name);
+  if (!fs.existsSync(dst)) fs.copyFileSync(a.path, dst);
+  return name;
 }
 
 function runHyperframes(bin, args, cwd, signal) {

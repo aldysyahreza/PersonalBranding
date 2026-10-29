@@ -1,3 +1,10 @@
+@font-face { font-family: 'Archivo'; src: url('/fonts/Archivo-ExtraBold.ttf') format('truetype'); font-weight: 800; font-display: swap; }
+@font-face { font-family: 'Archivo'; src: url('/fonts/Archivo-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Fraunces'; src: url('/fonts/Fraunces-Italic.ttf') format('truetype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Outfit'; src: url('/fonts/Outfit-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Outfit'; src: url('/fonts/Outfit-SemiBold.ttf') format('truetype'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Caveat'; src: url('/fonts/Caveat-SemiBold.ttf') format('truetype'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('/fonts/JetBrainsMono-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; }
 /* Font bundel (OFL) — sama dengan yang dipakai render ffmpeg/libass. */
 @font-face { font-family: 'Montserrat'; src: url('/fonts/Montserrat-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; }
 @font-face { font-family: 'Montserrat'; src: url('/fonts/Montserrat-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
@@ -282,4 +289,12 @@ code.path { display: block; margin: 4px 0; }
 .word.emph-arc { background: transparent; color: var(--accent); border-color: var(--accent); text-decoration: underline wavy; }
 .word.emph-script { background: transparent; color: var(--ink); border-color: var(--accent); font-family: 'Great Vibes', cursive; font-size: 1.05rem; font-weight: 400; }
 
-.pv-hf { position: absolute; left: 0; top: 0; border: 0; pointer-events: none; background: #F3F2EF; }
+.pv-hf { position: absolute; left: 0; top: 0; border: 0; pointer-events: none; background: transparent; color-scheme: normal; }
+
+/* Scrim & hook lockup (tema The Brand Fixer) */
+.pv-scrim { background: linear-gradient(180deg, rgba(15,14,12,0) 42%, rgba(15,14,12,.62) 92%); pointer-events: none; }
+.pv-hook { position: absolute; display: flex; flex-direction: column; align-items: center; text-align: center; text-shadow: 0 3px 12px rgba(0,0,0,.35); }
+.pv-hook-big { animation: pv-hook-slam .2s ease-out both; }
+.pv-hook-acc { animation: pv-hook-rise .3s ease-out .26s both; }
+@keyframes pv-hook-slam { from { transform: scale(1.12); } to { transform: scale(1); } }
+@keyframes pv-hook-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }

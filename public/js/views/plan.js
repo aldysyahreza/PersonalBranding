@@ -9,11 +9,21 @@ import { ICON_NAMES, LEGACY_ICON } from '../../shared/icons.js';
 import { fmtTime, uid, r3, tokenize, normWord } from '../../shared/core.js';
 
 export const ICON_OPTIONS = [['auto', 'Ikon otomatis (sesuai isi)'], ['', 'Tanpa ikon'], ...ICON_NAMES.map((n) => [n, `Ikon: ${n}`])];
-export const CARD_TYPES = [['keyword', 'Kata kunci (blok aksen)'], ['number', 'Angka besar'], ['list', 'Daftar poin']];
+export const CARD_TYPES = [['keyword', 'Pernyataan (fakta → rasa)'], ['number', 'Angka besar + lingkaran'], ['list', 'Checklist poin'], ['compare', 'Banding: yang keliru dicoret → yang benar'], ['quote', 'Kutipan (Fraunces)'], ['flow', 'Alur langkah (panah)'], ['chat', 'Mockup chat di atas footage']];
+export const CASE_TAGS = [['', 'Tanpa case tag'], ...['01 — Brand Foundation', '02 — Brand Character', '03 — Brand Trust', '04 — Brand Experience', '05 — Internal Alignment', '06 — Marketing System', '07 — AI-Era Visibility'].map((t) => [`DX·${t}`, `DX·${t}`])];
+const FIELD_LABELS = {
+  keyword: ['Lead kecil (Outfit)', 'Kata tegas (Archivo)', 'Frasa rasa (Fraunces)'],
+  number: ['Lead kecil', 'Angka', 'Frasa di bawah angka'],
+  list: ['Lead kecil', 'Judul (opsional)', 'Poin (pisahkan dengan ;)'],
+  compare: ['Lead kecil', 'Yang keliru (dicoret)', 'Yang benar (Fraunces)'],
+  quote: ['Keterangan kecil', 'Kutipan', '—'],
+  flow: ['Lead kecil', 'Langkah pertama', 'Langkah berikutnya (pisahkan dengan ;)'],
+  chat: ['Catatan tangan (Caveat)', 'Pesan masuk', 'Balasan (opsional)'],
+};
 
 /** Kata pada kartu yang tidak ditemukan di ucapan sekitar rentang kartu. */
 export function unknownCardWords(card, segments) {
-  const spoken = new Set(segments.filter((s) => s.end >= card.start - 1.5 && s.start <= card.end + 1.5).flatMap((s) => tokenize(s.text).map(normWord)));
+  const spoken = new Set(segments.filter((s) => s.end >= (card.verifyFrom ?? card.start) - 1.5 && s.start <= card.end + 1.5).flatMap((s) => tokenize(s.text).map(normWord)));
   const numeric = card.numberValue ? normWord(card.title) : null;
   return [card.kicker, card.title, card.subtitle].flatMap((t) => tokenize(String(t || '').replace(/[;|]/g, ' ')).map(normWord)).filter((w) => w && !spoken.has(w) && w !== numeric);
 }
@@ -40,7 +50,10 @@ export function renderPlan(main) {
       !segs.length ? h('div', { class: 'alert warn' }, 'Belum ada transkrip: saran penekanan, kartu, dan struktur membutuhkan transkrip. Saran cut dari jeda tetap bisa dibuat.') : null,
       p.transcript && !p.transcript.reviewed ? h('div', { class: 'alert warn' }, 'Transkrip belum ditandai sudah dikoreksi. Saran mengikuti teks saat ini.') : null,
       h('div', { class: 'provider' }, h('div', {}, h('strong', {}, 'Saran berbasis aturan (lokal)'), h('div', { class: 'muted small' }, 'Heuristik transparan: angka → kartu angka, "pertama/kedua" → kartu poin, kata kunci brand → penekanan, jeda > 0,5 dtk → cut, segmen > 6 dtk → ide b-roll.')),
-        h('button', { class: 'btn primary', onclick: () => generate(p, 'rules') }, 'Buat saran aturan')),
+        h('div', { class: 'row wrap' },
+          h('button', { class: 'btn primary', onclick: () => generate(p, 'rules', false, true) }, 'Buat otomatis'),
+          h('button', { class: 'btn ghost', onclick: () => generate(p, 'rules') }, 'Saran saja'))),
+      h('p', { class: 'muted small' }, '"Buat otomatis": hook, kartu, penekanan, zoom & SFX yang SELURUH teksnya ditemukan di ucapan langsung disetujui (berlabel "otomatis"). Kartu berisi kata di luar ucapan, end card, dan cut tetap menunggu persetujuan Anda.'),
       h('div', { class: `provider ${claude.configured ? '' : 'off'}` }, h('div', {}, h('strong', {}, `Saran AI — Claude (${claude.model})`), h('div', { class: 'muted small' }, claude.configured ? 'Hanya teks transkrip yang dikirim, setelah persetujuan. Hasil tetap perlu ditinjau.' : 'Belum tersedia: isi ANTHROPIC_API_KEY di .env lalu jalankan ulang (opsional).')),
         h('button', { class: 'btn', disabled: !claude.configured || !segs.length, onclick: async () => {
           const ok = await consentDialog({ title: 'Kirim transkrip ke Claude?', service: 'Anthropic Claude API', sent: 'teks transkrip beserta timestamp dan durasi video.', notSent: 'video, audio, wajah, nama file, API key lain.' });
@@ -56,16 +69,16 @@ export function renderPlan(main) {
     ), ...(p.plan.notes || []).map((n) => h('p', { class: 'muted small' }, n))));
   }
 
-  col.append(emphasisPanel(p, seek), cardsPanel(p, seek), zoomPanel(p, seek), brollPanel(p, seek), audioPanel(p, seek), cutsPanel(p, seek));
+  col.append(hookPanel(p, seek), emphasisPanel(p, seek), cardsPanel(p, seek), endcardPanel(p), zoomPanel(p, seek), brollPanel(p, seek), audioPanel(p, seek), cutsPanel(p, seek));
   col.append(h('div', { class: 'row end' }, h('button', { class: 'btn primary', onclick: () => go('editor') }, 'Lanjut ke Editor →')));
 }
 
-async function generate(p, source, consent) {
+async function generate(p, source, consent, autoApprove = false) {
   try {
     const { saveNow } = await import('../store.js');
     await saveNow();
-    setProject(await api.plan(p.id, source, consent), { keepHistory: true });
-    toast('Saran dibuat. Tinjau dan setujui yang sesuai.', 'ok');
+    setProject(await api.plan(p.id, source, consent, autoApprove), { keepHistory: true });
+    toast(autoApprove ? 'Rencana otomatis dibuat. Item terverifikasi sudah disetujui — cek di preview Editor.' : 'Saran dibuat. Tinjau dan setujui yang sesuai.', 'ok');
   } catch (e) {
     toast(e.message, 'error', e.hint);
   }
@@ -103,7 +116,7 @@ function emphasisPanel(p, seek) {
       })),
     );
   });
-  return section('Penekanan kata', 'Kata yang diberi blok warna aksen di subtitle. Bisa juga diatur langsung di Transkrip dengan klik kata.', items, [
+  return section('Penekanan kata', 'Kata yang ditonjolkan di subtitle (tema bible: Fraunces Italic, maks satu per layar). Bisa juga diatur langsung di Transkrip dengan klik kata.', items, [
     items.length ? h('button', { class: 'btn ghost sm', onclick: () => edit((x) => x.emphasisSuggestions.forEach((e) => {
       const ww = x.transcript.segments.find((s) => s.id === e.segId)?.words?.[e.wordIndex];
       if (ww) ww.emph = true;
@@ -122,12 +135,10 @@ function cardsPanel(p, seek) {
       x.cards[i].needsReview = unknownCardWords(x.cards[i], segs).length > 0;
     });
     return h('div', { class: `item card-item ${c.approved ? 'approved' : ''}` },
-      h('div', { class: 'row wrap' }, timeFields('cards', i, seek, dur), select(c.type, CARD_TYPES, (v) => edit((x) => (x.cards[i].type = v))), select(c.layout || 'full', [['full', 'Layar penuh'], ['panel', 'Panel bawah (wajah terlihat)']], (v) => edit((x) => (x.cards[i].layout = v))), select(LEGACY_ICON[c.icon] || (c.icon ?? 'auto'), ICON_OPTIONS, (v) => edit((x) => (x.cards[i].icon = v))), originBadge(c.origin),
-        approveToggle(c, (on) => edit((x) => (x.cards[i].approved = on))), h('button', { class: 'link danger', onclick: () => edit((x) => x.cards.splice(i, 1)) }, 'Hapus')),
+      h('div', { class: 'row wrap' }, timeFields('cards', i, seek, dur), select(c.type, CARD_TYPES, (v) => edit((x) => (x.cards[i].type = v))), select(c.layout || (c.type === 'chat' ? 'overlay' : 'full'), [['full', 'Layar penuh'], ['overlay', 'Melayang di atas footage'], ['panel', 'Panel bawah (wajah terlihat)']], (v) => edit((x) => (x.cards[i].layout = v))), select(LEGACY_ICON[c.icon] || (c.icon ?? 'auto'), ICON_OPTIONS, (v) => edit((x) => (x.cards[i].icon = v))), select(c.caseTag || '', CASE_TAGS, (v) => edit((x) => (x.cards[i].caseTag = v))), select(c.image || '', [['', 'Tanpa foto'], ...p.assets.filter((a) => a.kind === 'image').map((a) => [a.id, `Foto: ${a.name}`])], (v) => edit((x) => (x.cards[i].image = v))), originBadge(c.origin), c.autoApproved ? badge('otomatis', 'info') : null,
+        approveToggle(c, (on) => edit((x) => { x.cards[i].approved = on; x.cards[i].autoApproved = false; })), h('button', { class: 'link danger', onclick: () => edit((x) => x.cards.splice(i, 1)) }, 'Hapus')),
       h('div', { class: 'grid3' },
-        h('label', { class: 'field' }, h('span', { class: 'field-label' }, 'Label atas'), h('input', { value: c.kicker || '', onchange: set('kicker') })),
-        h('label', { class: 'field' }, h('span', { class: 'field-label' }, c.type === 'number' ? 'Angka' : 'Judul'), h('input', { value: c.title || '', onchange: set('title') })),
-        h('label', { class: 'field' }, h('span', { class: 'field-label' }, c.type === 'list' ? 'Poin (pisahkan dengan ;)' : 'Label bawah'), h('input', { value: c.subtitle || '', onchange: set('subtitle') })),
+        ...['kicker', 'title', 'subtitle'].map((k, j) => h('label', { class: 'field' }, h('span', { class: 'field-label' }, (FIELD_LABELS[c.type] || FIELD_LABELS.keyword)[j]), h('input', { value: c[k] || '', onchange: set(k) }))),
       ),
       h('div', { class: 'muted small' }, c.reason || ''),
       c.pacingNote && !c.approved ? h('div', { class: 'alert warn small' }, c.pacingNote) : null,
@@ -233,4 +244,32 @@ function cutsPanel(p, seek) {
     h('button', { class: 'btn ghost sm', onclick: () => edit((x) => x.cuts.push({ id: uid('cut'), origin: 'pengguna', enabled: true, approved: true, kind: 'manual', start: r3(store.playhead || 0), end: r3(Math.min(dur, (store.playhead || 0) + 0.5)), reason: 'Cut manual' })) }, '+ Cut'),
     items.length ? h('button', { class: 'btn ghost sm', onclick: () => edit((x) => x.cuts.forEach((c) => (c.enabled = c.approved = true))) }, 'Setujui semua') : null,
   ]);
+}
+
+function hookPanel(p, seek) {
+  const hk = p.hook;
+  const set = (k) => (e) => edit((x) => { x.hook[k] = e.target.value; x.hook.origin = 'pengguna'; });
+  const items = hk ? [h('div', { class: `item card-item ${hk.approved ? 'approved' : ''}` },
+    h('div', { class: 'row wrap' }, h('button', { class: 'btn icon', onclick: () => seek(hk.start) }, '▶'), h('span', { class: 'mono small' }, `${fmtTime(hk.start)}–${fmtTime(hk.end)}`), originBadge(hk.origin), hk.autoApproved ? badge('otomatis', 'info') : null,
+      approveToggle(hk, (on) => edit((x) => { x.hook.approved = on; x.hook.autoApproved = false; }))),
+    h('div', { class: 'grid3' },
+      h('label', { class: 'field' }, h('span', { class: 'field-label' }, 'Lead kecil (huruf kecil)'), h('input', { value: hk.lead || '', onchange: set('lead') })),
+      h('label', { class: 'field' }, h('span', { class: 'field-label' }, 'Kata besar (≤9 huruf paling kuat)'), h('input', { value: hk.big || '', onchange: set('big') })),
+      h('label', { class: 'field' }, h('span', { class: 'field-label' }, 'Frasa rasa (Fraunces)'), h('input', { value: hk.accent || '', onchange: set('accent') }))),
+    h('div', { class: 'muted small' }, hk.reason || ''),
+    hk.needsReview ? h('div', { class: 'alert warn small' }, `Kata tidak ditemukan di ucapan pembuka: ${(hk.unknownWords || []).join(', ')}.`) : null)] : [];
+  return section('Hook (0–1,6 dtk)', 'Fixer Lockup di atas wajah: lead kecil → kata besar "slam" → frasa Fraunces. Subtitle disembunyikan selama hook.', items, []);
+}
+
+function endcardPanel(p) {
+  const ec = p.endcard;
+  if (!ec) return null;
+  const set = (k) => (e) => edit((x) => (x.endcard[k] = e.target.value));
+  return section('End card (2 dtk setelah video)', 'Latar ink-soft + lockup + signature, ditambahkan setelah kalimat terakhir sehingga wajah tidak tertutup. Teks berasal dari bible, bukan ucapan — perlu persetujuan.', [
+    h('div', { class: `item card-item ${ec.approved ? 'approved' : ''}` },
+      h('div', { class: 'row wrap' }, badge('dari bible', 'info'), approveToggle(ec, (on) => edit((x) => (x.endcard.approved = on)))),
+      h('div', { class: 'grid2' },
+        ...[['lead', 'Lead kecil'], ['big', 'Kata besar'], ['accent', 'Frasa rasa'], ['pill', 'Pill CTA (kosongkan bila tidak ada keyword)']].map(([k, l]) => h('label', { class: 'field' }, h('span', { class: 'field-label' }, l), h('input', { value: ec[k] || '', onchange: set(k) })))),
+      h('div', { class: 'muted small' }, ec.reason || '')),
+  ], []);
 }

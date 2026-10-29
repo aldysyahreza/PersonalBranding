@@ -32,7 +32,7 @@ export function assetsDir(id) {
   return d;
 }
 
-export function createProject({ name, presetId = 'aldy-editorial', level = 'editorial' }) {
+export function createProject({ name, presetId = 'brand-fixer', level = 'editorial' }) {
   const id = uid('prj');
   const preset = getPreset(presetId);
   const now = new Date().toISOString();
@@ -108,7 +108,7 @@ export function listProjects() {
 }
 
 /** Field yang boleh diubah langsung dari UI lewat PUT. Field lain dikelola server. */
-export const EDITABLE = ['name', 'style', 'styleLevel', 'output', 'transcript', 'cuts', 'zooms', 'emphasisSuggestions', 'cards', 'broll', 'sfx', 'music', 'brandKeywords', 'plan'];
+export const EDITABLE = ['name', 'style', 'styleLevel', 'output', 'transcript', 'cuts', 'zooms', 'emphasisSuggestions', 'cards', 'broll', 'sfx', 'music', 'brandKeywords', 'plan', 'hook', 'endcard'];
 
 export function applyEdits(p, body) {
   for (const k of EDITABLE) if (k in body) p[k] = body[k];

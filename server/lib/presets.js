@@ -27,7 +27,9 @@ export function listPresets() {
         return null;
       }
     })
-    .filter(Boolean);
+    .filter(Boolean)
+    // Preset dari bible brand tampil paling atas (default proyek baru).
+    .sort((a, b) => (b.id === 'brand-fixer') - (a.id === 'brand-fixer'));
 }
 
 export function getPreset(id) {
@@ -46,7 +48,7 @@ export function savePreset({ id, name, style, basedOn }) {
     throw new UserError('ID preset tidak valid.', 'Gunakan huruf kecil, angka, dan tanda hubung (3–60 karakter).');
   }
   const file = path.join(config.presetsDir, `${id}.json`);
-  if (id === 'aldy-editorial') {
+  if (id === 'aldy-editorial' || id === 'brand-fixer') {
     throw new UserError('Preset bawaan tidak ditimpa dari aplikasi.', 'Simpan dengan ID lain, atau edit file JSON-nya secara langsung.');
   }
   const data = {

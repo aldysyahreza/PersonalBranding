@@ -109,7 +109,7 @@ function arcPath(w, h) {
   return `m 0 ${r(h * 0.9)} b ${r(w * 0.3)} ${r(h * 0.1)} ${r(w * 0.7)} 0 ${r(w)} ${r(h * 0.35)} l ${r(w)} ${r(h * 0.6)} b ${r(w * 0.7)} ${r(h * 0.32)} ${r(w * 0.3)} ${r(h * 0.42)} 0 ${r(h)}`;
 }
 
-export function buildAss(project, { width: W, height: H, keep, paper = false, skipCards = new Set() }) {
+export function buildAss(project, { width: W, height: H, keep, paper = false, skipCards = new Set(), endSpan = null }) {
   const st = project.style;
   const cap = st.captions;
   const col = st.colors;
@@ -125,6 +125,12 @@ export function buildAss(project, { width: W, height: H, keep, paper = false, sk
   const ev = (layer, start, end, style, text) => lines.push(`Dialogue: ${layer},${ts(start)},${ts(end)},${style},,0,0,0,,${text}`);
   const ms = (sec) => Math.max(0, Math.round(sec * 1000));
   const darkAccent = shade(col.accent, -0.38);
+  // Lebar caption: zona aman kanan bisa lebih lebar (UI Instagram), caption tetap di tengah.
+  const capWidth = (W - side - Math.max(side, Math.round(W * (st.safeZone?.right ?? 0)))) * 0.94;
+  const scriptGap = cap.scriptGap ?? (/great vibes/i.test(fonts.accent) ? 0.82 : 1.0);
+  const hook = project.hook;
+  const hookSpan = hook?.approved && st.hook?.enabled !== false ? mapSpan(hook.start, hook.end, keep) : null;
+  const hookOn = !!(hookSpan && hookSpan.end - hookSpan.start > 0.2 && (hook.big || '').trim());
 
   const emphBox = cap.emphasis === 'box' || cap.emphasis === 'mix' || cap.layout === 'kinetic';
   const styles = [
@@ -139,6 +145,9 @@ export function buildAss(project, { width: W, height: H, keep, paper = false, sk
     `Style: CardAccent,${fonts.accent},${px(st.cards.labelSize * 1.9)},${assColor(col.cardText)},${assColor(col.cardText)},&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,5,${side},${side},0,1`,
     `Style: CardBox,${fonts.key},${px(st.cards.titleSize)},${assColor('#FFFFFF')},${assColor('#FFFFFF')},${assColor(col.accent)},&H00000000,-1,0,0,0,100,100,-1,0,3,${px(14)},0,5,${side},${side},0,1`,
     `Style: CardBoxShade,${fonts.key},${px(st.cards.titleSize)},&HFF000000,&HFF000000,${assColor(darkAccent)},&H00000000,-1,0,0,0,100,100,-1,0,3,${px(14)},0,5,${side},${side},0,1`,
+    `Style: HookLead,${fonts.lead},${px(46)},${assColor(col.text)},${assColor(col.text)},&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,0,${shadow},2,${side},${side},0,1`,
+    `Style: HookBig,${fonts.key},${px(200)},${assColor(col.text)},${assColor(col.text)},&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,0,${shadow * 1.5},2,${side},${side},0,1`,
+    `Style: HookAccent,${fonts.accent},${px(140)},${assColor(col.text)},${assColor(col.text)},&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,0,${shadow * 1.5},2,${side},${side},0,1`,
     `Style: Shape,Arial,20,${assColor(col.cardBg)},${assColor(col.cardBg)},&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1`,
   ];
 
@@ -162,6 +171,7 @@ export function buildAss(project, { width: W, height: H, keep, paper = false, sk
     // Selama kartu grafis tampil, subtitle disembunyikan (kartu sudah menampilkan kalimatnya),
     // supaya teks tidak muncul dua kali.
     const cardBlocks = (project.cards || []).filter((c) => c.approved).map((c) => mapSpan(c.start, c.end, keep)).filter(Boolean);
+    if (hookOn) cardBlocks.push(hookSpan);
     for (const ph of phrases) {
       const whole = mapSpan(ph.start, ph.end, keep);
       if (!whole || whole.end - whole.start < 0.05) continue;
@@ -198,10 +208,10 @@ export function buildAss(project, { width: W, height: H, keep, paper = false, sk
     const size = { small: px(cap.leadSize), big: px(cap.keySize), script: px(cap.keySize * (cap.scriptScale ?? 1.8)) };
     const tierFont = { small: fonts.lead, big: fonts.key, script: fonts.accent };
     const ls = kineticLines(ph.words, {
-      maxWidth: (W - side * 2) * 0.92,
+      maxWidth: capWidth,
       widthOf: (text, tier) => estWidth(cap.uppercase ? text.toUpperCase() : text, size[tier], tier, tierFont[tier]),
     });
-    const gap = { small: 1.15, big: 1.02, script: 0.82 };
+    const gap = { small: 1.15, big: 1.02, script: scriptGap };
     const heights = ls.map((l) => size[l.tier] * gap[l.tier]);
     let y = capY - heights.reduce((a, b) => a + b, 0);
     const fadeOut = 90;
@@ -240,6 +250,29 @@ export function buildAss(project, { width: W, height: H, keep, paper = false, sk
     });
   }
 
+  // ---------------- Hook lockup (bible: kata besar "slam" 112%→100% dalam 6 frame) ----------------
+  if (hookOn) {
+    const { start, end } = hookSpan;
+    const maxW = capWidth;
+    const fit = (text, size, font) => {
+      const w = estWidth(text, size, 'bold', font) * 0.96;
+      return w > maxW ? Math.floor((size * maxW) / w) : size;
+    };
+    const big = String(hook.big).trim();
+    const bigBase = px(big.length <= 9 ? 200 : big.length <= 12 ? 150 : 112);
+    const bigSize = fit(big, bigBase, fonts.key);
+    const leadSize = hook.lead ? fit(hook.lead, px(46), fonts.lead) : 0;
+    const accSize = hook.accent ? fit(hook.accent, px(124), fonts.accent) : 0;
+    const x = Math.round(W / 2);
+    const bottom = Math.round(Math.min(H * (1 - (st.safeZone?.bottom ?? 0.22)), H * 0.73));
+    let y = bottom - (accSize ? accSize * 0.95 : 0);
+    const out = `\\fad(0,90)`;
+    if (accSize) ev(4, start, end, 'HookAccent', `{\\an2\\fs${accSize}\\alpha&HFF&\\t(260,420,\\alpha&H00&)\\move(${x},${bottom + px(18)},${x},${bottom},260,460)${out}}${esc(hook.accent)}`);
+    ev(4, start, end, 'HookBig', `{\\an2\\pos(${x},${Math.round(y)})\\fs${bigSize}\\fsp${-Math.round(bigSize * 0.035)}\\fscx112\\fscy112\\t(0,200,\\fscx100\\fscy100)${out}}${esc(big)}`);
+    y -= bigSize * 0.88;
+    if (leadSize) ev(4, start, end, 'HookLead', `{\\an2\\pos(${x},${Math.round(y)})\\fs${leadSize}\\alpha&HFF&\\t(0,140,\\alpha&H00&)${out}}${esc(hook.lead)}`);
+  }
+
   // ---------------- Kartu visual (animasi bertahap) ----------------
   for (const card of project.cards || []) {
     // Kartu yang sudah dirender HyperFrames ditumpuk sebagai video; jangan digambar ulang di ASS.
@@ -251,7 +284,7 @@ export function buildAss(project, { width: W, height: H, keep, paper = false, sk
     const out = `\\fad(0,90)`;
     // Zoom-out pelan sepanjang kartu (Ken Burns) — dimulai setelah animasi masuk.
     const drift = (from = 104, to = 96, startAt = 260) => `\\fscx${from}\\fscy${from}\\t(${startAt},${dur},\\fscx${to}\\fscy${to})`;
-    const full = card.layout !== 'panel';
+    const full = card.layout !== 'panel' && card.layout !== 'overlay' && card.type !== 'chat';
     const cx = Math.round(W / 2);
     let cy;
     if (full) {
@@ -326,6 +359,13 @@ export function buildAss(project, { width: W, height: H, keep, paper = false, sk
         const t0 = 220 + i * 160;
         ev(7, span.start, span.end, 'CardLabel', `{\\an8\\move(${cx - px(30)},${iy},${cx},${iy},${t0},${t0 + 220})\\1c${assColor(col.cardText)}\\alpha&HFF&\\t(${t0},${t0 + 200},\\alpha&H00&)${out}}✓ ${esc(it)}`);
       });
+    } else if (st.cards?.theme === 'brandfixer') {
+      // Editorial Diagnosis: Archivo ink "slam" + frasa Fraunces + coretan bawah terracotta.
+      const tc = assColor(col.cardText);
+      ev(8, span.start, span.end, 'Card', `{\\an5\\pos(${cx},${cy})\\fs${titleSize}\\fn${fonts.key}\\1c${tc}\\fscx112\\fscy112\\t(0,200,\\fscx100\\fscy100)${out}}${titleText}`);
+      const uw = px(360), uy = Math.round(cy + titleH / 2 + px(10)), ux = Math.round(cx - uw / 2);
+      ev(8, span.start, span.end, 'Shape', `{\\an7\\pos(${ux},${uy})\\1c${assColor(col.accent)}\\bord0\\shad0\\clip(${ux},${uy - px(20)},${ux},${uy + px(40)})\\t(300,750,\\clip(${ux},${uy - px(20)},${ux + uw + px(10)},${uy + px(40)}))${out}\\p1}${arcPath(uw, px(14))}{\\p0}`);
+      if (sub) ev(8, span.start, span.end, 'CardAccent', `{\\an8\\pos(${cx},${uy + px(40)})\\1c${tc}\\alpha&HFF&\\t(320,520,\\alpha&H00&)${out}}${sub}`);
     } else {
       // Judul kotak merah dengan "bayangan" blok gelap ter-offset (efek 3D), terbuka dari kiri ke kanan.
       const tw = Math.max(...wrapped.map((l) => estWidth(l, titleSize, 'bold', fonts.key))) + px(40);
@@ -336,6 +376,20 @@ export function buildAss(project, { width: W, height: H, keep, paper = false, sk
       ev(8, span.start, span.end, 'CardBox', `{\\an5\\pos(${cx},${cy})\\fs${titleSize}${wipe(40)}${drift(103, 97, 360)}${out}}${titleText}`);
       if (sub) ev(8, span.start, span.end, 'CardLabel', `{\\an8\\pos(${cx},${Math.round(top + titleH + labelH * 0.4)})\\alpha&HFF&\\t(320,520,\\alpha&H00&)${out}}${sub}`);
     }
+  }
+
+  // ---------------- End card (cadangan bila HyperFrames tidak dipakai) ----------------
+  if (endSpan && !skipCards.has('endcard')) {
+    const ec = { ...(st.endcard || {}), ...(project.endcard || {}) };
+    const { start, end } = endSpan;
+    const x = Math.round(W / 2), cy = Math.round(H * 0.5);
+    ev(5, start, end, 'Shape', `{\\an7\\pos(0,0)\\1c${assColor(col.inkSoft || '#2A2824')}\\p1}${rect(0, 0, W, H)}{\\p0}`);
+    const big = String(ec.big || '').trim();
+    const bs = Math.min(px(big.length <= 9 ? 200 : 150), Math.floor(capWidth / Math.max(0.3, estWidth(big, 1, 'bold', fonts.key))));
+    if (ec.lead) ev(6, start, end, 'HookLead', `{\\an2\\pos(${x},${cy - Math.round(bs * 0.9)})\\fad(150,0)}${esc(ec.lead)}`);
+    if (big) ev(6, start, end, 'HookBig', `{\\an2\\pos(${x},${cy})\\fs${bs}\\fsp${-Math.round(bs * 0.035)}\\fscx112\\fscy112\\t(100,300,\\fscx100\\fscy100)}${esc(big)}`);
+    if (ec.accent) ev(6, start, end, 'HookAccent', `{\\an8\\pos(${x},${cy + px(10)})\\fs${px(120)}\\fad(300,0)}${esc(ec.accent)}`);
+    ev(6, start, end, 'HookLead', `{\\an8\\pos(${x},${cy + px(220)})\\fs${px(26)}\\fad(500,0)}aldy syahreza · the brand fixer`);
   }
 
   return [

@@ -59,7 +59,29 @@ Catatan: lokasi Node dicatat saat auto-start dipasang — jalankan ulang `Pasang
 
 Lokasi `projects/` dan `output/` dapat diubah via `PROJECTS_DIR` / `OUTPUT_DIR` di `.env`.
 
-## Gaya visual (preset "Aldy — Editorial Talking Head")
+## Gaya utama: preset "Aldy — The Brand Fixer (Editorial Diagnosis)"
+
+Preset default ini mengikuti bible brand Aldy di Claude: design system **The Brand Fixer** dan **Brand Fixer OS**. Ringkasannya ada di `docs/BRAND_PROFILE.md`.
+- **Font (OFL, dibundel):** Archivo 800 (kata tegas), Fraunces Italic (satu kata/frasa rasa per layar), Outfit (lead), Caveat (catatan tangan), JetBrains Mono (case tag).
+- **Warna:** paper/sand/cream + ink. Terracotta dipakai untuk garis dan bidang (lingkaran, coretan, centang, pill), maksimal 2 elemen per kartu.
+- **Hook 0–1,6 dtk:** lockup lead kecil → kata besar "slam" 112%→100% → frasa Fraunces. Semua katanya diambil dari ucapan pembuka.
+- **Caption kinetik putih** dengan scrim gelap di bawahnya. Grading hangat: saturasi −10%, hitam diangkat, grain halus.
+- **Kartu HyperFrames tema Editorial Diagnosis:**
+  - Pernyataan (fakta → rasa + coretan bawah), bisa dengan tile foto Anda sendiri.
+  - Angka menghitung naik + lingkaran tergambar.
+  - Checklist bernomor.
+  - Banding: "bukan X, tapi Y", yang keliru dicoret.
+  - Kutipan.
+  - Alur langkah dengan panah.
+  - Mockup chat transparan di atas footage (label "ilustrasi").
+  - End card 2 dtk setelah video.
+- **Signature & case tag:** signature "aldy syahreza / the brand fixer" ada di kartu. Case tag DX·01–07 bisa dipilih per kartu.
+- **Larangan bible dipatuhi:** tanpa transisi zoom/whoosh, tanpa caption berwarna-warni. SFX hanya klik/pop halus.
+- **"Buat otomatis" di Rencana edit:**
+  - Langsung disetujui: hook, kartu, penekanan, zoom & SFX yang seluruh teksnya ditemukan di ucapan.
+  - Tetap menunggu persetujuan: kartu berisi kata baru, end card (teks dari bible), dan cut.
+
+## Gaya lama (preset "Referensi video — Editorial Talking Head")
 
 Meniru ritme video referensi, lalu dikembangkan:
 - **Caption kinetik** (`captions.layout: "kinetic"`): kata muncul satu per satu tepat saat diucapkan (blur → tajam, naik halus), menumpuk per frasa lalu hilang bersama. Hierarki otomatis: kata sambung kecil (Montserrat Medium), kata bermakna besar (Montserrat ExtraBold), aksen.

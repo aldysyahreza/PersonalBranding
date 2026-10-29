@@ -395,7 +395,14 @@ export const EMPH_CYCLE = ['box', 'arc', 'script'];
 export function resolveEmphasis(phrases, mode = 'mix') {
   let n = 0;
   for (const ph of phrases) {
+    // 'serif' (bible The Brand Fixer): satu kata rasa per layar dalam Fraunces Italic, sisanya polos.
+    let used = false;
     for (const w of ph.words) {
+      if (mode === 'serif') {
+        w.style = w.emph && !used ? (typeof w.emph === 'string' && w.emph !== 'script' ? w.emph : 'script') : null;
+        if (w.style) used = true;
+        continue;
+      }
       if (!w.emph) w.style = null;
       else if (typeof w.emph === 'string') w.style = w.emph;
       else if (mode === 'mix') w.style = EMPH_CYCLE[n++ % EMPH_CYCLE.length];

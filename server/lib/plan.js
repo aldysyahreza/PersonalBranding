@@ -15,6 +15,9 @@ const TRAILING_STOP = new Set(['yang', 'dan', 'di', 'ke', 'dari', 'untuk', 'deng
 
 // Penanda kalimat inti: frasa setelahnya biasanya poin utama ("…adalah brand yang jelas").
 const MARKERS = new Set(['adalah', 'yaitu', 'yakni', 'kuncinya', 'rahasianya', 'intinya', 'masalahnya', 'faktanya', 'artinya', 'solusinya', 'caranya', 'jawabannya', 'bukan']);
+const CONTRAST = new Set(['tapi', 'tetapi', 'melainkan', 'namun', 'but']);
+const CHAT = new Set(['chat', 'nge-chat', 'whatsapp', 'wa', 'dm', 'inbox', 'nanya', 'tanya', 'bertanya', 'nanyain', 'komplain']);
+const QUOTE_MARKERS = new Set(['intinya', 'ingat', 'artinya', 'kuncinya', 'pelajarannya']);
 const CTA = new Set(['simpan', 'save', 'follow', 'ikuti', 'komen', 'komentar', 'bagikan', 'share', 'kirim', 'klik', 'cek', 'dm', 'tag', 'subscribe', 'daftar']);
 const NUM_WORDS = { satu: 1, dua: 2, tiga: 3, empat: 4, lima: 5, enam: 6, tujuh: 7, delapan: 8, sembilan: 9, sepuluh: 10, sebelas: 11, seratus: 100, seribu: 1000, sejuta: 1e6 };
 const NUM_SCALE = { belas: 10, puluh: 10, ratus: 100, ribu: 1000, juta: 1e6, miliar: 1e9 };
@@ -91,7 +94,32 @@ export function rulePlan(project) {
       if (ORDINALS.test(w.text) && i <= 1) {
         cand.push({ prio: 3, type: 'keyword', start: r3(w.start), end: r3(Math.min(seg.end, w.start + 2.2)), kicker: w.text.replace(/[,.:]$/, ''), title: cleanPhrase(words.slice(i + 1), 5), subtitle: '', icon: 'check', reason: 'Penanda poin berurutan; kartu poin membantu penonton mengikuti struktur.' });
       }
-      if (MARKERS.has(n) && i < words.length - 1) {
+      // "bukan X, tapi Y" → kartu banding: X dicoret, Y dalam Fraunces (bible: coret yang salah).
+      if (n === 'bukan' && i < words.length - 2) {
+        const j = words.findIndex((x, k) => k > i + 1 && CONTRAST.has(normWord(x.text)));
+        if (j > i + 1 && j - i <= 6) {
+          const x = cleanPhrase(words.slice(i + 1, j), 4), y = cleanPhrase(words.slice(j + 1), 4);
+          if (x && y) cand.push({ prio: 4, type: 'compare', start: r3(w.start - 0.05), end: r3(words[Math.min(words.length - 1, j + 2)].end + 0.4), kicker: '', title: x, subtitle: y, icon: '', reason: `Pola "bukan … ${words[j].text} …": yang keliru dicoret, yang benar ditonjolkan.` });
+        }
+      }
+      // "dari X ke Y" → diagram alur dua langkah.
+      if (n === 'dari' && i < words.length - 2) {
+        const j = words.findIndex((x, k) => k > i + 1 && k <= i + 4 && normWord(x.text) === 'ke');
+        if (j > 0) {
+          const x = cleanPhrase(words.slice(i + 1, j), 3), y = cleanPhrase(words.slice(j + 1), 3);
+          if (x && y && !NUMBER_RE.test(x)) cand.push({ prio: 2, type: 'flow', start: r3(w.start - 0.05), end: r3(w.start + 2.4), kicker: '', title: x, subtitle: y, icon: '', reason: 'Pola "dari … ke …" lebih mudah dipahami sebagai alur.' });
+        }
+      }
+      // Percakapan pelanggan → mockup chat melayang di atas footage (teks = ucapan, berlabel ilustrasi).
+      if (CHAT.has(n) && i < words.length - 2) {
+        const said = cleanPhrase(words.slice(i + 1), 7);
+        if (tokenize(said).length >= 2) cand.push({ prio: 2.5, type: 'chat', layout: 'overlay', start: r3(w.start), end: r3(w.start + 3), kicker: '', title: said, subtitle: '', icon: '', reason: 'Menyebut chat/pertanyaan pelanggan: mockup chat (ilustrasi, teks dari ucapan) di atas footage.' });
+      }
+      if (QUOTE_MARKERS.has(n) && i <= 1 && tokenize(seg.text).length <= 14) {
+        cand.push({ prio: 2, type: 'quote', start: r3(seg.start), end: r3(Math.min(seg.end + 0.4, seg.start + 3.5)), kicker: '', title: seg.text.replace(/[.,!?;:…]+$/, ''), subtitle: '', icon: 'quote', reason: `Kalimat inti ("${w.text} …") sebagai kutipan Fraunces.` });
+        return;
+      }
+      if (MARKERS.has(n) && n !== 'bukan' && i < words.length - 1) {
         const title = cleanPhrase(words.slice(i + 1), 4);
         if (tokenize(title).length >= 1) cand.push({ prio: 2, type: 'keyword', start: r3(words[i + 1].start - 0.05), end: r3(Math.min(seg.end + 0.3, words[i + 1].start + 2)), kicker: words.slice(Math.max(0, i - 2), i + 1).map((x) => x.text).join(' ').replace(/[.,!?;:…]+$/, ''), title, subtitle: '', icon: 'auto', reason: `Frasa setelah "${w.text}" biasanya poin utama kalimat.` });
       }
@@ -104,18 +132,29 @@ export function rulePlan(project) {
     });
   }
 
+  // Tiga poin berurutan atau lebih → satu kartu checklist rangkuman (menggantikan kartu poin satuan).
+  const ords = cand.filter((c) => c.icon === 'check' && ORDINALS.test(c.kicker || ''));
+  if (ords.length >= 3) {
+    const last = ords[ords.length - 1];
+    const lastSeg = segs.find((sg) => sg.start <= last.start && sg.end >= last.start);
+    for (const o of ords) cand.splice(cand.indexOf(o), 1);
+    const at = r3((lastSeg?.end ?? last.end) + 0.05);
+    cand.push({ prio: 4, type: 'list', start: at, end: r3(at + 3.2), kicker: '', title: '', subtitle: ords.map((o) => cleanPhrase(tokenize(o.title).map((t) => ({ text: t })), 3)).join('; '), icon: '', reason: 'Poin berurutan dirangkum sebagai checklist (layak disimpan).', verifyFrom: ords[0].start });
+  }
+
   // Pilih kartu: prioritas tinggi dulu, dengan jeda wajah minimal di antara kartu dan
   // maks ±1 kartu per 8 dtk agar wajah tetap dominan (keluhan "adegan wajah terlalu cepat").
   const P = { ...DEFAULT_PACING, ...(project.style?.pacing || {}) };
-  const maxCards = Math.max(2, Math.round(dur / 8));
+  const maxCards = Math.max(2, Math.round(dur / 7));
   for (const c of cand.sort((a, b) => b.prio - a.prio || a.start - b.start)) {
     if (out.cards.length >= maxCards) break;
     // Durasi kartu mengikuti waktu baca (±0,35 dtk/kata + 1,2 dtk), dalam batas min–maks.
     const words = tokenize([c.kicker, c.title, c.subtitle].join(' ')).length;
     c.start = r3(Math.max(c.start, P.firstCardAt));
-    c.end = r3(Math.min(dur, c.start + Math.min(P.maxCard, Math.max(P.minCard, 1.2 + words * 0.35))));
-    if (!c.title || out.cards.some((x) => c.start < x.end + P.minFaceGap && c.end > x.start - P.minFaceGap)) continue;
-    if (out.cards.some((x) => normWord(x.title) === normWord(c.title))) continue; // hindari kartu kembar
+    const extra = c.type === 'chat' || c.type === 'list' || c.type === 'compare' ? 0.8 : 0;
+    c.end = r3(Math.min(dur, c.start + Math.min(P.maxCard, Math.max(P.minCard, 1.2 + extra + words * 0.35))));
+    if ((!c.title && c.type !== 'list') || out.cards.some((x) => c.start < x.end + P.minFaceGap && c.end > x.start - P.minFaceGap)) continue;
+    if (c.title && out.cards.some((x) => normWord(x.title) === normWord(c.title))) continue; // hindari kartu kembar
     const { prio, ...card } = c;
     out.cards.push(card);
   }
@@ -154,8 +193,17 @@ export function rulePlan(project) {
     }
   }
 
+  // Foto milik pengguna (aset gambar) dipasang ke kartu pernyataan sebagai tile (bible: foto nyata dulu).
+  const photos = (project.assets || []).filter((a) => a.kind === 'image' && !a.missing);
+  let pi = 0;
+  if (photos.length) for (const c of out.cards) if (c.type === 'keyword' && !c.cta) c.image = photos[pi++ % photos.length].id;
+
+  out.hook = hookSuggestion(segs, keywords, project.style?.hook?.maxSec ?? 1.6);
+  // Kartu tidak boleh menumpuk hook di awal.
+  if (out.hook) out.cards = out.cards.filter((c) => c.start >= out.hook.end + 0.3);
+
   // SFX dari pustaka sintetis bawaan, disesuaikan jenis visualnya.
-  out.sfx.push(...sfxForVisuals(out.cards, out.broll));
+  out.sfx.push(...sfxForVisuals(out.cards, out.broll, project.style?.audio?.sfxPalette));
 
   // Zoom punch-in bergantian antar kalimat (ritme visual seperti referensi, tanpa footage tambahan).
   const level = project.style?.zoom?.punchIn ?? 1.12;
@@ -181,8 +229,43 @@ function musicSuggestion(project) {
   };
 }
 
-function sfxForVisuals(cards, broll) {
+/** Hook lockup dari kata-kata pembuka (semuanya diucapkan): lead kecil → 1–2 kata besar → frasa rasa. */
+export function hookSuggestion(segs, keywords = new Set(), maxSec = 1.6) {
+  const first = segs[0];
+  const words = (first?.words || []).filter((w) => w.start - first.start <= Math.max(2.5, maxSec + 0.8));
+  if (words.length < 2) return null;
+  const score = (w, i) => {
+    const n = normWord(w.text);
+    if (!n || TRAILING_STOP.has(n) || FILLERS.has(n)) return -1;
+    return (NUMBER_RE.test(w.text) ? 6 : 0) + (keywords.has(n) ? 4 : 0) + Math.min(4, n.length / 2) - i * 0.15;
+  };
+  let bi = 0;
+  words.forEach((w, i) => { if (score(w, i) > score(words[bi], bi)) bi = i; });
+  if (score(words[bi], bi) < 0) return null;
+  const clean = (t) => t.replace(/[.,!?;:…]+$/, '');
+  let big = clean(words[bi].text);
+  let bEnd = bi;
+  const nx = words[bi + 1];
+  if (nx && !/[.,!?;:…]$/.test(words[bi].text) && (big + ' ' + clean(nx.text)).length <= 12 && !TRAILING_STOP.has(normWord(nx.text))) {
+    big += ' ' + clean(nx.text);
+    bEnd = bi + 1;
+  }
+  const lead = words.slice(Math.max(0, bi - 4), bi).map((w) => w.text).join(' ').replace(/[.,!?;:…]+$/, '').toLowerCase();
+  const accWords = /[.,!?;:…]$/.test(words[bEnd].text) ? [] : words.slice(bEnd + 1, bEnd + 3);
+  const accent = clean(accWords.map((w) => w.text).join(' '));
+  const lastW = accWords.length ? accWords[accWords.length - 1] : words[bEnd];
+  const start = r3(Math.max(0, first.start));
+  const end = r3(Math.max(start + 1.0, Math.min(start + maxSec + 0.6, lastW.end + 0.25)));
+  return { start, end, lead, big: big.charAt(0).toUpperCase() + big.slice(1), accent: accent.length <= 18 ? accent : '', reason: 'Hook 0–1,6 dtk: kata pembuka paling bermakna sebagai kata besar (diambil dari ucapan).' };
+}
+
+function sfxForVisuals(cards, broll, palette = 'reference') {
   const out = [];
+  // Bible: tanpa whoosh/zoom/audio meme — hanya bunyi halus.
+  if (palette === 'quiet') {
+    for (const c of cards) if (c.type !== 'chat') out.push({ time: c.start, builtin: c.type === 'number' ? 'pop' : 'click', reason: 'Penanda halus munculnya kartu (palet tenang sesuai bible).' });
+    return out;
+  }
   for (const c of cards) {
     const [builtin, reason] = c.type === 'number' ? ['impact', 'Menegaskan angka besar.']
       : c.cta ? ['notif', 'Menarik perhatian ke ajakan (CTA).']
@@ -204,7 +287,7 @@ const PLAN_SCHEMA = {
   properties: {
     structure: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['part', 'start', 'end', 'reason'], properties: { part: { type: 'string' }, start: { type: 'number' }, end: { type: 'number' }, reason: { type: 'string' } } } },
     emphasis: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['segId', 'word', 'reason'], properties: { segId: { type: 'string' }, word: { type: 'string' }, reason: { type: 'string' } } } },
-    cards: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['type', 'start', 'end', 'kicker', 'title', 'subtitle', 'icon', 'reason'], properties: { type: { type: 'string', enum: ['keyword', 'number', 'list'] }, start: { type: 'number' }, end: { type: 'number' }, kicker: { type: 'string' }, title: { type: 'string' }, subtitle: { type: 'string' }, icon: { type: 'string', enum: ['', 'check', 'cross', 'arrow', 'warning', 'star'] }, reason: { type: 'string' } } } },
+    cards: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['type', 'start', 'end', 'kicker', 'title', 'subtitle', 'icon', 'reason'], properties: { type: { type: 'string', enum: ['keyword', 'number', 'list', 'compare', 'quote', 'flow'] }, start: { type: 'number' }, end: { type: 'number' }, kicker: { type: 'string' }, title: { type: 'string' }, subtitle: { type: 'string' }, icon: { type: 'string', enum: ['', 'check', 'cross', 'arrow', 'warning', 'star'] }, reason: { type: 'string' } } } },
     broll: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['start', 'end', 'idea', 'reason'], properties: { start: { type: 'number' }, end: { type: 'number' }, idea: { type: 'string' }, reason: { type: 'string' } } } },
     cuts: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['start', 'end', 'reason'], properties: { start: { type: 'number' }, end: { type: 'number' }, reason: { type: 'string' } } } },
     notes: { type: 'array', items: { type: 'string' } },
@@ -268,7 +351,8 @@ export async function claudePlan(project) {
     const idx = seg ? (seg.words || []).findIndex((w) => normWord(w.text) === normWord(e.word)) : -1;
     return idx >= 0 ? [{ segId: seg.id, wordIndex: idx, word: seg.words[idx].text, reason: e.reason }] : [];
   });
-  plan.sfx = sfxForVisuals(plan.cards || [], plan.broll || []);
+  plan.sfx = sfxForVisuals(plan.cards || [], plan.broll || [], project.style?.audio?.sfxPalette);
+  plan.hook = hookSuggestion(segs, new Set((project.brandKeywords || []).map(normWord)), project.style?.hook?.maxSec ?? 1.6);
   plan.zooms = [];
   plan.music = musicSuggestion(project);
   return plan;
@@ -278,7 +362,7 @@ export async function claudePlan(project) {
 export function verifyCardText(card, segments) {
   const spoken = new Set(
     segments
-      .filter((s) => s.end >= card.start - 1.5 && s.start <= card.end + 1.5)
+      .filter((s) => s.end >= (card.verifyFrom ?? card.start) - 1.5 && s.start <= card.end + 1.5)
       .flatMap((s) => tokenize(s.text).map(normWord)),
   );
   const numeric = card.numberValue ? normWord(card.title) : null;
@@ -289,19 +373,24 @@ export function verifyCardText(card, segments) {
 }
 
 /** Ubah hasil rencana menjadi item proyek (semua belum disetujui). */
-export function planToItems(plan, origin, segments) {
+export function planToItems(plan, origin, segments, { autoApprove = false } = {}) {
   const tag = (o) => ({ id: uid(o), origin, approved: false });
+  // Otomatis: kartu yang SELURUH teksnya ditemukan di ucapan langsung disetujui (bukan klaim baru);
+  // yang berisi kata di luar ucapan tetap menunggu persetujuan. Cut tidak pernah otomatis.
+  const auto = (ok) => (autoApprove && ok ? { approved: true, autoApproved: true } : {});
+  const hook = plan.hook ? { ...plan.hook, unknownWords: verifyCardText({ ...plan.hook, kicker: plan.hook.lead, title: plan.hook.big, subtitle: plan.hook.accent }, segments) } : null;
   return {
     structure: plan.structure || [],
-    emphasis: (plan.emphasis || []).map((e) => ({ ...tag('em'), ...e })),
+    emphasis: (plan.emphasis || []).map((e) => ({ ...tag('em'), ...e, ...auto(true) })),
     cards: (plan.cards || []).map((c) => {
       const unknown = verifyCardText(c, segments);
-      return { ...tag('card'), ...c, unknownWords: unknown, needsReview: unknown.length > 0 };
+      return { ...tag('card'), ...c, unknownWords: unknown, needsReview: unknown.length > 0, ...auto(unknown.length === 0) };
     }),
+    hook: hook ? { ...hook, origin, approved: false, needsReview: hook.unknownWords.length > 0, ...auto(hook.unknownWords.length === 0) } : null,
     broll: (plan.broll || []).map((b) => ({ ...tag('broll'), ...b, assetId: null })),
-    sfx: (plan.sfx || []).map((s) => ({ ...tag('sfx'), ...s, volumeDb: 0 })),
+    sfx: (plan.sfx || []).map((s) => ({ ...tag('sfx'), ...s, volumeDb: 0, ...auto(true) })),
     cuts: (plan.cuts || []).map((c) => ({ ...tag('cut'), ...c, enabled: false })),
-    zooms: (plan.zooms || []).map((z) => ({ ...tag('zoom'), ...z })),
+    zooms: (plan.zooms || []).map((z) => ({ ...tag('zoom'), ...z, ...auto(true) })),
     music: plan.music || null,
     notes: plan.notes || [],
   };

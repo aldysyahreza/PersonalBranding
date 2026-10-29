@@ -7,18 +7,19 @@ import { buildPhrases, splitLeadKey, framing, isCut, OUTPUT_FORMATS, keepSegment
 
 const WEIGHTS = { Thin: 100, ExtraLight: 200, Light: 300, Regular: 400, Medium: 500, SemiBold: 600, Bold: 700, ExtraBold: 800, Black: 900 };
 export function fontCss(name = 'Inter') {
-  const parts = String(name).split(' ');
+  const italic = /\sItalic$/.test(String(name));
+  const parts = String(name).replace(/\sItalic$/, '').split(' ');
   const last = parts[parts.length - 1];
   // "Montserrat ExtraBold" → keluarga "Montserrat", tebal 800; "Great Vibes" → keluarga utuh, tebal 400.
   const family = WEIGHTS[last] ? parts.slice(0, -1).join(' ') : parts.join(' ');
-  return { fontFamily: `'${family}', system-ui, sans-serif`, fontWeight: WEIGHTS[last] || 400 };
+  return { fontFamily: `'${family}', system-ui, sans-serif`, fontWeight: WEIGHTS[last] || 400, fontStyle: italic ? 'italic' : 'normal' };
 }
 
 const measureCtx = document.createElement('canvas').getContext('2d');
 /** Lebar teks (px) di browser dengan font yang sama dengan render. */
 function textWidth(text, size, font) {
   const f = fontCss(font);
-  measureCtx.font = `${f.fontWeight} ${size}px ${f.fontFamily}`;
+  measureCtx.font = `${f.fontStyle} ${f.fontWeight} ${size}px ${f.fontFamily}`;
   return measureCtx.measureText(text).width;
 }
 
@@ -31,9 +32,11 @@ export function createPreview() {
   const vignette = h('div', { class: 'pv-vignette' });
   const brollLayer = h('div', { class: 'pv-layer' });
   const capLayer = h('div', { class: 'pv-layer' });
+  const scrimLayer = h('div', { class: 'pv-layer pv-scrim' });
+  const hookLayer = h('div', { class: 'pv-layer' });
   const cardLayer = h('div', { class: 'pv-layer' });
   const guides = h('div', { class: 'pv-layer pv-guides hidden' });
-  frame.append(bgVideo, video, vignette, brollLayer, capLayer, cardLayer, guides);
+  frame.append(bgVideo, video, vignette, brollLayer, scrimLayer, capLayer, hookLayer, cardLayer, guides);
   const stage = h('div', { class: 'pv-stage' }, frame);
   const timeLabel = h('span', { class: 'mono' });
   const playBtn = h('button', { class: 'btn primary', onclick: () => (video.paused ? video.play() : video.pause()) }, '▶ Putar');
@@ -130,8 +133,9 @@ export function createPreview() {
       const capY = Math.round(Math.min(safeBottom, Math.max(safeTop + cap.keySize * k * 2, H * cap.position)));
       const size = { small: cap.leadSize * k, big: cap.keySize * k, script: cap.keySize * (cap.scriptScale ?? 1.8) * k };
       const fontOf = { small: fonts.lead, big: fonts.key, script: fonts.accent };
-      const ls = kineticLines(ph.words, { maxWidth: (W - side * 2) * 0.92, widthOf: (text, tier) => textWidth(cap.uppercase ? text.toUpperCase() : text, size[tier], fontOf[tier]) });
-      const gap = { small: 1.15, big: 1.02, script: 0.82 };
+      const capW = (W - side - Math.max(side, W * (pr.style.safeZone.right || 0))) * 0.94;
+      const ls = kineticLines(ph.words, { maxWidth: capW, widthOf: (text, tier) => textWidth(cap.uppercase ? text.toUpperCase() : text, size[tier], fontOf[tier]) });
+      const gap = { small: 1.15, big: 1.02, script: cap.scriptGap ?? (/great vibes/i.test(fonts.accent) ? 0.82 : 1.0) };
       const font = { small: fonts.lead, big: fonts.key, script: fonts.accent };
       const heights = ls.map((l) => size[l.tier] * gap[l.tier]);
       let y = capY - heights.reduce((a, b) => a + b, 0);
@@ -163,7 +167,11 @@ export function createPreview() {
   function drawCaptions(pr, t) {
     const cap = pr.style.captions;
     // Saat kartu grafis tampil, subtitle disembunyikan (sama dengan render).
-    const onCard = (pr.cards || []).some((c) => c.approved && t >= c.start && t < c.end);
+    const hk = pr.hook?.approved && pr.style.hook?.enabled !== false && pr.hook.big ? pr.hook : null;
+    const onHook = hk && t >= hk.start && t < hk.end;
+    drawHook(pr, onHook ? hk : null);
+    scrimLayer.style.opacity = cap.enabled ? String(cap.scrim || 0) : '0';
+    const onCard = onHook || (pr.cards || []).some((c) => c.approved && t >= c.start && t < c.end);
     const ph = cap.enabled && !onCard ? phrasesFor(pr).find((x) => t >= x.start && t < x.end) : null;
     if (ph && cap.layout === 'kinetic') return drawKinetic(pr, t, ph);
     capState = { key: null, words: [] };
@@ -196,6 +204,26 @@ export function createPreview() {
     }
   }
 
+  let hookKey = null;
+  /** Hook lockup (sama dengan render ASS): lead → kata besar slam → frasa rasa. */
+  function drawHook(pr, hk) {
+    const key = hk ? JSON.stringify([hk, W, pr.style.fonts]) : null;
+    if (key === hookKey) return;
+    hookKey = key;
+    hookLayer.replaceChildren();
+    if (!hk) return;
+    const k = Math.min(W, H) / 1080, f = pr.style.fonts;
+    const big = String(hk.big).trim();
+    const capW = (W - W * pr.style.safeZone.side - Math.max(W * pr.style.safeZone.side, W * (pr.style.safeZone.right || 0))) * 0.94;
+    const fit = (txt, size, font) => Math.min(size, size * capW / Math.max(1, textWidth(txt, size, font)));
+    const bs = fit(big, (big.length <= 9 ? 200 : big.length <= 12 ? 150 : 112) * k, f.key);
+    const bottom = Math.min(H * (1 - pr.style.safeZone.bottom), H * 0.73);
+    hookLayer.append(h('div', { class: 'pv-hook', style: { left: '0', right: '0', bottom: `${H - bottom}px`, color: pr.style.colors.text } },
+      hk.lead ? h('div', { class: 'pv-hook-lead', style: { fontSize: `${fit(hk.lead, 46 * k, f.lead)}px`, ...fontCss(f.lead) } }, hk.lead) : null,
+      h('div', { class: 'pv-hook-big', style: { fontSize: `${bs}px`, letterSpacing: '-0.035em', lineHeight: 0.88, ...fontCss(f.key) } }, big),
+      hk.accent ? h('div', { class: 'pv-hook-acc', style: { fontSize: `${fit(hk.accent, 124 * k, f.accent)}px`, lineHeight: 0.95, ...fontCss(f.accent) } }, hk.accent) : null));
+  }
+
   let cardKey = null;
   function drawCards(pr, t) {
     const card = (pr.cards || []).find((c) => c.approved && t >= c.start && t < c.end);
@@ -214,7 +242,7 @@ export function createPreview() {
     cardLayer.replaceChildren();
     if (!card) return;
     if ((pr.style.cards?.engine ?? 'hyperframes') === 'hyperframes' && store.status.hyperframes?.ok && card.layout !== 'panel') {
-      const fr = h('iframe', { class: 'pv-hf', src: `/api/projects/${pr.id}/hf/preview/${card.id}?w=${W}&h=${H}&v=${encodeURIComponent(key.length + ':' + card.title)}`, style: { width: `${W}px`, height: `${H}px` }, scrolling: 'no' });
+      const fr = h('iframe', { class: 'pv-hf', allowTransparency: 'true', src: `/api/projects/${pr.id}/hf/preview/${card.id}?w=${W}&h=${H}&v=${encodeURIComponent(key.length + ':' + card.title)}`, style: { width: `${W}px`, height: `${H}px` }, scrolling: 'no' });
       fr.addEventListener('load', () => { try { fr.contentWindow.__timelines?.root?.seek(Math.max(0, store.playhead - card.start), false); } catch {} });
       cardLayer.append(fr);
       return;

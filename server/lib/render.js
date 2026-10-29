@@ -9,8 +9,8 @@ import { run } from './proc.js';
 import { probe, UserError } from './media.js';
 import { buildAss } from './ass.js';
 import { keepSegments, outputDuration, mapSpan, mapTime, framing, zoomPieces, enforcePacing, OUTPUT_FORMATS, r3 } from '../../public/shared/core.js';
-import { libraryFile, isLibraryItem, catalog, paperFile } from './synth.js';
-import { hyperframesStatus, prepareCardClips } from './hyperframes.js';
+import { libraryFile, isLibraryItem, catalog, paperFile, scrimFile } from './synth.js';
+import { hyperframesStatus, prepareCardClips, isOverlay } from './hyperframes.js';
 import { workDir } from './projects.js';
 
 export const QUALITY = {
@@ -80,14 +80,17 @@ export function buildCommand(project, o) {
   const fps = project.style?.output?.fps || 30;
   const keep = keepSegments(meta.duration, project.cuts);
   if (!keep.length) throw new UserError('Semua bagian video terpotong.', 'Nonaktifkan beberapa cut agar ada bagian yang tersisa.');
-  const outDur = outputDuration(keep);
+  // End card (bible: 2 dtk, latar ink-soft) ditambahkan SETELAH video — wajah tidak tertutup.
+  const tail = project.endcard?.approved ? Math.max(0.5, Number(project.style?.endcard?.seconds) || 2) : 0;
+  const baseDur = outputDuration(keep);
+  const outDur = baseDur + tail;
   const dir = workDir(project.id);
   const assName = `subs_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.ass`;
   // Kartu layar penuh memakai latar kertas bertekstur (overlay PNG) di bawah teks ASS.
   const hfClips = o.hfClips || new Map();
-  const fullCards = (project.cards || []).filter((c) => c.approved && c.layout !== 'panel' && !hfClips.has(c.id)).map((c) => mapSpan(c.start, c.end, keep)).filter(Boolean);
+  const fullCards = (project.cards || []).filter((c) => c.approved && c.layout !== 'panel' && !isOverlay(c) && !hfClips.has(c.id)).map((c) => mapSpan(c.start, c.end, keep)).filter(Boolean);
   const usePaper = project.style.cards?.paper !== false && fullCards.length > 0;
-  fs.writeFileSync(path.join(dir, assName), buildAss(project, { width: W, height: H, keep, paper: usePaper, skipCards: new Set(hfClips.keys()) }));
+  fs.writeFileSync(path.join(dir, assName), buildAss(project, { width: W, height: H, keep, paper: usePaper, skipCards: new Set(hfClips.keys()), endSpan: tail ? { start: baseDur, end: outDur } : null }));
 
   const inputs = ['-i', project.source.path];
   let nextInput = 1;
@@ -129,6 +132,10 @@ export function buildCommand(project, o) {
 
   // 3) Koreksi warna terukur.
   let cur = 'vf';
+  if (tail) {
+    f.push(`[vf]tpad=stop_mode=clone:stop_duration=${r3(tail)}[vtail]`);
+    cur = 'vtail';
+  }
   const col = project.style.color;
   if (col?.enabled) {
     const i = Math.min(1, Math.max(0, col.intensity ?? 0.5));
@@ -136,7 +143,10 @@ export function buildCommand(project, o) {
     const w = (col.warmth || 0) * i;
     const cb = `colorbalance=rm=${r3(w * 0.6)}:bm=${r3(-w * 0.6)}:rh=${r3(w * 0.3)}:bh=${r3(-w * 0.3)}`;
     const vig = col.vignette > 0 ? `,vignette=a=${r3(col.vignette * i * (Math.PI / 4))}` : '';
-    f.push(`[${cur}]${eq},${cb}${vig}[vcol]`);
+    // Hitam sedikit diangkat (lift) + grain halus temporal (bible: grading hangat, grain 5–8%).
+    const lift = col.lift > 0 ? `,curves=all='0/${r3(col.lift * i)} 1/1'` : '';
+    const grain = col.grain > 0 ? `,noise=alls=${Math.max(1, Math.round(col.grain * i * 100))}:allf=t` : '';
+    f.push(`[${cur}]${eq},${cb}${lift}${vig}${grain}[vcol]`);
     cur = 'vcol';
   }
 
@@ -159,6 +169,16 @@ export function buildCommand(project, o) {
     bi++;
   }
 
+  // 4a) Scrim gelap di bawah area caption (di bawah kartu: kartu layar penuh menutupinya).
+  const scrim = project.style.captions?.enabled !== false ? project.style.captions?.scrim || 0 : 0;
+  if (scrim > 0) {
+    inputs.push('-loop', '1', '-framerate', String(fps), '-t', String(outDur), '-i', scrimFile(W, H, scrim));
+    const si = nextInput++;
+    f.push(`[${si}:v]format=rgba,setsar=1[scrim]`);
+    f.push(`[${cur}][scrim]overlay=0:0:eof_action=pass:format=auto[vscrim]`);
+    cur = 'vscrim';
+  }
+
   // 4b) Latar kertas untuk kartu layar penuh (potong keras seperti referensi).
   if (usePaper) {
     inputs.push('-loop', '1', '-framerate', String(fps), '-t', String(outDur), '-i', paperFile(W, H, project.style.colors?.cardBg));
@@ -174,8 +194,8 @@ export function buildCommand(project, o) {
   for (const clip of hfClips.values()) {
     inputs.push('-i', clip.file);
     const idx = nextInput++;
-    f.push(`[${idx}:v]fps=${fps},scale=${W}:${H},setsar=1,format=yuv420p,setpts=PTS-STARTPTS+${r3(clip.start)}/TB[hf${hi}]`);
-    f.push(`[${cur}][hf${hi}]overlay=0:0:eof_action=pass:enable='between(t,${r3(clip.start)},${r3(clip.end)})'[vhf${hi}]`);
+    f.push(`[${idx}:v]fps=${fps},scale=${W}:${H},setsar=1,format=${clip.alpha ? 'yuva420p' : 'yuv420p'},setpts=PTS-STARTPTS+${r3(clip.start)}/TB[hf${hi}]`);
+    f.push(`[${cur}][hf${hi}]overlay=0:0:eof_action=pass${clip.alpha ? ':format=auto' : ''}:enable='between(t,${r3(clip.start)},${r3(clip.end)})'[vhf${hi}]`);
     cur = `vhf${hi}`;
     hi++;
   }
@@ -195,6 +215,7 @@ export function buildCommand(project, o) {
       if (a.voiceGainDb) chain.push(`volume=${a.voiceGainDb}dB`);
       if (a.normalize) chain.push('loudnorm=I=-14:TP=-1.5:LRA=11');
       chain.push('aresample=48000');
+      if (tail) chain.push(`apad=pad_dur=${r3(tail)}`);
       const music = project.music?.enabled && assetById(project, project.music.assetId);
       const duck = music && !music.missing && a.ducking;
       f.push(`[voice0]${chain.join(',')}${duck ? ',asplit=2[voice][vkey]' : '[voice]'}`);
@@ -318,11 +339,16 @@ async function cardClips(project, { W, H, job, onlyAt } = {}) {
   const keep = keepSegments(project.source.meta.duration, project.cuts);
   const spans = (project.cards || [])
     .filter((c) => c.approved && c.layout !== 'panel')
-    .map((card) => ({ card, span: mapSpan(card.start, card.end, keep) }))
+    .map((card) => ({ card, span: mapSpan(card.start, card.end, keep) }));
+  if (project.endcard?.approved) {
+    const base = outputDuration(keep);
+    spans.push({ card: { id: 'endcard', type: 'endcard', start: 0, end: 0, endcard: project.endcard }, span: { start: base, end: base + Math.max(0.5, Number(project.style?.endcard?.seconds) || 2) } });
+  }
+  const chosen = spans
     .filter((x) => x.span && x.span.end - x.span.start >= 0.3 && (onlyAt === undefined || (onlyAt >= x.span.start && onlyAt < x.span.end)));
-  if (!spans.length) return { clips: new Map(), note: null };
+  if (!chosen.length) return { clips: new Map(), note: null };
   try {
-    const clips = await prepareCardClips(project, { W, H, fps: project.style?.output?.fps || 30, spans, job, signal: job?.controller?.signal });
+    const clips = await prepareCardClips(project, { W, H, fps: project.style?.output?.fps || 30, spans: chosen, job, signal: job?.controller?.signal });
     return { clips, note: null };
   } catch (e) {
     if (job?.controller?.signal?.aborted) throw e;

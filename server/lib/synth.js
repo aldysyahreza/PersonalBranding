@@ -347,3 +347,20 @@ export function paperFile(W, H, hex = '#F2F1ED') {
   fs.renameSync(tmp, file);
   return file;
 }
+
+/**
+ * Scrim: gradien gelap transparan di bagian bawah frame (bible: teks putih di atas foto
+ * selalu dengan scrim 0→62%). PNG RGBA, di-cache per ukuran & kekuatan.
+ */
+export function scrimFile(W, H, strength = 0.55) {
+  const s = Math.max(0, Math.min(1, strength));
+  fs.mkdirSync(LIBRARY_DIR, { recursive: true });
+  const file = path.join(LIBRARY_DIR, `scrim-${W}x${H}-${Math.round(s * 100)}-v1.png`);
+  if (fs.existsSync(file)) return file;
+  const a = `clip(255*${(0.62 * s).toFixed(3)}*pow(clip((Y-H*0.42)/(H*0.5),0,1),1.4),0,255)`;
+  const tmp = `${file}.tmp.png`;
+  const res = spawnSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'lavfi', '-i', `color=c=black:s=${W}x${H}:d=1,format=rgba`, '-vf', `geq=r=15:g=14:b=12:a='${a}'`, '-frames:v', '1', tmp]);
+  if (res.status !== 0) throw new Error(`Scrim gagal dibuat: ${String(res.stderr).slice(-300)}`);
+  fs.renameSync(tmp, file);
+  return file;
+}
