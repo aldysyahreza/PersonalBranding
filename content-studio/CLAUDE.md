@@ -104,3 +104,7 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 - Naskah final v7: posts/reels-persona-brand.json (hook cermin × chat "Tanya tim kontenmu: brand ini mau dibawa ke mana?", Reframe 3 baris persona brand dengan contoh skincare kulit sensitif, CTA save). Dihindari atas permintaan Aldy: "teman yang jujur", "serum yang tidak janji berlebihan", "satu hal yang ditolak", CTA kirim ke tim.
 - Build: `python3 animatic/build_reel.py /home/user/vo/vo3_raw.ogg posts/reels-persona-brand.json out/reel3 arah`. Hasil: out/reel3/reel.mp4 (50,8 dtk > batas 45; hook 3,8 dtk OK; -14,9 LUFS).
 - Adegan: 8 (chat grup, 3 jawaban, diagnosis jembatan, tulis 3 baris, kartu persona x3, simpan). Generator di scratchpad, HTML hasil: animatic/animatic-arah.html.
+
+## Durasi reels (Aldy, 29 Okt 2026) - menggantikan batas 45 dtk
+- Total sampai 60 dtk masih aman (target 40-55 dtk, naskah maks ~130 kata). Hook tetap maks 4 dtk. Studio masih menandai > 45 dtk; ubah ambang di reelAnalyze bila perlu.
+- CTA reels berikutnya (topik "konten ramai, penjualan sepi"): follow, dengan alasan apa yang didapat kalau follow.
