@@ -108,3 +108,8 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 ## Durasi reels (Aldy, 29 Okt 2026) - menggantikan batas 45 dtk
 - Total sampai 60 dtk masih aman (target 40-55 dtk, naskah maks ~130 kata). Hook tetap maks 4 dtk. Studio masih menandai > 45 dtk; ubah ambang di reelAnalyze bila perlu.
 - CTA reels berikutnya (topik "konten ramai, penjualan sepi"): follow, dengan alasan apa yang didapat kalau follow.
+
+## Reels "konten ramai, penjualan sepi" (29 Okt 2026): set adegan "pillar", CTA follow
+- Naskah v6: posts/reels-konten-ramai.json (cerita brand baju ilustrasi, Reframe = bedah content pillar P produk vs S solusi, problem-solution fit lalu product-market fit, contoh S "baju yang tidak bikin perut terlihat buncit", CTA follow + value message). Aldy menolak contoh skincare dan komentar "harganya berapa".
+- Build: `python3 animatic/build_reel.py /home/user/vo/vo4_raw.ogg posts/reels-konten-ramai.json out/reel4 pillar auto` (argumen ke-5 = take: auto|akhir|awal). Hasil out/reel4/reel.mp4 (59,9 dtk).
+- vo_prep.py sekarang mengenali take ulang (kalimat yang diulang Aldy untuk opsi intonasi) lewat jarak MFCC+DTW, memilih satu take per blok (auto = variasi nada terbesar; selisih <10% -> yang terakhir) dan membuang potongan batal di antara dua take. Laporan di out/reel4/laporan.txt. Tanpa ASR, jadi cek caption bila ragu.

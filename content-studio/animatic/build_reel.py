@@ -1,7 +1,7 @@
 """Satu perintah: rekaman voice over -> reels animatic siap tayang.
 
 Pakai (dari folder proyek):
-  python3 animatic/build_reel.py rekaman.m4a posts/reels-harga-ditawar.json out/reel [v3|omzet|arah]
+  python3 animatic/build_reel.py rekaman.m4a posts/reels-harga-ditawar.json out/reel [v3|omzet|arah|pillar]
 
 Langkah:
   1. vo_prep.py   jernihkan suara, buang napas/klik, atur jeda per kalimat, waktu per kata
@@ -61,13 +61,14 @@ def to_scenes(timing_path, anchors_path, out_path):
 
 SETS = {'v3': ('animatic-v3.html', 'anchors-v3.json', 'sfx-v3.py'),
         'omzet': ('animatic-omzet.html', 'anchors-omzet.json', 'sfx-omzet.py'),
-        'arah': ('animatic-arah.html', 'anchors-arah.json', 'sfx-arah.py')}
+        'arah': ('animatic-arah.html', 'anchors-arah.json', 'sfx-arah.py'),
+        'pillar': ('animatic-pillar.html', 'anchors-pillar.json', 'sfx-pillar.py')}
 
 
-def main(rec, script, outdir, setname='v3'):
+def main(rec, script, outdir, setname='v3', take='auto'):
     html, anchors, sfx = SETS[setname]
     os.makedirs(outdir, exist_ok=True)
-    run([sys.executable, os.path.join(HERE, 'vo_prep.py'), rec, script, outdir])
+    run([sys.executable, os.path.join(HERE, 'vo_prep.py'), rec, script, outdir, take])
     timing = to_scenes(os.path.join(outdir, 'timing.json'), os.path.join(HERE, anchors), os.path.join(outdir, 'timing_scenes.json'))
     run([sys.executable, os.path.join(HERE, sfx), outdir, '--timing', timing])
     vo, mu, fx = (os.path.join(outdir, n) for n in ('vo_clean.wav', 'music.wav', 'fx.wav'))
@@ -97,4 +98,4 @@ def main(rec, script, outdir, setname='v3'):
 if __name__ == '__main__':
     if len(sys.argv) < 4:
         print(__doc__); sys.exit(1)
-    main(*sys.argv[1:5])
+    main(*sys.argv[1:6])

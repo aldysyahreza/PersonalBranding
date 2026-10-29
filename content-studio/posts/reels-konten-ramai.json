@@ -1,0 +1,68 @@
+{
+  "id": "r-konten-ramai",
+  "title": "Reels: konten ramai, penjualan sepi (content pillar)",
+  "format": "reels",
+  "stage": "copy",
+  "dx": 6,
+  "job": "Follow",
+  "pillar": "Brand Diagnosis",
+  "hue": "terracotta",
+  "caption": "Kontenmu ramai, tapi penjualan sepi?\n\nBayangkan satu brand baju. Videonya ditonton ribuan, komentarnya penuh pujian, tapi pesanan hari itu nol. Biasanya hampir semua kontennya bicara produk, dan orang belum merasa punya masalah yang harus diselesaikan.\n\nBuka sepuluh konten terakhir. Tandai P kalau bicara produk, S kalau bicara masalah pembeli dan solusinya. Pilar S membuktikan masalahnya dirasakan orang (problem-solution fit). Pilar P membuktikan produkmu jawabannya (product-market fit). Mulai dari S, baru P.\n\nFollow akun ini. Di sini saya bedah satu masalah brand setiap kali, supaya kontenmu sampai ke keputusan beli, bukan berhenti di likes.",
+  "pinned": "Contoh P: koleksi baru, bahan katun. Contoh S: baju yang tidak bikin perut terlihat buncit.",
+  "story": "",
+  "reel": {
+    "v": 2,
+    "angle": "tanya",
+    "exec": "layar",
+    "coverH": "Ramai, tapi sepi",
+    "coverHi": "kenapa penjualan sepi?",
+    "beats": [
+      {
+        "say": "Kontenmu ramai, tapi kenapa penjualan sepi?",
+        "txt": "Ramai, tapi *sepi*",
+        "shot": "phone",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Bayangkan satu brand baju. Videonya ditonton ribuan. Komentarnya penuh pujian: bagus banget! Tapi pesanan hari itu: nol.",
+        "txt": "Bagus banget! Pesanan *nol*",
+        "shot": "med",
+        "dur": "",
+        "case": "Cerita ilustrasi (bukan klien): konten ramai, pujian banyak, pesanan nol. Kata 'Bayangkan' wajib diucapkan.",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Kalau saya bedah, hampir semua kontennya bicara produk. Orang suka, tapi belum merasa punya masalah. Satu langkah: bedah content pillar-mu.",
+        "txt": "Bedah *content pillar*",
+        "shot": "close",
+        "dur": "",
+        "case": "",
+        "solusi": "Bedah content pillar: tandai tiap konten P (bicara produk) atau S (bicara masalah pembeli dan solusinya).",
+        "contoh": ""
+      },
+      {
+        "say": "Buka sepuluh konten terakhir. Tandai P kalau bicara produk, S kalau bicara masalah pembeli dan solusinya. Contoh P: koleksi baru, bahan katun. Contoh S: baju yang tidak bikin perut terlihat buncit. Hampir semua P? Itu masalahnya. Pilar S membuktikan masalahnya dirasakan orang: problem-solution fit. Pilar P membuktikan produkmu jawabannya: product-market fit. Mulai dari S, baru P.",
+        "txt": "P = produk, S = *solusi*",
+        "shot": "card",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": "Contoh P: koleksi baru, bahan katun. Contoh S: baju yang tidak bikin perut terlihat buncit (ilustrasi brand baju, bukan klien)."
+      },
+      {
+        "say": "Follow akun ini. Di sini saya bedah satu masalah brand setiap kali, supaya kontenmu sampai ke keputusan beli, bukan berhenti di likes.",
+        "txt": "*Follow* untuk bedah brand",
+        "shot": "med",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      }
+    ],
+    "prod": {}
+  }
+}

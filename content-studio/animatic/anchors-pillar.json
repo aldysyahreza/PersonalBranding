@@ -1,0 +1,322 @@
+{
+ "_petunjuk": "Adegan dimulai pada kata pembukanya (dicari di babak chap).",
+ "scenes": [
+  {
+   "start": "kontenmu",
+   "act": "HOOK",
+   "chap": 1
+  },
+  {
+   "start": "bayangkan",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "komentarnya",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "kalau",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "orang",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "buka",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "contoh",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "contoh",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "hampir",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "pilar",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "pilar",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "mulai",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "follow",
+   "act": "CTA",
+   "chap": 5
+  }
+ ],
+ "beats": [
+  [
+   [
+    0.3,
+    "kontenmu"
+   ],
+   [
+    2.44,
+    "penjualan"
+   ],
+   [
+    2.95,
+    "sepi"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "bayangkan"
+   ],
+   [
+    1.16,
+    "brand"
+   ],
+   [
+    2.22,
+    "videonya"
+   ],
+   [
+    3.53,
+    "ribuan"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "komentarnya"
+   ],
+   [
+    1.98,
+    "bagus"
+   ],
+   [
+    3.23,
+    "tapi"
+   ],
+   [
+    4.67,
+    "nol"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "kalau"
+   ],
+   [
+    0.9,
+    "bedah"
+   ],
+   [
+    1.57,
+    "hampir"
+   ],
+   [
+    3.19,
+    "produk"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "orang"
+   ],
+   [
+    1.19,
+    "tapi"
+   ],
+   [
+    2.64,
+    "masalah"
+   ],
+   [
+    3.61,
+    "satu"
+   ],
+   [
+    4.41,
+    "bedah"
+   ],
+   [
+    5.48,
+    "pillar"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "buka"
+   ],
+   [
+    2.11,
+    "tandai"
+   ],
+   [
+    3.3,
+    "produk"
+   ],
+   [
+    3.92,
+    "s"
+   ],
+   [
+    5.75,
+    "solusinya"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "contoh"
+   ],
+   [
+    0.72,
+    "koleksi"
+   ],
+   [
+    2.16,
+    "bahan"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "contoh"
+   ],
+   [
+    0.64,
+    "baju"
+   ],
+   [
+    2.68,
+    "buncit"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "hampir"
+   ],
+   [
+    0.9,
+    "p"
+   ],
+   [
+    1.56,
+    "itu"
+   ],
+   [
+    1.83,
+    "masalahnya"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "pilar"
+   ],
+   [
+    1.32,
+    "masalahnya"
+   ],
+   [
+    2.6,
+    "orang"
+   ],
+   [
+    3.18,
+    "problem"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "pilar"
+   ],
+   [
+    1.49,
+    "produkmu"
+   ],
+   [
+    2.05,
+    "jawabannya"
+   ],
+   [
+    3.05,
+    "product"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "mulai"
+   ],
+   [
+    0.86,
+    "s"
+   ],
+   [
+    1.35,
+    "baru"
+   ],
+   [
+    1.69,
+    "p"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "follow"
+   ],
+   [
+    1.16,
+    "ini"
+   ],
+   [
+    2.0,
+    "di"
+   ],
+   [
+    3.39,
+    "masalah"
+   ],
+   [
+    4.95,
+    "supaya"
+   ],
+   [
+    6.39,
+    "keputusan"
+   ],
+   [
+    7.67,
+    "bukan"
+   ],
+   [
+    8.54,
+    "likes"
+   ]
+  ]
+ ]
+}

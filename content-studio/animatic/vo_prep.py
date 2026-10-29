@@ -1,7 +1,8 @@
 """Siapkan voice over untuk animatic: jernihkan suara, buang napas/klik, atur jeda per kalimat, keluarkan waktu per kata.
 
 Pakai:
-  python3 animatic/vo_prep.py rekaman.m4a posts/reels-harga-ditawar.json out/vo
+  python3 animatic/vo_prep.py rekaman.m4a posts/reels-harga-ditawar.json out/vo [auto|akhir|awal]
+  (kalimat yang Anda ulang untuk opsi intonasi dikenali otomatis; auto = pilih nada paling hidup, akhir/awal = pilih take terakhir/pertama)
 Hasil di folder out/vo:
   vo_clean.wav   suara bersih dengan jeda rapi (-16 LUFS, puncak -1,5 dBTP)
   timing.json    durasi tiap langkah + waktu tiap kata (untuk animatic dan caption)
@@ -93,6 +94,82 @@ def contour(x, a, b):
     return 1 if p1 > p0 * 1.08 else (-1 if p1 < p0 * 0.92 else 0)
 
 
+
+def f0track(x, a, b):
+    s = x[int(a * SR):int(b * SR)]; n = int(0.04 * SR); hop = int(0.01 * SR); ps = []
+    lo, hi = int(SR / 350), int(SR / 70)
+    for i in range(0, len(s) - n, hop):
+        f = s[i:i + n] * np.hanning(n)
+        if np.sqrt(np.mean(f ** 2)) < 0.01: continue
+        ac = np.correlate(f, f, 'full')[n - 1:]
+        k = lo + int(np.argmax(ac[lo:hi]))
+        if ac[0] > 0 and ac[k] / ac[0] > 0.5: ps.append(SR / k)
+    return ps
+
+
+def _mel_fb(n_mels=26, n_fft=512, sr=16000):
+    f = lambda m: 700 * (10 ** (m / 2595) - 1); m = lambda f_: 2595 * np.log10(1 + f_ / 700)
+    pts = f(np.linspace(m(60), m(7600), n_mels + 2)); bins = np.floor((n_fft + 1) * pts / sr).astype(int)
+    fb = np.zeros((n_mels, n_fft // 2 + 1))
+    for i in range(1, n_mels + 1):
+        a, b, c = bins[i - 1], bins[i], bins[i + 1]
+        for k in range(a, b): fb[i - 1, k] = (k - a) / max(1, b - a)
+        for k in range(b, c): fb[i - 1, k] = (c - k) / max(1, c - b)
+    return fb
+
+
+def _mfcc(sig, fb, dm):
+    y = np.interp(np.arange(0, len(sig), SR / 16000), np.arange(len(sig)), sig)
+    fr = [np.log(fb @ (np.abs(np.fft.rfft(y[i:i + 400] * np.hamming(400), 512)) ** 2) + 1e-8) for i in range(0, len(y) - 400, 160)]
+    c = (dm @ np.array(fr).T).T[:, 1:13]
+    return c - c.mean(0)
+
+
+def _dtw(a, b):
+    n, m = len(a), len(b); C = np.sqrt(((a[:, None, :] - b[None, :, :]) ** 2).sum(2))
+    A = np.full((n + 1, m + 1), 1e9); A[0, 0] = 0
+    for i in range(1, n + 1):
+        for j in range(1, m + 1): A[i, j] = C[i - 1, j - 1] + min(A[i - 1, j], A[i, j - 1], A[i - 1, j - 1])
+    return A[n, m] / (n + m)
+
+
+def retakes(x, segs, mode='auto', window=9, ratio=0.7):
+    """Deteksi pengulangan (take ulang) tanpa ASR: potongan yang bunyinya sama (jarak MFCC+DTW jauh di bawah median).
+    Potongan berurutan yang diulang berurutan dianggap satu blok. Dari tiap blok dipilih satu take:
+    'akhir' = yang terakhir, 'awal' = yang pertama, 'auto' = nada paling hidup (variasi F0 terbesar; selisih < 10% -> yang terakhir).
+    Mengembalikan (indeks potongan yang dibuang, catatan)."""
+    fb = _mel_fb(); dm = np.cos(np.pi / 26 * (np.arange(26) + .5)[None, :] * np.arange(13)[:, None])
+    M = [_mfcc(x[int(a * SR):int(b * SR)], fb, dm) for a, b, _ in segs]; n = len(segs); d = {}
+    for i in range(n):
+        for j in range(i + 1, min(n, i + window)):
+            r = (segs[i][1] - segs[i][0]) / (segs[j][1] - segs[j][0])
+            if 0.6 < r < 1.67: d[(i, j)] = _dtw(M[i], M[j])
+    if not d: return set(), []
+    med = float(np.median(list(d.values()))); dup = sorted(k for k, v in d.items() if v < ratio * med)
+    done, blocks = set(), []
+    for (i, j) in dup:
+        if (i, j) in done: continue
+        L = 1
+        while (i + L, j + L) in set(dup) and i + L < j: L += 1
+        for k in range(L): done.add((i + k, j + k))
+        blocks.append((i, j, L))
+    drop, notes = set(), []
+    for i, j, L in blocks:
+        def spread(r):
+            ps = [p for k in r for p in f0track(x, segs[k][0], segs[k][1])]
+            return float(np.std(np.log(ps))) if len(ps) > 4 else 0.0
+        t1, t2 = list(range(i, i + L)), list(range(j, j + L)); s1, s2 = spread(t1), spread(t2)
+        pick2 = True if mode == 'akhir' else (False if mode == 'awal' else (s1 > s2 * 1.10))
+        pick2 = (not pick2) if mode == 'auto' else pick2
+        if mode == 'auto': pick2 = not (s1 > s2 * 1.10)
+        keep, lose = (t2, t1) if pick2 else (t1, t2)
+        drop.update(lose)
+        drop.update(range(i + L, j))   # potongan di antara dua take = take yang dibatalkan (awal kalimat yang tidak jadi)
+        notes.append('Pengulangan: %.2f-%.2f dan %.2f-%.2f (%d potongan; %d potongan batal di antaranya), variasi nada %.3f vs %.3f → dipakai take %s'
+                     % (segs[t1[0]][0], segs[t1[-1]][1], segs[t2[0]][0], segs[t2[-1]][1], L, max(0, j - i - L), s1, s2, 'ke-2' if pick2 else 'ke-1'))
+    return drop, notes
+
+
 def phrases(beats):
     """Naskah dipecah jadi frasa (di koma/titik/tanya), diberi jenis jeda sesudahnya."""
     out = []
@@ -133,7 +210,7 @@ def align(segs, phr, tone, maxa=3, maxb=3):
     return units[::-1]
 
 
-def main(src, script, outdir):
+def main(src, script, outdir, take='auto'):
     os.makedirs(outdir, exist_ok=True)
     post = json.load(open(script, encoding='utf-8'))
     beats = [b['say'] for b in post['reel']['beats']] if 'reel' in post else [b['say'] for b in post['beats']]
@@ -148,6 +225,8 @@ def main(src, script, outdir):
     ff('-i', raw, '-af', chain, '-ar', str(SR), clean)
     x = read_wav(clean)
     segs = speech_segments(x)
+    drop, retake_notes = retakes(x, segs, take)
+    segs = [sg for k, sg in enumerate(segs) if k not in drop]
     phr = phrases(beats)
     tone = [contour(x, a, b) for a, b, _ in segs]
     units = align(segs, phr, tone)
@@ -195,7 +274,7 @@ def main(src, script, outdir):
     write_wav(os.path.join(outdir, 'vo_clean.wav'), y)
     json.dump(tl, open(os.path.join(outdir, 'timing.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     raw_dur = len(read_wav(raw)) / SR
-    lines = ['Peredam bising: ' + dn_name, 'Durasi: %.1f dtk → %.1f dtk' % (raw_dur, total), 'Segmen bicara: %d' % len(segs), ''] + rep + ['']
+    lines = ['Peredam bising: ' + dn_name, 'Durasi: %.1f dtk → %.1f dtk' % (raw_dur, total), 'Segmen bicara: %d (dibuang karena pengulangan: %d)' % (len(segs), len(drop)), ''] + retake_notes + [''] + rep + ['']
     lines += ['Langkah %d: mulai %.2f, %.2f dtk' % (i + 1, b['start'], b['dur']) for i, b in enumerate(tl['beats'])]
     open(os.path.join(outdir, 'laporan.txt'), 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
     for f in (raw, clean): os.remove(f)
@@ -205,4 +284,4 @@ def main(src, script, outdir):
 if __name__ == '__main__':
     if len(sys.argv) < 4:
         print(__doc__); sys.exit(1)
-    main(*sys.argv[1:4])
+    main(*sys.argv[1:5])
