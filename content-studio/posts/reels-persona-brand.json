@@ -1,0 +1,68 @@
+{
+  "id": "r-persona-brand",
+  "title": "Reels: tim konten, arah brand, persona brand",
+  "format": "reels",
+  "stage": "copy",
+  "dx": 6,
+  "job": "Save",
+  "pillar": "Brand Diagnosis",
+  "hue": "terracotta",
+  "caption": "Tanya tim kontenmu: brand ini mau dibawa ke mana? Kalau jawabannya beda-beda, masalahnya bukan di timnya.\n\nJualan bukan cuma produk. Produk adalah jembatan ke kesan di kepala pembeli, dan kesan itu namanya persona brand.\n\nTulis tiga baris: siapa yang diajak bicara, kesan yang dibawa pulang, dan sudut produk. Simpan video ini dan isi tiga barisnya sebelum briefing konten berikutnya.",
+  "pinned": "Contoh tiga baris: (1) perempuan berkulit sensitif yang capek gonta-ganti skincare, (2) brand yang paham kulitku, bukan yang paling murah, (3) serum untuk kulit yang gampang merah.",
+  "story": "",
+  "reel": {
+    "v": 2,
+    "angle": "cermin",
+    "exec": "chat",
+    "coverH": "Brand mau ke mana?",
+    "coverHi": "jawabannya beda-beda",
+    "beats": [
+      {
+        "say": "Tanya tim kontenmu: brand ini mau dibawa ke mana?",
+        "txt": "Jawabannya *beda-beda*",
+        "shot": "phone",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Admin jawab satu hal. Content creator jawab lain. Social media lain lagi. Semua kerja keras, tapi ke tiga arah yang berbeda.",
+        "txt": "Satu brand, *tiga arah*",
+        "shot": "med",
+        "dur": "",
+        "case": "Pola umum tim konten (bukan satu klien): tiap peran menjawab arah brand dengan versinya sendiri. Tanpa identitas klien.",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Karena jualan bukan cuma produk. Produk itu jembatan ke kesan di kepala pembeli. Itu namanya persona brand. Satu langkah: tulis tiga baris.",
+        "txt": "Produk = *jembatan*",
+        "shot": "close",
+        "dur": "",
+        "case": "",
+        "solusi": "Tulis persona brand dalam tiga baris: siapa yang diajak bicara, kesan yang dibawa pulang, sudut produk.",
+        "contoh": ""
+      },
+      {
+        "say": "Mulai dari tiga baris ini. Pertama, siapa yang diajak bicara. Misalnya perempuan berkulit sensitif yang capek gonta-ganti skincare. Kedua, kesan yang dibawa pulang. Misalnya brand yang paham kulitku, bukan yang paling murah. Ketiga, sudut produk. Bukan serum ini murah, tapi serum untuk kulit yang gampang merah.",
+        "txt": "Tiga baris *persona*",
+        "shot": "card",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": "Contoh ilustrasi skincare kulit sensitif (bukan klien, beri label 'contoh' di layar)."
+      },
+      {
+        "say": "Simpan video ini. Isi tiga barisnya sebelum briefing konten berikutnya.",
+        "txt": "*Simpan* untuk briefing",
+        "shot": "med",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      }
+    ],
+    "prod": {}
+  }
+}

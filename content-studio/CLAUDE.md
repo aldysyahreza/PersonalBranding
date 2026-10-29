@@ -99,3 +99,8 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 
 ## Evaluasi reels topik 2 -> aturan reels berikutnya (29 Okt 2026)
 - Video topik 2 dipakai sebagai bahan evaluasi, tidak direvisi. Terapkan di reels berikutnya: hook maksimal 4 dtk (satu kalimat, angka/kontradiksi di 1,5 dtk pertama), total 35-45 dtk (naskah maks ~95 kata), satu langkah solusi saja, tidak ada angka tanpa sumber atau label "contoh hitungan".
+
+## Reels topik "arah brand / persona brand" (29 Okt 2026): set adegan "arah"
+- Naskah final v7: posts/reels-persona-brand.json (hook cermin × chat "Tanya tim kontenmu: brand ini mau dibawa ke mana?", Reframe 3 baris persona brand dengan contoh skincare kulit sensitif, CTA save). Dihindari atas permintaan Aldy: "teman yang jujur", "serum yang tidak janji berlebihan", "satu hal yang ditolak", CTA kirim ke tim.
+- Build: `python3 animatic/build_reel.py /home/user/vo/vo3_raw.ogg posts/reels-persona-brand.json out/reel3 arah`. Hasil: out/reel3/reel.mp4 (50,8 dtk > batas 45; hook 3,8 dtk OK; -14,9 LUFS).
+- Adegan: 8 (chat grup, 3 jawaban, diagnosis jembatan, tulis 3 baris, kartu persona x3, simpan). Generator di scratchpad, HTML hasil: animatic/animatic-arah.html.

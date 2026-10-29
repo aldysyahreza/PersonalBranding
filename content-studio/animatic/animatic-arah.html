@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Animatic: arah brand dan persona brand</title>
+<!-- Animatic reels 1080x1920, gaya "buku catatan diagnosis": kertas grid krem, objek semi-3D, coretan pena merah,
+     mode Diagnosis (ink + garis amber) lewat pindai, caption karaoke per kata. Semua gerak = fungsi waktu: window.seek(t). -->
+<style>
+:root{--ink:#0F0E0C;--paper:#FBF8F3;--terra:#B84A2E;--amber:#C8944A;--cream:#F4EBD9;--gray:#6B6560;
+  --f-display:Archivo,"Helvetica Neue",Arial,sans-serif;--f-serif:Fraunces,Georgia,serif;--f-body:Outfit,system-ui,sans-serif;--f-hand:Caveat,cursive;--f-mono:"JetBrains Mono",monospace;
+  --sh:0 34px 46px rgba(15,14,12,.16),0 8px 14px rgba(15,14,12,.12)}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:var(--f-body);color:var(--ink);background:var(--paper)}
+.bgpaper,.bgdx{position:absolute;inset:-40px}
+.bgpaper{background:
+  radial-gradient(ellipse 75% 60% at 50% 42%,rgba(255,255,255,.65),rgba(255,255,255,0) 70%),
+  linear-gradient(rgba(15,14,12,.055) 2px,transparent 2px) 0 0/60px 60px,
+  linear-gradient(90deg,rgba(15,14,12,.055) 2px,transparent 2px) 0 0/60px 60px,#F7F2E9}
+.bgdx{background:radial-gradient(ellipse 70% 55% at 50% 40%,#2a231c,#110f0c 75%),#110f0c;opacity:0}
+.bgdx::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(200,148,74,.12) 2px,transparent 2px) 0 0/60px 60px,linear-gradient(90deg,rgba(200,148,74,.12) 2px,transparent 2px) 0 0/60px 60px}
+.grain{position:absolute;inset:0;opacity:.22;mix-blend-mode:multiply;pointer-events:none;z-index:40;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.vig{position:absolute;inset:0;pointer-events:none;z-index:39;background:radial-gradient(ellipse 85% 70% at 50% 45%,transparent 60%,rgba(15,14,12,.16))}
+.sc{position:absolute;inset:0;visibility:hidden;transform-origin:540px 800px}
+.a{position:absolute}
+.disp{font-family:var(--f-display);font-weight:800;letter-spacing:-.045em;line-height:.95}
+.fr{font-family:var(--f-serif);font-style:italic;font-weight:400;letter-spacing:-.02em;line-height:.95}
+.mono{font:500 26px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.hand{font:600 64px/1 var(--f-hand);color:var(--terra)}
+.chip{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:12px 22px;font:500 24px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.card{background:#fff;border-radius:34px;box-shadow:var(--sh)}
+.ncard{position:absolute;left:0;width:430px;display:flex;align-items:center;gap:20px;padding:20px 24px;background:#fff;border-radius:28px;box-shadow:0 18px 30px rgba(15,14,12,.14),0 3px 8px rgba(15,14,12,.1)}
+.ncard b{flex:none;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:800 28px/1 var(--f-display);color:#fff}
+.ncard div{flex:1;min-width:0}.ncard em{display:block;font:500 20px/1.2 var(--f-mono);font-style:normal;color:var(--gray);letter-spacing:.04em}.ncard span{display:block;font:700 30px/1.2 var(--f-body)}
+.odo{display:inline-flex;overflow:hidden;line-height:1}
+.odo i{display:block;font-style:normal;height:1em;overflow:hidden}
+.odo i s{display:block;text-decoration:none;line-height:1em;will-change:transform}
+.bub{position:absolute;max-width:430px;padding:22px 28px;border-radius:32px 32px 32px 10px;background:#fff;font:700 34px/1.15 var(--f-body);box-shadow:0 8px 0 rgba(15,14,12,.9)}
+.bub.me{border-radius:32px 32px 10px 32px;background:var(--ink);color:#fff;box-shadow:0 8px 0 var(--terra)}
+.hl{background-image:linear-gradient(var(--amber),var(--amber));background-repeat:no-repeat;background-position:0 90%;background-size:0% 36%;padding:0 6px}
+#hud{position:absolute;inset:0;z-index:30;pointer-events:none}
+#hdl{position:absolute;left:84px;top:236px;font:700 26px/1 var(--f-mono);letter-spacing:.1em}
+#hdl i{font-style:normal;font-weight:500;opacity:.55}
+#hdr{position:absolute;right:84px;top:226px;display:flex;gap:14px;align-items:center}
+#chap{font:500 24px/1 var(--f-mono);letter-spacing:.08em;color:var(--terra)}
+#topic{background:var(--amber);color:var(--ink)}
+#cap{position:absolute;left:0;right:0;top:1360px;display:flex;justify-content:center}
+#cap span{display:inline-block;background:var(--ink);color:#fff;border-radius:18px;padding:16px 28px 18px;font:800 52px/1.1 var(--f-display);letter-spacing:-.02em;box-shadow:0 10px 24px rgba(15,14,12,.22)}
+#cap span u{text-decoration:none}
+#scan{position:absolute;left:-40px;right:-40px;height:6px;background:#FFE2B0;box-shadow:0 0 18px 6px rgba(200,148,74,.9),0 0 60px 20px rgba(200,148,74,.45);z-index:35;opacity:0}
+#scanlab{position:absolute;right:84px;font:500 22px/1 var(--f-mono);letter-spacing:.1em;color:#FFE2B0;z-index:35;opacity:0}
+#flash{position:absolute;inset:0;background:#fff;z-index:36;opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="stage">
+<div class="bgpaper" id="bgp"></div><div class="bgdx" id="bgd"></div>
+
+<!-- 1 HOOK: pertanyaan di grup tim konten -->
+<section class="sc" id="b1">
+  <div class="a card" data-obj id="d1chat" style="left:84px;top:360px;width:912px;height:780px">
+    <div class="a mono" style="left:44px;top:40px;color:var(--gray)">grup · tim konten</div>
+    <div class="bub me a" id="d1q" style="left:232px;top:120px;width:640px;max-width:640px;font:800 52px/1.15 var(--f-display);letter-spacing:-.02em">Brand ini mau dibawa ke mana?</div>
+    <div id="d1rows"></div>
+  </div>
+  <div class="a hand" id="d1note" style="left:84px;top:1190px;transform:rotate(-3deg)">jawabannya beda-beda</div>
+</section>
+
+<!-- 2 RELATE: tiga peran, tiga jawaban, tiga arah -->
+<section class="sc" id="b2">
+  <div id="d2cards"></div>
+  <svg class="a" id="d2svg" viewBox="0 0 1080 250" style="left:0;top:960px;width:1080px;height:250px" fill="none" stroke-linecap="round"></svg>
+  <div class="a hand" id="d2note" style="left:340px;top:1226px">tiga arah berbeda</div>
+</section>
+
+<!-- 3 INSIGHT a: jualan bukan cuma produk; produk = jembatan (mode diagnosis) -->
+<section class="sc" id="b3">
+  <div class="a card" data-obj id="d3a" style="left:84px;top:380px;width:912px;height:420px">
+    <div class="a mono" style="left:44px;top:40px;color:var(--gray)">jualan</div>
+    <div class="a disp" style="left:44px;top:170px;font-size:112px;white-space:nowrap">Jualan</div>
+    <div class="a disp" style="left:500px;top:170px;font-size:112px">=</div>
+    <div class="a" id="d3abox" style="left:610px;top:110px;width:220px"></div>
+    <div class="a chip" style="left:612px;top:330px;background:var(--ink);color:#fff">produk</div>
+    <svg class="a" viewBox="0 0 912 420" style="left:0;top:0;width:912px;height:420px" fill="none" stroke-linecap="round"><path id="d3x1" d="M580 100 L860 350" stroke="#B84A2E" stroke-width="12"/><path id="d3x2" d="M860 100 L580 350" stroke="#B84A2E" stroke-width="12"/></svg>
+  </div>
+  <div class="a hand" id="d3hand" style="left:84px;top:850px;transform:rotate(-3deg)">bukan cuma itu</div>
+  <div id="d3dark">
+    <div class="a" id="d3dbox" data-obj style="left:84px;top:560px;width:280px"></div>
+    <div class="a chip" id="d3dchip" style="left:100px;top:830px;background:var(--amber);color:var(--ink)">produk</div>
+    <svg class="a" viewBox="0 0 1080 1920" style="left:0;top:0;width:1080px;height:1920px" fill="none" stroke-linecap="round"><path id="d3br" d="M380 760 Q540 480 740 740" stroke="#C8944A" stroke-width="12" stroke-dasharray="2 22"/><path id="d3br2" d="M380 760 Q540 480 740 740" stroke="#FFE2B0" stroke-width="5"/></svg>
+    <div class="a" id="d3bub" data-obj style="left:640px;top:330px;width:380px;height:160px;border-radius:80px;background:#FFE2B0;display:flex;align-items:center;justify-content:center"><span class="disp" style="font-size:80px;color:#0F0E0C">kesan</span></div>
+    <div class="a" id="d3head" data-obj style="left:740px;top:560px;width:240px;height:240px"><svg viewBox="0 0 80 80" width="240" height="240"><circle cx="40" cy="40" r="38" fill="#C8944A"/><circle cx="40" cy="31" r="13" fill="#0F0E0C"/><path d="M14 68 C16 50 64 50 66 68" fill="#0F0E0C"/></svg></div>
+    <div class="a chip" id="d3hchip" style="left:765px;top:830px;background:#FFE2B0;color:var(--ink)">pembeli</div>
+    <div class="a" id="d3stamp" style="left:190px;top:1010px;transform-origin:center"><div style="border:8px solid #FFE2B0;color:#FFE2B0;border-radius:16px;padding:12px 26px;font:800 64px/1 var(--f-display);letter-spacing:.02em;white-space:nowrap">PERSONA BRAND</div></div>
+  </div>
+</section>
+
+<!-- 4 INSIGHT b: satu langkah, tulis tiga baris -->
+<section class="sc" id="b4">
+  <div class="a chip" id="d4chip" style="left:84px;top:330px;background:var(--ink);color:#fff">langkah 1</div>
+  <div class="a card" data-obj id="d4page" style="left:110px;top:420px;width:860px;height:520px">
+    <div class="a mono" style="left:0;right:0;top:44px;text-align:center;color:var(--terra)">persona brand · 3 baris</div>
+    <svg class="a" viewBox="0 0 860 520" style="left:0;top:0;width:860px;height:520px" fill="none" stroke-linecap="round">
+      <circle id="d4n0" cx="80" cy="200" r="22" fill="#B84A2E"/><circle id="d4n1" cx="80" cy="310" r="22" fill="#0F0E0C"/><circle id="d4n2" cx="80" cy="420" r="22" fill="#C8944A"/>
+      <path id="d4l0" d="M130 212 C300 196 460 224 790 206" stroke="#0F0E0C" stroke-width="6"/>
+      <path id="d4l1" d="M130 322 C300 306 460 334 790 316" stroke="#0F0E0C" stroke-width="6"/>
+      <path id="d4l2" d="M130 432 C300 416 460 444 790 426" stroke="#0F0E0C" stroke-width="6"/>
+    </svg>
+  </div>
+</section>
+
+<!-- 5-7 REFRAME: tiga baris persona brand, satu per adegan -->
+<section class="sc" id="b5"></section>
+<section class="sc" id="b6"></section>
+<section class="sc" id="b7"></section>
+
+<!-- 8 CTA: simpan, isi sebelum briefing -->
+<section class="sc" id="b8">
+  <div class="a" id="d8save" data-obj style="left:84px;top:360px;width:200px;height:200px;border-radius:50%;background:var(--terra);display:flex;align-items:center;justify-content:center;box-shadow:var(--sh)"><svg viewBox="0 0 24 24" width="96" height="96" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg></div>
+  <div class="a chip" id="d8chip" style="left:84px;top:582px;background:var(--ink);color:#fff">tersimpan ✓</div>
+  <div class="a card" data-obj id="d8cal" style="left:330px;top:380px;width:666px;height:170px">
+    <div class="a mono" style="left:40px;top:34px;color:var(--gray)">jadwal · berikutnya</div>
+    <div class="a disp" style="left:40px;top:84px;font-size:62px;white-space:nowrap">Briefing konten</div>
+  </div>
+  <div class="a card" data-obj id="d8card" style="left:84px;top:690px;width:912px;height:540px">
+    <div class="a mono" style="left:44px;top:36px;color:var(--gray)">isi dulu, baru briefing</div>
+    <div id="d8rows"></div>
+  </div>
+</section>
+<div id="scan"></div><div id="scanlab">DIAGNOSIS · MEMINDAI</div>
+<div id="hud">
+  <div id="hdl">THE BRAND FIXER</div>
+  <div id="hdr"><span id="chap">// 01 · OBSERVASI</span></div>
+  <div id="cap"><span></span></div>
+</div>
+<div id="flash"></div>
+<div class="vig"></div><div class="grain"></div>
+</div>
+
+
+<script>
+(function(){
+'use strict';
+var DEF=[
+  {dur:3.8,name:'HOOK',chap:1,say:'Tanya tim kontenmu: brand ini mau dibawa ke mana?'},
+  {dur:9.38,name:'RELATE',chap:2,say:'Admin jawab satu hal. Content creator jawab lain. Social media lain lagi. Semua kerja keras, tapi ke tiga arah yang berbeda.'},
+  {dur:7.6,name:'INSIGHT',chap:3,say:'Karena jualan bukan cuma produk. Produk itu jembatan ke kesan di kepala pembeli. Itu namanya persona brand.'},
+  {dur:2.81,name:'INSIGHT',chap:3,say:'Satu langkah: tulis tiga baris.'},
+  {dur:8.85,name:'REFRAME',chap:4,say:'Mulai dari tiga baris ini. Pertama, siapa yang diajak bicara. Misalnya perempuan berkulit sensitif yang capek gonta-ganti skincare.'},
+  {dur:5.99,name:'REFRAME',chap:4,say:'Kedua, kesan yang dibawa pulang. Misalnya brand yang paham kulitku, bukan yang paling murah.'},
+  {dur:7.31,name:'REFRAME',chap:4,say:'Ketiga, sudut produk. Bukan serum ini murah, tapi serum untuk kulit yang gampang merah.'},
+  {dur:5.03,name:'CTA',chap:5,say:'Simpan video ini. Isi tiga barisnya sebelum briefing konten berikutnya.'}];
+var BEATS=window.ANIMATIC_BEATS?DEF.map(function(d,i){return Object.assign({},d,window.ANIMATIC_BEATS[i]||{})}):DEF;
+var SPEED=BEATS.map(function(b,i){return Math.max(1,DEF[i].dur/b.dur)});
+var T0=[],acc=0;BEATS.forEach(function(b){T0.push(acc);acc+=b.dur});window.ANIMATIC_DURATION=acc;
+var ANCH=(window.ANIMATIC_ANCHORS||{}).beats||[];
+function nrm(s){return String(s).toLowerCase().replace(/[^a-z0-9]/g,'')}
+var WARP=BEATS.map(function(b,i){var pts=[[0,0]];if(!b.words||!ANCH[i])return null;var from=0;
+  ANCH[i].forEach(function(a){for(var k=from;k<b.words.length;k++){if(nrm(b.words[k].w).indexOf(a[1])===0){var r=b.words[k].t-T0[i],l=pts[pts.length-1];if(r>l[1]+.05&&a[0]>l[0])pts.push([a[0],r]);from=k+1;break}}});
+  return pts.length>1?pts:null});
+function LOCAL(i,lt){var p=WARP[i];if(!p)return lt*SPEED[i];
+  for(var k=1;k<p.length;k++)if(lt<=p[k][1])return p[k-1][0]+(lt-p[k-1][1])*(p[k][0]-p[k-1][0])/(p[k][1]-p[k-1][1]);
+  var L=p[p.length-1],tail=Math.max(1,(DEF[i].dur-L[0])/Math.max(.3,BEATS[i].dur-L[1]));return L[0]+(lt-L[1])*tail}
+
+function $(id){return document.getElementById(id)}
+function cl(x){return x<0?0:x>1?1:x}
+function pr(t,a,d){return cl((t-a)/d)}
+var E={out:function(t){return 1-Math.pow(1-t,3)},io:function(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2},
+  back:function(t){var c=1.70158;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2)}};
+function op(el,v){el.style.opacity=v}
+function tf(el,s){el.style.transform=s}
+function up(el,t,a,d,dist){var k=E.out(pr(t,a,d||.45));op(el,k);tf(el,'translateY('+((1-k)*(dist==null?60:dist))+'px)')}
+function pop(el,t,a,d,extra){var k=pr(t,a,d||.5);op(el,cl(k*4));tf(el,'scale('+(k?E.back(k):.4)+')'+(extra||''))}
+function draw(p,t,a,d){var L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L*(1-E.io(pr(t,a,d)));p.style.opacity=t>=a?1:0}
+function swing(x,amp,f,damp){return amp*Math.exp(-damp*x)*Math.sin(f*x)}
+
+/* ---------- bangun objek ---------- */
+var AVC=['#C8944A','#B84A2E','#6B6560'];
+function av(c,ch,s){return '<div style="width:'+s+'px;height:'+s+'px;border-radius:50%;background:'+c+';color:#fff;display:flex;align-items:center;justify-content:center;font:800 '+Math.round(s*.46)+'px/1 var(--f-display)">'+ch+'</div>'}
+function boxSvg(w){var h=Math.round(w*360/440);return '<svg viewBox="0 0 440 360" width="'+w+'" height="'+h+'" style="display:block;overflow:visible"><path d="M30 120 L220 60 L410 120 L220 180Z" fill="#E2C592" stroke="#0F0E0C" stroke-width="7" stroke-linejoin="round"/><path d="M30 120 L30 290 L220 350 L220 180Z" fill="#C79A5E" stroke="#0F0E0C" stroke-width="7" stroke-linejoin="round"/><path d="M410 120 L410 290 L220 350 L220 180Z" fill="#B98238" stroke="#0F0E0C" stroke-width="7" stroke-linejoin="round"/><path d="M196 70 L244 56 L244 188 L196 178Z" fill="#F4EBD9" opacity=".85"/></svg>'}
+function head(x0,y0,x1,y1){var a=Math.atan2(y1-y0,x1-x0),s=30;function p(da){return (x1-s*Math.cos(a+da)).toFixed(1)+' '+(y1-s*Math.sin(a+da)).toFixed(1)}return 'M'+p(.5)+' L'+x1+' '+y1+' L'+p(-.5)}
+function wordSpans(el,txt){el.innerHTML=txt.split(' ').map(function(w){return '<span class="wd" style="display:inline-block;margin-right:.28em">'+w+'</span>'}).join('')}
+function reveal(el,times,t){var s=el.children;for(var i=0;i<s.length;i++){var k=E.out(pr(t,times[i]==null?99:times[i],.2));s[i].style.opacity=k;s[i].style.transform='translateY('+((1-k)*14)+'px)'}}
+function showAll(el){var s=el.children;for(var i=0;i<s.length;i++){s[i].style.opacity=1;s[i].style.transform='none'}}
+
+/* 1 */
+$('d1rows').innerHTML=[0,1,2].map(function(k){return '<div class="a" id="d1a'+k+'" style="left:44px;top:'+(380+k*130)+'px;width:500px;height:100px"><div class="a" style="left:0;top:8px">'+av(AVC[k],['A','C','S'][k],84)+'</div><div class="a" style="left:104px;top:6px;width:200px;height:88px;border-radius:32px 32px 32px 10px;background:#F4EBD9;box-shadow:0 6px 0 rgba(15,14,12,.9);display:flex;align-items:center;justify-content:center;gap:14px"><i class="dt" style="width:16px;height:16px;border-radius:50%;background:#0F0E0C;display:block"></i><i class="dt" style="width:16px;height:16px;border-radius:50%;background:#0F0E0C;display:block"></i><i class="dt" style="width:16px;height:16px;border-radius:50%;background:#0F0E0C;display:block"></i></div></div>'}).join('');
+/* 2 */
+var ANS=[['admin','Jualan sebanyak-banyaknya'],['content creator','Foto harus estetik dulu'],['social media','Ikut tren yang lagi naik']];
+$('d2cards').innerHTML=ANS.map(function(r,k){return '<div class="a card" data-obj id="d2c'+k+'" style="left:84px;top:'+(300+k*220)+'px;width:912px;height:190px"><div class="a" style="left:36px;top:45px">'+av(AVC[k],r[0].charAt(0).toUpperCase(),100)+'</div><div class="a mono" style="left:170px;top:42px;font-size:24px;color:var(--gray)">'+r[0]+'</div><div class="a disp" style="left:170px;top:92px;font-size:54px;white-space:nowrap">'+r[1]+'</div></div>'}).join('');
+(function(){var tg=[[180,40],[540,20],[900,40]],cl2=['#C8944A','#B84A2E','#6B6560'],h='<circle id="d2o" cx="540" cy="222" r="26" fill="#0F0E0C"/>';
+  tg.forEach(function(p,k){h+='<path id="d2p'+k+'" d="M540 222 L'+p[0]+' '+p[1]+'" stroke="'+cl2[k]+'" stroke-width="10"/><path id="d2h'+k+'" d="'+head(540,222,p[0],p[1])+'" stroke="'+cl2[k]+'" stroke-width="10" stroke-linejoin="round"/>'});
+  $('d2svg').innerHTML=h})();
+/* 3 */
+$('d3abox').innerHTML=boxSvg(220);$('d3dbox').innerHTML=boxSvg(280);
+/* 5-7 kartu persona */
+var RW=[['1','Siapa yang diajak bicara'],['2','Kesan yang dibawa pulang'],['3','Sudut produk']],NC=['#B84A2E','#0F0E0C','#C8944A'];
+function mkCard(p){return '<div class="a card" data-obj id="'+p+'card" style="left:110px;top:350px;width:860px;height:910px;box-shadow:0 40px 60px rgba(15,14,12,.18),0 10px 0 rgba(15,14,12,.9);border:5px solid var(--ink)">'
+  +'<div class="a mono" style="left:44px;top:44px;color:var(--terra)">persona brand · 3 baris</div><span class="chip a" style="right:44px;top:30px;background:var(--amber);color:var(--ink)">contoh</span>'
+  +RW.map(function(r,k){var y=130+k*250;return '<div class="a" id="'+p+'r'+k+'" style="left:0;top:'+y+'px;width:850px;height:230px"><div class="a" id="'+p+'h'+k+'" style="left:20px;top:-6px;width:800px;height:222px;border-radius:26px;background:rgba(200,148,74,.2);opacity:0"></div>'
+    +'<div class="a" style="left:44px;top:8px;width:84px;height:84px;border-radius:50%;background:'+NC[k]+';color:'+(k===2?'#0F0E0C':'#fff')+';display:flex;align-items:center;justify-content:center;font:800 44px/1 var(--f-display)">'+r[0]+'</div>'
+    +'<div class="a" style="left:156px;top:14px;font:800 44px/1.05 var(--f-display);letter-spacing:-.03em;white-space:nowrap">'+r[1]+'</div>'
+    +(k<2?'<div class="a" id="'+p+'e'+k+'" style="left:156px;top:84px;width:660px;font:600 38px/1.25 var(--f-body)"></div>'
+     :'<div class="a" id="'+p+'ea" style="left:156px;top:84px;width:660px;font:600 34px/1.2 var(--f-body);color:var(--gray)"></div><div class="a" id="'+p+'eb" style="left:156px;top:136px;width:660px;font:800 40px/1.2 var(--f-body);color:var(--terra)"></div><svg class="a" viewBox="0 0 400 30" style="left:156px;top:84px;width:400px;height:30px" fill="none" stroke-linecap="round"><path id="'+p+'sx" d="M0 15 L300 15" stroke="#B84A2E" stroke-width="7"/></svg>')
+    +'</div>'}).join('')+'</div>'}
+['c5','c6','c7'].forEach(function(p,i){$('b'+(i+5)).innerHTML=mkCard(p)});
+var T_E0=[5.25,5.99,6.47,6.96,7.12,7.44,8.08],T_E1=[3.12,3.31,3.49,3.86,4.41,4.78,4.96,5.33],T_EA=[2.57,2.91,3.24],T_EB=[4.35,4.8,5.25,5.7,5.92,6.37];
+['c5','c6','c7'].forEach(function(p){wordSpans($(p+'e0'),'Perempuan berkulit sensitif yang capek gonta-ganti skincare');wordSpans($(p+'e1'),'“Brand yang paham kulitku, bukan yang paling murah”');wordSpans($(p+'ea'),'Serum ini murah');wordSpans($(p+'eb'),'Serum untuk kulit yang gampang merah')});
+/* "gonta-ganti" satu kata, "“Brand" ikut kutip: jumlah kata tetap cocok dengan waktu */
+/* 8 */
+var CK=['Siapa yang diajak bicara','Kesan yang dibawa pulang','Sudut produk'];
+$('d8rows').innerHTML=CK.map(function(r,k){return '<div class="a" style="left:44px;top:'+(120+k*135)+'px;width:824px;height:110px"><div class="a" style="left:0;top:14px;width:74px;height:74px;border:6px solid #0F0E0C;border-radius:18px"></div><svg class="a" viewBox="0 0 80 80" style="left:-3px;top:8px;width:92px;height:92px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="d8k'+k+'" d="M18 42 L34 58 L68 14" stroke="#B84A2E" stroke-width="10"/></svg><div class="a" style="left:116px;top:20px;font:700 44px/1.1 var(--f-body);white-space:nowrap">'+r+'</div></div>'}).join('');
+
+/* ---------- caption karaoke ---------- */
+var CAP=BEATS.map(function(b,bi){
+  if(b.words&&b.words.length){var out=[],chunk=[];b.words.forEach(function(w,i){chunk.push({w:w.w.replace(/[“”"]/g,''),t:w.t});
+    if(chunk.length===3||/[.,?!:]["”]?$/.test(w.w)||i===b.words.length-1){var nx=b.words[i+1];out.push({words:chunk,end:nx?Math.min(nx.t,w.t+1.2):w.t+.9});chunk=[]}});return out}
+  var ws=b.say.replace(/[“”"]/g,'').split(/\s+/).filter(Boolean),tot=0;ws.forEach(function(w){tot+=w.length+2});
+  var t=T0[bi]+.15,span=b.dur-.35,out=[],chunk=[];
+  ws.forEach(function(w,i){var d=span*(w.length+2)/tot;chunk.push({w:w,t:t});t+=d;if(chunk.length===3||/[.,?!:]$/.test(w)||i===ws.length-1){out.push({words:chunk,end:t});chunk=[]}});
+  return out});
+
+/* ---------- adegan ---------- */
+var DI=2,SCAN_A=2.0,SCAN_B=3.0;
+window.ANIMATIC_SCAN={i:DI,a:SCAN_A+.4,b:SCAN_B+1.0};
+function rowSet(p,k,state,tAct){var r=$(p+'r'+k),h=$(p+'h'+k);op(r,state==='idle'?.35:1);op(h,state==='active'?pr(0,0,1)+1*0+0:0);if(state==='active')op(h,tAct)}
+var S=[
+ function(t){ // 1
+   var q=$('d1q');pop(q,t,.3,.5,'');q.style.transformOrigin='100% 100%';
+   [0,1,2].forEach(function(k){var a=$('d1a'+k),at=2.0+k*.35;pop(a,t,at,.4);a.style.transformOrigin='0 50%';
+     Array.prototype.forEach.call(a.querySelectorAll('.dt'),function(d,j){d.style.opacity=.35+.65*Math.abs(Math.sin(t*7+j*1.1+k))})});
+   pop($('d1note'),t,3.1,.4,' rotate(-3deg)')},
+ function(t){ // 2
+   [.2,1.75,3.75].forEach(function(a,k){var c=$('d2c'+k),kk=E.out(pr(t,a,.5));op(c,cl(kk*3));tf(c,'translateX('+((1-kk)*-500)+'px)')});
+   pop($('d2o'),t,7.15,.35);$('d2o').style.transformOrigin='540px 222px';
+   [0,1,2].forEach(function(k){draw($('d2p'+k),t,7.3+k*.18,.5);op($('d2h'+k),pr(t,7.3+k*.18+.45,.1))});
+   pop($('d2note'),t,8.2,.4)},
+ function(t){ // 3 diagnosis
+   var ks=E.io(pr(t,SCAN_A,SCAN_B-SCAN_A+.9)),dark=ks>.5;
+   var scan=$('scan'),lab=$('scanlab');op(scan,ks>0&&ks<1?1:0);scan.style.top=(ks*1920)+'px';op(lab,ks>0&&ks<1?1:0);lab.style.top=(ks*1920-40)+'px';
+   $('bgd').style.opacity=ks>0?1:0;$('bgd').style.clipPath='inset(0 0 '+((1-ks)*100)+'% 0)';
+   var fl=1-pr(ks,.2,.3);
+   var a=$('d3a');pop(a,t,.2,.45);if(fl<1)op(a,Math.min(parseFloat(a.style.opacity),fl));
+   draw($('d3x1'),t,1.0,.35);draw($('d3x2'),t,1.25,.35);
+   var h=$('d3hand');pop(h,t,1.5,.4,' rotate(-3deg)');if(fl<1)op(h,Math.min(parseFloat(h.style.opacity),fl));
+   var dk=dark?1:0;
+   pop($('d3dbox'),t,2.95,.4);op($('d3dbox'),t<2.95?0:parseFloat($('d3dbox').style.opacity));
+   up($('d3dchip'),t,3.1,.3,16);op($('d3dchip'),t<3.1?0:parseFloat($('d3dchip').style.opacity));
+   draw($('d3br'),t,3.0,.7);draw($('d3br2'),t,3.0,.7);
+   pop($('d3bub'),t,3.45,.4);pop($('d3head'),t,3.7,.4);up($('d3hchip'),t,4.25,.3,16);
+   pop($('d3stamp'),t,6.2,.3,' rotate(-5deg)');
+   var s=$('d3stamp');tf(s,'rotate(-5deg) scale('+(function(){var k=pr(t,6.2,.3);return k<1?1.3-.3*E.out(k):1})()+')');op(s,t>=6.2?1:0)},
+ function(t){ // 4
+   pop($('d4chip'),t,.2,.4);var pg=$('d4page'),kc=E.out(pr(t,.05,.45));op(pg,cl(kc*3));tf(pg,'translateY('+((1-kc)*-200)+'px)');
+   [0,1,2].forEach(function(k){var a=.94+k*.33;draw($('d4l'+k),t,a,.3);var n=$('d4n'+k);n.style.transformOrigin=[80,80,80][k]+'px '+(200+k*110)+'px';n.style.transform='scale('+E.back(pr(t,a-.1,.3))+')';n.style.opacity=t>=a-.1?1:0})},
+ function(t){ // 5
+   var kc=E.out(pr(t,.2,.55)),cd=$('c5card');tf(cd,'translateY('+((1-kc)*-700)+'px) rotate('+swing(Math.max(0,t-.5),4,7,2.6)+'deg)');op(cd,cl(kc*3));
+   [0,1,2].forEach(function(k){var a=.75+k*.2;var r=$('c5r'+k),act=k===0&&t>=2.0;op(r,(k===0&&act)?1:.35*pr(t,a,.25)+0);op($('c5h'+k),act?pr(t,2.0,.3):0)});
+   op($('c5r0'),t<2.0?.35*pr(t,.75,.25):pr(t,2.0,.3)*.65+.35);
+   reveal($('c5e0'),T_E0,t);reveal($('c5e1'),[],99);reveal($('c5ea'),[],99);reveal($('c5eb'),[],99);op($('c5sx').parentNode,0)},
+ function(t){ // 6
+   op($('c6r0'),1);op($('c6h0'),0);showAll($('c6e0'));
+   op($('c6r1'),.35+.65*pr(t,.2,.3));op($('c6h1'),pr(t,.2,.3));op($('c6r2'),.35);op($('c6h2'),0);
+   reveal($('c6e1'),T_E1,t);reveal($('c6ea'),[],t);reveal($('c6eb'),[],t);op($('c6sx').parentNode,0)},
+ function(t){ // 7
+   op($('c7r0'),1);op($('c7r1'),1);op($('c7h0'),0);op($('c7h1'),0);showAll($('c7e0'));showAll($('c7e1'));
+   op($('c7r2'),.35+.65*pr(t,.2,.3));op($('c7h2'),pr(t,.2,.3));
+   reveal($('c7ea'),T_EA,t);reveal($('c7eb'),T_EB,t);var sv=$('c7sx').parentNode;op(sv,1);draw($('c7sx'),t,3.35,.4)},
+ function(t){ // 8
+   pop($('d8save'),t,.2,.5);up($('d8chip'),t,.9,.3,16);
+   var kc=E.out(pr(t,1.65,.5));op($('d8card'),cl(kc*3));tf($('d8card'),'translateY('+((1-kc)*80)+'px)');
+   [0,1,2].forEach(function(k){draw($('d8k'+k),t,2.05+k*.35,.3)});
+   pop($('d8cal'),t,3.15,.45)}];
+
+var TR=[null,'zoom','drop','whip','up','drop','drop','whip'],TD=.42;
+function apply(i,t){
+  var sec=$('b'+(i+1)),start=T0[i],end=start+BEATS[i].dur,inK=i?pr(t,start,TD):1,outK=i<BEATS.length-1?pr(t,end,TD):0;
+  var vis=t>=start&&(i===BEATS.length-1||t<end+TD);sec.style.visibility=vis?'visible':'hidden';if(!vis)return;
+  var tx=0,sc=1+.03*pr(t,start,BEATS[i].dur),blur=0,o=1,ty=0;
+  var ti=TR[i];if(inK<1){var e=E.io(inK);if(ti==='zoom'){sc*=.82+.18*e;o=e}else if(ti==='whip'){tx=(1-e)*1080;blur=(1-e)*14}else if(ti==='up'){ty=(1-e)*1920}else if(ti==='drop'){o=e}}
+  var to=TR[i+1];if(outK>0){var e2=E.io(outK);if(to==='zoom'){sc*=1+e2*1.2;o=1-e2;blur=e2*10}else if(to==='whip'){tx=-e2*1080;blur=e2*14}else if(to==='up'){ty=-e2*1920}else if(to==='drop'){o=1-e2}}
+  tf(sec,'translate('+tx+'px,'+ty+'px) scale('+sc+')');sec.style.filter=blur>.3?'blur('+blur.toFixed(1)+'px)':'none';op(sec,o);sec.style.zIndex=i+1;
+  S[i](LOCAL(i,t-start));
+}
+window.ANIMATIC_T0=T0;window.ANIMATIC_LOCAL=function(i,lt){return LOCAL(i,lt)};
+window.seek=function(t){
+  var cur=0;for(var i=0;i<BEATS.length;i++)if(t>=T0[i])cur=i;
+  for(var j=0;j<BEATS.length;j++)apply(j,t);
+  if(cur!==DI&&!(cur===DI+1&&t<T0[DI+1]+TD)){$('bgd').style.opacity=0;$('scan').style.opacity=0;$('scanlab').style.opacity=0}
+  var fl=pr(t,T0[DI+1]-.05,.35);op($('flash'),fl>0&&fl<1?(1-fl)*.85:0);
+  var dark=cur===DI&&LOCAL(DI,t-T0[DI])>SCAN_A+.7;
+  $('hdl').style.color=dark?'#FFE2B0':'#0F0E0C';
+  $('chap').textContent='// 0'+(BEATS[cur].chap||cur+1)+' · '+BEATS[cur].name;$('chap').style.color=dark?'#FFE2B0':'#B84A2E';
+  var span=$('cap').firstChild,list=CAP[cur],c=null;for(var k=0;k<list.length;k++)if(t>=list[k].words[0].t-.05)c=list[k];
+  if(!c||t>list[list.length-1].end+.1){op(span,0)}else{op(span,1);span.innerHTML=c.words.map(function(w){return '<u style="color:'+(t>=w.t?'#fff':'rgba(255,255,255,.38)')+'">'+w.w+'</u>'}).join(' ');
+    var kk=pr(t,c.words[0].t-.05,.12);tf(span,'scale('+(.92+.08*E.back(kk))+')')}
+};
+window.seek(0);
+})();
+</script>
+</body>
+</html>

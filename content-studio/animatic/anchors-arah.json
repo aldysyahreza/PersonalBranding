@@ -1,0 +1,187 @@
+{
+ "_petunjuk": "Adegan dimulai pada kata pembukanya (dicari di babak chap). beats[i] = jangkar [detik rancangan, awal kata].",
+ "scenes": [
+  {
+   "start": "tanya",
+   "act": "HOOK",
+   "chap": 1
+  },
+  {
+   "start": "admin",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "karena",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "satu",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "mulai",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "kedua",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "ketiga",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "simpan",
+   "act": "CTA",
+   "chap": 5
+  }
+ ],
+ "beats": [
+  [
+   [
+    0.3,
+    "tanya"
+   ],
+   [
+    2.97,
+    "mana"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "admin"
+   ],
+   [
+    1.77,
+    "content"
+   ],
+   [
+    3.79,
+    "social"
+   ],
+   [
+    6.02,
+    "semua"
+   ],
+   [
+    7.54,
+    "tiga"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "karena"
+   ],
+   [
+    1.09,
+    "cuma"
+   ],
+   [
+    2.71,
+    "jembatan"
+   ],
+   [
+    3.34,
+    "kesan"
+   ],
+   [
+    4.27,
+    "pembeli"
+   ],
+   [
+    5.69,
+    "namanya"
+   ],
+   [
+    6.39,
+    "persona"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "satu"
+   ],
+   [
+    0.94,
+    "tulis"
+   ],
+   [
+    1.95,
+    "baris"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "mulai"
+   ],
+   [
+    2.13,
+    "pertama"
+   ],
+   [
+    5.25,
+    "perempuan"
+   ],
+   [
+    8.08,
+    "skincare"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "kedua"
+   ],
+   [
+    3.12,
+    "brand"
+   ],
+   [
+    5.33,
+    "murah"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "ketiga"
+   ],
+   [
+    2.57,
+    "serum"
+   ],
+   [
+    4.35,
+    "serum"
+   ],
+   [
+    6.37,
+    "merah"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "simpan"
+   ],
+   [
+    1.78,
+    "isi"
+   ],
+   [
+    3.2,
+    "briefing"
+   ]
+  ]
+ ]
+}
