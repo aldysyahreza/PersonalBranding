@@ -48,24 +48,50 @@ export async function transcribeLocal(project, job) {
   job.message = 'Mengekstrak audio…';
   const wav = await extractAudio(project, { signal: job.controller.signal });
   job.message = `Mentranskripsi dengan model "${config.whisperModel}" (pertama kali dapat memakan waktu untuk mengunduh model)…`;
-  const r = await run(config.whisperPython, [path.join(ROOT, 'scripts', 'transcribe_local.py'), wav, config.whisperModel, config.whisperLanguage, config.whisperDevice], {
-    signal: job.controller.signal,
-    onStderr: (s) => {
-      const m = s.match(/PROGRESS ([\d.]+)/g);
-      if (m) job.progress = Number(m[m.length - 1].split(' ')[1]) * 0.98;
-    },
-  });
+  const outFile = `${wav}.json`;
+  const attempt = (device) => {
+    fs.rmSync(outFile, { force: true });
+    return run(config.whisperPython, [path.join(ROOT, 'scripts', 'transcribe_local.py'), wav, config.whisperModel, config.whisperLanguage, device, outFile], {
+      signal: job.controller.signal,
+      // CPU: sembunyikan GPU agar library CUDA tidak dimuat sama sekali (sumber crash native).
+      env: device === 'cpu' ? { CUDA_VISIBLE_DEVICES: '', KMP_DUPLICATE_LIB_OK: 'TRUE' } : { KMP_DUPLICATE_LIB_OK: 'TRUE' },
+      onStderr: (s) => {
+        const m = s.match(/PROGRESS ([\d.]+)/g);
+        if (m) job.progress = Number(m[m.length - 1].split(' ')[1]) * 0.98;
+      },
+    });
+  };
+  const readResult = () => {
+    try {
+      const d = JSON.parse(fs.readFileSync(outFile, 'utf8'));
+      return Array.isArray(d.segments) ? d : null;
+    } catch {
+      return null;
+    }
+  };
+  let r = await attempt(config.whisperDevice);
+  let data = readResult();
+  // Crash native (mis. KERNEL32/ntdll di Windows) tanpa hasil → ulangi sekali di CPU.
+  if (!data && !job.controller.signal.aborted && config.whisperDevice !== 'cpu' && !r.stderr.includes('ERROR_NO_FASTER_WHISPER')) {
+    job.message = 'Transkripsi GPU/otomatis gagal; mengulang di CPU (lebih lambat, tetap lokal)…';
+    job.progress = 0;
+    r = await attempt('cpu');
+    data = readResult();
+  }
   fs.rmSync(wav, { force: true });
-  if (r.code !== 0) {
+  fs.rmSync(outFile, { force: true });
+  if (!data) {
     if (r.stderr.includes('ERROR_NO_FASTER_WHISPER')) throw new UserError('faster-whisper belum terpasang.', status.setup, 412);
-    const hint = /cublas|cudnn|cuda/i.test(r.stderr)
+    const nativeCrash = /KERNEL32|ntdll|Unknown Unknown|0xC0000|access violation/i.test(r.stderr) || (r.code !== 0 && r.code !== 1 && !r.stderr.trim());
+    const hint = nativeCrash
+      ? 'Program Whisper crash di tingkat sistem Windows. Coba: (1) tambahkan WHISPER_DEVICE=cpu dan WHISPER_MODEL=base di file .env lalu nyalakan ulang aplikasi; (2) perbarui paket: .venv\\Scripts\\pip install -U faster-whisper ctranslate2; (3) pasang "Microsoft Visual C++ Redistributable 2015–2022 (x64)". Sementara itu, transkrip bisa diimpor dari file SRT.'
+      : /cublas|cudnn|cuda/i.test(r.stderr)
       ? 'Library GPU (CUDA) tidak lengkap. Set WHISPER_DEVICE=cpu di file .env lalu jalankan ulang aplikasi.'
       : /huggingface|connection|resolve|HTTPSConnection|offline/i.test(r.stderr)
       ? 'Model belum ada di cache dan tidak dapat diunduh. Sambungkan internet sekali untuk mengunduh model, atau gunakan transkrip manual.'
       : r.stderr.split('\n').filter(Boolean).slice(-2).join(' ');
     throw new UserError('Transkripsi lokal gagal.', hint, 500);
   }
-  const data = JSON.parse(r.stdout);
   return toTranscript(data, 'local-whisper');
 }
 

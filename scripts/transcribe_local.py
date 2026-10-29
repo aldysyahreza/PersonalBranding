@@ -1,17 +1,23 @@
 #!/usr/bin/env python3
 """Transkripsi lokal dengan faster-whisper. Audio tidak keluar dari komputer.
 
-Pemakaian: python3 transcribe_local.py <audio.wav> <model> [bahasa] [device]
+Pemakaian: python3 transcribe_local.py <audio.wav> <model> [bahasa] [device] [output.json]
 device: auto (GPU bila library CUDA lengkap, jika tidak otomatis CPU) | cpu | cuda
-Output: JSON ke stdout -> {"language": ..., "segments": [{start,end,text,words:[{text,start,end}]}]}
+Output: JSON ke output.json (atau stdout) -> {"language": ..., "segments": [{start,end,text,words:[{text,start,end}]}]}
+Setelah hasil ditulis, proses keluar dengan os._exit(0): di Windows, CTranslate2 kadang crash
+saat interpreter ditutup (KERNEL32/ntdll) walau transkripsi sudah selesai.
 Progres ditulis ke stderr sebagai baris "PROGRESS <0..1>".
 
 Model diunduh otomatis dari Hugging Face pada pemakaian pertama (butuh internet
 sekali), lalu disimpan di cache lokal.
 """
 import json
+import os
 import re
 import sys
+
+# Hindari crash OpenMP ganda (numpy + ctranslate2) di Windows.
+os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
 
 
 def load_wav(path):
@@ -80,7 +86,21 @@ def main():
             raise
         print(f"GPU tidak dapat dipakai ({err}); beralih ke CPU.", file=sys.stderr, flush=True)
         info, out = run(WhisperModel, model_name, "cpu", samples, language)
-    json.dump({"language": info.language, "segments": out}, sys.stdout, ensure_ascii=False)
+    result = {"language": info.language, "segments": out}
+    out_path = sys.argv[5] if len(sys.argv) > 5 and sys.argv[5] else None
+    if out_path:
+        tmp = out_path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(result, f, ensure_ascii=False)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, out_path)
+    else:
+        json.dump(result, sys.stdout, ensure_ascii=False)
+    sys.stdout.flush()
+    sys.stderr.flush()
+    # Lewati penutupan interpreter (sumber crash native CTranslate2/CUDA di Windows).
+    os._exit(0)
 
 
 if __name__ == "__main__":

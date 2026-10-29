@@ -2,9 +2,10 @@
 // sehingga path file dengan spasi/karakter khusus aman dan tidak ada injeksi.
 import { spawn } from 'node:child_process';
 
-export function run(cmd, args, { onStderr, onStdout, timeoutMs = 0, signal } = {}) {
+export function run(cmd, args, { onStderr, onStdout, timeoutMs = 0, signal, env } = {}) {
   return new Promise((resolve, reject) => {
-    const child = spawn(cmd, args, { stdio: ['ignore', 'pipe', 'pipe'], signal });
+    // windowsHide: jangan munculkan jendela konsol hitam di Windows (server berjalan tersembunyi).
+    const child = spawn(cmd, args, { stdio: ['ignore', 'pipe', 'pipe'], signal, windowsHide: true, env: env ? { ...process.env, ...env } : process.env });
     let stdout = '';
     let stderr = '';
     let timer;
