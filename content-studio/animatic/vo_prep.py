@@ -54,7 +54,7 @@ def syllables(s):
     return max(1, len(re.findall(r'[aiueo]+', s.lower())))
 
 
-def speech_segments(x, thr_db=-38, min_sil=0.2, min_seg=0.12):
+def speech_segments(x, thr_db=-38, min_sil=0.2, min_seg=0.2):
     """Segmen bicara dari energi per 10 ms; buang potongan yang terlalu pelan atau tidak bersuara (napas, klik)."""
     hop = int(0.01 * SR)
     fr = x[:len(x) // hop * hop].reshape(-1, hop)
@@ -234,6 +234,13 @@ def main(src, script, outdir, take='auto'):
     ff('-i', raw, '-af', chain, '-ar', str(SR), clean)
     x = read_wav(clean)
     segs = speech_segments(x)
+    # napas / klik / desis bibir: pelan (jauh di bawah ucapan lain) dan hampir tanpa nada. Dibuang supaya tidak ikut terputar ("peceh").
+    med = float(np.median([r for _, _, r in segs])); keep = []
+    for a_, b_, r_ in segs:
+        voiced = len(f0track(x, a_, b_)) / max(1, int((b_ - a_) / 0.01) - 3)
+        if voiced < 0.2 and r_ < med - 10: continue
+        keep.append([a_, b_, r_])
+    n_napas = len(segs) - len(keep); segs = keep
     drop, retake_notes = retakes(x, segs, take)
     segs = [sg for k, sg in enumerate(segs) if k not in drop]
     phr = phrases(beats)
@@ -266,7 +273,9 @@ def main(src, script, outdir, take='auto'):
             words.append({'w': w, 't': round(tw, 3), 'beat': bi}); acc += syllables(w)
         kind = phr[pidx[-1]]['after'] if ui < len(units) - 1 else 'akhir'
         out.append(np.zeros(int(PAUSE[kind] * SR))); t += PAUSE[kind]
-        rep.append('%5.2f-%5.2f → %5.2f-%5.2f  jeda %.2f %-8s %s' % (segs[sidx[0]][0], segs[sidx[-1]][1], u0, t - PAUSE[kind], PAUSE[kind], kind, ' '.join(phr[j]['text'] for j in pidx)))
+        sp_dur = sum(segs[k][1] - segs[k][0] for k in sidx); rate = sum(phr[j]['syl'] for j in pidx) / max(sp_dur, 0.01)
+        flag = '' if 3.2 <= rate <= 8.5 else '   ⚠ tempo %.1f suku kata/dtk tidak wajar: cek apakah potongan cocok dengan kalimat' % rate
+        rep.append('%5.2f-%5.2f → %5.2f-%5.2f  jeda %.2f %-8s %s%s' % (segs[sidx[0]][0], segs[sidx[-1]][1], u0, t - PAUSE[kind], PAUSE[kind], kind, ' '.join(phr[j]['text'] for j in pidx), flag))
     y = np.concatenate(out)
     # langkah: mulai = awal bicara langkah itu (dikurangi 0,2 dtk), berakhir saat langkah berikutnya mulai
     starts = []
@@ -283,7 +292,7 @@ def main(src, script, outdir, take='auto'):
     write_wav(os.path.join(outdir, 'vo_clean.wav'), y)
     json.dump(tl, open(os.path.join(outdir, 'timing.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     raw_dur = len(read_wav(raw)) / SR
-    lines = ['Peredam bising: ' + dn_name, 'Durasi: %.1f dtk → %.1f dtk' % (raw_dur, total), 'Segmen bicara: %d (dibuang karena pengulangan: %d)' % (len(segs), len(drop)), ''] + retake_notes + [''] + rep + ['']
+    lines = ['Peredam bising: ' + dn_name, 'Durasi: %.1f dtk → %.1f dtk' % (raw_dur, total), 'Segmen bicara: %d (dibuang: %d pengulangan, %d napas/klik)' % (len(segs), len(drop), n_napas), ''] + retake_notes + [''] + rep + ['']
     lines += ['Langkah %d: mulai %.2f, %.2f dtk' % (i + 1, b['start'], b['dur']) for i, b in enumerate(tl['beats'])]
     open(os.path.join(outdir, 'laporan.txt'), 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
     for f in (raw, clean): os.remove(f)
