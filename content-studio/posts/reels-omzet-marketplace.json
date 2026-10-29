@@ -1,14 +1,14 @@
 {
   "id": "r-omzet-marketplace",
-  "title": "Reels: omzet di aplikasi besar, yang cair kecil",
+  "title": "Reels: laporan marketplace besar, yang cair kecil",
   "format": "reels",
   "stage": "copy",
   "dx": 6,
   "job": "Share",
   "pillar": "Brand Diagnosis",
   "hue": "terracotta",
-  "caption": "Aplikasi bilang Rp100 juta, rekening bilang Rp79 juta (contoh hitungan: admin 10% + biaya proses + iklan).\n\nAdmin dan iklan memang memotong. Tapi yang lebih mahal adalah pembeli yang suka produkmu, lalu lupa nama brand-mu dan beli lagi dari toko lain.\n\nSatu langkah kecil yang bisa dicoba: selipkan kartu di tiap paket. Isinya nama brand, kenapa produk ini dibuat, dan kapan sebaiknya isi ulang.\n\nKirim ke satu owner yang omzet di aplikasinya besar tapi uangnya tipis, biar dia hitung selisihnya malam ini.",
-  "pinned": "Cara hitung selisihnya: omzet di aplikasi dikurangi saldo yang cair, lalu dibagi omzet di aplikasi.",
+  "caption": "Laporan marketplace bilang Rp100 juta, rekening bilang Rp79 juta (contoh hitungan: admin 10% + biaya proses + iklan).\n\nAdmin dan iklan memang memotong. Tapi yang lebih mahal adalah pembeli yang suka produkmu, lalu lupa nama brand-mu dan beli lagi dari toko lain.\n\nSatu langkah kecil yang bisa dicoba: selipkan kartu di tiap paket. Isinya nama brand, kenapa produk ini dibuat, dan kapan sebaiknya isi ulang.\n\nKirim ke satu owner yang laporan marketplace-nya besar tapi uang di rekeningnya tipis, biar dia hitung selisihnya malam ini.",
+  "pinned": "Cara hitung selisihnya: omzet di laporan marketplace dikurangi saldo yang cair, lalu dibagi omzet di laporan marketplace.",
   "story": "",
   "reel": {
     "v": 2,
@@ -18,11 +18,11 @@
     "coverHi": "cair Rp79 juta",
     "beats": [
       {
-        "say": "Aplikasi bilang Rp100 juta. Rekening bilang Rp79 juta.",
+        "say": "Laporan marketplace bilang Rp100 juta. Rekening bilang Rp79 juta.",
         "txt": "Cair cuma *Rp79 juta*",
         "shot": "phone",
         "dur": "",
-        "case": "Angka = contoh hitungan (admin 10% + biaya proses Rp1.250/pesanan + iklan ROAS 10x), dasar di posts/hitung-potongan-marketplace.md. Tampilkan label 'contoh hitungan' di layar.",
+        "case": "Angka = contoh hitungan (admin 10% + biaya proses Rp1.250/pesanan + iklan ROAS 10x), dasar di posts/hitung-potongan-marketplace.md. Tampilkan label 'contoh hitungan' di layar. Visual: laporan penjualan marketplace (bukan 'aplikasi').",
         "solusi": "",
         "contoh": ""
       },
@@ -54,7 +54,7 @@
         "contoh": "Contoh yang bisa dicoba (belum klaim hasil): kartu 3 baris: (1) nama brand + satu kalimat jualan apa untuk siapa, (2) kenapa produk ini dibuat, (3) kapan biasanya perlu isi ulang + akun untuk info isi ulang."
       },
       {
-        "say": "Kirim ke satu owner yang omzet di aplikasinya besar, tapi uangnya tipis. Biar dia hitung selisihnya malam ini.",
+        "say": "Kirim ke satu owner yang laporan marketplace-nya besar, tapi uang di rekeningnya tipis. Biar dia hitung selisihnya malam ini.",
         "txt": "Kirim ke *satu owner*",
         "shot": "med",
         "dur": "",

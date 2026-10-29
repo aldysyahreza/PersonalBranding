@@ -1,9 +1,9 @@
-# Hitungan potongan marketplace (dasar angka "Rp100 juta → Rp79 juta")
+# Hitungan potongan marketplace (dasar angka "laporan marketplace Rp100 juta → rekening Rp79 juta")
 
 Status: PERKIRAAN. Tarif diambil dari berita dan blog (sumber di bawah), belum dicek ke Seller Centre. Cek tarif resmi kategori Anda sebelum angka ini tayang sebagai fakta.
 
 ## Asumsi contoh
-- Omzet di aplikasi: Rp100 juta per bulan
+- Omzet di laporan penjualan marketplace: Rp100 juta per bulan
 - Rata-rata nilai pesanan: Rp150 ribu (asumsi, ≈ 667 pesanan)
 - Biaya proses pesanan Shopee: Rp1.250 per pesanan berhasil → ≈ Rp0,83 juta (0,83%)
 - Admin Shopee non-Star untuk fashion dan kecantikan: ± 8,25–10% setelah perubahan 31 Juli 2026. Sumber tidak sepakat untuk skincare (ada yang menulis 6,5%, ada yang 9–9,5%)
