@@ -7,7 +7,7 @@
   "job": "Share",
   "pillar": "Brand Diagnosis",
   "hue": "terracotta",
-  "caption": "Aplikasi bilang Rp100 juta, rekening bilang Rp79 juta.\n\nAdmin dan iklan memang memotong. Tapi yang lebih mahal adalah pembeli yang suka produkmu, lalu lupa nama brand-mu dan beli lagi dari toko lain.\n\nSatu langkah kecil: selipkan kartu di tiap paket. Isinya nama brand, kenapa produk ini dibuat, dan kapan sebaiknya isi ulang.\n\nKirim ke satu owner yang omzet di aplikasinya besar tapi uangnya tipis, biar dia hitung selisihnya malam ini.",
+  "caption": "Aplikasi bilang Rp100 juta, rekening bilang Rp79 juta (contoh hitungan: admin 10% + biaya proses + iklan).\n\nAdmin dan iklan memang memotong. Tapi yang lebih mahal adalah pembeli yang suka produkmu, lalu lupa nama brand-mu dan beli lagi dari toko lain.\n\nSatu langkah kecil yang bisa dicoba: selipkan kartu di tiap paket. Isinya nama brand, kenapa produk ini dibuat, dan kapan sebaiknya isi ulang.\n\nKirim ke satu owner yang omzet di aplikasinya besar tapi uangnya tipis, biar dia hitung selisihnya malam ini.",
   "pinned": "Cara hitung selisihnya: omzet di aplikasi dikurangi saldo yang cair, lalu dibagi omzet di aplikasi.",
   "story": "",
   "reel": {
@@ -22,7 +22,7 @@
         "txt": "Cair cuma *Rp79 juta*",
         "shot": "phone",
         "dur": "",
-        "case": "",
+        "case": "Angka = contoh hitungan (admin 10% + biaya proses Rp1.250/pesanan + iklan ROAS 10x), dasar di posts/hitung-potongan-marketplace.md. Tampilkan label 'contoh hitungan' di layar.",
         "solusi": "",
         "contoh": ""
       },
@@ -31,12 +31,12 @@
         "txt": "Suka produk, lupa *brand*",
         "shot": "med",
         "dur": "",
-        "case": "PENDING: pola dari brand yang Aldy dampingi (selisih >21%, beli ulang 20-30%, hit and run). Belum ada kasus bersumber/publik terverifikasi. Perlu konfirmasi Aldy: angka ini boleh diucapkan sebagai 'yang saya temui'.",
+        "case": "Pola dari brand yang Aldy dampingi tahun lalu (rata-rata beberapa brand, BUKAN satu klien): selisih omzet vs cair di atas 21%, biaya terbesar admin dan iklan, pembeli hit and run. Tidak ada identitas klien.",
         "solusi": "",
         "contoh": ""
       },
       {
-        "say": "Marketplace menjual produkmu, bukan brand-mu. Yang beli lagi cuma 20 sampai 30 persen. Satu langkah: selipkan kartu kecil di tiap paket.",
+        "say": "Marketplace menjual produkmu, bukan brand-mu. Di brand yang saya dampingi, yang beli lagi sekitar 20 sampai 30 persen. Satu langkah: selipkan kartu kecil di tiap paket.",
         "txt": "Satu *kartu* per paket",
         "shot": "close",
         "dur": "",
@@ -45,13 +45,13 @@
         "contoh": ""
       },
       {
-        "say": "Isinya tiga baris. Nama brand-mu, kenapa produk ini dibuat, dan kapan sebaiknya isi ulang. Pembeli yang tadinya cuma lewat, sekarang tahu siapa yang jualan.",
+        "say": "Coba isi tiga baris. Nama brand-mu, kenapa produk ini dibuat, dan kapan sebaiknya isi ulang. Pembeli yang tadinya cuma lewat, jadi tahu siapa yang jualan.",
         "txt": "Dari lewat jadi *kenal*",
         "shot": "card",
         "dur": "",
         "case": "",
         "solusi": "",
-        "contoh": "Kartu 3 baris: (1) nama brand + satu kalimat jualan apa untuk siapa, (2) kenapa produk ini dibuat, (3) kapan biasanya perlu isi ulang + akun untuk info isi ulang."
+        "contoh": "Contoh yang bisa dicoba (belum klaim hasil): kartu 3 baris: (1) nama brand + satu kalimat jualan apa untuk siapa, (2) kenapa produk ini dibuat, (3) kapan biasanya perlu isi ulang + akun untuk info isi ulang."
       },
       {
         "say": "Kirim ke satu owner yang omzet di aplikasinya besar, tapi uangnya tipis. Biar dia hitung selisihnya malam ini.",
