@@ -96,3 +96,6 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 - Set adegan = animatic-<nama>.html + anchors-<nama>.json + sfx-<nama>.py, dipilih lewat argumen ke-4 build_reel.py: `python3 animatic/build_reel.py rekaman.mp4 posts/reels-omzet-marketplace.json out/reel2 omzet` (default `v3` = topik harga ditawar).
 - Hasil: out/reel2/reel.mp4 (49,8 dtk, -14,5 LUFS, puncak -2,2 dBFS). Hook 6,3 dtk (> 4) dan total > 45 dtk: terbuka untuk dipangkas.
 - Terbuka: tarif admin per sumber belum diverifikasi di Seller Centre, aturan marketplace soal kartu/voucher belum dicek, angka 30-50% dari Aldy.
+
+## Evaluasi reels topik 2 -> aturan reels berikutnya (29 Okt 2026)
+- Video topik 2 dipakai sebagai bahan evaluasi, tidak direvisi. Terapkan di reels berikutnya: hook maksimal 4 dtk (satu kalimat, angka/kontradiksi di 1,5 dtk pertama), total 35-45 dtk (naskah maks ~95 kata), satu langkah solusi saja, tidak ada angka tanpa sumber atau label "contoh hitungan".
