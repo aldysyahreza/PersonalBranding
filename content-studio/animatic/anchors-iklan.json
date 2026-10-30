@@ -1,0 +1,288 @@
+{
+ "_petunjuk": "Adegan dimulai pada kata pembukanya (dicari di babak chap).",
+ "scenes": [
+  {
+   "start": "iklanmu",
+   "act": "HOOK",
+   "chap": 1
+  },
+  {
+   "start": "bayangkan",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "tapi",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "kalau",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "orang",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "satu",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "pakai",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "contoh",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "jawabannya",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "buat",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "simpan",
+   "act": "CTA",
+   "chap": 5
+  }
+ ],
+ "beats": [
+  [
+   [
+    0.3,
+    "iklanmu"
+   ],
+   [
+    1.57,
+    "tapi"
+   ],
+   [
+    3.26,
+    "naik"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "bayangkan"
+   ],
+   [
+    1.05,
+    "sepatu"
+   ],
+   [
+    1.96,
+    "iklannya"
+   ],
+   [
+    3.57,
+    "klik"
+   ],
+   [
+    4.47,
+    "chat"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "tapi"
+   ],
+   [
+    1.0,
+    "order"
+   ],
+   [
+    2.33,
+    "dua"
+   ],
+   [
+    2.46,
+    "orang"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "kalau"
+   ],
+   [
+    0.79,
+    "bedah"
+   ],
+   [
+    1.08,
+    "iklannya"
+   ],
+   [
+    1.81,
+    "salah"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "orang"
+   ],
+   [
+    1.12,
+    "tiga"
+   ],
+   [
+    3.35,
+    "mau"
+   ],
+   [
+    4.34,
+    "butuh"
+   ],
+   [
+    5.69,
+    "takutkan"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "satu"
+   ],
+   [
+    0.76,
+    "petakan"
+   ],
+   [
+    2.29,
+    "baru"
+   ],
+   [
+    2.71,
+    "iklan"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "pakai"
+   ],
+   [
+    1.8,
+    "mau"
+   ],
+   [
+    2.25,
+    "butuh"
+   ],
+   [
+    2.94,
+    "takut"
+   ],
+   [
+    3.94,
+    "benefit"
+   ],
+   [
+    4.96,
+    "fitur"
+   ],
+   [
+    5.7,
+    "pengalaman"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "contoh"
+   ],
+   [
+    2.01,
+    "mau"
+   ],
+   [
+    3.09,
+    "butuh"
+   ],
+   [
+    4.68,
+    "takut"
+   ],
+   [
+    5.28,
+    "ukuran"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "jawabannya"
+   ],
+   [
+    1.96,
+    "tampil"
+   ],
+   [
+    3.56,
+    "fitur"
+   ],
+   [
+    5.51,
+    "pengalaman"
+   ],
+   [
+    7.77,
+    "hari"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "buat"
+   ],
+   [
+    1.34,
+    "itu"
+   ],
+   [
+    1.94,
+    "jalankan"
+   ],
+   [
+    3.11,
+    "hasilnya"
+   ],
+   [
+    4.13,
+    "seratus"
+   ],
+   [
+    5.62,
+    "order"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "simpan"
+   ],
+   [
+    1.63,
+    "buka"
+   ],
+   [
+    2.92,
+    "berikutnya"
+   ]
+  ]
+ ]
+}

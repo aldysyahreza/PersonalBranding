@@ -54,7 +54,7 @@ def syllables(s):
     return max(1, len(re.findall(r'[aiueo]+', s.lower())))
 
 
-def speech_segments(x, thr_db=-38, min_sil=0.2, min_seg=0.2):
+def speech_segments(x, thr_db=-38, min_sil=0.2, min_seg=0.2, min_rms=-40):
     """Segmen bicara dari energi per 10 ms; buang potongan yang terlalu pelan atau tidak bersuara (napas, klik)."""
     hop = int(0.01 * SR)
     fr = x[:len(x) // hop * hop].reshape(-1, hop)
@@ -73,7 +73,7 @@ def speech_segments(x, thr_db=-38, min_sil=0.2, min_seg=0.2):
     for a, b in segs:
         s = x[int(a * SR):int(b * SR)]
         rms = 20 * np.log10(np.sqrt((s ** 2).mean()) + 1e-9)
-        if b - a < min_seg or rms < -40:
+        if b - a < min_seg or rms < min_rms:
             continue
         out.append([a, b, rms])
     return out
@@ -182,7 +182,7 @@ def phrases(beats):
     return out
 
 
-def align(segs, phr, tone, maxa=3, maxb=3):
+def align(segs, phr, tone, maxa=4, maxb=4):
     """Pasangkan potongan bicara dengan frasa naskah (dynamic programming). Satu unit = 1-3 potongan berurutan
     dengan 1-3 frasa berurutan; dipilih susunan yang kecepatan bicaranya (suku kata/detik) paling konsisten."""
     n, m = len(segs), len(phr)
@@ -207,7 +207,7 @@ def align(segs, phr, tone, maxa=3, maxb=3):
     units, i, j = [], n, m
     while i > 0:
         a, b = bk[i][j]; units.append((list(range(i - a, i)), list(range(j - b, j)))); i -= a; j -= b
-    return units[::-1]
+    return units[::-1], dp[n][m]
 
 
 def main(src, script, outdir, take='auto'):
@@ -217,11 +217,13 @@ def main(src, script, outdir, take='auto'):
     raw = os.path.join(outdir, '_raw.wav'); clean = os.path.join(outdir, '_clean.wav')
     ff('-i', src, '-ac', '1', '-ar', str(SR), raw)
     xr = read_wav(raw); hop = int(0.02 * SR); fr = xr[:len(xr) // hop * hop].reshape(-1, hop)
-    lantai = float(np.percentile(20 * np.log10(np.sqrt((fr ** 2).mean(1)) + 1e-9), 20))   # lantai bising: 20% bingkai terpelan
-    if lantai < -55:
+    fdb = 20 * np.log10(np.sqrt((fr ** 2).mean(1)) + 1e-9)
+    lantai = float(np.percentile(fdb, 20))   # lantai bising: 20% bingkai terpelan
+    snr = float(np.percentile(fdb, 90)) - lantai
+    if lantai < -55 or snr > 28:
         # rekaman sudah bersih (mis. voice note HP): peredam bising justru menimbulkan suara "robot" (terukur: jarak spektrum 10 dB dari asli
         # dan HF kasar), jadi dilewati. Hanya filter dasar + kompresi lembut.
-        dn_name = 'tidak dipakai (rekaman bersih, lantai %.0f dB)' % lantai
+        dn_name = 'tidak dipakai (rekaman bersih, lantai %.0f dB, selisih ucapan-bising %.0f dB)' % (lantai, snr)
         chain = ','.join(['highpass=f=70', 'lowpass=f=15000',
                           'acompressor=threshold=-24dB:ratio=2:attack=15:release=160:makeup=1', 'loudnorm=I=-16:TP=-1.5:LRA=11'])
     else:
@@ -233,7 +235,12 @@ def main(src, script, outdir, take='auto'):
                           'loudnorm=I=-16:TP=-1.5:LRA=7', 'lowpass=f=14500'])
     ff('-i', raw, '-af', chain, '-ar', str(SR), clean)
     x = read_wav(clean)
-    segs = speech_segments(x)
+    if lantai >= -55 and snr > 28:
+        # bising ringan: loudnorm menaikkan lantai bising di hasil bersih sampai terbaca sebagai ucapan, jadi potong dari rekaman asli
+        # dengan ambang relatif terhadap lantai bising (waktu sama karena filter tidak menggeser waktu)
+        segs = speech_segments(xr, thr_db=lantai + 12, min_rms=lantai + 10)
+    else:
+        segs = speech_segments(x)
     # napas / klik / desis bibir: pelan (jauh di bawah ucapan lain) dan hampir tanpa nada. Dibuang supaya tidak ikut terputar ("peceh").
     med = float(np.median([r for _, _, r in segs])); keep = []
     for a_, b_, r_ in segs:
@@ -241,12 +248,29 @@ def main(src, script, outdir, take='auto'):
         if voiced < 0.2 and r_ < med - 10: continue
         keep.append([a_, b_, r_])
     n_napas = len(segs) - len(keep); segs = keep
-    drop, retake_notes = retakes(x, segs, take)
-    segs = [sg for k, sg in enumerate(segs) if k not in drop]
+    drop_d, notes_d = retakes(x, segs, take)
     phr = phrases(beats)
-    tone = [contour(x, a, b) for a, b, _ in segs]
-    units = align(segs, phr, tone)
 
+    def coba(drop):
+        sg = [g for k, g in enumerate(segs) if k not in drop]
+        if len(sg) < len(phr) * 0.5: return None
+        tn = [contour(x, a_, b_) for a_, b_, _ in sg]
+        try: un, cost = align(sg, phr, tn)
+        except SystemExit: return None
+        # kualitas: berapa unit bertempo tidak wajar, lalu biaya DP
+        bad = 0
+        for sidx, pidx in un:
+            rt = sum(phr[j]['syl'] for j in pidx) / max(0.01, sum(sg[k][1] - sg[k][0] for k in sidx))
+            if not 3.2 <= rt <= 9.5: bad += 1
+        return bad, cost, sg, tn, un
+    kandidat = [(set(), [])] + ([(drop_d, notes_d)] if drop_d else [])
+    hasil = [(coba(d_), d_, n_) for d_, n_ in kandidat]
+    hasil = [h for h in hasil if h[0] is not None]
+    if not hasil: raise SystemExit('Potongan bicara tidak cocok dengan naskah. Cek apakah rekaman sesuai naskah.')
+    best = min(hasil, key=lambda h: (h[0][0], h[0][1]))
+    (_, _, segs, tone, units), drop, retake_notes = best
+    if not drop and drop_d:
+        retake_notes = ['Kemiripan bunyi antar potongan ditemukan, tapi tanpa membuang apa pun susunannya lebih cocok dengan naskah (kata yang memang diulang di naskah): tidak ada take ulang yang dibuang.']
     # susun ulang: potongan bicara + jeda baku (antar unit) / jeda alami pendek (di dalam unit)
     out, t, words, rep = [np.zeros(int(PAUSE['awal'] * SR))], PAUSE['awal'], [], []
     def cut(si):
@@ -292,7 +316,7 @@ def main(src, script, outdir, take='auto'):
     write_wav(os.path.join(outdir, 'vo_clean.wav'), y)
     json.dump(tl, open(os.path.join(outdir, 'timing.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     raw_dur = len(read_wav(raw)) / SR
-    lines = ['Peredam bising: ' + dn_name, 'Durasi: %.1f dtk → %.1f dtk' % (raw_dur, total), 'Segmen bicara: %d (dibuang: %d pengulangan, %d napas/klik)' % (len(segs), len(drop), n_napas), ''] + retake_notes + [''] + rep + ['']
+    lines = ['Peredam bising: ' + dn_name, 'Durasi: %.1f dtk → %.1f dtk' % (raw_dur, total), 'Segmen bicara dipakai: %d (dibuang: %d pengulangan, %d napas/klik)' % (len(segs), len(drop), n_napas), ''] + retake_notes + [''] + rep + ['']
     lines += ['Langkah %d: mulai %.2f, %.2f dtk' % (i + 1, b['start'], b['dur']) for i, b in enumerate(tl['beats'])]
     open(os.path.join(outdir, 'laporan.txt'), 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
     for f in (raw, clean): os.remove(f)

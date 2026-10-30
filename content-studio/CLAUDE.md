@@ -122,3 +122,7 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 ## Reels topik 5 "iklan jalan, pesanan tidak naik" (30 Okt 2026)
 - Disetujui Aldy (topik 1 dari tiga kandidat: iklan/penawaran samar; kandidat lain belum dipakai: owner jadi penghambat tim, assessment dulu baru strategi). Naskah posts/reels-iklan-penawaran.json (CTA save, contoh brand sepatu ilustrasi (katering ditolak Aldy: tidak umum; boleh fashion muslim)). Menunggu rekaman voice over; build dengan set adegan baru ("iklan").
 - (30 Okt) Rumus SMS diganti "kanvas 3 lawan 3" (adaptasi Value Proposition Canvas, Osterwalder): sisi pembeli = mau, butuh, takut; sisi produk = benefit, fitur, pengalaman; pasangan baris: mau->benefit, butuh->fitur, takut->pengalaman. Pemetaan ini adaptasi Claude, bukan bagian baku kanvas aslinya. Contoh: sepatu kerja (tampil rapi / tidak pegal / salah ukuran -> tampil rapi seharian / bantalan empuk / gratis tukar ukuran 7 hari).
+
+## Reels iklan (30 Okt 2026): set adegan "iklan", kanvas 3 lawan 3
+- Build: `python3 animatic/build_reel.py /home/user/vo/vo5_raw.mp4 posts/reels-iklan-penawaran.json out/reel5 iklan auto`. Hasil out/reel5/reel.mp4 (57,2 dtk).
+- vo_prep.py (30 Okt): NR dilewati bila selisih ucapan-bising > 28 dB; segmentasi dari rekaman asli (ambang = lantai bising + 12 dB) untuk bising ringan; deteksi take ulang dicoba tanpa DAN dengan pembuangan, dipakai yang paling cocok naskah (kata yang memang diulang di naskah, mis. benefit/fitur/pengalaman, sempat salah dikira take ulang dan 12 potongan sah terbuang).

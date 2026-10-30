@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Animatic: kanvas penawaran untuk iklan</title>
+<!-- Animatic reels 1080x1920, gaya "buku catatan diagnosis": kertas grid krem, objek semi-3D, coretan pena merah,
+     mode Diagnosis (ink + garis amber) lewat pindai, caption karaoke per kata. Semua gerak = fungsi waktu: window.seek(t). -->
+<style>
+:root{--ink:#0F0E0C;--paper:#FBF8F3;--terra:#B84A2E;--amber:#C8944A;--cream:#F4EBD9;--gray:#6B6560;
+  --f-display:Archivo,"Helvetica Neue",Arial,sans-serif;--f-serif:Fraunces,Georgia,serif;--f-body:Outfit,system-ui,sans-serif;--f-hand:Caveat,cursive;--f-mono:"JetBrains Mono",monospace;
+  --sh:0 34px 46px rgba(15,14,12,.16),0 8px 14px rgba(15,14,12,.12)}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:var(--f-body);color:var(--ink);background:var(--paper)}
+.bgpaper,.bgdx{position:absolute;inset:-40px}
+.bgpaper{background:
+  radial-gradient(ellipse 75% 60% at 50% 42%,rgba(255,255,255,.65),rgba(255,255,255,0) 70%),
+  linear-gradient(rgba(15,14,12,.055) 2px,transparent 2px) 0 0/60px 60px,
+  linear-gradient(90deg,rgba(15,14,12,.055) 2px,transparent 2px) 0 0/60px 60px,#F7F2E9}
+.bgdx{background:radial-gradient(ellipse 70% 55% at 50% 40%,#2a231c,#110f0c 75%),#110f0c;opacity:0}
+.bgdx::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(200,148,74,.12) 2px,transparent 2px) 0 0/60px 60px,linear-gradient(90deg,rgba(200,148,74,.12) 2px,transparent 2px) 0 0/60px 60px}
+.grain{position:absolute;inset:0;opacity:.22;mix-blend-mode:multiply;pointer-events:none;z-index:40;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.vig{position:absolute;inset:0;pointer-events:none;z-index:39;background:radial-gradient(ellipse 85% 70% at 50% 45%,transparent 60%,rgba(15,14,12,.16))}
+.sc{position:absolute;inset:0;visibility:hidden;transform-origin:540px 800px}
+.a{position:absolute}
+.disp{font-family:var(--f-display);font-weight:800;letter-spacing:-.045em;line-height:.95}
+.fr{font-family:var(--f-serif);font-style:italic;font-weight:400;letter-spacing:-.02em;line-height:.95}
+.mono{font:500 26px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.hand{font:600 64px/1 var(--f-hand);color:var(--terra)}
+.chip{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:12px 22px;font:500 24px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.card{background:#fff;border-radius:34px;box-shadow:var(--sh)}
+.ncard{position:absolute;left:0;width:430px;display:flex;align-items:center;gap:20px;padding:20px 24px;background:#fff;border-radius:28px;box-shadow:0 18px 30px rgba(15,14,12,.14),0 3px 8px rgba(15,14,12,.1)}
+.ncard b{flex:none;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:800 28px/1 var(--f-display);color:#fff}
+.ncard div{flex:1;min-width:0}.ncard em{display:block;font:500 20px/1.2 var(--f-mono);font-style:normal;color:var(--gray);letter-spacing:.04em}.ncard span{display:block;font:700 30px/1.2 var(--f-body)}
+.odo{display:inline-flex;overflow:hidden;line-height:1}
+.odo i{display:block;font-style:normal;height:1em;overflow:hidden}
+.odo i s{display:block;text-decoration:none;line-height:1em;will-change:transform}
+.bub{position:absolute;max-width:430px;padding:22px 28px;border-radius:32px 32px 32px 10px;background:#fff;font:700 34px/1.15 var(--f-body);box-shadow:0 8px 0 rgba(15,14,12,.9)}
+.bub.me{border-radius:32px 32px 10px 32px;background:var(--ink);color:#fff;box-shadow:0 8px 0 var(--terra)}
+.hl{background-image:linear-gradient(var(--amber),var(--amber));background-repeat:no-repeat;background-position:0 90%;background-size:0% 36%;padding:0 6px}
+#hud{position:absolute;inset:0;z-index:30;pointer-events:none}
+#hdl{position:absolute;left:84px;top:236px;font:700 26px/1 var(--f-mono);letter-spacing:.1em}
+#hdl i{font-style:normal;font-weight:500;opacity:.55}
+#hdr{position:absolute;right:84px;top:226px;display:flex;gap:14px;align-items:center}
+#chap{font:500 24px/1 var(--f-mono);letter-spacing:.08em;color:var(--terra)}
+#topic{background:var(--amber);color:var(--ink)}
+#cap{position:absolute;left:0;right:0;top:1360px;display:flex;justify-content:center}
+#cap span{display:inline-block;background:var(--ink);color:#fff;border-radius:18px;padding:16px 28px 18px;font:800 52px/1.1 var(--f-display);letter-spacing:-.02em;box-shadow:0 10px 24px rgba(15,14,12,.22)}
+#cap span u{text-decoration:none}
+#scan{position:absolute;left:-40px;right:-40px;height:6px;background:#FFE2B0;box-shadow:0 0 18px 6px rgba(200,148,74,.9),0 0 60px 20px rgba(200,148,74,.45);z-index:35;opacity:0}
+#scanlab{position:absolute;right:84px;font:500 22px/1 var(--f-mono);letter-spacing:.1em;color:#FFE2B0;z-index:35;opacity:0}
+#flash{position:absolute;inset:0;background:#fff;z-index:36;opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="stage">
+<div class="bgpaper" id="bgp"></div><div class="bgdx" id="bgd"></div>
+
+<!-- 1 HOOK: klik naik, pesanan datar -->
+<section class="sc" id="b1">
+  <div class="a card" data-obj id="d1ad" style="left:84px;top:370px;width:912px;height:400px">
+    <div class="a mono" style="left:44px;top:40px;color:var(--gray)">dasbor iklan · klik</div><span class="chip a" style="right:44px;top:30px;background:var(--amber);color:var(--ink)">ilustrasi</span>
+    <svg class="a" viewBox="0 0 912 400" style="left:0;top:0;width:912px;height:400px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="d1up" d="M60 330 C220 320 330 250 460 200 S720 100 850 80" stroke="#B84A2E" stroke-width="14"/><circle id="d1dot" cx="850" cy="80" r="16" fill="#B84A2E"/></svg>
+  </div>
+  <div class="a" data-obj id="d1ord" style="left:84px;top:830px;width:912px;height:390px;border-radius:34px;background:linear-gradient(150deg,#2b2824,#0F0E0C);box-shadow:var(--sh);color:#fff">
+    <div class="a mono" style="left:44px;top:40px;color:#FFE2B0">pesanan</div>
+    <svg class="a" viewBox="0 0 912 390" style="left:0;top:0;width:912px;height:390px" fill="none" stroke-linecap="round"><path id="d1flat" d="M60 250 L850 244" stroke="#FFE2B0" stroke-width="14"/></svg>
+    <span id="d1chip" class="chip a" style="right:44px;top:34px;background:var(--terra);color:#fff">datar</span>
+  </div>
+</section>
+
+<!-- 2 RELATE a: brand sepatu, ditonton, klik murah, chat -->
+<section class="sc" id="b2">
+  <div class="a card" data-obj id="d2shoe" style="left:290px;top:340px;width:500px;height:360px"><div class="a" style="left:80px;top:80px;width:340px"><svg viewBox="0 0 200 120" style="display:block;overflow:visible"><path d="M10 82 Q10 62 30 60 L70 52 Q85 26 112 32 L150 56 Q186 62 192 86 L192 96 L10 96Z" fill="#E2C592" stroke="#0F0E0C" stroke-width="5" stroke-linejoin="round"/><path d="M10 96 L192 96 L192 106 Q192 114 182 114 L20 114 Q10 114 10 106Z" fill="#0F0E0C"/><path d="M96 42 L112 56 M84 48 L100 62 M72 54 L88 66" stroke="#0F0E0C" stroke-width="4" stroke-linecap="round"/></svg></div></div>
+  <div class="a chip" id="d2brand" style="left:290px;top:285px;background:var(--ink);color:#fff">brand sepatu</div>
+  <div class="a card" data-obj id="d2v" style="left:84px;top:780px;width:280px;height:250px"><div class="a mono" style="left:30px;top:30px;font-size:20px;color:var(--gray)">ditonton</div><div class="a disp" style="left:30px;top:90px;font-size:64px;white-space:nowrap"><span class="odo" id="d2odo"></span></div></div>
+  <div class="a card" data-obj id="d2k" style="left:400px;top:780px;width:280px;height:250px"><div class="a mono" style="left:30px;top:30px;font-size:20px;color:var(--gray)">biaya klik</div><div class="a disp" style="left:30px;top:98px;font-size:62px;color:var(--terra)">murah</div></div>
+  <div class="a card" data-obj id="d2c" style="left:716px;top:780px;width:280px;height:250px"><div class="a mono" style="left:30px;top:30px;font-size:20px;color:var(--gray)">chat</div><div class="a disp" style="left:30px;top:90px;font-size:64px;white-space:nowrap"><span class="odo" id="d2odo2"></span></div></div>
+  <span class="chip a" id="d2il" style="left:84px;top:1070px;background:var(--amber);color:var(--ink)">ilustrasi</span>
+</section>
+
+<!-- 3 RELATE b: dua orang order -->
+<section class="sc" id="b3">
+  <div class="a mono" id="d3lab" style="left:84px;top:400px;color:var(--gray)">chat yang masuk</div>
+  <div class="a" id="d3grid" data-obj style="left:160px;top:470px;width:760px;height:300px"></div>
+  <div class="a" id="d3big" style="left:84px;top:850px;white-space:nowrap"><span class="disp" style="font-size:230px;color:var(--terra)"><span class="odo" id="d3odo"></span></span><span class="mono" style="font-size:28px;margin-left:26px">order bulan ini</span></div>
+</section>
+
+<!-- 4 INSIGHT a: iklannya tidak salah (diagnosis) -->
+<section class="sc" id="b4">
+  <div class="a card" data-obj id="d4ad" style="left:84px;top:400px;width:912px;height:520px">
+    <div class="a mono" style="left:44px;top:40px;color:var(--gray)">iklan · sepatu</div>
+    <div class="a" style="left:60px;top:130px;width:300px"><svg viewBox="0 0 200 120" style="display:block;overflow:visible"><path d="M10 82 Q10 62 30 60 L70 52 Q85 26 112 32 L150 56 Q186 62 192 86 L192 96 L10 96Z" fill="#E2C592" stroke="#0F0E0C" stroke-width="5" stroke-linejoin="round"/><path d="M10 96 L192 96 L192 106 Q192 114 182 114 L20 114 Q10 114 10 106Z" fill="#0F0E0C"/><path d="M96 42 L112 56 M84 48 L100 62 M72 54 L88 66" stroke="#0F0E0C" stroke-width="4" stroke-linecap="round"/></svg></div>
+    <div class="a chip" id="d4c1" style="left:440px;top:150px;background:var(--ink);color:#fff">ditonton ribuan</div>
+    <div class="a chip" id="d4c2" style="left:440px;top:240px;background:var(--ink);color:#fff">klik murah</div>
+    <div class="a chip" id="d4c3" style="left:440px;top:330px;background:var(--ink);color:#fff">chat masuk</div>
+  </div>
+  <div id="d4dark">
+    <div class="a" id="d4ok" data-obj style="left:420px;top:520px;width:240px;height:240px;border-radius:50%;background:#C8944A;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 80 80" width="150" height="150" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="d4ck" d="M18 42 L34 58 L64 22" stroke="#0F0E0C" stroke-width="10"/></svg></div>
+    <div class="a disp" id="d4tx" style="left:0;right:0;top:830px;text-align:center;font-size:76px;color:#FFE2B0;white-space:nowrap">iklannya tidak salah</div>
+  </div>
+</section>
+
+<!-- 5 INSIGHT b: tiga hal di kepala pembeli -->
+<section class="sc" id="b5">
+  <div class="a" id="d5head" data-obj style="left:420px;top:350px;width:240px;height:240px"><svg viewBox="0 0 80 80" width="240" height="240"><circle cx="40" cy="40" r="38" fill="#C8944A"/><circle cx="40" cy="31" r="13" fill="#0F0E0C"/><path d="M14 68 C16 50 64 50 66 68" fill="#0F0E0C"/></svg></div>
+  <div class="a chip" id="d5n" style="left:700px;top:410px;background:var(--ink);color:#fff">3 hal</div>
+  <div id="d5rows"></div>
+</section>
+
+<!-- 6 INSIGHT c: petakan dulu, baru buat iklan -->
+<section class="sc" id="b6">
+  <div class="a chip" id="d6chip" style="left:84px;top:330px;background:var(--ink);color:#fff">langkah 1</div>
+  <div class="a card" data-obj id="d6a" style="left:84px;top:430px;width:400px;height:340px"><div class="a mono" style="left:0;right:0;top:36px;text-align:center;color:var(--gray);font-size:24px">peta 3 hal</div>
+    <div class="a" style="left:50px;top:130px;width:96px;height:96px;border-radius:50%;background:var(--terra)"></div><div class="a" style="left:152px;top:130px;width:96px;height:96px;border-radius:50%;background:var(--ink)"></div><div class="a" style="left:254px;top:130px;width:96px;height:96px;border-radius:50%;background:var(--amber)"></div></div>
+  <svg class="a" viewBox="0 0 1080 340" style="left:0;top:430px;width:1080px;height:340px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="d6ar" d="M496 170 L584 170" stroke="#0F0E0C" stroke-width="9"/><path id="d6ah" d="M560 146 L586 170 L560 194" stroke="#0F0E0C" stroke-width="9"/></svg>
+  <div class="a card" data-obj id="d6b" style="left:596px;top:430px;width:400px;height:340px"><div class="a mono" style="left:0;right:0;top:36px;text-align:center;color:var(--gray);font-size:24px">iklan</div><div class="a" style="left:80px;top:130px;width:240px"><svg viewBox="0 0 200 120" style="display:block;overflow:visible"><path d="M10 82 Q10 62 30 60 L70 52 Q85 26 112 32 L150 56 Q186 62 192 86 L192 96 L10 96Z" fill="#E2C592" stroke="#0F0E0C" stroke-width="5" stroke-linejoin="round"/><path d="M10 96 L192 96 L192 106 Q192 114 182 114 L20 114 Q10 114 10 106Z" fill="#0F0E0C"/><path d="M96 42 L112 56 M84 48 L100 62 M72 54 L88 66" stroke="#0F0E0C" stroke-width="4" stroke-linecap="round"/></svg></div></div>
+</section>
+
+<!-- 7-9 kanvas 3 lawan 3 -->
+<section class="sc" id="b7"><div class="a chip" id="v7ti" style="left:84px;top:330px;background:var(--ink);color:#fff">kanvas 3 lawan 3</div><div class="a mono" id="v7hl" style="left:84px;top:412px;color:var(--gray);font-size:24px">pembeli</div><div class="a mono" id="v7hr" style="left:596px;top:412px;color:var(--gray);font-size:24px">produk</div><div class="a card" data-obj id="v7kL0" style="left:84px;top:470px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#B84A2E"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#B84A2E">mau</div><div class="a" id="v7kLt0" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><div class="a card" data-obj id="v7kR0" style="left:596px;top:470px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#B84A2E"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#B84A2E">benefit</div><div class="a" id="v7kRt0" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><svg class="a" viewBox="0 0 1080 1920" style="left:0;top:0;width:1080px;height:1920px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="v7ar0" d="M492 570 L588 570" stroke="#B84A2E" stroke-width="8"/><path id="v7ah0" d="M566 548 L590 570 L566 592" stroke="#B84A2E" stroke-width="8"/></svg><div class="a card" data-obj id="v7kL1" style="left:84px;top:700px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#0F0E0C"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#0F0E0C">butuh</div><div class="a" id="v7kLt1" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><div class="a card" data-obj id="v7kR1" style="left:596px;top:700px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#0F0E0C"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#0F0E0C">fitur</div><div class="a" id="v7kRt1" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><svg class="a" viewBox="0 0 1080 1920" style="left:0;top:0;width:1080px;height:1920px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="v7ar1" d="M492 800 L588 800" stroke="#0F0E0C" stroke-width="8"/><path id="v7ah1" d="M566 778 L590 800 L566 822" stroke="#0F0E0C" stroke-width="8"/></svg><div class="a card" data-obj id="v7kL2" style="left:84px;top:930px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#C8944A"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#C8944A">takut</div><div class="a" id="v7kLt2" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><div class="a card" data-obj id="v7kR2" style="left:596px;top:930px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#C8944A"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#C8944A">pengalaman</div><div class="a" id="v7kRt2" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><svg class="a" viewBox="0 0 1080 1920" style="left:0;top:0;width:1080px;height:1920px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="v7ar2" d="M492 1030 L588 1030" stroke="#C8944A" stroke-width="8"/><path id="v7ah2" d="M566 1008 L590 1030 L566 1052" stroke="#C8944A" stroke-width="8"/></svg></section>
+<section class="sc" id="b8"><div class="a chip" id="v8ti" style="left:84px;top:330px;background:var(--ink);color:#fff">kanvas 3 lawan 3</div><div class="a mono" id="v8hl" style="left:84px;top:412px;color:var(--gray);font-size:24px">pembeli</div><div class="a mono" id="v8hr" style="left:596px;top:412px;color:var(--gray);font-size:24px">produk</div><div class="a card" data-obj id="v8kL0" style="left:84px;top:470px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#B84A2E"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#B84A2E">mau</div><div class="a" id="v8kLt0" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><div class="a card" data-obj id="v8kR0" style="left:596px;top:470px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#B84A2E"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#B84A2E">benefit</div><div class="a" id="v8kRt0" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><svg class="a" viewBox="0 0 1080 1920" style="left:0;top:0;width:1080px;height:1920px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="v8ar0" d="M492 570 L588 570" stroke="#B84A2E" stroke-width="8"/><path id="v8ah0" d="M566 548 L590 570 L566 592" stroke="#B84A2E" stroke-width="8"/></svg><div class="a card" data-obj id="v8kL1" style="left:84px;top:700px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#0F0E0C"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#0F0E0C">butuh</div><div class="a" id="v8kLt1" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><div class="a card" data-obj id="v8kR1" style="left:596px;top:700px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#0F0E0C"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#0F0E0C">fitur</div><div class="a" id="v8kRt1" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><svg class="a" viewBox="0 0 1080 1920" style="left:0;top:0;width:1080px;height:1920px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="v8ar1" d="M492 800 L588 800" stroke="#0F0E0C" stroke-width="8"/><path id="v8ah1" d="M566 778 L590 800 L566 822" stroke="#0F0E0C" stroke-width="8"/></svg><div class="a card" data-obj id="v8kL2" style="left:84px;top:930px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#C8944A"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#C8944A">takut</div><div class="a" id="v8kLt2" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><div class="a card" data-obj id="v8kR2" style="left:596px;top:930px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#C8944A"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#C8944A">pengalaman</div><div class="a" id="v8kRt2" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><svg class="a" viewBox="0 0 1080 1920" style="left:0;top:0;width:1080px;height:1920px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="v8ar2" d="M492 1030 L588 1030" stroke="#C8944A" stroke-width="8"/><path id="v8ah2" d="M566 1008 L590 1030 L566 1052" stroke="#C8944A" stroke-width="8"/></svg></section>
+<section class="sc" id="b9"><div class="a chip" id="v9ti" style="left:84px;top:330px;background:var(--ink);color:#fff">kanvas 3 lawan 3</div><div class="a mono" id="v9hl" style="left:84px;top:412px;color:var(--gray);font-size:24px">pembeli</div><div class="a mono" id="v9hr" style="left:596px;top:412px;color:var(--gray);font-size:24px">produk</div><div class="a card" data-obj id="v9kL0" style="left:84px;top:470px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#B84A2E"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#B84A2E">mau</div><div class="a" id="v9kLt0" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><div class="a card" data-obj id="v9kR0" style="left:596px;top:470px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#B84A2E"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#B84A2E">benefit</div><div class="a" id="v9kRt0" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><svg class="a" viewBox="0 0 1080 1920" style="left:0;top:0;width:1080px;height:1920px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="v9ar0" d="M492 570 L588 570" stroke="#B84A2E" stroke-width="8"/><path id="v9ah0" d="M566 548 L590 570 L566 592" stroke="#B84A2E" stroke-width="8"/></svg><div class="a card" data-obj id="v9kL1" style="left:84px;top:700px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#0F0E0C"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#0F0E0C">butuh</div><div class="a" id="v9kLt1" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><div class="a card" data-obj id="v9kR1" style="left:596px;top:700px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#0F0E0C"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#0F0E0C">fitur</div><div class="a" id="v9kRt1" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><svg class="a" viewBox="0 0 1080 1920" style="left:0;top:0;width:1080px;height:1920px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="v9ar1" d="M492 800 L588 800" stroke="#0F0E0C" stroke-width="8"/><path id="v9ah1" d="M566 778 L590 800 L566 822" stroke="#0F0E0C" stroke-width="8"/></svg><div class="a card" data-obj id="v9kL2" style="left:84px;top:930px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#C8944A"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#C8944A">takut</div><div class="a" id="v9kLt2" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><div class="a card" data-obj id="v9kR2" style="left:596px;top:930px;width:400px;height:200px;border-radius:28px"><div class="a" style="left:0;top:26px;width:12px;height:148px;border-radius:0 8px 8px 0;background:#C8944A"></div><div class="a mono" style="left:40px;top:28px;font-size:22px;color:#C8944A">pengalaman</div><div class="a" id="v9kRt2" style="left:40px;top:70px;width:330px;font:800 38px/1.12 var(--f-display);letter-spacing:-.02em"></div></div><svg class="a" viewBox="0 0 1080 1920" style="left:0;top:0;width:1080px;height:1920px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="v9ar2" d="M492 1030 L588 1030" stroke="#C8944A" stroke-width="8"/><path id="v9ah2" d="M566 1008 L590 1030 L566 1052" stroke="#C8944A" stroke-width="8"/></svg></section>
+
+<!-- 10 buat iklan dari kanvas, jalankan, cek hasilnya -->
+<section class="sc" id="b10">
+  <div id="d10a">
+    <div class="a card" data-obj id="d10c0" style="left:84px;top:500px;width:270px;height:230px"><div class="a mono" style="left:0;right:0;top:92px;text-align:center;font-size:26px">kanvas</div></div>
+    <svg class="a" viewBox="0 0 1080 300" style="left:0;top:500px;width:1080px;height:300px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="d10a1" d="M362 115 L402 115" stroke="#0F0E0C" stroke-width="8"/><path id="d10a2" d="M690 115 L730 115" stroke="#0F0E0C" stroke-width="8"/></svg>
+    <div class="a card" data-obj id="d10c1" style="left:410px;top:500px;width:270px;height:230px"><div class="a" style="left:40px;top:50px;width:190px"><svg viewBox="0 0 200 120" style="display:block;overflow:visible"><path d="M10 82 Q10 62 30 60 L70 52 Q85 26 112 32 L150 56 Q186 62 192 86 L192 96 L10 96Z" fill="#E2C592" stroke="#0F0E0C" stroke-width="5" stroke-linejoin="round"/><path d="M10 96 L192 96 L192 106 Q192 114 182 114 L20 114 Q10 114 10 106Z" fill="#0F0E0C"/><path d="M96 42 L112 56 M84 48 L100 62 M72 54 L88 66" stroke="#0F0E0C" stroke-width="4" stroke-linecap="round"/></svg></div></div>
+    <div class="a" data-obj id="d10c2" style="left:738px;top:500px;width:258px;height:230px;border-radius:34px;background:var(--terra);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;color:#fff;box-shadow:var(--sh)"><svg viewBox="0 0 24 24" width="84" height="84"><path d="M8 5v14l11-7z" fill="#fff"/></svg><span class="mono" style="font-size:24px;color:#fff">jalankan</span></div>
+  </div>
+  <div id="d10b">
+    <div class="a mono" id="d10t" style="left:84px;top:400px;color:var(--terra)">cek hasilnya</div>
+    <div class="a" id="d10g" data-obj style="left:160px;top:470px;width:760px;height:760px"></div>
+    <div class="a hand" id="d10q" style="left:560px;top:1250px;font-size:96px">berapa?</div>
+    <div class="a chip" id="d10k" style="left:84px;top:1270px;background:var(--ink);color:#fff">100 klik</div>
+  </div>
+</section>
+
+<!-- 11 CTA simpan, buka lagi saat membuat iklan -->
+<section class="sc" id="b11">
+  <div class="a" id="d11save" data-obj style="left:84px;top:380px;width:200px;height:200px;border-radius:50%;background:var(--terra);display:flex;align-items:center;justify-content:center;box-shadow:var(--sh)"><svg viewBox="0 0 24 24" width="96" height="96" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg></div>
+  <div class="a chip" id="d11chip" style="left:84px;top:602px;background:var(--ink);color:#fff">tersimpan ✓</div>
+  <div class="a card" data-obj id="d11card" style="left:330px;top:380px;width:666px;height:420px">
+    <div class="a mono" style="left:40px;top:36px;color:var(--gray)">iklan baru</div>
+    <div id="d11cells"></div>
+    <svg class="a" viewBox="0 0 666 420" style="left:0;top:0;width:666px;height:420px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="d11ck" d="M520 40 L548 68 L596 18" stroke="#B84A2E" stroke-width="10"/></svg>
+  </div>
+</section>
+<div id="scan"></div><div id="scanlab">DIAGNOSIS · MEMINDAI</div>
+<div id="hud">
+  <div id="hdl">THE BRAND FIXER</div>
+  <div id="hdr"><span id="chap">// 01 · OBSERVASI</span></div>
+  <div id="cap"><span></span></div>
+</div>
+<div id="flash"></div>
+<div class="vig"></div><div class="grain"></div>
+</div>
+
+
+<script>
+(function(){
+'use strict';
+var DEF=[
+  {dur:3.89,name:'HOOK',chap:1,say:"Iklanmu jalan terus, tapi kenapa pesanan tidak naik?"},
+  {dur:5.82,name:'RELATE',chap:2,say:"Bayangkan satu brand sepatu. Iklannya ditonton ribuan, klik murah, chat masuk tiap hari."},
+  {dur:3.22,name:'RELATE',chap:2,say:"Tapi yang akhirnya order bulan ini: dua orang."},
+  {dur:2.39,name:'INSIGHT',chap:3,say:"Kalau saya bedah, iklannya tidak salah."},
+  {dur:6.43,name:'INSIGHT',chap:3,say:"Orang membeli kalau tiga hal di kepalanya terjawab: apa yang dia mau, apa yang dia butuh, dan apa yang dia takutkan."},
+  {dur:3.48,name:'INSIGHT',chap:3,say:"Satu langkah: petakan ketiganya dulu, baru buat iklan."},
+  {dur:7.07,name:'REFRAME',chap:4,say:"Pakai rumus kanvas tiga lawan tiga: mau, butuh, takut dijawab benefit, fitur, pengalaman."},
+  {dur:6.02,name:'REFRAME',chap:4,say:"Contoh sepatu kerja. Pembeli mau tampil rapi, butuh kaki tidak pegal, takut salah ukuran."},
+  {dur:8.37,name:'REFRAME',chap:4,say:"Jawabannya: benefit, tampil rapi seharian. Fitur, bantalan empuk. Pengalaman, gratis tukar ukuran tujuh hari."},
+  {dur:6.32,name:'REFRAME',chap:4,say:"Buat iklannya dari kanvas itu, jalankan, lalu cek hasilnya: dari seratus yang klik, berapa yang order."},
+  {dur:4.18,name:'CTA',chap:5,say:"Simpan video ini. Buka lagi saat membuat iklan berikutnya."}];
+var BEATS=window.ANIMATIC_BEATS?DEF.map(function(d,i){return Object.assign({},d,window.ANIMATIC_BEATS[i]||{})}):DEF;
+var SPEED=BEATS.map(function(b,i){return Math.max(1,DEF[i].dur/b.dur)});
+var T0=[],acc=0;BEATS.forEach(function(b){T0.push(acc);acc+=b.dur});window.ANIMATIC_DURATION=acc;
+var ANCH=(window.ANIMATIC_ANCHORS||{}).beats||[];
+function nrm(s){return String(s).toLowerCase().replace(/[^a-z0-9]/g,'')}
+var WARP=BEATS.map(function(b,i){var pts=[[0,0]];if(!b.words||!ANCH[i])return null;var from=0;
+  ANCH[i].forEach(function(a){for(var k=from;k<b.words.length;k++){if(nrm(b.words[k].w).indexOf(a[1])===0){var r=b.words[k].t-T0[i],l=pts[pts.length-1];if(r>l[1]+.05&&a[0]>l[0])pts.push([a[0],r]);from=k+1;break}}});
+  return pts.length>1?pts:null});
+function LOCAL(i,lt){var p=WARP[i];if(!p)return lt*SPEED[i];
+  for(var k=1;k<p.length;k++)if(lt<=p[k][1])return p[k-1][0]+(lt-p[k-1][1])*(p[k][0]-p[k-1][0])/(p[k][1]-p[k-1][1]);
+  var L=p[p.length-1],tail=Math.max(1,(DEF[i].dur-L[0])/Math.max(.3,BEATS[i].dur-L[1]));return L[0]+(lt-L[1])*tail}
+function $(id){return document.getElementById(id)}
+function cl(x){return x<0?0:x>1?1:x}
+function pr(t,a,d){return cl((t-a)/d)}
+var E={out:function(t){return 1-Math.pow(1-t,3)},io:function(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2},
+  back:function(t){var c=1.70158;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2)}};
+function op(el,v){el.style.opacity=v}
+function tf(el,s){el.style.transform=s}
+function up(el,t,a,d,dist){var k=E.out(pr(t,a,d||.45));op(el,k);tf(el,'translateY('+((1-k)*(dist==null?60:dist))+'px)')}
+function pop(el,t,a,d,extra){var k=pr(t,a,d||.5);op(el,cl(k*4));tf(el,'scale('+(k?E.back(k):.4)+')'+(extra||''))}
+function draw(p,t,a,d){var L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L*(1-E.io(pr(t,a,d)));p.style.opacity=t>=a?1:0}
+function odo(el,digits){el.innerHTML='';for(var i=0;i<digits;i++){var c=document.createElement('i'),s=document.createElement('s');s.innerHTML='0<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>0';c.appendChild(s);el.appendChild(c)}}
+function odoSet(el,v){var n=el.children.length,str=String(Math.max(0,Math.round(v))).padStart(n,' ');v=Math.max(0,Math.round(v));for(var i=0;i<n;i++){var ch=str[i],c=el.children[i];if(ch===' '){c.style.display='none';continue}c.style.display='block';
+  var place=Math.pow(10,n-1-i),d=Math.floor(v/place)%10;tf(c.firstChild,'translateY('+(-d*100/11)+'%)')}}
+function fade(el,t,a,d){op(el,1-pr(t,a,d||.3))}
+
+/* ---------- bangun objek ---------- */
+odo($('d2odo'),5);odo($('d2odo2'),2);odo($('d3odo'),1);
+(function(){var g=$('d3grid'),h='';for(var i=0;i<40;i++){var r=Math.floor(i/10),c=i%10;h+='<i class="dot" style="position:absolute;left:'+(c*76+12)+'px;top:'+(r*76+12)+'px;width:52px;height:52px;border-radius:50%;background:'+(i===13||i===27?'#B84A2E':'rgba(15,14,12,.28)')+'"></i>'}g.innerHTML=h})();
+(function(){var g=$('d10g'),h='';for(var i=0;i<100;i++){var r=Math.floor(i/10),c=i%10;h+='<i class="dot" style="position:absolute;left:'+(c*76+12)+'px;top:'+(r*76+12)+'px;width:52px;height:52px;border-radius:50%;background:rgba(15,14,12,.28)"></i>'}g.innerHTML=h})();
+var DOTS3=Array.prototype.slice.call($('d3grid').children),DOTS10=Array.prototype.slice.call($('d10g').children);
+var R5=[['mau','yang dia inginkan','#B84A2E','#fff'],['butuh','yang harus terpenuhi','#0F0E0C','#fff'],['takut','yang bikin batal beli','#C8944A','#0F0E0C']];
+$('d5rows').innerHTML=R5.map(function(r,k){return '<div class="a card" data-obj id="d5r'+k+'" style="left:100px;top:'+(650+k*190)+'px;width:880px;height:160px;border-radius:28px"><div class="a" style="left:30px;top:30px;width:100px;height:100px;border-radius:50%;background:'+r[2]+';color:'+r[3]+';display:flex;align-items:center;justify-content:center;font:800 24px/1 var(--f-mono);text-transform:uppercase">'+(k+1)+'</div><div class="a disp" style="left:160px;top:34px;font-size:64px;text-transform:uppercase">'+r[0]+'</div><div class="a" style="left:160px;top:104px;font:500 30px/1 var(--f-body);color:var(--gray)">'+r[1]+'</div></div>'}).join('');
+(function(){var h='',tx=[0,1,2,3,4,5];[0,1,2,3,4,5].forEach(function(k){var c=k%2,r=Math.floor(k/2);h+='<div class="a" style="left:'+(40+c*300)+'px;top:'+(100+r*100)+'px;width:260px;height:76px;border-radius:16px;background:'+['#B84A2E','#0F0E0C','#C8944A'][r]+';opacity:'+(c?.55:1)+'"></div>'});$('d11cells').innerHTML=h})();
+var CV={L:[['tampil rapi','kaki tidak pegal','salah ukuran'],[1.9,3.09,4.68]],R:[['tampil rapi seharian','bantalan empuk','gratis tukar ukuran tujuh hari']]};
+var CAP=BEATS.map(function(b,bi){
+  if(b.words&&b.words.length){var out=[],chunk=[];b.words.forEach(function(w,i){chunk.push({w:w.w.replace(/[“”"]/g,''),t:w.t});
+    if(chunk.length===3||/[.,?!:]["”]?$/.test(w.w)||i===b.words.length-1){var nx=b.words[i+1];out.push({words:chunk,end:nx?Math.min(nx.t,w.t+1.2):w.t+.9});chunk=[]}});return out}
+  var ws=b.say.replace(/[“”"]/g,'').split(/\s+/).filter(Boolean),tot=0;ws.forEach(function(w){tot+=w.length+2});
+  var t=T0[bi]+.15,span=b.dur-.35,out=[],chunk=[];
+  ws.forEach(function(w,i){var d=span*(w.length+2)/tot;chunk.push({w:w,t:t});t+=d;if(chunk.length===3||/[.,?!:]$/.test(w)||i===ws.length-1){out.push({words:chunk,end:t});chunk=[]}});
+  return out});
+
+/* ---------- kanvas (adegan 7-9) ---------- */
+function cvSet(p,t,o){ // o: {labL:[t..],labR:[t..],ansL:[t..]|null,ansR:[t..]|null,arrow:[t..],introT}
+  var kc=pr(t,.1,.4);op($(p+'ti'),kc);op($(p+'hl'),kc);op($(p+'hr'),kc);
+  for(var k=0;k<3;k++){
+    var L=$(p+'kL'+k),R=$(p+'kR'+k),lt=$(p+'kLt'+k),rt=$(p+'kRt'+k);
+    var aL=o.labL[k],aR=o.labR[k];
+    var kl=E.out(pr(t,aL,.4)),kr=E.out(pr(t,aR,.4));
+    op(L,cl(kl*3));tf(L,'translateX('+((1-kl)*-60)+'px)');op(R,cl(kr*3));tf(R,'translateX('+((1-kr)*60)+'px)');
+    if(o.ansL){lt.textContent=CV.L[0][k];op(lt,E.out(pr(t,o.ansL[k],.3)));tf(lt,'translateY('+((1-E.out(pr(t,o.ansL[k],.3)))*14)+'px)')}else{lt.textContent='';}
+    if(o.ansR){rt.textContent=CV.R[0][k];op(rt,E.out(pr(t,o.ansR[k],.3)));tf(rt,'translateY('+((1-E.out(pr(t,o.ansR[k],.3)))*14)+'px)')}else{rt.textContent='';}
+    draw($(p+'ar'+k),t,o.arrow[k],.35);op($(p+'ah'+k),t>=o.arrow[k]+.3?1:0);
+  }
+}
+
+/* ---------- adegan ---------- */
+var DI=3,SCAN_A=.5,SCAN_B=1.0;
+window.ANIMATIC_SCAN={i:DI,a:SCAN_A+.4,b:SCAN_B+1.0};
+var S=[
+ function(t){ // 1
+   pop($('d1ad'),t,.15,.45);draw($('d1up'),t,.4,1.6);op($('d1dot'),t>=1.9?1:0);
+   var kb=E.out(pr(t,2.35,.55));op($('d1ord'),cl(kb*3));tf($('d1ord'),'translateX('+((1-kb)*1080)+'px)');
+   draw($('d1flat'),t,2.7,.8);pop($('d1chip'),t,3.3,.35)},
+ function(t){ // 2
+   pop($('d2shoe'),t,.2,.5);pop($('d2brand'),t,.95,.35);
+   [[1.9,'d2v'],[3.5,'d2k'],[4.4,'d2c']].forEach(function(a){up($(a[1]),t,a[0],.45,50)});
+   odoSet($('d2odo'),12480*E.io(pr(t,2.1,1.2)));odoSet($('d2odo2'),37*E.io(pr(t,4.5,.9)));pop($('d2il'),t,4.0,.3)},
+ function(t){ // 3
+   op($('d3lab'),pr(t,.1,.3));
+   DOTS3.forEach(function(d,i){var r=Math.floor(i/10),c=i%10,k=pr(t,.1+(r+c)*.04,.3);d.style.opacity=k;d.style.transform='scale('+(k?E.back(k):.3)+')';
+     if(i===13||i===27){var kk=pr(t,i===13?2.3:2.46,.3);d.style.background=kk>0?'#B84A2E':'rgba(15,14,12,.28)';d.style.transform='scale('+(k?(1+.35*Math.sin(kk*Math.PI)):.3)+')'}});
+   up($('d3big'),t,1.4,.45,40);odoSet($('d3odo'),t<2.3?0:(t<2.46?1:2))},
+ function(t){ // 4 diagnosis
+   var ks=E.io(pr(t,SCAN_A,SCAN_B-SCAN_A+.9)),dark=ks>.5;
+   var scan=$('scan'),lab=$('scanlab');op(scan,ks>0&&ks<1?1:0);scan.style.top=(ks*1920)+'px';op(lab,ks>0&&ks<1?1:0);lab.style.top=(ks*1920-40)+'px';
+   $('bgd').style.opacity=ks>0?1:0;$('bgd').style.clipPath='inset(0 0 '+((1-ks)*100)+'% 0)';
+   var a=$('d4ad');pop(a,t,.1,.4);op(a,Math.min(parseFloat(a.style.opacity),1-pr(ks,.2,.3)));
+   pop($('d4c1'),t,.3,.3);pop($('d4c2'),t,.45,.3);pop($('d4c3'),t,.6,.3);
+   pop($('d4ok'),t,1.25,.4);draw($('d4ck'),t,1.45,.35);var tx=$('d4tx');up(tx,t,1.55,.35,30);op(tx,t<1.55?0:parseFloat(tx.style.opacity));op($('d4ok'),t<1.25?0:parseFloat($('d4ok').style.opacity))},
+ function(t){ // 5
+   pop($('d5head'),t,.1,.45);pop($('d5n'),t,1.1,.35);
+   [3.2,4.2,5.5].forEach(function(a,k){var el=$('d5r'+k),kk=E.out(pr(t,a,.45));op(el,cl(kk*3));tf(el,'translateX('+((1-kk)*-500)+'px)')})},
+ function(t){ // 6
+   pop($('d6chip'),t,.2,.35);up($('d6a'),t,.6,.45,40);draw($('d6ar'),t,1.8,.35);op($('d6ah'),t>=2.1?1:0);pop($('d6b'),t,2.25,.45)},
+ function(t){ // 7 kanvas kosong, label
+   cvSet('v7',t,{labL:[1.7,2.15,2.85],labR:[3.85,4.85,5.6],ansL:null,ansR:null,arrow:[4.1,5.1,5.9]})},
+ function(t){ // 8 sisi pembeli terisi
+   cvSet('v8',t,{labL:[-1,-1,-1],labR:[-1,-1,-1],ansL:[2.0,3.05,4.6],ansR:null,arrow:[99,99,99]});
+   for(var k=0;k<3;k++)op($('v8kL'+k),1)},
+ function(t){ // 9 sisi produk terisi
+   cvSet('v9',t,{labL:[-1,-1,-1],labR:[-1,-1,-1],ansL:[-9,-9,-9],ansR:[1.9,3.55,6.3],arrow:[2.6,4.7,7.9]})},
+ function(t){ // 10
+   var ka=1-pr(t,2.8,.3);op($('d10a'),ka);
+   up($('d10c0'),t,.2,.4,40);draw($('d10a1'),t,.7,.3);up($('d10c1'),t,.95,.4,40);draw($('d10a2'),t,1.5,.3);pop($('d10c2'),t,1.9,.4);
+   op($('d10b'),t<2.8?0:1);op($('d10t'),pr(t,2.9,.3));
+   DOTS10.forEach(function(d,i){var r=Math.floor(i/10),c=i%10,k=pr(t,3.5+(r+c)*.06,.25);d.style.opacity=k;d.style.transform='scale('+(k?E.back(k):.3)+')'});
+   pop($('d10k'),t,3.6,.3);pop($('d10q'),t,5.2,.4,' rotate(-3deg)')},
+ function(t){ // 11
+   pop($('d11save'),t,.2,.5);up($('d11chip'),t,.8,.3,16);
+   var kc=E.out(pr(t,1.55,.5));op($('d11card'),cl(kc*3));tf($('d11card'),'translateY('+((1-kc)*80)+'px)');
+   Array.prototype.forEach.call($('d11cells').children,function(c,i){var k=pr(t,1.8+i*.12,.3);c.style.opacity=(parseFloat(c.style.opacity)||1)*0+k*(i%2?.55:1)});
+   draw($('d11ck'),t,2.65,.35)}];
+
+var TR=[null,'zoom','drop','whip','whip','drop','up','drop','drop','whip','up'],TD=.42;
+function apply(i,t){
+  var sec=$('b'+(i+1)),start=T0[i],end=start+BEATS[i].dur,inK=i?pr(t,start,TD):1,outK=i<BEATS.length-1?pr(t,end,TD):0;
+  var vis=t>=start&&(i===BEATS.length-1||t<end+TD);sec.style.visibility=vis?'visible':'hidden';if(!vis)return;
+  var tx=0,sc=1+.03*pr(t,start,BEATS[i].dur),blur=0,o=1,ty=0;
+  var ti=TR[i];if(inK<1){var e=E.io(inK);if(ti==='zoom'){sc*=.82+.18*e;o=e}else if(ti==='whip'){tx=(1-e)*1080;blur=(1-e)*14}else if(ti==='up'){ty=(1-e)*1920}else if(ti==='drop'){o=e}}
+  var to=TR[i+1];if(outK>0){var e2=E.io(outK);if(to==='zoom'){sc*=1+e2*1.2;o=1-e2;blur=e2*10}else if(to==='whip'){tx=-e2*1080;blur=e2*14}else if(to==='up'){ty=-e2*1920}else if(to==='drop'){o=1-e2}}
+  tf(sec,'translate('+tx+'px,'+ty+'px) scale('+sc+')');sec.style.filter=blur>.3?'blur('+blur.toFixed(1)+'px)':'none';op(sec,o);sec.style.zIndex=i+1;
+  S[i](LOCAL(i,t-start));
+}
+window.ANIMATIC_T0=T0;window.ANIMATIC_LOCAL=function(i,lt){return LOCAL(i,lt)};
+window.seek=function(t){
+  var cur=0;for(var i=0;i<BEATS.length;i++)if(t>=T0[i])cur=i;
+  for(var j=0;j<BEATS.length;j++)apply(j,t);
+  if(cur!==DI&&!(cur===DI+1&&t<T0[DI+1]+TD)){$('bgd').style.opacity=0;$('scan').style.opacity=0;$('scanlab').style.opacity=0}
+  var fl=pr(t,T0[DI+1]-.05,.35);op($('flash'),fl>0&&fl<1?(1-fl)*.85:0);
+  var dark=cur===DI&&LOCAL(DI,t-T0[DI])>SCAN_A+.7;
+  $('hdl').style.color=dark?'#FFE2B0':'#0F0E0C';
+  $('chap').textContent='// 0'+(BEATS[cur].chap||cur+1)+' · '+BEATS[cur].name;$('chap').style.color=dark?'#FFE2B0':'#B84A2E';
+  var span=$('cap').firstChild,list=CAP[cur],c=null;for(var k=0;k<list.length;k++)if(t>=list[k].words[0].t-.05)c=list[k];
+  if(!c||t>list[list.length-1].end+.1){op(span,0)}else{op(span,1);span.innerHTML=c.words.map(function(w){return '<u style="color:'+(t>=w.t?'#fff':'rgba(255,255,255,.38)')+'">'+w.w+'</u>'}).join(' ');
+    var kk=pr(t,c.words[0].t-.05,.12);tf(span,'scale('+(.92+.08*E.back(kk))+')')}
+};
+window.seek(0);
+})();
+</script>
+</body>
+</html>

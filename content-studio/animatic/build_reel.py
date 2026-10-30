@@ -1,7 +1,7 @@
 """Satu perintah: rekaman voice over -> reels animatic siap tayang.
 
 Pakai (dari folder proyek):
-  python3 animatic/build_reel.py rekaman.m4a posts/reels-harga-ditawar.json out/reel [v3|omzet|arah|pillar]
+  python3 animatic/build_reel.py rekaman.m4a posts/reels-harga-ditawar.json out/reel [v3|omzet|arah|pillar|iklan]
 
 Langkah:
   1. vo_prep.py   jernihkan suara, buang napas/klik, atur jeda per kalimat, waktu per kata
@@ -62,7 +62,8 @@ def to_scenes(timing_path, anchors_path, out_path):
 SETS = {'v3': ('animatic-v3.html', 'anchors-v3.json', 'sfx-v3.py'),
         'omzet': ('animatic-omzet.html', 'anchors-omzet.json', 'sfx-omzet.py'),
         'arah': ('animatic-arah.html', 'anchors-arah.json', 'sfx-arah.py'),
-        'pillar': ('animatic-pillar.html', 'anchors-pillar.json', 'sfx-pillar.py')}
+        'pillar': ('animatic-pillar.html', 'anchors-pillar.json', 'sfx-pillar.py'),
+        'iklan': ('animatic-iklan.html', 'anchors-iklan.json', 'sfx-iklan.py')}
 
 
 def main(rec, script, outdir, setname='v3', take='auto'):
