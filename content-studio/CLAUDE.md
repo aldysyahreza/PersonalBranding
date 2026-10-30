@@ -118,3 +118,6 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 - Penyebab: RNNoise pada rekaman yang sudah bersih (voice note HP, lantai bising -64 dB) menggeser spektrum 10 dB dari asli dan membuat HF kasar (suara robot). vo_prep.py sekarang mengukur lantai bising dan MELEWATI RNNoise bila < -55 dB (hanya highpass + kompresi 2:1 + loudnorm). Rekaman berisik tetap pakai RNNoise.
 - SFX berbasis desis dilembutkan di semua sfx-*.py: whoosh dua kutub lowpass 1,8 kHz, scratch pita 0,7-2,2 kHz, tick klik bernada 1,7 kHz; efek -28 LUFS (sebelumnya -24).
 - (29 Okt) vo_prep: napas/klik pelan tanpa nada dibuang otomatis; min_seg 0,2 dtk; laporan menandai tempo tidak wajar. Penyebab "peceh" detik 50-51 reel4: salah cocok potongan setelah RNNoise dimatikan + klik 0,12 dtk.
+
+## Reels topik 5 "iklan jalan, pesanan tidak naik" (30 Okt 2026)
+- Disetujui Aldy (topik 1 dari tiga kandidat: iklan/penawaran samar; kandidat lain belum dipakai: owner jadi penghambat tim, assessment dulu baru strategi). Naskah posts/reels-iklan-penawaran.json (CTA save, contoh katering kantor ilustrasi). Menunggu rekaman voice over; build dengan set adegan baru ("iklan").
