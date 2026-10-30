@@ -7,8 +7,8 @@
   "job": "Save",
   "pillar": "Brand Diagnosis",
   "hue": "terracotta",
-  "caption": "Iklanmu jalan terus, tapi pesanan tidak naik?\n\nBayangkan satu usaha katering kantor. Iklannya ditonton ribuan, klik murah, chat masuk tiap hari, tapi yang akhirnya order bulan ini hanya dua orang.\n\nIklan cuma mengantar orang ke penawaranmu. Kalau penawarannya samar, orang berhenti di chat. Tulis ulang penawaranmu: untuk siapa, masalah apa yang selesai, dan kenapa sekarang.\n\nSimpan video ini dan buka lagi sebelum kamu menaikkan budget iklan berikutnya.",
-  "pinned": "Contoh samar: Katering enak, harga bersahabat. Contoh jelas: Makan siang untuk kantor sepuluh sampai lima puluh orang, menu ganti tiap hari, tiga hari pertama gratis ongkir. (Contoh ilustrasi, bukan klien.)",
+  "caption": "Iklanmu jalan terus, tapi pesanan tidak naik?\n\nBayangkan satu brand sepatu. Iklannya ditonton ribuan, klik murah, chat masuk tiap hari, tapi yang akhirnya order bulan ini hanya dua orang.\n\nIklan cuma mengantar orang ke penawaranmu. Kalau penawarannya samar, orang berhenti di chat. Tulis ulang penawaranmu: untuk siapa, masalah apa yang selesai, dan kenapa sekarang.\n\nSimpan video ini dan buka lagi sebelum kamu menaikkan budget iklan berikutnya.",
+  "pinned": "Contoh samar: Sepatu nyaman, harga bersahabat. Contoh jelas: Sepatu kerja untuk yang berdiri seharian, tidak bikin pegal, gratis tukar ukuran sampai akhir bulan. (Contoh ilustrasi, bukan klien.)",
   "story": "",
   "reel": {
     "v": 2,
@@ -27,11 +27,11 @@
         "contoh": ""
       },
       {
-        "say": "Bayangkan satu usaha katering kantor. Iklannya ditonton ribuan, klik murah, chat masuk tiap hari. Tapi yang akhirnya order bulan ini: dua orang.",
+        "say": "Bayangkan satu brand sepatu. Iklannya ditonton ribuan, klik murah, chat masuk tiap hari. Tapi yang akhirnya order bulan ini: dua orang.",
         "txt": "Klik banyak, order *dua*",
         "shot": "med",
         "dur": "",
-        "case": "Cerita ilustrasi (bukan klien): iklan ramai, klik murah, order hanya dua. Kata 'Bayangkan' wajib diucapkan; angka = contoh.",
+        "case": "Cerita ilustrasi (bukan klien): brand sepatu, iklan ramai, klik murah, order hanya dua. Kata 'Bayangkan' wajib diucapkan; angka = contoh.",
         "solusi": "",
         "contoh": ""
       },
@@ -45,13 +45,13 @@
         "contoh": ""
       },
       {
-        "say": "Bandingkan. Samar: Katering enak, harga bersahabat. Jelas: Makan siang untuk kantor sepuluh sampai lima puluh orang, menu ganti tiap hari, tiga hari pertama gratis ongkir. Lihat tiga bagiannya: untuk siapa, masalah apa yang selesai, kenapa sekarang.",
+        "say": "Bandingkan. Samar: Sepatu nyaman, harga bersahabat. Jelas: Sepatu kerja untuk yang berdiri seharian, tidak bikin pegal, gratis tukar ukuran sampai akhir bulan. Lihat tiga bagiannya: untuk siapa, masalah apa yang selesai, kenapa sekarang.",
         "txt": "Samar vs *jelas*",
         "shot": "card",
         "dur": "",
         "case": "",
         "solusi": "",
-        "contoh": "Contoh ilustrasi katering kantor (bukan klien, label 'ilustrasi' di layar): samar 'Katering enak, harga bersahabat' vs jelas 'Makan siang untuk kantor 10-50 orang, menu ganti tiap hari, 3 hari pertama gratis ongkir'."
+        "contoh": "Contoh ilustrasi brand sepatu (bukan klien, label 'ilustrasi' di layar): samar 'Sepatu nyaman, harga bersahabat' vs jelas 'Sepatu kerja untuk yang berdiri seharian, tidak bikin pegal, gratis tukar ukuran sampai akhir bulan'."
       },
       {
         "say": "Simpan video ini. Buka lagi sebelum kamu menaikkan budget iklan berikutnya.",

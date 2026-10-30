@@ -120,4 +120,4 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 - (29 Okt) vo_prep: napas/klik pelan tanpa nada dibuang otomatis; min_seg 0,2 dtk; laporan menandai tempo tidak wajar. Penyebab "peceh" detik 50-51 reel4: salah cocok potongan setelah RNNoise dimatikan + klik 0,12 dtk.
 
 ## Reels topik 5 "iklan jalan, pesanan tidak naik" (30 Okt 2026)
-- Disetujui Aldy (topik 1 dari tiga kandidat: iklan/penawaran samar; kandidat lain belum dipakai: owner jadi penghambat tim, assessment dulu baru strategi). Naskah posts/reels-iklan-penawaran.json (CTA save, contoh katering kantor ilustrasi). Menunggu rekaman voice over; build dengan set adegan baru ("iklan").
+- Disetujui Aldy (topik 1 dari tiga kandidat: iklan/penawaran samar; kandidat lain belum dipakai: owner jadi penghambat tim, assessment dulu baru strategi). Naskah posts/reels-iklan-penawaran.json (CTA save, contoh brand sepatu ilustrasi (katering ditolak Aldy: tidak umum; boleh fashion muslim)). Menunggu rekaman voice over; build dengan set adegan baru ("iklan").
