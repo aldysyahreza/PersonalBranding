@@ -7,8 +7,8 @@
   "job": "Save",
   "pillar": "Brand Diagnosis",
   "hue": "terracotta",
-  "caption": "Iklanmu jalan terus, tapi pesanan tidak naik?\n\nBayangkan satu brand sepatu. Iklannya ditonton ribuan, klik murah, chat masuk tiap hari, tapi yang akhirnya order bulan ini hanya dua orang.\n\nIklan cuma mengantar orang ke penawaranmu. Kalau penawarannya samar, orang berhenti di chat. Pakai rumus SMS untuk konten iklanmu: Siapa yang dituju, Masalah yang selesai, Sekarang kenapa harus beli.\n\nSimpan video ini dan buka lagi sebelum kamu menaikkan budget iklan berikutnya.",
-  "pinned": "Rumus SMS. Samar: Sepatu nyaman, harga bersahabat. Jelas: Sepatu kerja untuk yang berdiri seharian (Siapa), tidak bikin pegal (Masalah), gratis tukar ukuran sampai akhir bulan (Sekarang). Contoh ilustrasi, bukan klien.",
+  "caption": "Iklanmu jalan terus, tapi pesanan tidak naik?\n\nBayangkan satu brand sepatu. Iklannya ditonton ribuan, klik murah, chat masuk tiap hari, tapi yang akhirnya order bulan ini hanya dua orang.\n\nOrang membeli kalau tiga hal di kepalanya terjawab: apa yang dia mau, apa yang dia butuh, dan apa yang dia takutkan. Pakai kanvas tiga lawan tiga untuk konten iklanmu: mau dijawab benefit, butuh dijawab fitur, takut dijawab pengalaman.\n\nSimpan video ini dan isi enam kotaknya dulu sebelum menulis iklan berikutnya.",
+  "pinned": "Contoh kanvas (ilustrasi brand sepatu kerja, bukan klien). Pembeli: mau tampil rapi, butuh kaki tidak pegal, takut salah ukuran. Produk: benefit tampil rapi seharian, fitur bantalan empuk, pengalaman gratis tukar ukuran tujuh hari.",
   "story": "",
   "reel": {
     "v": 2,
@@ -36,26 +36,26 @@
         "contoh": ""
       },
       {
-        "say": "Kalau saya bedah, iklannya tidak salah. Iklan cuma mengantar orang ke penawaranmu. Kalau penawarannya samar, orang berhenti di chat. Satu langkah: tulis ulang penawaranmu pakai satu rumus.",
-        "txt": "Iklan = *pengantar*",
+        "say": "Kalau saya bedah, iklannya tidak salah. Orang membeli kalau tiga hal di kepalanya terjawab: apa yang dia mau, apa yang dia butuh, dan apa yang dia takutkan. Satu langkah: petakan ketiganya dulu, baru tulis iklan.",
+        "txt": "Mau · Butuh · *Takut*",
         "shot": "close",
         "dur": "",
         "case": "",
-        "solusi": "Tulis ulang penawaran iklan dengan rumus SMS: Siapa yang dituju, Masalah yang selesai, Sekarang kenapa harus beli.",
+        "solusi": "Petakan tiga hal di kepala pembeli (mau, butuh, takut) dan jawab satu per satu dengan benefit, fitur, pengalaman sebelum menulis iklan.",
         "contoh": ""
       },
       {
-        "say": "Pakai rumus SMS: Siapa yang dituju, Masalah yang selesai, Sekarang kenapa harus beli. Bandingkan. Samar: Sepatu nyaman, harga bersahabat. Jelas: Sepatu kerja untuk yang berdiri seharian, tidak bikin pegal, gratis tukar ukuran sampai akhir bulan.",
-        "txt": "Rumus *SMS*",
+        "say": "Pakai rumus kanvas tiga lawan tiga: mau, butuh, takut dijawab benefit, fitur, pengalaman. Contoh sepatu kerja. Pembeli mau tampil rapi, butuh kaki tidak pegal, takut salah ukuran. Jawabannya: benefit, tampil rapi seharian. Fitur, bantalan empuk. Pengalaman, gratis tukar ukuran tujuh hari.",
+        "txt": "Kanvas *3 lawan 3*",
         "shot": "card",
         "dur": "",
         "case": "",
         "solusi": "",
-        "contoh": "Layar: tiga huruf S-M-S menyorot bagian kalimat 'jelas': S = yang berdiri seharian, M = tidak bikin pegal, S = gratis tukar ukuran sampai akhir bulan. Contoh ilustrasi brand sepatu (bukan klien, label 'ilustrasi')."
+        "contoh": "Layar: kanvas 2 kolom x 3 baris. Kiri (pembeli): mau = tampil rapi, butuh = kaki tidak pegal, takut = salah ukuran. Kanan (produk): benefit = tampil rapi seharian, fitur = bantalan empuk, pengalaman = gratis tukar ukuran 7 hari. Panah tiap baris. Label 'ilustrasi', brand sepatu bukan klien."
       },
       {
-        "say": "Simpan video ini. Buka lagi sebelum kamu menaikkan budget iklan berikutnya.",
-        "txt": "*Simpan* sebelum naik budget",
+        "say": "Simpan video ini. Buka lagi saat menulis iklan berikutnya, dan isi enam kotaknya dulu.",
+        "txt": "*Simpan* · isi 6 kotak",
         "shot": "med",
         "dur": "",
         "case": "",
