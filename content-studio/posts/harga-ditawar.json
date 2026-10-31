@@ -12,8 +12,8 @@
     "f": 5,
     "s": 5
   },
-  "caption": "Jam 9 malam, chat masuk: “Kak, bisa kurang?”\nKamu sudah hafal jawabannya.\n\nPelanggan yang terus menawar biasanya bukan sedang menilai harga kamu. Mereka belum punya alasan lain untuk memilih.\n\nSurvei Penjualan Eceran Bank Indonesia memprakirakan penjualan September turun 2,3% dari Agustus. Orang makin berhitung, dan godaan ikut diskon makin besar menjelang 11.11 dan 12.12. Tapi diskon tanpa alasan dipilih hanya memindahkan masalah ke margin.\n\nGeser sampai slide terakhir, ada tiga hal kecil yang bisa kamu coba minggu ini. Simpan supaya bisa dicek lagi, dan kirim ke teman yang sering ditawar.",
-  "pinned": "Lengkapi kalimat ini: “Orang memilih kami karena ___.” Tulis jawabanmu di sini, saya bantu cek 10 jawaban pertama.",
+  "caption": "Jam 9 malam, chat masuk: “Kak, bisa kurang?”\nKamu sudah hafal jawabannya.\n\nPelanggan yang terus menawar biasanya bukan sedang menilai harga kamu. Mereka belum punya alasan lain untuk memilih.\n\nSurvei Penjualan Eceran Bank Indonesia memprakirakan penjualan September turun 2,3% dari Agustus. Orang makin berhitung, dan godaan ikut diskon makin besar menjelang 11.11 dan 12.12. Tapi diskon tanpa alasan dipilih hanya memindahkan masalah ke margin.\n\nGeser sampai slide terakhir, ada tiga hal kecil yang bisa kamu coba minggu ini. Simpan, lalu buka lagi saat tim CS menjawab chat tawar-menawar.",
+  "pinned": "Kalimat alasan dipilih: “Orang memilih kami karena ___.” Isi titik-titiknya untuk bisnismu, lalu pakai sebagai kalimat pembuka balasan pertama CS.",
   "story": "Poll: Kamu lebih sering ditawar karena harga, waktu, atau jasa?",
   "quality": [
     9,
@@ -26,7 +26,7 @@
     8
   ],
   "brief": "",
-  "rev": 5,
+  "rev": 6,
   "hue": "terracotta",
   "slides": [
     {
@@ -127,15 +127,16 @@
       "h": "Rapikan alasannya.",
       "h2": "",
       "hi": "Baru bicara harga.",
-      "body": "Simpan. Kirim ke owner yang lelah ditawar.\nFollow @aldysyahreza.",
+      "body": "Simpan, lalu buka lagi saat tim CS menjawab chat tawar-menawar.",
       "items": "",
       "word": "",
       "note": "",
-      "pill": "SIMPAN & KIRIM",
+      "pill": "SIMPAN",
       "narasi": ""
     }
   ],
   "photos": {
-    "_petunjuk": "Isi path foto per nomor slide (1-8), relatif terhadap file JSON ini. Contoh: \"1\": \"../foto/cover.jpg\". Kosongkan untuk slide tanpa foto."
+    "_petunjuk": "Isi path foto per nomor slide (1-8), relatif terhadap file JSON ini. Contoh: \"1\": \"../foto/cover.jpg\". Kosongkan untuk slide tanpa foto.",
+    "1": "../foto/cover-aldy.jpg"
   }
 }

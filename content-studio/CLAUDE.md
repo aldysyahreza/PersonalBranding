@@ -126,3 +126,9 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 ## Reels iklan (30 Okt 2026): set adegan "iklan", kanvas 3 lawan 3
 - Build: `python3 animatic/build_reel.py /home/user/vo/vo5_raw.mp4 posts/reels-iklan-penawaran.json out/reel5 iklan auto`. Hasil out/reel5/reel.mp4 (57,2 dtk).
 - vo_prep.py (30 Okt): NR dilewati bila selisih ucapan-bising > 28 dB; segmentasi dari rekaman asli (ambang = lantai bising + 12 dB) untuk bising ringan; deteksi take ulang dicoba tanpa DAN dengan pembuangan, dipakai yang paling cocok naskah (kata yang memang diulang di naskah, mis. benefit/fitur/pengalaman, sempat salah dikira take ulang dan 12 potongan sah terbuang).
+
+## Carousel "Harga kamu selalu ditawar" final (31 Okt 2026, rev 6)
+- Slide 8 satu CTA (SIMPAN, alasan: buka lagi saat tim CS menjawab chat tawar-menawar); caption ditutup satu ajakan simpan; komentar pin tanpa ajakan berkomentar. SEED rev 6 + migrasi hanya mengganti bila nilai lama masih sama.
+- Ikon tombol slide CTA kini mengikuti pill (`ctaBtns`): SIMPAN = ikon simpan saja, KIRIM = ikon kirim saja, FOLLOW/lain = tanpa ikon, "SIMPAN & KIRIM" (lama) = dua ikon.
+- Cover berfoto: scrim lebih gelap (26% -> .46 -> .6) + text-shadow, supaya teks putih terbaca di atas kaos putih. Foto cover: foto/cover-aldy.jpg (posts/harga-ditawar.json photos "1"). Slide 2 butuh etching (ada di browser Aldy, bukan di repo): render repo menampilkan placeholder; ZIP dari Studio yang lengkap.
+- Backup: content-studio.v26.bak.
