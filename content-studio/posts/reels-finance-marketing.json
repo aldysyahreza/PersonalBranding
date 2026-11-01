@@ -1,0 +1,68 @@
+{
+  "id": "r-finance-marketing",
+  "title": "Reels: finance vs marketing, coordination system",
+  "format": "reels",
+  "stage": "copy",
+  "dx": 6,
+  "job": "Share",
+  "pillar": "Brand Diagnosis",
+  "hue": "terracotta",
+  "caption": "Finance dan marketing sama-sama benar, jadi sepakati dulu cara ngukurnya, kasih budget percobaan dengan batas rugi, dan kirim ke finance dan marketing kamu biar sepakat soal batas rugi berikutnya.\n\n#brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #financevsmarketing #roimarketing",
+  "pinned": "Cerita Nike di video ini dari film AIR (2023), yang sebagian adegannya didramatisasi dan detail aslinya masih diperdebatkan. Contoh tes iklan dua minggu hanya ilustrasi.",
+  "story": "Poll: Di bisnis kamu, siapa yang lebih sering menang debat? Finance / Marketing / Gantian",
+  "reel": {
+    "v": 2,
+    "angle": "kontradiksi",
+    "exec": "banding",
+    "coverH": "Finance vs Marketing",
+    "coverHi": "dua-duanya bener",
+    "beats": [
+      {
+        "say": "Finance dan marketing berdebat. Dan dua-duanya bener.",
+        "txt": "Dua-duanya *bener*",
+        "shot": "phone",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Di setiap bisnis yang saya dampingi, debatnya selalu sama. Finance gak mau keluar uang tanpa kepastian. Marketing harus keluar uang dulu, padahal hasilnya belum pasti.",
+        "txt": "Aman vs *berani*",
+        "shot": "med",
+        "dur": "",
+        "case": "Pola dari pengalaman Aldy mendampingi bisnis (bukan satu klien, tanpa identitas): debat finance vs marketing di meja meeting selalu sama.",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Dua-duanya masuk akal. Di film AIR, Nike digambarkan ketinggalan dari Adidas dan Converse, lalu berani taruhan ke satu pemain muda. Taruhan gak bisa dipastikan di depan. Tapi gak dijalanin, kita gak pernah tahu hasilnya.",
+        "txt": "Taruhan = *belum pasti*",
+        "shot": "close",
+        "dur": "",
+        "case": "Film AIR (2023) adalah dramatisasi: kredit penandatanganan Jordan diperdebatkan (Rolling Stone, History vs Hollywood), Jordan tidak tampil di layar. Jangan sebut angka kontrak (sumber berbeda: 2,5 juta, 500 ribu per tahun, 15 juta lima tahun). Tanpa logo Nike, tanpa foto Jordan.",
+        "solusi": "Sepakati cara ngukur sebelum uang keluar.",
+        "contoh": ""
+      },
+      {
+        "say": "Yang bikin dua sisi ini jalan bareng saya sebut coordination system. Satu, sepakati cara ngukurnya sebelum uang keluar. Dua, kasih budget percobaan dengan batas rugi. Tiga, cek hasilnya di tanggal yang udah ditentukan. Misalnya tes iklan dua minggu, ukurannya biaya per pesanan.",
+        "txt": "Coordination *system*",
+        "shot": "card",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": "Contoh: tes iklan 2 minggu, ukuran = biaya per pesanan, batas rugi disepakati finance, cek hasil di tanggal yang sama (ilustrasi, bukan klien)."
+      },
+      {
+        "say": "Kirim ke finance dan marketing kamu. Minta mereka sepakat satu hal: batas rugi buat percobaan berikutnya.",
+        "txt": "*Kirim* ke dua divisi",
+        "shot": "med",
+        "dur": "",
+        "case": "",
+        "solusi": "",
+        "contoh": ""
+      }
+    ],
+    "prod": {}
+  }
+}
