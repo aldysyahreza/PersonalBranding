@@ -25,9 +25,9 @@
       "note": "",
       "pill": "BACA DIAGNOSISNYA →",
       "narasi": "",
-      "phz": "130",
-      "phx": "50",
-      "phy": "70"
+      "phz": "135",
+      "phx": "53",
+      "phy": "89"
     },
     {
       "type": "scene",
@@ -143,6 +143,6 @@
   "hue": "terracotta",
   "photos": {
     "_petunjuk": "Isi path foto per nomor slide (1-8), relatif terhadap file JSON ini.",
-    "1": "../foto/cover-owner-tim.jpg"
+    "1": "../foto/cover-owner-meja.jpg"
   }
 }
