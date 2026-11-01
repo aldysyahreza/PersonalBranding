@@ -7,7 +7,7 @@
  "job": "Share",
  "pillar": "Brand Diagnosis",
  "hue": "terracotta",
- "caption": "Sales janji dua hari sementara tim butuh lima, jadi pasang satu pintu janji: tanggal ke pelanggan baru keluar setelah operasional cek kapasitas, dan follow buat aturan seperti ini tiap minggu. #brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #salesvsoperasional #manajementim",
+ "caption": "Sales janji dua hari sementara tim butuh lima, jadi simpan tiga cek janji satu pintu (kapasitas, antrean, tanggal tercepat) buat dibuka sebelum jawab tanggal ke pelanggan berikutnya. #brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #salesvsoperasional #manajementim",
  "pinned": "Sumber: Tesla menargetkan 5.000 Model 3 per minggu di akhir 2017, tercapai pekan terakhir Juni 2018; rata-rata kuartal itu sekitar 2.198 per minggu (NPR, 2 Jul 2018; Toronto Star, 28 Jun 2018). Dialog sales dan operasional adalah ilustrasi dari pola, bukan satu klien.",
  "story": "Siapa di bisnismu yang paling sering bilang 'bisa kok'? Sales / Owner / Gantian",
  "reel": {
@@ -45,17 +45,17 @@
     "contoh": ""
    },
    {
-    "say": "Saya sebut ini janji satu pintu. Aturannya satu: tanggal ke pelanggan baru boleh keluar setelah operasional cek kapasitas. Contohnya, pesanan besar masuk pagi. Sales jawab siang, setelah operasional kasih tanggal tercepat. Kalo gak sanggup, tawarkan tanggal lain, bukan janji yang dipaksakan.",
-    "txt": "Satu *pintu* janji",
+    "say": "Saya sebut ini janji satu pintu. Tanggal ke pelanggan cuma boleh keluar dari satu orang, setelah tiga hal dicek. Pertama, kapasitas: berapa pesanan yang tim sanggup per minggu. Kedua, antrean: berapa yang masih jalan. Ketiga, tanggal tercepat, plus cadangan dua hari. Contohnya: sanggup dua puluh, antrean lima belas, pesanan baru sepuluh. Berarti tanggalnya minggu depan, bukan besok. Kalo meleset, kabari pelanggan sehari sebelum telat.",
+    "txt": "Tiga cek *sebelum* janji",
     "shot": "card",
     "dur": "",
     "case": "",
-    "solusi": "Satu aturan: tanggal ke pelanggan hanya keluar setelah operasional cek kapasitas.",
-    "contoh": "Pesanan besar pagi, jawaban sales siang setelah operasional beri tanggal tercepat (ilustrasi)."
+    "solusi": "Satu aturan: tanggal ke pelanggan keluar dari satu orang setelah tiga cek (kapasitas, antrean, tanggal tercepat + cadangan 2 hari); kalo meleset kabari H-1.",
+    "contoh": "Sanggup 20/minggu, antrean 15, pesanan baru 10 -> tanggal minggu depan, bukan besok (angka ilustrasi)."
    },
    {
-    "say": "Follow kalo kamu mau satu pola dari meja meeting tiap minggu, lengkap dengan satu aturan yang bisa langsung kamu pakai.",
-    "txt": "Follow buat *seri* ini",
+    "say": "Simpan video ini. Pas sales bawa janji tanggal berikutnya, buka lagi dan cek tiga hal tadi sebelum jawab ke pelanggan.",
+    "txt": "*Simpan* buat cek janji",
     "shot": "med",
     "dur": "",
     "case": "",
