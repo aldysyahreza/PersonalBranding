@@ -160,3 +160,7 @@ Dasar: 3 sampel tulisan Aldy (voice/sampel-aldy.md). Tingkat disetujui Aldy: "pe
 - Setiap konten yang dibuat Claude (carousel, reels, story) otomatis disertai caption ringkas: SATU kalimat berstruktur HVC (Hook, Value, CTA) + hashtag. Tulis di pesan penyerahan DAN simpan di field `caption` posts/*.json.
 - Kalimat: suara Aldy v2 ("kamu", "gak", "bikin"), satu CTA saja (save/share/follow, dengan alasan, tanpa komentar/keyword/DM), angka contoh diberi label "(contoh hitungan)". Hashtag 6-8: 6 dasar (#brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer) + 1-2 sesuai topik.
 - Caption panjang lama diarsipkan di posts/caption-panjang.md. Komentar pin dan story poll tetap dibuat seperti biasa.
+
+## Keputusan reels finance vs marketing (1 Nov 2026)
+- Aldy memutuskan memakai logo dan foto asli Jordan/Nike (menggantikan saran Claude memakai ilustrasi). Aset disediakan Aldy (posts/aset-nike-jordan.md). Risiko dicatat; keterangan "tidak berafiliasi" wajib di layar dan komentar pin.
+- Reframe diperjelas (tiga kesepakatan: cara ngukur, batas rugi, tanggal ngecek + contoh angka ilustrasi); durasi boleh lebih dari 60 dtk (target sampai ±75 dtk) untuk reels bercerita atas izin Aldy. CTA: share ke tim internal untuk menentukan kesepakatan.
