@@ -1,0 +1,142 @@
+{
+  "id": "p-owner-penghambat",
+  "title": "Owner jadi penghambat: semua keputusan brand lewat kamu",
+  "format": "carousel",
+  "stage": "copy",
+  "dx": 6,
+  "job": "Save",
+  "pillar": "Brand Diagnosis",
+  "scores": {
+    "t": 4,
+    "e": 5,
+    "f": 4,
+    "s": 5
+  },
+  "slides": [
+    {
+      "type": "cover",
+      "lead": "keputusan brand",
+      "h": "Lewat",
+      "h2": "Kamu",
+      "hi": "tim jadi menunggu",
+      "body": "",
+      "items": "",
+      "word": "",
+      "note": "",
+      "pill": "BACA DIAGNOSISNYA →",
+      "narasi": ""
+    },
+    {
+      "type": "scene",
+      "lead": "",
+      "h": "Jam 7 malam,",
+      "h2": "",
+      "hi": "tim masih menunggu.",
+      "body": "“Kak, caption ini boleh tayang?” Kamu baru membalas besok siang. Jadwal tayang bergeser lagi.",
+      "items": "",
+      "word": "",
+      "note": "Ilustrasi dari pola yang sering terjadi.",
+      "pill": "",
+      "narasi": "",
+      "scn": "A wide view of a small fashion brand's back office at 7 in the evening, one long desk, warm light from a single desk lamp. An Indonesian male owner, age 36, short natural hair, light stubble, casual shirt with an overshirt, sits tired holding a smartphone that glows with a stack of unread message bubbles. A laptop with a half-finished social media calendar, a notebook, a glass of iced tea. Behind him, two empty chairs and a window with the city lights outside. No readable text anywhere."
+    },
+    {
+      "type": "vertical",
+      "lead": "",
+      "h": "",
+      "h2": "",
+      "hi": "",
+      "body": "",
+      "items": "Caption siap, tapi tayang menunggu kata “oke” dari kamu.\nContent creator bertanya hal kecil yang bisa mereka putuskan sendiri.\nKamu masih membalas komplain yang jawabannya itu-itu saja.\nChat tim jam 10 malam: “Kak, ini boleh?”",
+      "word": "Gejala",
+      "note": "",
+      "pill": "",
+      "narasi": ""
+    },
+    {
+      "type": "markup",
+      "lead": "",
+      "h": "Tim kamu bukan lambat.",
+      "h2": "",
+      "hi": "Mereka belum tahu batasnya.",
+      "body": "Kalau batas keputusan tidak tertulis, tim memilih aman: bertanya dulu ke kamu. Makin sering ditanya, makin kamu merasa harus ikut menjawab.",
+      "items": "",
+      "word": "batasnya",
+      "note": "ini yang belum ada",
+      "pill": "",
+      "narasi": ""
+    },
+    {
+      "type": "akar",
+      "lead": "",
+      "h": "Biasanya akarnya ada di tiga tempat.",
+      "h2": "",
+      "hi": "",
+      "body": "",
+      "items": "Batas: belum tertulis mana yang boleh tim putuskan sendiri.\nAcuan: belum ada contoh keputusan yang kamu anggap benar.\nKebiasaan: kamu terbiasa menjawab, jadi tim terbiasa bertanya.",
+      "word": "",
+      "note": "",
+      "pill": "",
+      "narasi": ""
+    },
+    {
+      "type": "statement",
+      "lead": "",
+      "h": "Keputusan satu pintu bukan kontrol.",
+      "h2": "",
+      "hi": "Itu antrean yang kamu bikin sendiri.",
+      "body": "",
+      "items": "",
+      "word": "",
+      "note": "",
+      "pill": "",
+      "narasi": ""
+    },
+    {
+      "type": "action",
+      "lead": "",
+      "h": "Coba tiga hal ini minggu ini.",
+      "h2": "",
+      "hi": "",
+      "body": "",
+      "items": "Tulis 10 keputusan brand yang paling sering ditanyakan tim ke kamu.\nBeri tiap keputusan satu label: putuskan sendiri, lapor setelahnya, atau tanya dulu.\nContoh: balas komplain ukuran, tim putuskan sendiri. Ubah harga, tanya dulu.",
+      "word": "",
+      "note": "",
+      "pill": "",
+      "narasi": ""
+    },
+    {
+      "type": "cta",
+      "lead": "",
+      "h": "Rapikan batasnya.",
+      "h2": "",
+      "hi": "Tim berani memutuskan.",
+      "body": "Simpan, lalu buka lagi saat tim menunggu jawabanmu hari ini.",
+      "items": "",
+      "word": "",
+      "note": "",
+      "pill": "SIMPAN",
+      "narasi": ""
+    }
+  ],
+  "caption": "Tim kamu bukan lambat. Mereka belum tahu batas keputusannya.\n\nKalau semua keputusan brand harus lewat kamu, caption tertahan, balasan komplain menunggu, dan kamu jadi antrean yang kamu bikin sendiri.\n\nSatu langkah kecil: tulis 10 keputusan yang paling sering ditanyakan tim, lalu beri label putuskan sendiri, lapor setelahnya, atau tanya dulu.\n\nSimpan, lalu buka lagi saat tim menunggu jawabanmu hari ini.\n\n#brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #manajementim #brandingbisnis #thebrandfixer",
+  "pinned": "Contoh pembagian untuk brand fashion. Putuskan sendiri: balas komplain ukuran, ganti jam tayang. Lapor setelahnya: ganti caption, pilih foto. Tanya dulu: ubah harga, ubah nada brand.",
+  "story": "Poll: Berapa keputusan brand yang minggu ini menunggu kamu? 0-3, 4-10, lebih dari 10",
+  "quality": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "brief": "",
+  "rev": 6,
+  "hue": "terracotta",
+  "photos": {
+    "_petunjuk": "Isi path foto per nomor slide (1-8), relatif terhadap file JSON ini.",
+    "1": "../foto/cover-aldy.jpg"
+  }
+}

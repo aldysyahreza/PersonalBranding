@@ -132,3 +132,7 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 - Ikon tombol slide CTA kini mengikuti pill (`ctaBtns`): SIMPAN = ikon simpan saja, KIRIM = ikon kirim saja, FOLLOW/lain = tanpa ikon, "SIMPAN & KIRIM" (lama) = dua ikon.
 - Cover berfoto: scrim lebih gelap (26% -> .46 -> .6) + text-shadow, supaya teks putih terbaca di atas kaos putih. Foto cover: foto/cover-aldy.jpg (posts/harga-ditawar.json photos "1"). Slide 2 butuh etching (ada di browser Aldy, bukan di repo): render repo menampilkan placeholder; ZIP dari Studio yang lengkap.
 - Backup: content-studio.v26.bak.
+
+## Carousel "Owner jadi penghambat" (1 Nov 2026)
+- Topik dipilih Aldy dari 3 kandidat (31 Okt). Naskah posts/carousel-owner-penghambat.json (8 slide, CTA SIMPAN, cover berfoto). Solusi satu langkah: tulis 10 keputusan yang sering ditanyakan tim, beri label putuskan sendiri / lapor setelahnya / tanya dulu. Studi kasus = ilustrasi (bukan klien), label di slide 2. Etching slide 2 diunggah Aldy di Studio (prompt di scn).
+- Topik ditinggalkan: polemik deklarasi Sumpah Pemuda (31 Okt): Aldy memilih lewati (berita masih bergerak, risiko menggiring opini). Topik cadangan yang sudah diriset: diskon biaya layanan marketplace 50% untuk UMK (Permen UMKM 3/2026, berlaku 25 Okt 2026, daftar SAPA UMKM; kategori dan syarat perlu dicek ulang sebelum dipakai).
