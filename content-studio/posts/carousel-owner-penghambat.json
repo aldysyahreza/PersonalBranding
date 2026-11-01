@@ -51,7 +51,8 @@
       "word": "Gejala",
       "note": "",
       "pill": "",
-      "narasi": ""
+      "narasi": "",
+      "lay": "c"
     },
     {
       "type": "markup",
@@ -77,7 +78,8 @@
       "word": "",
       "note": "",
       "pill": "",
-      "narasi": ""
+      "narasi": "",
+      "lay": "b"
     },
     {
       "type": "statement",
@@ -103,7 +105,8 @@
       "word": "",
       "note": "",
       "pill": "",
-      "narasi": ""
+      "narasi": "",
+      "lay": "b"
     },
     {
       "type": "cta",

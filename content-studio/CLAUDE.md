@@ -136,3 +136,9 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 ## Carousel "Owner jadi penghambat" (1 Nov 2026)
 - Topik dipilih Aldy dari 3 kandidat (31 Okt). Naskah posts/carousel-owner-penghambat.json (8 slide, CTA SIMPAN, cover berfoto). Solusi satu langkah: tulis 10 keputusan yang sering ditanyakan tim, beri label putuskan sendiri / lapor setelahnya / tanya dulu. Studi kasus = ilustrasi (bukan klien), label di slide 2. Etching slide 2 diunggah Aldy di Studio (prompt di scn).
 - Topik ditinggalkan: polemik deklarasi Sumpah Pemuda (31 Okt): Aldy memilih lewati (berita masih bergerak, risiko menggiring opini). Topik cadangan yang sudah diriset: diskon biaya layanan marketplace 50% untuk UMK (Permen UMKM 3/2026, berlaku 25 Okt 2026, daftar SAPA UMKM; kategori dan syarat perlu dicek ulang sebelum dipakai).
+
+## Pustaka tata letak slide (v27, 1 Nov 2026) - Tugas 5 mulai
+- Slide punya kolom `lay` (a asli | b | c). Studio menampilkan "Gaya tampilan" di editor tipe yang punya varian. Palet, font, aturan foto tidak berubah; hanya bentuk. Diimpor/diekspor otomatis (kolom string).
+- Varian: vertical a bubble chat / b daftar bernomor besar / c catatan tempel; akar a diagram batang / b tiga kartu bersisian / c tangga naik; action a checklist / b langkah bernomor besar (outline). Belum: markup, statement, cta, cover (rencana berikutnya).
+- Pilot: posts/carousel-owner-penghambat.json (slide 3 c, 5 b, 7 b). Tes: tests/t26_layouts.js (unduhan = pratinjau, beda_rata < 5). Gotcha: di kartu miring jangan pakai <b><br><span> (export menggeser teks ~10 px); pakai blok div dengan tinggi baris tetap.
+- Backup: content-studio.v27.bak. Belum dipublikasikan ulang ke Artifact.
