@@ -27,16 +27,16 @@
         "contoh": ""
       },
       {
-        "say": "Di setiap bisnis yang saya dampingi, debatnya selalu sama. Finance gak mau keluar uang tanpa kepastian. Marketing harus keluar uang dulu, padahal hasilnya belum pasti.",
+        "say": "Di bisnis yang saya dampingi, adegannya hampir selalu sama. Rapat sore, finance buka laptop: “Budget iklan mau naik? Hasilnya aja belum jelas.” Marketing jawab: “Kalo gak dicoba, kapan kita tahu?”",
         "txt": "Aman vs *berani*",
         "shot": "med",
         "dur": "",
-        "case": "Pola dari pengalaman Aldy mendampingi bisnis (bukan satu klien, tanpa identitas): debat finance vs marketing di meja meeting selalu sama.",
+        "case": "Adegan komposit dari pola pengalaman Aldy (bukan satu klien, dialog ilustrasi, tanpa identitas). Beri label 'ilustrasi dari pola' di layar.",
         "solusi": "",
         "contoh": ""
       },
       {
-        "say": "Dua-duanya masuk akal. Di film AIR, Nike digambarkan ketinggalan dari Adidas dan Converse, lalu berani taruhan ke satu pemain muda. Taruhan gak bisa dipastikan di depan. Tapi gak dijalanin, kita gak pernah tahu hasilnya.",
+        "say": "Dua-duanya masuk akal. Ceritanya mirip film AIR: Nike digambarkan ketinggalan dari Adidas dan Converse, lalu taruhan ke satu pemain muda. Hasilnya gak bisa dipastiin, tapi diam juga bukan pilihan aman.",
         "txt": "Taruhan = *belum pasti*",
         "shot": "close",
         "dur": "",
@@ -45,7 +45,7 @@
         "contoh": ""
       },
       {
-        "say": "Yang bikin dua sisi ini jalan bareng saya sebut coordination system. Satu, sepakati cara ngukurnya sebelum uang keluar. Dua, kasih budget percobaan dengan batas rugi. Tiga, cek hasilnya di tanggal yang udah ditentukan. Misalnya tes iklan dua minggu, ukurannya biaya per pesanan.",
+        "say": "Biasanya yang bikin debat ini selesai bukan siapa yang menang. Mereka sepakat cara ngukurnya dulu, nentuin batas rugi, lalu ngecek hasilnya di tanggal yang sama. Saya sebut ini coordination system. Misalnya tes iklan dua minggu, diukur dari biaya per pesanan.",
         "txt": "Coordination *system*",
         "shot": "card",
         "dur": "",

@@ -143,6 +143,7 @@
   "hue": "terracotta",
   "photos": {
     "_petunjuk": "Isi path foto per nomor slide (1-8), relatif terhadap file JSON ini.",
-    "1": "../foto/cover-owner-meja.jpg"
+    "1": "../foto/cover-owner-meja.jpg",
+    "2": "../foto/etching-slide2-nunggu.png"
   }
 }
