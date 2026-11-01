@@ -12,3 +12,8 @@
 - Perion/Advertiser Perceptions via Demand Gen Report: hanya 22% marketer yakin bisa membuktikan nilai ke CFO; 21% CMO selaras dengan CFO soal budget dan metrik (sumber sekunder, AS, korporat: tidak dipakai di naskah).
 - Gartner (via CX Today): >40% CMO yang minta anggaran lebih besar akan kehilangan pengaruh bila tak bisa menunjukkan ROI. Deloitte (EBITDA 12% lebih cepat) tidak ditemukan sumber primer: JANGAN dipakai.
 - Langkah 2 (budget percobaan dengan batas rugi) dan langkah 3 (cek di tanggal tetap) = praktik umum yang selaras dengan pengujian terkontrol dan tinjauan bulanan, BUKAN angka dari survei. Langkah 1 punya dukungan survei (Bain).
+
+## Hasil cerita Nike (ditambah 1 Nov 2026)
+- Primer: Form 10-K Nike FY2025 (SEC): Jordan Brand revenue 7.270 juta dolar, turun 16% dari 8.701 juta (FY2024); total Nike 46,3 miliar dolar. Jordan Brand bukan segmen pelaporan terpisah. Satu situs pihak ketiga menyebut FY2026 7.034 juta dolar (belum diverifikasi, jangan dipakai).
+- Sekunder: penjualan tahun pertama (1985) dilaporkan sekitar 126 juta dolar (satu sumber menulis 130 juta); target awal disebut sekitar 3 juta dolar tapi jangka waktunya berbeda antarsumber (3 tahun vs tahun ke-4), jadi tidak disebut di naskah. Ekspektasi awal ±100.000 pasang (satu sumber).
+- Penempatan di naskah: hasil + "Jordan Brand masih di atas 7 miliar dolar setahun" (akurat walau turun 16%), lalu pembalikan bias penyintas: "Tapi kita tahu cerita ini karena Nike menang. Taruhan yang kalah gak dibikin film." Ini opini analisis, bukan data; fungsinya menjembatani ke batas rugi.

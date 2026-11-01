@@ -8,7 +8,7 @@
   "pillar": "Brand Diagnosis",
   "hue": "terracotta",
   "caption": "Finance dan marketing sama-sama benar, jadi sepakati dulu cara ngukurnya, kasih budget percobaan dengan batas rugi, dan kirim ke finance dan marketing kamu biar sepakat soal batas rugi berikutnya.\n\n#brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #financevsmarketing #roimarketing",
-  "pinned": "Cerita Nike di video ini dari film AIR (2023), yang sebagian adegannya didramatisasi dan detail aslinya masih diperdebatkan. Contoh tes iklan dua minggu hanya ilustrasi.",
+  "pinned": "Sumber angka: laporan tahunan Nike FY2025 (SEC): Jordan Brand 7,27 miliar dolar. Penjualan tahun pertama Air Jordan (1985) dilaporkan media sekitar 126 juta dolar. Film AIR (2023) sebagian didramatisasi dan siapa yang berjasa menandatangani Jordan masih diperdebatkan. Contoh tes iklan dua minggu hanya ilustrasi.",
   "story": "Poll: Di bisnis kamu, siapa yang lebih sering menang debat? Finance / Marketing / Gantian",
   "reel": {
     "v": 2,
@@ -27,7 +27,7 @@
         "contoh": ""
       },
       {
-        "say": "Di bisnis yang saya dampingi, adegannya hampir selalu sama. Rapat sore, finance buka laptop: “Budget iklan mau naik? Hasilnya aja belum jelas.” Marketing jawab: “Kalo gak dicoba, kapan kita tahu?”",
+        "say": "Di bisnis yang saya dampingi, adegannya hampir selalu sama. Finance: “Budget iklan mau naik? Hasilnya aja belum jelas.” Marketing: “Kalo gak dicoba, kapan kita tahu?”",
         "txt": "Aman vs *berani*",
         "shot": "med",
         "dur": "",
@@ -36,16 +36,16 @@
         "contoh": ""
       },
       {
-        "say": "Dua-duanya masuk akal. Ceritanya mirip film AIR: Nike digambarkan ketinggalan dari Adidas dan Converse, lalu taruhan ke satu pemain muda. Hasilnya gak bisa dipastiin, tapi diam juga bukan pilihan aman.",
-        "txt": "Taruhan = *belum pasti*",
+        "say": "Dua-duanya masuk akal. Di film AIR, Nike digambarkan ketinggalan dari Adidas dan Converse, lalu taruhan ke satu pemain muda. Hasilnya, penjualan tahun pertama Air Jordan dilaporkan sekitar 126 juta dolar, dan sekarang Jordan Brand masih di atas 7 miliar dolar setahun. Tapi kita tahu cerita ini karena Nike menang. Taruhan yang kalah gak dibikin film.",
+        "txt": "Yang kalah *gak difilmkan*",
         "shot": "close",
         "dur": "",
-        "case": "Film AIR (2023) adalah dramatisasi: kredit penandatanganan Jordan diperdebatkan (Rolling Stone, History vs Hollywood), Jordan tidak tampil di layar. Jangan sebut angka kontrak (sumber berbeda: 2,5 juta, 500 ribu per tahun, 15 juta lima tahun). Tanpa logo Nike, tanpa foto Jordan.",
+        "case": "Film AIR (2023) = dramatisasi; kredit penandatanganan Jordan diperdebatkan. Angka: Jordan Brand FY2025 = 7,27 miliar dolar (10-K Nike, SEC; turun 16% dari 8,70 miliar FY2024; bukan segmen terpisah). Penjualan tahun pertama 1985 'dilaporkan' ±126 juta dolar (sumber media, ada yang menulis 130 juta). Tanpa angka kontrak. Tanpa logo/foto Jordan. Kalimat 'taruhan yang kalah gak dibikin film' = opini Aldy/Claude (bias penyintas), bukan data.",
         "solusi": "Sepakati cara ngukur sebelum uang keluar.",
         "contoh": ""
       },
       {
-        "say": "Biasanya yang bikin debat ini selesai bukan siapa yang menang. Mereka sepakat cara ngukurnya dulu, nentuin batas rugi, lalu ngecek hasilnya di tanggal yang sama. Saya sebut ini coordination system. Misalnya tes iklan dua minggu, diukur dari biaya per pesanan.",
+        "say": "Biasanya debat ini selesai bukan karena ada yang menang. Mereka sepakat cara ngukurnya, batas ruginya, dan tanggal ngecek hasilnya. Saya sebut ini coordination system. Misalnya tes iklan dua minggu, diukur dari biaya per pesanan.",
         "txt": "Coordination *system*",
         "shot": "card",
         "dur": "",
