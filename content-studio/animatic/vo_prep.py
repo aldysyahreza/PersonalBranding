@@ -11,7 +11,7 @@ Hasil di folder out/vo:
 Butuh: ffmpeg dan numpy. Peredam bising RNNoise memakai model animatic/models/sh.rnnn
 (diunduh otomatis bila belum ada); bila gagal, dipakai afftdn bawaan ffmpeg.
 """
-import json, os, re, subprocess, sys, urllib.request, wave
+import os, json, os, re, subprocess, sys, urllib.request, wave
 import numpy as np
 
 SR = 48000
@@ -248,6 +248,15 @@ def main(src, script, outdir, take='auto'):
         if voiced < 0.2 and r_ < med - 10: continue
         keep.append([a_, b_, r_])
     n_napas = len(segs) - len(keep); segs = keep
+    # potongan manual (detik rekaman asli) untuk kalimat yang terekam dua kali: env VO_CUTS="a-b,c-d"
+    cuts = [tuple(float(q) for q in c.split('-')) for c in os.environ.get('VO_CUTS', '').split(',') if c.strip()]
+    for c0, c1 in cuts:
+        ns = []
+        for a_, b_, r_ in segs:
+            if b_ <= c0 or a_ >= c1: ns.append([a_, b_, r_]); continue
+            if c0 - a_ >= 0.2: ns.append([a_, c0, r_])
+            if b_ - c1 >= 0.2: ns.append([c1, b_, r_])
+        segs = ns
     drop_d, notes_d = retakes(x, segs, take)
     phr = phrases(beats)
 
