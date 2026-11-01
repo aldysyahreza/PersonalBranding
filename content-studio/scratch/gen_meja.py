@@ -4,9 +4,9 @@ v3 = open(A + 'animatic-v3.html', encoding='utf-8').read()
 head = v3[:v3.index('<div class="bgpaper" id="bgp"></div>')]
 head = head.replace('<title>Animatic v3 The Brand Fixer</title>', '<title>Animatic: finance vs marketing, cerita dari meja meeting</title>')
 tail = v3[v3.index('<div id="scan">'):v3.index('<script>')]
-DUR = [4.6,3.55,7.38,1.65,7.11,9.27,8.35,8.65,3.96,4.5,3.67,7.61,5.51,10.84]
-SC = [("finance","HOOK",1),("di","RELATE",2),("finance","RELATE",2),("duaduanya","INSIGHT",3),("di","INSIGHT",3),("hasilnya","INSIGHT",3),("tapi","INSIGHT",3),("biasanya","REFRAME",4),("pertama","REFRAME",4),("kedua","REFRAME",4),("ketiga","REFRAME",4),("contohnya","REFRAME",4),("kalo","REFRAME",4),("kirim","CTA",5)]
-SAY = ['Finance dan marketing berdebat. Dan dua-duanya bener.','Di bisnis yang saya dampingi, adegannya hampir selalu sama.','Finance: Budget iklan mau naik? Hasilnya aja belum jelas. Marketing: Kalo gak dicoba, kapan kita tahu?','Dua-duanya masuk akal.','Di film AIR, Nike digambarkan ketinggalan dari Adidas dan Converse, lalu taruhan ke satu pemain muda.','Hasilnya, penjualan tahun pertama Air Jordan dilaporkan sekitar 126 juta dolar, dan sekarang Jordan Brand masih di atas 7 miliar dolar setahun.','Tapi kita tahu cerita ini karena Nike menang. Taruhan yang kalah gak dibikin film.','Biasanya debat ini selesai bukan karena ada yang menang. Mereka duduk bareng dan sepakat tiga hal. Saya sebut ini coordination system.','Pertama, cara ngukurnya: angka apa yang jadi patokan.','Kedua, batas ruginya: uang yang boleh hilang kalo percobaannya gagal.','Ketiga, tanggal ngecek: kapan hasilnya dibahas bareng.','Contohnya tes iklan dua minggu: ukurannya biaya per pesanan, batas ruginya lima juta, dicek tanggal yang udah ditentukan.','Kalo bagus, lanjut. Kalo kena batas rugi, stop, tanpa saling nyalahin.','Kirim ke tim internal kamu: finance, marketing, dan yang pegang keputusan. Duduk bareng sepuluh menit, dan tentukan tiga kesepakatan itu buat percobaan berikutnya.']
+DUR = [4.6,3.55,7.38,1.65,7.11,9.27,8.35,8.65,3.96,4.5,3.67,7.61,5.51,8.4,3.6]
+SC = [("finance","HOOK",1),("di","RELATE",2),("finance","RELATE",2),("duaduanya","INSIGHT",3),("di","INSIGHT",3),("hasilnya","INSIGHT",3),("tapi","INSIGHT",3),("biasanya","REFRAME",4),("pertama","REFRAME",4),("kedua","REFRAME",4),("ketiga","REFRAME",4),("contohnya","REFRAME",4),("kalo","REFRAME",4),("kirim","CTA",5),("berikutnya","CTA",5)]
+SAY = ['Finance dan marketing berdebat. Dan dua-duanya bener.','Di bisnis yang saya dampingi, adegannya hampir selalu sama.','Finance: Budget iklan mau naik? Hasilnya aja belum jelas. Marketing: Kalo gak dicoba, kapan kita tahu?','Dua-duanya masuk akal.','Di film AIR, Nike digambarkan ketinggalan dari Adidas dan Converse, lalu taruhan ke satu pemain muda.','Hasilnya, penjualan tahun pertama Air Jordan dilaporkan sekitar 126 juta dolar, dan sekarang Jordan Brand masih di atas 7 miliar dolar setahun.','Tapi kita tahu cerita ini karena Nike menang. Taruhan yang kalah gak dibikin film.','Biasanya debat ini selesai bukan karena ada yang menang. Mereka duduk bareng dan sepakat tiga hal. Saya sebut ini coordination system.','Pertama, cara ngukurnya: angka apa yang jadi patokan.','Kedua, batas ruginya: uang yang boleh hilang kalo percobaannya gagal.','Ketiga, tanggal ngecek: kapan hasilnya dibahas bareng.','Contohnya tes iklan dua minggu: ukurannya biaya per pesanan, batas ruginya lima juta, dicek tanggal yang udah ditentukan.','Kalo bagus, lanjut. Kalo kena batas rugi, stop, tanpa saling nyalahin.','Kirim ke tim internal kamu: finance, marketing, dan yang pegang keputusan. Duduk bareng sepuluh menit, dan tentukan tiga kesepakatan itu buat percobaan berikutnya.','percobaan berikutnya.']
 DEF = ',\n  '.join("{dur:%s,name:'%s',chap:%d,say:%s}" % (DUR[i], SC[i][1], SC[i][2], json.dumps(SAY[i], ensure_ascii=False)) for i in range(len(DUR)))
 AVT = '<svg viewBox="0 0 80 80" width="%d" height="%d"><circle cx="40" cy="40" r="38" fill="%s"/><circle cx="40" cy="31" r="13" fill="#0F0E0C"/><path d="M14 68 C16 50 64 50 66 68" fill="#0F0E0C"/></svg>'
 SHOE = '<svg viewBox="0 0 200 120" style="display:block;overflow:visible"><path d="M10 82 Q10 62 30 60 L70 52 Q85 26 112 32 L150 56 Q186 62 192 86 L192 96 L10 96Z" fill="%s" stroke="#0F0E0C" stroke-width="5" stroke-linejoin="round"/><path d="M10 96 L192 96 L192 106 Q192 114 182 114 L20 114 Q10 114 10 106Z" fill="#0F0E0C"/></svg>'
@@ -131,6 +131,19 @@ BODY = r'''<div class="bgpaper" id="bgp"></div><div class="bgdx" id="bgd"></div>
     <div id="k14rows"></div>
   </div>
 </section>
+
+<!-- 15 END CARD CTA -->
+<section class="sc" id="b15">
+  <div class="a" style="left:0;top:0;width:1080px;height:1920px;background:var(--terra)"></div>
+  <div class="a" id="e15send" data-obj style="left:440px;top:330px;width:200px;height:200px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 0 rgba(15,14,12,.35)"><svg viewBox="0 0 24 24" width="96" height="96" fill="none" stroke="#B84A2E" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></svg></div>
+  <div class="a disp" id="e15h1" style="left:0;right:0;top:600px;text-align:center;font-size:120px;color:#fff;line-height:1">KIRIM KE TIM</div>
+  <div class="a disp" id="e15h2" style="left:0;right:0;top:730px;text-align:center;font-size:120px;color:#0F0E0C;line-height:1">INTERNAL KAMU</div>
+  <div class="a" id="e15sub" style="left:96px;right:96px;top:900px;text-align:center;font:700 44px/1.25 var(--f-body);color:#fff">Duduk bareng 10 menit, tentukan 3 kesepakatan ini.</div>
+  <div class="a" id="e15p0" style="left:96px;top:1060px;width:888px;height:110px;border-radius:999px;background:#fff;display:flex;align-items:center;padding-left:48px;font:800 48px/1 var(--f-display);color:#0F0E0C">1 &nbsp;Cara ngukur</div>
+  <div class="a" id="e15p1" style="left:96px;top:1190px;width:888px;height:110px;border-radius:999px;background:#fff;display:flex;align-items:center;padding-left:48px;font:800 48px/1 var(--f-display);color:#0F0E0C">2 &nbsp;Batas rugi</div>
+  <div class="a" id="e15p2" style="left:96px;top:1320px;width:888px;height:110px;border-radius:999px;background:#fff;display:flex;align-items:center;padding-left:48px;font:800 48px/1 var(--f-display);color:#0F0E0C">3 &nbsp;Tanggal cek</div>
+  <div class="a mono" id="e15h" style="left:0;right:0;top:1500px;text-align:center;font-size:34px;color:#fff;letter-spacing:.06em">@aldysyahreza</div>
+</section>
 '''
 def kc(p,num,col,title,sub,icon):
     return ('<div class="a card" data-obj id="%scard" style="left:84px;top:400px;width:912px;height:760px">'
@@ -253,9 +266,11 @@ var S=[
  function(t){ // 14
    pop($('k14send'),t,.2,.5);draw($('k14a'),t,.9,.4);[1.88,2.68,3.61].forEach(function(a,k){pop($('k14a'+k),t,a,.4)});
    var kc=E.out(pr(t,4.8,.5));op($('k14card'),cl(kc*3));tf($('k14card'),'translateY('+((1-kc)*70)+'px)');pop($('k14chip'),t,6.1,.3);
-   [7.1,8.2,9.3].forEach(function(a,k){draw($('k14k'+k),t,a,.35)})}];
+   [7.0,7.9,8.8].forEach(function(a,k){draw($('k14k'+k),t,a,.35)})},
+ function(t){ // 15 end card
+   pop($('e15send'),t,.05,.45);up($('e15h1'),t,.2,.35,40);up($('e15h2'),t,.35,.35,40);up($('e15sub'),t,.6,.35,30);[0,1,2].forEach(function(k){up($('e15p'+k),t,.8+k*.18,.35,40)});op($('e15h'),pr(t,1.5,.4))}];
 
-var TR=[null,'zoom','drop','whip','whip','whip','whip','whip','drop','drop','drop','whip','drop','up'],TD=.42;
+var TR=[null,'zoom','drop','whip','whip','whip','whip','whip','drop','drop','drop','whip','drop','up','drop'],TD=.42;
 function apply(i,t){
   var sec=$('b'+(i+1)),start=T0[i],end=start+BEATS[i].dur,inK=i?pr(t,start,TD):1,outK=i<BEATS.length-1?pr(t,end,TD):0;
   var vis=t>=start&&(i===BEATS.length-1||t<end+TD);sec.style.visibility=vis?'visible':'hidden';if(!vis)return;
@@ -272,8 +287,8 @@ window.seek=function(t){
   if(cur!==DI&&!(cur===DI+1&&t<T0[DI+1]+TD)){$('bgd').style.opacity=0;$('scan').style.opacity=0;$('scanlab').style.opacity=0}
   var fl=pr(t,T0[DI+1]-.05,.35);op($('flash'),fl>0&&fl<1?(1-fl)*.85:0);
   var dark=cur===DI&&LOCAL(DI,t-T0[DI])>SCAN_A+.7;
-  $('hdl').style.color=dark?'#FFE2B0':'#0F0E0C';
-  $('chap').textContent='// 0'+(BEATS[cur].chap||cur+1)+' · '+BEATS[cur].name;$('chap').style.color=dark?'#FFE2B0':'#B84A2E';
+  $('hdl').style.color=dark?'#FFE2B0':(cur===14?'#fff':'#0F0E0C');
+  $('chap').textContent='// 0'+(BEATS[cur].chap||cur+1)+' · '+BEATS[cur].name;$('chap').style.color=dark?'#FFE2B0':(cur===14?'#fff':'#B84A2E');
   var span=$('cap').firstChild,list=CAP[cur],c=null;for(var k=0;k<list.length;k++)if(t>=list[k].words[0].t-.05)c=list[k];
   if(!c||t>list[list.length-1].end+.1){op(span,0)}else{op(span,1);span.innerHTML=c.words.map(function(w){return '<u style="color:'+(t>=w.t?'#fff':'rgba(255,255,255,.38)')+'">'+w.w+'</u>'}).join(' ');
     var kk=pr(t,c.words[0].t-.05,.12);tf(span,'scale('+(.92+.08*E.back(kk))+')')}
@@ -295,6 +310,6 @@ anch={"_petunjuk":"Adegan dimulai pada kata pembukanya.","scenes":sc_json,"beats
  [[0.2,"pertama"],[1.25,"ngukurnya"]],[[0.2,"kedua"],[1.17,"ruginya"]],[[0.2,"ketiga"],[1.29,"ngecek"]],
  [[0.2,"contohnya"],[1.38,"dua"],[2.72,"biaya"],[3.96,"batas"],[5.7,"dicek"]],
  [[0.2,"kalo"],[1.15,"lanjut"],[2.25,"kena"],[3.43,"stop"],[4.54,"nyalahin"]],
- [[0.2,"kirim"],[1.88,"finance"],[2.68,"marketing"],[3.61,"pegang"],[5.22,"duduk"],[7.8,"kesepakatan"]]]}
+ [[0.2,"kirim"],[1.88,"finance"],[2.68,"marketing"],[3.61,"pegang"],[5.22,"duduk"],[7.8,"kesepakatan"]],[[0.2,"berikutnya"]]]}
 json.dump(anch,open(A+'anchors-meja.json','w',encoding='utf-8'),ensure_ascii=False,indent=1)
 print('ok')

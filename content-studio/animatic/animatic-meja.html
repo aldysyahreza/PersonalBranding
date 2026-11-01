@@ -173,6 +173,19 @@ html,body{margin:0;background:#000}
     <div id="k14rows"></div>
   </div>
 </section>
+
+<!-- 15 END CARD CTA -->
+<section class="sc" id="b15">
+  <div class="a" style="left:0;top:0;width:1080px;height:1920px;background:var(--terra)"></div>
+  <div class="a" id="e15send" data-obj style="left:440px;top:330px;width:200px;height:200px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 0 rgba(15,14,12,.35)"><svg viewBox="0 0 24 24" width="96" height="96" fill="none" stroke="#B84A2E" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></svg></div>
+  <div class="a disp" id="e15h1" style="left:0;right:0;top:600px;text-align:center;font-size:120px;color:#fff;line-height:1">KIRIM KE TIM</div>
+  <div class="a disp" id="e15h2" style="left:0;right:0;top:730px;text-align:center;font-size:120px;color:#0F0E0C;line-height:1">INTERNAL KAMU</div>
+  <div class="a" id="e15sub" style="left:96px;right:96px;top:900px;text-align:center;font:700 44px/1.25 var(--f-body);color:#fff">Duduk bareng 10 menit, tentukan 3 kesepakatan ini.</div>
+  <div class="a" id="e15p0" style="left:96px;top:1060px;width:888px;height:110px;border-radius:999px;background:#fff;display:flex;align-items:center;padding-left:48px;font:800 48px/1 var(--f-display);color:#0F0E0C">1 &nbsp;Cara ngukur</div>
+  <div class="a" id="e15p1" style="left:96px;top:1190px;width:888px;height:110px;border-radius:999px;background:#fff;display:flex;align-items:center;padding-left:48px;font:800 48px/1 var(--f-display);color:#0F0E0C">2 &nbsp;Batas rugi</div>
+  <div class="a" id="e15p2" style="left:96px;top:1320px;width:888px;height:110px;border-radius:999px;background:#fff;display:flex;align-items:center;padding-left:48px;font:800 48px/1 var(--f-display);color:#0F0E0C">3 &nbsp;Tanggal cek</div>
+  <div class="a mono" id="e15h" style="left:0;right:0;top:1500px;text-align:center;font-size:34px;color:#fff;letter-spacing:.06em">@aldysyahreza</div>
+</section>
 <div id="scan"></div><div id="scanlab">DIAGNOSIS · MEMINDAI</div>
 <div id="hud">
   <div id="hdl">THE BRAND FIXER</div>
@@ -201,7 +214,8 @@ var DEF=[
   {dur:3.67,name:'REFRAME',chap:4,say:"Ketiga, tanggal ngecek: kapan hasilnya dibahas bareng."},
   {dur:7.61,name:'REFRAME',chap:4,say:"Contohnya tes iklan dua minggu: ukurannya biaya per pesanan, batas ruginya lima juta, dicek tanggal yang udah ditentukan."},
   {dur:5.51,name:'REFRAME',chap:4,say:"Kalo bagus, lanjut. Kalo kena batas rugi, stop, tanpa saling nyalahin."},
-  {dur:10.84,name:'CTA',chap:5,say:"Kirim ke tim internal kamu: finance, marketing, dan yang pegang keputusan. Duduk bareng sepuluh menit, dan tentukan tiga kesepakatan itu buat percobaan berikutnya."}];
+  {dur:8.4,name:'CTA',chap:5,say:"Kirim ke tim internal kamu: finance, marketing, dan yang pegang keputusan. Duduk bareng sepuluh menit, dan tentukan tiga kesepakatan itu buat percobaan berikutnya."},
+  {dur:3.6,name:'CTA',chap:5,say:"percobaan berikutnya."}];
 var BEATS=window.ANIMATIC_BEATS?DEF.map(function(d,i){return Object.assign({},d,window.ANIMATIC_BEATS[i]||{})}):DEF;
 var SPEED=BEATS.map(function(b,i){return Math.max(1,DEF[i].dur/b.dur)});
 var T0=[],acc=0;BEATS.forEach(function(b){T0.push(acc);acc+=b.dur});window.ANIMATIC_DURATION=acc;
@@ -296,9 +310,11 @@ var S=[
  function(t){ // 14
    pop($('k14send'),t,.2,.5);draw($('k14a'),t,.9,.4);[1.88,2.68,3.61].forEach(function(a,k){pop($('k14a'+k),t,a,.4)});
    var kc=E.out(pr(t,4.8,.5));op($('k14card'),cl(kc*3));tf($('k14card'),'translateY('+((1-kc)*70)+'px)');pop($('k14chip'),t,6.1,.3);
-   [7.1,8.2,9.3].forEach(function(a,k){draw($('k14k'+k),t,a,.35)})}];
+   [7.0,7.9,8.8].forEach(function(a,k){draw($('k14k'+k),t,a,.35)})},
+ function(t){ // 15 end card
+   pop($('e15send'),t,.05,.45);up($('e15h1'),t,.2,.35,40);up($('e15h2'),t,.35,.35,40);up($('e15sub'),t,.6,.35,30);[0,1,2].forEach(function(k){up($('e15p'+k),t,.8+k*.18,.35,40)});op($('e15h'),pr(t,1.5,.4))}];
 
-var TR=[null,'zoom','drop','whip','whip','whip','whip','whip','drop','drop','drop','whip','drop','up'],TD=.42;
+var TR=[null,'zoom','drop','whip','whip','whip','whip','whip','drop','drop','drop','whip','drop','up','drop'],TD=.42;
 function apply(i,t){
   var sec=$('b'+(i+1)),start=T0[i],end=start+BEATS[i].dur,inK=i?pr(t,start,TD):1,outK=i<BEATS.length-1?pr(t,end,TD):0;
   var vis=t>=start&&(i===BEATS.length-1||t<end+TD);sec.style.visibility=vis?'visible':'hidden';if(!vis)return;
@@ -315,8 +331,8 @@ window.seek=function(t){
   if(cur!==DI&&!(cur===DI+1&&t<T0[DI+1]+TD)){$('bgd').style.opacity=0;$('scan').style.opacity=0;$('scanlab').style.opacity=0}
   var fl=pr(t,T0[DI+1]-.05,.35);op($('flash'),fl>0&&fl<1?(1-fl)*.85:0);
   var dark=cur===DI&&LOCAL(DI,t-T0[DI])>SCAN_A+.7;
-  $('hdl').style.color=dark?'#FFE2B0':'#0F0E0C';
-  $('chap').textContent='// 0'+(BEATS[cur].chap||cur+1)+' · '+BEATS[cur].name;$('chap').style.color=dark?'#FFE2B0':'#B84A2E';
+  $('hdl').style.color=dark?'#FFE2B0':(cur===14?'#fff':'#0F0E0C');
+  $('chap').textContent='// 0'+(BEATS[cur].chap||cur+1)+' · '+BEATS[cur].name;$('chap').style.color=dark?'#FFE2B0':(cur===14?'#fff':'#B84A2E');
   var span=$('cap').firstChild,list=CAP[cur],c=null;for(var k=0;k<list.length;k++)if(t>=list[k].words[0].t-.05)c=list[k];
   if(!c||t>list[list.length-1].end+.1){op(span,0)}else{op(span,1);span.innerHTML=c.words.map(function(w){return '<u style="color:'+(t>=w.t?'#fff':'rgba(255,255,255,.38)')+'">'+w.w+'</u>'}).join(' ');
     var kk=pr(t,c.words[0].t-.05,.12);tf(span,'scale('+(.92+.08*E.back(kk))+')')}

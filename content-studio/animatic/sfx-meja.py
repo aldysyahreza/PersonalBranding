@@ -7,7 +7,7 @@ import json, os, sys, wave
 import numpy as np
 
 SR = 48000
-DESIGN = [4.6,3.55,7.38,1.65,7.11,9.27,8.35,8.65,3.96,4.5,3.67,7.61,5.51,10.84]   # durasi rancangan tiap langkah (sama dengan DEF di animatic-meja.html)
+DESIGN = [4.6,3.55,7.38,1.65,7.11,9.27,8.35,8.65,3.96,4.5,3.67,7.61,5.51,8.4,3.6]   # durasi rancangan tiap langkah (sama dengan DEF di animatic-meja.html)
 args = sys.argv[1:]
 TIMING = args[args.index('--timing') + 1] if '--timing' in args else None
 if TIMING:
@@ -139,7 +139,9 @@ pop(at(12, 0.45)); chime(at(12, 1.0), 0.16); pop(at(12, 2.2)); thud(at(12, 3.3),
 whoosh(T0[13], up=True); pop(at(13, 0.2), 700, 300, 0.3)
 for a in (1.88, 2.68, 3.61): pop(at(13, a), 850, 420, 0.25)
 pop(at(13, 4.8), 700, 330, 0.28)
-for a in (7.1, 8.2, 9.3): tick(at(13, a), 0.2)
+for a in (7.0, 7.9, 8.8): tick(at(13, a), 0.2)
+whoosh(T0[14], up=False, d=0.3, g=0.3); pop(at(14, 0.1), 700, 330, 0.3); chime(at(14, 0.9), 0.2)
+for a in (0.8, 0.98, 1.16): pop(at(14, a), 850, 420, 0.2)
 chime(at(13, 9.4), 0.18)
 
 def save(p, x, peak):

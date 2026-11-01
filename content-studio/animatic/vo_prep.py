@@ -15,7 +15,7 @@ import os, json, os, re, subprocess, sys, urllib.request, wave
 import numpy as np
 
 SR = 48000
-PAUSE = {'koma': 0.18, 'kalimat': 0.35, 'langkah': 0.55, 'awal': 0.25, 'akhir': 0.6}
+PAUSE = {'koma': 0.18, 'kalimat': 0.35, 'langkah': 0.55, 'awal': 0.25, 'akhir': float(os.environ.get('VO_TAIL', 0.6))}
 PAD_PRE, PAD_POST, FADE = 0.05, 0.09, 0.012
 BOUND = {'koma': 0.1, 'kalimat': 0.6, 'langkah': 3.0}  # biaya menggabungkan frasa melewati batas ini
 HERE = os.path.dirname(os.path.abspath(__file__))

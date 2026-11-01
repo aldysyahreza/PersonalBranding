@@ -70,6 +70,11 @@
    "start": "kirim",
    "act": "CTA",
    "chap": 5
+  },
+  {
+   "start": "berikutnya",
+   "act": "CTA",
+   "chap": 5
   }
  ],
  "beats": [
@@ -283,6 +288,12 @@
    [
     7.8,
     "kesepakatan"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "berikutnya"
    ]
   ]
  ]
