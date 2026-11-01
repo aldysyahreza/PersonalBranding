@@ -1,0 +1,68 @@
+{
+ "id": "reels-sales-operasional",
+ "title": "Sales vs Operasional (Cerita dari meja meeting #3)",
+ "format": "reels",
+ "stage": "naskah",
+ "dx": 6,
+ "job": "Share",
+ "pillar": "Brand Diagnosis",
+ "hue": "terracotta",
+ "caption": "Sales janji dua hari sementara tim butuh lima, jadi pasang satu pintu janji: tanggal ke pelanggan baru keluar setelah operasional cek kapasitas, dan follow buat aturan seperti ini tiap minggu. #brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #salesvsoperasional #manajementim",
+ "pinned": "Sumber: Tesla menargetkan 5.000 Model 3 per minggu di akhir 2017, tercapai pekan terakhir Juni 2018; rata-rata kuartal itu sekitar 2.198 per minggu (NPR, 2 Jul 2018; Toronto Star, 28 Jun 2018). Dialog sales dan operasional adalah ilustrasi dari pola, bukan satu klien.",
+ "story": "Siapa di bisnismu yang paling sering bilang 'bisa kok'? Sales / Owner / Gantian",
+ "reel": {
+  "v": 2,
+  "angle": "angka",
+  "exec": "banding",
+  "coverH": "Sales vs Operasional",
+  "coverHi": "dua hari vs lima",
+  "beats": [
+   {
+    "say": "Sales janji dua hari. Tim operasional butuh lima.",
+    "txt": "Dua hari vs *lima*",
+    "shot": "phone",
+    "dur": "",
+    "case": "",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Di bisnis yang saya dampingi, ini sering kejadian. Sales: “Bisa kok, Pak. Minggu depan beres.” Operasional: “Tim kami lagi penuh.” Pelanggan jarang marah karena telat. Mereka marah karena sudah dijanjikan.",
+    "txt": "Janji *duluan*",
+    "shot": "med",
+    "dur": "",
+    "case": "Adegan komposit dari pola pengalaman Aldy (bukan satu klien, dialog ilustrasi). Label 'ilustrasi dari pola' di layar.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Perusahaan besar juga begitu. Tesla menjanjikan lima ribu Model 3 per minggu di akhir 2017. Targetnya baru tercapai akhir Juni 2018, dan rata-rata kuartal itu dilaporkan sekitar dua ribu per minggu. Janjinya keluar sebelum kapasitasnya terbukti.",
+    "txt": "Janji *sebelum* kapasitas",
+    "shot": "close",
+    "dur": "",
+    "case": "Tesla: target 5.000/minggu akhir 2017 (diumumkan 2017), ditunda ke akhir kuartal 2 2018, tercapai pekan terakhir Juni 2018 (5.031); rata-rata kuartal ±2.198/minggu (laporan media). Sumber: NPR 2 Jul 2018, Toronto Star 28 Jun 2018. Tanpa logo; sebut netral, bukan menyalahkan.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Saya sebut ini janji satu pintu. Aturannya satu: tanggal ke pelanggan baru boleh keluar setelah operasional cek kapasitas. Contohnya, pesanan besar masuk pagi. Sales jawab siang, setelah operasional kasih tanggal tercepat. Kalo gak sanggup, tawarkan tanggal lain, bukan janji yang dipaksakan.",
+    "txt": "Satu *pintu* janji",
+    "shot": "card",
+    "dur": "",
+    "case": "",
+    "solusi": "Satu aturan: tanggal ke pelanggan hanya keluar setelah operasional cek kapasitas.",
+    "contoh": "Pesanan besar pagi, jawaban sales siang setelah operasional beri tanggal tercepat (ilustrasi)."
+   },
+   {
+    "say": "Follow kalo kamu mau satu pola dari meja meeting tiap minggu, lengkap dengan satu aturan yang bisa langsung kamu pakai.",
+    "txt": "Follow buat *seri* ini",
+    "shot": "med",
+    "dur": "",
+    "case": "",
+    "solusi": "",
+    "contoh": ""
+   }
+  ],
+  "prod": {}
+ }
+}
