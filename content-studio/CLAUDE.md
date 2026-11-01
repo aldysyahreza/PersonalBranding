@@ -155,3 +155,8 @@ Dasar: 3 sampel tulisan Aldy (voice/sampel-aldy.md). Tingkat disetujui Aldy: "pe
 - Pembaruan copy 1 Nov: posts/carousel-owner-penghambat.json ditulis ulang dengan aturan ini. Belum: posts/harga-ditawar.json, pemeriksa kaku di Studio, prompt Brief.
 - SAPAAN KONTEN (Aldy setuju, 1 Nov 2026): semua konten sosmed (carousel, reels, caption, story) memakai "kamu" untuk audiens dan "saya" untuk Aldy. "Anda" hanya untuk dokumen formal (proposal klien, email resmi, ringkasan assessment). Jangan campur dengan "lu/gue". Hipotesis belum teruji: owner senior mungkin lebih nyaman "Anda"; kalau ada data simpan/balasan yang menunjukkan itu, tinjau lagi. Sapaan Claude ke Aldy di obrolan tetap "Anda" (terpisah dari bahasa konten).
 - (1 Nov, lanjutan) Cover "Nunggu Kamu" kini memakai foto/cover-owner-meja.jpg (825x1024, duduk di meja kerja), phz 135 / phx 53 / phy 89 (wajah di atas blok teks). Scrim cover berfoto ditambah gradasi atas (.42 -> 0 di 20%) supaya tanda tangan terbaca di latar terang. Foto yang tidak dipakai lagi: cover-owner-tim.jpg.
+
+## ATURAN CAPTION OTOMATIS (Aldy, 1 Nov 2026) - WAJIB
+- Setiap konten yang dibuat Claude (carousel, reels, story) otomatis disertai caption ringkas: SATU kalimat berstruktur HVC (Hook, Value, CTA) + hashtag. Tulis di pesan penyerahan DAN simpan di field `caption` posts/*.json.
+- Kalimat: suara Aldy v2 ("kamu", "gak", "bikin"), satu CTA saja (save/share/follow, dengan alasan, tanpa komentar/keyword/DM), angka contoh diberi label "(contoh hitungan)". Hashtag 6-8: 6 dasar (#brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer) + 1-2 sesuai topik.
+- Caption panjang lama diarsipkan di posts/caption-panjang.md. Komentar pin dan story poll tetap dibuat seperti biasa.
