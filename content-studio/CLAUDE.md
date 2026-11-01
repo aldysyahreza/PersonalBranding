@@ -142,3 +142,4 @@ CTA: lihat 'Cek CTA' di Standar suara Aldy.
 - Varian: vertical a bubble chat / b daftar bernomor besar / c catatan tempel; akar a diagram batang / b tiga kartu bersisian / c tangga naik; action a checklist / b langkah bernomor besar (outline). Belum: markup, statement, cta, cover (rencana berikutnya).
 - Pilot: posts/carousel-owner-penghambat.json (slide 3 c, 5 b, 7 b). Tes: tests/t26_layouts.js (unduhan = pratinjau, beda_rata < 5). Gotcha: di kartu miring jangan pakai <b><br><span> (export menggeser teks ~10 px); pakai blok div dengan tinggi baris tetap.
 - Backup: content-studio.v27.bak. Belum dipublikasikan ulang ke Artifact.
+- (1 Nov) Cover owner penghambat memakai foto foto/cover-owner-tim.jpg (825x1024, suasana kantor, tangan bersilang), phz 130 / phy 70 supaya wajah di atas blok teks. Sumber foto beresolusi rendah: minta versi >= 1600 px untuk cover berikutnya.
