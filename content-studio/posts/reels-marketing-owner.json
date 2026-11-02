@@ -1,0 +1,68 @@
+{
+ "id": "reels-marketing-owner",
+ "title": "Marketing vs Owner: tiga mata uang (Cerita dari meja meeting #4)",
+ "format": "reels",
+ "stage": "naskah",
+ "dx": 6,
+ "job": "Share",
+ "pillar": "Brand Diagnosis",
+ "hue": "terracotta",
+ "caption": "Marketing dan owner sering salah dengar karena beda mata uang, jadi minta tiap usulan dijawab dengan biaya, risiko, dan kecepatan, lalu kirim ke tim marketing kamu buat dipakai di usulan berikutnya. #brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #usulanmarketing #komunikasitim",
+ "pinned": "Sumber: Pepsi melewatkan Super Bowl 2010 setelah 23 tahun beruntun dan meluncurkan Pepsi Refresh Project senilai lebih dari 20 juta dolar AS (ABC News, BevNET, Chronicle of Philanthropy). Hasil penjualannya tidak diklaim di video ini. Dialog marketing dan owner adalah ilustrasi dari pola, bukan satu klien. Kerangka biaya, risiko, kecepatan diadaptasi dari artikel NP Digital tentang menjelaskan strategi konten ke non-marketer.",
+ "story": "Usulan marketing paling sering mentok karena apa? Biaya / Risiko / Kecepatan",
+ "reel": {
+  "v": 2,
+  "angle": "kutipan",
+  "exec": "banding",
+  "coverH": "Marketing vs Owner",
+  "coverHi": "tiga mata uang",
+  "beats": [
+   {
+    "say": "Marketing bilang “konten perlu refresh”. Owner dengar: “biaya lagi”.",
+    "txt": "“Refresh” = *biaya lagi*",
+    "shot": "phone",
+    "dur": "",
+    "case": "",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Di bisnis yang saya dampingi, usulan marketing sering mentok di meja owner. Marketing: “Konten lama perlu di-refresh.” Owner: “Jadi ada biaya baru lagi?” Dua-duanya gak salah. Bahasanya aja beda.",
+    "txt": "Beda *bahasa*",
+    "shot": "med",
+    "dur": "",
+    "case": "Adegan komposit dari pola pengalaman Aldy (bukan satu klien, dialog ilustrasi). Label 'ilustrasi dari pola'.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Perusahaan besar juga begitu. Tahun 2010, Pepsi melewatkan iklan Super Bowl untuk pertama kalinya dalam 23 tahun, dan memindahkan dananya ke kampanye sosial sekitar dua puluh juta dolar. Kampanye begitu biasanya dinilai dari partisipasi. Tapi pertanyaan owner tetap: berapa yang terjual?",
+    "txt": "Partisipasi vs *terjual*",
+    "shot": "close",
+    "dur": "",
+    "case": "Pepsi Refresh Project (2010): absen Super Bowl setelah 23 tahun beruntun, >US$20 juta hibah/kampanye sosial vs US$33 juta belanja Super Bowl tahun sebelumnya (ABC News, BevNET Des 2009, Chronicle of Philanthropy). HASIL PENJUALAN TIDAK DIKLAIM (klaim Pepsi turun ke peringkat 3 belum terverifikasi). Kalimat 'biasanya dinilai dari partisipasi' = pengamatan umum, bukan klaim tentang Pepsi.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Saya sebut ini tiga mata uang owner: biaya, risiko, kecepatan. Sebelum setuju, minta tim marketing jawab tiga hal. Biaya: lebih murah atau lebih mahal dari cara sekarang. Risiko: apa yang bisa salah, seberapa besar. Kecepatan: kapan hasil pertama kelihatan. Contohnya refresh konten lama: lebih murah dari bikin baru, risikonya kecil karena sudah pernah dibaca, hasil pertama dua minggu.",
+    "txt": "Tiga *mata uang* owner",
+    "shot": "card",
+    "dur": "",
+    "case": "Kerangka diadaptasi dari artikel NP Digital (biaya, risiko, kecepatan), dibalik untuk audiens owner. Bukan klaim data.",
+    "solusi": "Satu aturan: tiap usulan marketing dijawab dengan tiga hal: biaya, risiko, kecepatan.",
+    "contoh": "Refresh konten lama: lebih murah dari bikin baru, risiko kecil karena sudah pernah dibaca, hasil pertama dua minggu (ilustrasi)."
+   },
+   {
+    "say": "Kirim ke tim marketing kamu, dan minta setiap usulan berikutnya dijawab dengan tiga hal ini.",
+    "txt": "*Kirim* ke tim marketing",
+    "shot": "med",
+    "dur": "",
+    "case": "",
+    "solusi": "",
+    "contoh": ""
+   }
+  ],
+  "prod": {}
+ }
+}
