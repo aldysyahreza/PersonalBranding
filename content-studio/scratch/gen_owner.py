@@ -35,6 +35,16 @@ BULL = '<svg viewBox="0 0 400 220" width="400" height="220" style="display:block
 SHIELD = '<svg viewBox="0 0 400 220" width="400" height="220" style="display:block;margin:0 auto" fill="none" stroke="#0F0E0C" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"><path d="M200 14 L300 46 V112 C300 160 250 196 200 210 C150 196 100 160 100 112 V46Z" fill="#fff"/><path id="chk" d="M150 112 L190 150 L252 74" stroke="#B84A2E" stroke-width="16"/></svg>'
 WATCH = '<svg viewBox="0 0 400 220" width="400" height="220" style="display:block;margin:0 auto" fill="none" stroke="#0F0E0C" stroke-width="8" stroke-linecap="round"><circle cx="200" cy="124" r="84" fill="#fff"/><path d="M176 26 H224 M200 26 V40 M262 56 L278 40"/><g id="wh" style="transform-origin:200px 124px"><path d="M200 124 V72" stroke="#B84A2E" stroke-width="12"/></g><circle cx="200" cy="124" r="9" fill="#0F0E0C"/></svg>'
 
+def person(u, shirt, dark, hair, flip=False, tie=False):
+    inner = ('<g id="%(u)s_ll"><rect x="73" y="214" width="26" height="146" rx="13" fill="#2a2622"/></g><g id="%(u)s_lr"><rect x="101" y="214" width="26" height="146" rx="13" fill="#2a2622"/></g>'
+             '<g id="%(u)s_b"><g id="%(u)s_la"><rect x="62" y="126" width="22" height="104" rx="11" fill="%(dark)s"/><circle cx="73" cy="236" r="12" fill="#F1C9A3"/></g>'
+             '<rect x="66" y="112" width="68" height="124" rx="28" fill="%(shirt)s"/>%(tie)s'
+             '<g id="%(u)s_ra"><rect x="116" y="126" width="22" height="104" rx="11" fill="%(dark)s"/><circle cx="127" cy="236" r="12" fill="#F1C9A3"/></g>'
+             '<g id="%(u)s_h"><rect x="90" y="96" width="20" height="22" fill="#F1C9A3"/><circle cx="100" cy="70" r="35" fill="#F1C9A3"/><path d="M65 66 A35 35 0 0 1 135 66 Q118 44 100 47 Q82 44 65 66Z" fill="%(hair)s"/><circle cx="88" cy="76" r="3.4" fill="#0F0E0C"/><circle cx="114" cy="76" r="3.4" fill="#0F0E0C"/><path id="%(u)s_m" d="M91 92 Q101 99 111 92" fill="none" stroke="#0F0E0C" stroke-width="3.4" stroke-linecap="round"/></g></g>'
+             ) % {'u': u, 'shirt': shirt, 'dark': dark, 'hair': hair, 'tie': ('<path d="M100 114 L110 130 L103 176 L100 182 L97 176 L90 130Z" fill="#0F0E0C"/>' if tie else '')}
+    if flip: inner = '<g transform="translate(200,0) scale(-1,1)">' + inner + '</g>'
+    return '<svg viewBox="0 0 200 380" style="overflow:visible;display:block" width="100%%" height="100%%"><ellipse cx="100" cy="366" rx="64" ry="9" fill="rgba(15,14,12,.16)"/>' + inner + '</svg>'
+
 def card(p, num, col, title, sub, icon, fs=92):
     return ('<section class="sc" id="%s"><div class="a card" data-obj id="%sc" style="left:84px;top:400px;width:912px;height:760px">'
             '<div class="a" style="left:44px;top:50px;width:170px;height:170px;border-radius:50%%;background:%s;color:#fff;display:flex;align-items:center;justify-content:center;font:800 100px/1 var(--f-display)">%s</div>'
@@ -57,11 +67,13 @@ BODY = r'''<div class="bgpaper" id="bgp"></div><div class="bgdx" id="bgd"></div>
 </section>
 
 <section class="sc" id="b2">
-  <svg class="a" viewBox="0 0 1080 700" style="left:0;top:430px;width:1080px;height:700px" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="150" y="360" width="780" height="46" rx="16" fill="#C79A5E" stroke="#0F0E0C" stroke-width="7"/><path d="M230 406 V560 M850 406 V560" stroke="#0F0E0C" stroke-width="9"/></svg>
-  <div class="a" id="e2m" style="left:120px;top:490px;width:170px;height:170px">__AVM__</div><div class="a mono" id="e2ml" style="left:90px;top:1100px;width:230px;text-align:center;font-size:22px;color:var(--gray)">marketing</div>
-  <div class="a" id="e2o" style="left:790px;top:490px;width:170px;height:170px">__AVO__</div><div class="a mono" id="e2ol" style="left:760px;top:1100px;width:230px;text-align:center;font-size:22px;color:var(--gray)">owner</div>
-  <div class="a" id="e2p" data-obj style="left:260px;top:700px;width:230px;height:300px;background:#fff;border-radius:18px;box-shadow:var(--sh);padding:26px;font:700 34px/1.2 var(--f-body)">usulan<div style="margin-top:18px;height:10px;background:#E8E1D5;border-radius:5px"></div><div style="margin-top:14px;height:10px;background:#E8E1D5;border-radius:5px"></div><div style="margin-top:14px;height:10px;width:60%;background:#E8E1D5;border-radius:5px"></div></div>
-  <div class="a disp" id="e2x" style="left:800px;top:760px;font-size:200px;color:#B84A2E;transform-origin:center">✕</div>
+  <div class="a" id="e2fl" style="left:70px;top:1150px;width:940px;height:8px;border-radius:4px;background:#0F0E0C;opacity:.85"></div>
+  <div class="a" id="e2mS" style="left:60px;top:570px;width:320px;height:600px">__PM2__</div>
+  <div class="a" id="e2oS" style="left:700px;top:570px;width:320px;height:600px">__PO2__</div>
+  <div class="a mono" id="e2ml" style="left:60px;top:1180px;width:320px;text-align:center;font-size:24px;color:var(--terra)">marketing</div>
+  <div class="a mono" id="e2ol" style="left:700px;top:1180px;width:320px;text-align:center;font-size:24px;color:var(--gray)">owner</div>
+  <div class="a" id="e2p" data-obj style="left:340px;top:760px;width:190px;height:240px;background:#fff;border-radius:16px;box-shadow:var(--sh);padding:22px;font:700 32px/1.2 var(--f-body);transform-origin:left center">usulan<div style="margin-top:16px;height:9px;background:#E8E1D5;border-radius:5px"></div><div style="margin-top:12px;height:9px;background:#E8E1D5;border-radius:5px"></div><div style="margin-top:12px;height:9px;width:60%;background:#E8E1D5;border-radius:5px"></div></div>
+  <div class="a disp" id="e2x" style="left:440px;top:470px;font-size:190px;color:#B84A2E;transform-origin:center">✕</div>
 </section>
 
 <section class="sc" id="b3">
@@ -69,7 +81,8 @@ BODY = r'''<div class="bgpaper" id="bgp"></div><div class="bgdx" id="bgd"></div>
   <div class="a" id="f3b1" style="left:84px;top:450px;width:800px;padding:30px 38px;border-radius:36px 36px 36px 10px;background:#fff;box-shadow:0 10px 0 rgba(15,14,12,.9);font:700 48px/1.2 var(--f-body)">“Konten lama perlu di-refresh.”</div>
   <div class="a mono" id="f3l2" style="left:180px;top:720px;color:var(--gray);font-size:24px">owner</div>
   <div class="a" id="f3b2" style="left:180px;top:760px;width:800px;padding:30px 38px;border-radius:36px 36px 10px 36px;background:#0F0E0C;color:#fff;box-shadow:0 10px 0 var(--terra);font:700 48px/1.2 var(--f-body)">“Jadi ada biaya baru lagi?”</div>
-  <span class="chip a" id="f3il" style="left:84px;top:1040px;background:var(--amber);color:var(--ink)">ilustrasi dari pola</span>
+  <div class="a" id="f3mS" style="left:70px;top:890px;width:190px;height:360px">__PM3__</div><div class="a" id="f3oS" style="left:820px;top:890px;width:190px;height:360px">__PO3__</div>
+  <span class="chip a" id="f3il" style="left:310px;top:1180px;background:var(--amber);color:var(--ink)">ilustrasi dari pola</span>
 </section>
 
 <section class="sc" id="b4">
@@ -164,7 +177,7 @@ __C17__
 '''
 AV = '<svg viewBox="0 0 80 80" width="170" height="170"><circle cx="40" cy="40" r="38" fill="%s"/><circle cx="40" cy="31" r="13" fill="#0F0E0C"/><path d="M14 68 C16 50 64 50 66 68" fill="#0F0E0C"/></svg>'
 MAG = '<svg viewBox="0 0 100 100" width="150" height="150" fill="none" stroke="#0F0E0C" stroke-width="9" stroke-linecap="round"><circle cx="42" cy="42" r="28" fill="#fff"/><path d="M64 64 L90 90"/><text x="42" y="54" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="34" fill="#B84A2E" stroke="none">?</text></svg>'
-for k, val in {'__REFRESH__': REFRESH, '__COINS__': COINS, '__AVM__': AV % '#B84A2E', '__AVO__': AV % '#C8944A', '__EMB1__': emblem(380, 'a'), '__EMB2__': emblem(200, 'b'), '__CAN1__': can(260, 'a'), '__TV__': TV, '__DISCP__': DISCP, '__DISCS__': DISCS, '__DISCN__': DISCN, '__MAG__': MAG}.items():
+for k, val in {'__REFRESH__': REFRESH, '__COINS__': COINS, '__AVM__': AV % '#B84A2E', '__AVO__': AV % '#C8944A', '__EMB1__': emblem(380, 'a'), '__EMB2__': emblem(200, 'b'), '__CAN1__': can(260, 'a'), '__TV__': TV, '__DISCP__': DISCP, '__DISCS__': DISCS, '__DISCN__': DISCN, '__MAG__': MAG, '__PM2__': person('p2m', '#B84A2E', '#8f3a24', '#2a1d14'), '__PO2__': person('p2o', '#0F0E0C', '#2a2622', '#6B6560', flip=True, tie=True), '__PM3__': person('p3m', '#B84A2E', '#8f3a24', '#2a1d14'), '__PO3__': person('p3o', '#0F0E0C', '#2a2622', '#6B6560', flip=True, tie=True)}.items():
     BODY = BODY.replace(k, val)
 BODY = BODY.replace('__C13__', card('b13','1','#B84A2E','Impact','seberapa besar efeknya ke penjualan',BULL)).replace('__C14__', card('b14','2','#0F0E0C','Confidence','seberapa yakin tim, dan apa dasarnya',SHIELD,82)).replace('__C15__', card('b15','3','#C8944A','Ease','seberapa mudah dan cepat dikerjakan',WATCH))
 BODY = BODY.replace('__C16__', scorecard('b16','REFRESH KONTEN LAMA','#B84A2E',[('IMPACT','6'),('CONFIDENCE','8'),('EASE','9')],'confidence tinggi: sudah pernah dibaca')).replace('__C17__', scorecard('b17','KAMPANYE BARU','#0F0E0C',[('IMPACT','8'),('CONFIDENCE','4'),('EASE','3')],'confidence rendah: belum pernah dicoba'))
@@ -181,11 +194,32 @@ var DI=99,SCAN_A=0,SCAN_B=0;
 function kcard(p,t,tt,ts,ti){var kc=E.out(pr(t,.05,.4));op($(p+'c'),cl(kc*3));tf($(p+'c'),'translateY('+((1-kc)*60)+'px)');up($(p+'t'),t,tt,.35,24);up($(p+'s'),t,ts,.4,24);up($(p+'i'),t,ti,.45,24)}
 function sc(p,t,t0,vals,ts){var kc=E.out(pr(t,.05,.4));op($(p+'c'),cl(kc*3));tf($(p+'c'),'translateY('+((1-kc)*60)+'px)');up($(p+'t'),t,.1,.3,20);
   for(var i=0;i<3;i++){var f=E.io(pr(t,ts[i],.7)),b=$(p+'b'+i);tf(b,'scaleX('+(vals[i]/10*f)+')');b.style.transformOrigin='left';b.style.width='480px';op($(p+'n'+i),pr(t,ts[i]+.5,.25))}pop($(p+'il'),t,.3,.3);up($(p+'nt'),t,ts[2]+1.0,.4,20)}
+
+function RT(id,a,cx,cy){var e=$(id);if(e)e.setAttribute('transform','rotate('+a.toFixed(2)+' '+cx+' '+cy+')')}
+function BOB(u,t,amp){var e=$(u+'_b');if(e)e.setAttribute('transform','translate(0,'+(Math.sin(t*3.2)*amp).toFixed(2)+')')}
+function LEGS(u,ph,amp){RT(u+'_ll',Math.sin(ph)*amp,86,216);RT(u+'_lr',-Math.sin(ph)*amp,114,216)}
+function ARM(u,side,a){RT(u+'_'+side,a,side==='la'?73:127,134)}
+function HEAD(u,a){RT(u+'_h',a,100,104)}
 var S=[
  function(t){up($('a1l'),t,.25,.3,16);pop($('a1b'),t,.4,.45);tf($('a1b').firstChild,'rotate('+(t*120)+'deg)');up($('a1h'),t,3.0,.35,24);up($('a1l2'),t,4.0,.25,12);pop($('a1b2'),t,4.2,.45)},
- function(t){op($('e2m'),pr(t,.2,.3));op($('e2ml'),pr(t,.2,.3));op($('e2o'),pr(t,.5,.3));op($('e2ol'),pr(t,.5,.3));
-   var k=E.io(pr(t,1.7,1.1));op($('e2p'),pr(t,1.6,.25));tf($('e2p'),'translateX('+(k*270)+'px) rotate('+(k*-4)+'deg)');pop($('e2x'),t,2.9,.4)},
- function(t){up($('f3l1'),t,.2,.25,12);pop($('f3b1'),t,.3,.45);up($('f3l2'),t,2.2,.25,12);pop($('f3b2'),t,2.35,.45);pop($('f3il'),t,3.6,.3)},
+ function(t){
+   var ap=pr(t,.15,.35);op($('e2mS'),ap);op($('e2oS'),pr(t,.35,.35));op($('e2fl'),pr(t,.1,.3));op($('e2ml'),pr(t,.3,.3));op($('e2ol'),pr(t,.5,.3));
+   var w=E.io(pr(t,1.7,1.1)),x=w*250,walking=t>1.7&&t<2.8;
+   tf($('e2mS'),'translateX('+x+'px) translateY('+(ap<1?(1-ap)*30:0)+'px)');tf($('e2ml'),'translateX('+x+'px)');
+   BOB('p2m',t,3);BOB('p2o',t+.7,3);LEGS('p2m',t*16,walking?24:0);LEGS('p2o',0,0);
+   var hold=E.out(pr(t,1.5,.7)),drop=E.out(pr(t,3.1,.6));
+   ARM('p2m','ra',-80*hold*(1-drop)+(Math.sin(t*2.4)*5));ARM('p2m','la',walking?Math.sin(t*16+3)*26:8+Math.sin(t*2)*4);
+   var slump=E.out(pr(t,3.0,.6));HEAD('p2m',-18*slump+(t>1.7&&t<2.9?Math.sin(t*9)*4:0));
+   var rj=E.out(pr(t,2.95,.35));ARM('p2o','ra',-105*rj);ARM('p2o','la',10);
+   HEAD('p2o',t>2.95&&t<4.4?Math.sin((t-2.95)*17)*13*(1-pr(t,3.9,.5)):0);
+   var pe=$('e2p'),back=E.out(pr(t,2.95,.5)),fall=E.out(pr(t,3.15,.6));
+   op(pe,pr(t,1.45,.2));pe.style.left=(60+x+265-back*95)+'px';pe.style.top=(700+fall*110)+'px';tf(pe,'rotate('+(-8*hold-back*10-fall*10)+'deg)');
+   pop($('e2x'),t,3.0,.4)},
+ function(t){up($('f3l1'),t,.2,.25,12);pop($('f3b1'),t,.3,.45);up($('f3l2'),t,2.2,.25,12);pop($('f3b2'),t,2.35,.45);pop($('f3il'),t,3.6,.3);
+   op($('f3mS'),pr(t,.1,.3));op($('f3oS'),pr(t,.1,.3));BOB('p3m',t,3);BOB('p3o',t+.5,3);
+   var tm=t>.3&&t<2.1,to=t>2.35&&t<4.3;
+   ARM('p3m','ra',tm?-50+Math.sin(t*9)*18:6);HEAD('p3m',tm?Math.sin(t*8)*6:0);ARM('p3m','la',8);
+   ARM('p3o','ra',to?-35+Math.sin(t*8)*14:6);HEAD('p3o',to?Math.sin(t*7)*7:0);ARM('p3o','la',-20*(to?1:0))},
  function(t){pop($('g4a'),t,1.9,.45);pop($('g4b'),t,4.1,.45);pop($('g4n'),t,5.8,.4);up($('g4h'),t,6.8,.4,30);
    if(t<1.8){op($('g4a'),0);op($('g4b'),0)}},
  function(t){pop($('p5c'),t,.2,.3);pop($('p5e'),t,.3,.5);up($('p5k'),t,.8,.5,60);up($('p5t'),t,1.4,.4,30)},
