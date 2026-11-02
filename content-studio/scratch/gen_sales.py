@@ -1,0 +1,175 @@
+import json
+A = '/home/user/content-studio/animatic/'
+M = open('/home/user/content-studio/scratch/gen_meja.py', encoding='utf-8').read()
+v3 = open(A + 'animatic-v3.html', encoding='utf-8').read()
+head = v3[:v3.index('<div class="bgpaper" id="bgp"></div>')].replace('<title>Animatic v3 The Brand Fixer</title>', '<title>Animatic: sales vs operasional, cerita dari meja meeting #3</title>')
+tail = v3[v3.index('<div id="scan">'):v3.index('<script>')]
+# potongan mesin dari generator meja
+eng = M[M.index("JS = r'''") + len("JS = r'''"):M.index("/* ---------- bangun objek ---------- */")]
+cap = M[M.index("var CAP=BEATS.map"):M.index("/* ---------- adegan ---------- */")]
+fin = M[M.index("var TR=["):M.index("'''.replace('__DEF__'")]
+fin = fin[fin.index("function apply"):]
+
+DUR = [4.4,8.4,4.6,9.2,4.0,3.5,8.7,4.6,3.3,4.3,8.4,3.9,8.9]
+SC = [("sales","HOOK",1),("di","RELATE",2),("pelanggan","RELATE",2),("perusahaan","INSIGHT",3),("dan","INSIGHT",3),("janjinya","INSIGHT",3),("saya","REFRAME",4),("pertama","REFRAME",4),("kedua","REFRAME",4),("ketiga","REFRAME",4),("contohnya","REFRAME",4),("kalo","REFRAME",4),("simpan","CTA",5)]
+SAY = ['Sales janji dua hari. Tim operasional butuh lima.','Di bisnis yang saya dampingi, ini sering kejadian. Sales: Bisa kok, Pak. Minggu depan beres. Operasional: Tim kami lagi penuh.','Pelanggan jarang marah karena telat. Mereka marah karena sudah dijanjikan.','Perusahaan besar juga begitu. Tesla menjanjikan lima ribu Model 3 per minggu di akhir 2017.','dan rata-rata kuartal itu dilaporkan sekitar dua ribu per minggu.','Janjinya keluar sebelum kapasitasnya terbukti.','Saya sebut ini janji satu pintu. Tanggal ke pelanggan cuma boleh keluar dari satu orang, setelah tiga hal dicek.','Pertama, kapasitas.','Kedua, antrean.','Ketiga, tanggal tercepat.','Contohnya: sanggup dua puluh, antrean lima belas, pesanan baru sepuluh.','Kalo meleset, kabari pelanggan sehari sebelum telat.','Simpan video ini.']
+DEF = ',\n  '.join("{dur:%s,name:'%s',chap:%d,say:%s}" % (DUR[i], SC[i][1], SC[i][2], json.dumps(SAY[i], ensure_ascii=False)) for i in range(len(DUR)))
+SRC = '<div class="mono" style="position:absolute;left:96px;right:96px;top:1265px;font-size:19px;letter-spacing:.04em;color:#6B6560;text-transform:none;line-height:1.3">Sumber: NPR (2 Jul 2018), Toronto Star (28 Jun 2018). Akun ini tidak berafiliasi dengan Tesla.</div>'
+
+def card(p, num, col, title, sub, icon, fs=92):
+    return ('<section class="sc" id="%s"><div class="a card" data-obj id="%sc" style="left:84px;top:400px;width:912px;height:760px">'
+            '<div class="a" style="left:44px;top:50px;width:170px;height:170px;border-radius:50%%;background:%s;color:#fff;display:flex;align-items:center;justify-content:center;font:800 100px/1 var(--f-display)">%s</div>'
+            '<div class="a disp" id="%st" style="left:250px;top:84px;font-size:%dpx;white-space:nowrap">%s</div>'
+            '<div class="a" id="%ss" style="left:44px;top:290px;width:824px;font:700 52px/1.22 var(--f-body)">%s</div>'
+            '<div class="a" id="%si" style="left:44px;top:470px;width:824px;height:250px">%s</div></div></section>') % (p, p, col, num, p, fs, title, p, sub, p, icon)
+GAUGE = '<svg viewBox="0 0 400 220" width="520" height="286" style="display:block;margin:0 auto" fill="none" stroke-linecap="round"><path d="M40 200 A160 160 0 0 1 360 200" stroke="#E8E1D5" stroke-width="34"/><path id="g8a" d="M40 200 A160 160 0 0 1 280 62" stroke="#B84A2E" stroke-width="34"/><g id="g8n" style="transform-origin:200px 200px"><path d="M200 200 L200 70" stroke="#0F0E0C" stroke-width="10"/><circle cx="200" cy="200" r="16" fill="#0F0E0C"/></g></svg>'
+STACK = '<svg viewBox="0 0 400 200" width="520" height="260" style="display:block;margin:0 auto" fill="none" stroke="#0F0E0C" stroke-width="6" stroke-linejoin="round"><g id="q9"><rect class="q" x="20" y="130" width="110" height="56" rx="8" fill="#fff"/><rect class="q" x="145" y="130" width="110" height="56" rx="8" fill="#fff"/><rect class="q" x="270" y="130" width="110" height="56" rx="8" fill="#fff"/><rect class="q" x="82" y="68" width="110" height="56" rx="8" fill="#C8944A"/><rect class="q" x="207" y="68" width="110" height="56" rx="8" fill="#C8944A"/><rect class="q" x="145" y="6" width="110" height="56" rx="8" fill="#B84A2E"/></g></svg>'
+CALI = '<svg viewBox="0 0 420 200" width="540" height="257" style="display:block;margin:0 auto" fill="none" stroke="#0F0E0C" stroke-width="6" stroke-linejoin="round"><rect x="10" y="20" width="400" height="170" rx="20" fill="#fff"/><path d="M10 70 H410" /><g id="c10"><rect x="40" y="92" width="62" height="62" rx="12" fill="#B84A2E"/><rect x="118" y="92" width="62" height="62" rx="12" fill="#fff"/><rect x="196" y="92" width="62" height="62" rx="12" fill="#C8944A" stroke-dasharray="10 8"/><rect x="274" y="92" width="62" height="62" rx="12" fill="#C8944A" stroke-dasharray="10 8"/></g><text x="368" y="138" font-family="Archivo" font-weight="800" font-size="40" fill="#C8944A" stroke="none">+2</text></svg>'
+
+BODY = r'''<div class="bgpaper" id="bgp"></div><div class="bgdx" id="bgd"></div>
+
+<section class="sc" id="b1">
+  <div class="a mono" id="h1l0" style="left:88px;top:470px;color:var(--terra);font-size:30px">janji sales: 2 hari</div><div class="a" id="h1r0" style="left:0;top:520px;width:1080px;height:130px"></div>
+  <div class="a mono" id="h1l1" style="left:88px;top:790px;color:var(--ink);font-size:30px">kapasitas tim: 5 hari</div><div class="a" id="h1r1" style="left:0;top:840px;width:1080px;height:130px"></div>
+  <div class="a hand" id="h1ne" style="left:0;right:0;top:1060px;text-align:center;font-size:92px">tanggalnya gak ketemu</div>
+</section>
+
+<section class="sc" id="b2">
+  <div class="a disp" id="c2t" style="left:84px;right:84px;top:520px;font-size:104px;line-height:1">Ini sering<br>kejadian.</div>
+  <div class="a mono" id="c2l1" style="left:84px;top:410px;color:var(--gray);font-size:24px">sales</div>
+  <div class="a" id="c2b1" style="left:84px;top:450px;width:800px;padding:30px 38px;border-radius:36px 36px 10px 36px;background:#0F0E0C;color:#fff;box-shadow:0 10px 0 var(--terra);font:700 48px/1.2 var(--f-body)">“Bisa kok, Pak. Minggu depan beres.”</div>
+  <div class="a mono" id="c2l2" style="left:100px;top:760px;color:var(--gray);font-size:24px">operasional</div>
+  <div class="a" id="c2b2" style="left:100px;top:800px;width:760px;padding:30px 38px;border-radius:36px 36px 36px 10px;background:#fff;box-shadow:0 10px 0 rgba(15,14,12,.9);font:700 48px/1.2 var(--f-body)">“Tim kami lagi penuh.”</div>
+  <span class="chip a" id="c2il" style="left:84px;top:1080px;background:var(--amber);color:var(--ink)">ilustrasi dari pola</span>
+</section>
+
+<section class="sc" id="b3">
+  <div class="a mono" id="d3l" style="left:84px;top:430px;color:var(--gray);font-size:28px">pelanggan marah karena…</div>
+  <div class="a disp" id="d3a" style="left:84px;top:500px;font-size:230px;color:#9a948c">TELAT</div>
+  <svg class="a" viewBox="0 0 1080 400" style="left:0;top:480px;width:1080px;height:400px" fill="none" stroke-linecap="round"><path id="d3x" d="M60 190 C300 150 600 230 860 170" stroke="#B84A2E" stroke-width="16"/></svg>
+  <div class="a hand" id="d3b" style="left:84px;top:820px;font-size:170px;transform-origin:left;line-height:1">dijanjikan</div>
+  <svg class="a" viewBox="0 0 1080 120" style="left:0;top:1000px;width:1080px;height:120px" fill="none" stroke-linecap="round"><path id="d3u" d="M90 40 C300 80 600 10 900 60" stroke="#C8944A" stroke-width="14"/></svg>
+</section>
+
+<section class="sc" id="b4">
+  <span class="chip a" id="t4c" style="left:84px;top:400px;background:var(--ink);color:#fff">kasus publik · Tesla Model 3</span>
+  <svg class="a" viewBox="0 0 1080 700" style="left:0;top:480px;width:1080px;height:700px" fill="none" stroke-linecap="round"><path id="t4l" d="M170 330 L910 330" stroke="#0F0E0C" stroke-width="8" stroke-dasharray="2 18"/><circle id="t4n1" cx="170" cy="330" r="30" fill="#B84A2E" stroke="#0F0E0C" stroke-width="8"/><circle id="t4n2" cx="910" cy="330" r="30" fill="#0F0E0C"/></svg>
+  <div class="a" id="t4a" style="left:84px;top:520px;width:420px"><div class="mono" style="font-size:24px;color:var(--gray)">akhir 2017</div><div class="disp" style="font-size:84px;margin-top:10px">5.000</div><div style="font:700 36px/1.2 var(--f-body)">Model 3 per minggu</div><div class="mono" style="font-size:22px;color:var(--terra);margin-top:10px">janji</div></div>
+  <div class="a" id="t4b" style="left:600px;top:520px;width:400px;text-align:right"><div class="mono" style="font-size:24px;color:var(--gray)">akhir Juni 2018</div><div class="disp" style="font-size:84px;margin-top:10px">tercapai</div><div style="font:700 36px/1.2 var(--f-body)">pekan terakhir</div></div>
+  <div class="a hand" id="t4h" style="left:0;right:0;top:880px;text-align:center;font-size:96px">± 6 bulan lewat</div>
+  __SRC__
+</section>
+
+<section class="sc" id="b5">
+  <div class="a" id="p5a" style="left:150px;top:390px;width:300px;height:760px"><div class="a" id="p5ar" style="left:0;bottom:0;width:300px;height:640px;background:#0F0E0C;border-radius:24px 24px 0 0"></div><div class="a disp" id="p5al" style="left:0;top:0;width:300px;text-align:center;font-size:60px">5.000</div></div>
+  <div class="a" id="p5b" style="left:560px;top:390px;width:300px;height:760px"><div class="a" id="p5br" style="left:0;bottom:0;width:300px;height:282px;background:#B84A2E;border-radius:24px 24px 0 0;transform-origin:50% 100%"></div><div class="a disp" id="p5bl" style="left:-20px;bottom:300px;width:340px;text-align:center;font-size:60px;color:#B84A2E">± 2.200</div></div>
+  <div class="a mono" style="left:150px;top:1180px;width:300px;text-align:center;font-size:22px;color:var(--gray)">target / minggu</div>
+  <div class="a mono" id="p5bt" style="left:530px;top:1180px;width:360px;text-align:center;font-size:22px;color:var(--gray)">rata-rata kuartal</div>
+  __SRC__
+</section>
+
+<section class="sc" id="b6">
+  <div class="a" id="j6a" data-obj style="left:84px;top:520px;width:380px;height:300px;border-radius:34px;background:var(--terra);color:#fff;box-shadow:var(--sh);display:flex;align-items:center;justify-content:center;font:800 76px/1 var(--f-display)">JANJI</div>
+  <svg class="a" viewBox="0 0 1080 200" style="left:0;top:580px;width:1080px;height:200px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="j6l" d="M480 100 L590 100 M560 70 L592 100 L560 130" stroke="#0F0E0C" stroke-width="10"/></svg>
+  <div class="a" id="j6b" data-obj style="left:616px;top:520px;width:380px;height:300px;border-radius:34px;background:#fff;border:8px dashed #0F0E0C;display:flex;align-items:center;justify-content:center;text-align:center;font:800 50px/1.05 var(--f-display)">KAPASITAS<br>(belum dicek)</div>
+  <div class="a hand" id="j6h" style="left:0;right:0;top:920px;text-align:center;font-size:76px;line-height:1.05">janji duluan,<br>cek belakangan</div>
+</section>
+
+<section class="sc" id="b7">
+  <div class="a disp" id="o7h" style="left:84px;right:84px;top:410px;font-size:150px;line-height:.92">JANJI<br>SATU<br>PINTU</div>
+  <svg class="a" id="o7door" viewBox="0 0 360 520" style="left:640px;top:440px;width:340px;height:490px" fill="none" stroke-linejoin="round"><rect x="40" y="20" width="280" height="480" rx="26" fill="#fff" stroke="#0F0E0C" stroke-width="10"/><rect x="80" y="70" width="200" height="170" rx="14" fill="#C8944A" stroke="#0F0E0C" stroke-width="8"/><circle cx="270" cy="330" r="16" fill="#0F0E0C"/></svg>
+  <div class="a" id="o7p" style="left:600px;top:970px;width:420px;font:700 44px/1.2 var(--f-body);text-align:center">satu orang yang pegang tanggal</div>
+  <div class="a" id="o7n" style="left:84px;top:960px;width:480px;height:170px"></div>
+</section>
+__C8__
+__C9__
+__C10__
+
+<section class="sc" id="b11">
+  <span class="chip a" id="x11il" style="left:84px;top:400px;background:var(--amber);color:var(--ink)">contoh hitungan</span>
+  <div class="a mono" id="x11l0" style="left:84px;top:480px;color:var(--gray);font-size:26px">kapasitas: 20 pesanan / minggu</div>
+  <div class="a" id="x11bar" style="left:84px;top:540px;width:800px;height:120px;border:8px solid #0F0E0C;border-radius:26px;background:#fff"></div>
+  <div class="a" id="x11q" style="left:84px;top:540px;width:600px;height:120px;border-radius:26px;background:#0F0E0C;transform-origin:left"></div>
+  <div class="a" id="x11n" style="left:684px;top:540px;width:400px;height:120px;border-radius:0 26px 26px 0;background:#B84A2E;transform-origin:left"></div>
+  <div class="a" id="x11cap" style="left:880px;top:500px;width:8px;height:200px;background:#0F0E0C"></div>
+  <div class="a" id="x11tq" style="left:84px;top:700px;font:700 42px/1.2 var(--f-body)"><span style="color:#0F0E0C">■</span> antrean 15</div>
+  <div class="a" id="x11tn" style="left:84px;top:770px;font:700 42px/1.2 var(--f-body)"><span style="color:#B84A2E">■</span> pesanan baru 10</div>
+  <div class="a disp" id="x11r" style="left:84px;right:84px;top:900px;font-size:92px;line-height:1">Tanggalnya:<br>minggu depan,<br>bukan besok.</div>
+</section>
+
+<section class="sc" id="b12">
+  <svg class="a" viewBox="0 0 1080 700" style="left:0;top:430px;width:1080px;height:700px" fill="none" stroke-linecap="round"><path id="m12l" d="M120 300 L960 300" stroke="#0F0E0C" stroke-width="8"/><circle id="m12n1" cx="120" cy="300" r="22" fill="#6B6560"/><circle id="m12n2" cx="720" cy="300" r="34" fill="#B84A2E" stroke="#0F0E0C" stroke-width="8"/><circle id="m12n3" cx="960" cy="300" r="34" fill="#0F0E0C"/></svg>
+  <div class="a mono" id="m12a" style="left:70px;top:640px;width:240px;text-align:center;font-size:22px;color:var(--gray)">pesanan masuk</div>
+  <div class="a" id="m12b" style="left:540px;top:430px;width:360px;text-align:center;font:800 56px/1 var(--f-display);color:#B84A2E">H-1<br><span style="font:700 36px/1.2 var(--f-body);color:#0F0E0C">kabari pelanggan</span></div>
+  <div class="a" id="m12c" style="left:740px;top:640px;width:270px;text-align:center;font:500 24px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)">tanggal janji</div>
+  <div class="a hand" id="m12h" style="left:0;right:0;top:900px;text-align:center;font-size:100px">jangan nunggu ditagih</div>
+</section>
+
+<section class="sc" id="b13">
+  <div class="a" style="left:0;top:0;width:1080px;height:1920px;background:var(--terra)"></div>
+  <div class="a" id="e13s" data-obj style="left:440px;top:300px;width:200px;height:200px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 0 rgba(15,14,12,.35)"><svg viewBox="0 0 24 24" width="92" height="92" fill="none" stroke="#B84A2E" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg></div>
+  <div class="a disp" id="e13h1" style="left:0;right:0;top:540px;text-align:center;font-size:130px;color:#fff;line-height:1">SIMPAN</div>
+  <div class="a disp" id="e13h2" style="left:0;right:0;top:670px;text-align:center;font-size:130px;color:#fff;line-height:1">VIDEO INI</div>
+  <div class="a" id="e13sub" style="left:96px;right:96px;top:830px;text-align:center;font:700 42px/1.25 var(--f-body);color:#fff">Buka lagi sebelum jawab tanggal ke pelanggan.</div>
+  <div class="a" id="e13p0" style="left:96px;top:950px;width:888px;height:96px;border-radius:999px;background:#fff;display:flex;align-items:center;padding-left:48px;font:800 46px/1 var(--f-display);color:#0F0E0C">1 &nbsp;Kapasitas</div>
+  <div class="a" id="e13p1" style="left:96px;top:1060px;width:888px;height:96px;border-radius:999px;background:#fff;display:flex;align-items:center;padding-left:48px;font:800 46px/1 var(--f-display);color:#0F0E0C">2 &nbsp;Antrean</div>
+  <div class="a" id="e13p2" style="left:96px;top:1170px;width:888px;height:96px;border-radius:999px;background:#fff;display:flex;align-items:center;padding-left:48px;font:800 46px/1 var(--f-display);color:#0F0E0C">3 &nbsp;Tanggal tercepat + 2 hari</div>
+  <div class="a mono" id="e13h" style="left:0;right:0;top:1296px;text-align:center;font-size:34px;color:#fff;letter-spacing:.06em">@aldysyahreza</div>
+</section>
+'''
+BODY = BODY.replace('__SRC__', SRC)
+BODY = BODY.replace('__C8__', card('b8','1','#B84A2E','Kapasitas','berapa pesanan yang tim sanggup per minggu',GAUGE)).replace('__C9__', card('b9','2','#0F0E0C','Antrean','berapa yang masih jalan',STACK)).replace('__C10__', card('b10','3','#C8944A','Tanggal tercepat','plus cadangan dua hari',CALI,70))
+
+OBJ = r"""
+/* ---------- bangun objek ---------- */
+(function(){for(var r=0;r<2;r++){var h='',n=r?5:2;for(var k=0;k<7;k++){var on=k<n;h+='<div class="a" id="h1s'+r+k+'" style="left:'+(88+k*136)+'px;top:4px;width:112px;height:112px;border-radius:22px;'+(on?'background:'+(r?'#0F0E0C':'#B84A2E')+';color:#fff;box-shadow:var(--sh)':'border:6px dashed #b8b0a4')+';display:flex;align-items:center;justify-content:center;font:800 40px/1 var(--f-display)">'+(on?(k+1):'')+'</div>'}$('h1r'+r).innerHTML=h}})();
+(function(){var h='';[['KAPASITAS','#C8944A'],['ANTREAN','#0F0E0C'],['TANGGAL','#B84A2E']].forEach(function(a,k){h+='<div class="a" id="o7t'+k+'" style="left:'+(k*166)+'px;top:0;width:150px;height:150px;border-radius:26px;background:'+a[1]+';color:'+(k===0?'#0F0E0C':'#fff')+';box-shadow:var(--sh);display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 56px/1 var(--f-display)">'+(k+1)+'<span style="font:500 17px/1 var(--f-mono);letter-spacing:.06em;margin-top:10px">'+a[0]+'</span></div>'});$('o7n').innerHTML=h})();
+"""
+SCN = r"""
+var DI=99,SCAN_A=0,SCAN_B=0;
+function kcard(p,t,tt,ts,ti){var kc=E.out(pr(t,.05,.4));op($(p+'c'),cl(kc*3));tf($(p+'c'),'translateY('+((1-kc)*60)+'px)');up($(p+'t'),t,tt,.35,24);up($(p+'s'),t,ts,.4,24);up($(p+'i'),t,ti,.45,24)}
+var S=[
+ function(t){up($('h1l0'),t,.2,.3,20);pop($('h1s00'),t,.9,.35);pop($('h1s01'),t,1.15,.35);up($('h1l1'),t,1.9,.3,20);
+   for(var k=0;k<5;k++)pop($('h1s1'+k),t,2.3+k*.22,.32);if(t>3.6)up($('h1ne'),t,3.7,.35,30);else op($('h1ne'),0);
+   for(var k=2;k<7;k++){op($('h1s0'+k),pr(t,.9,.3));}for(var k=5;k<7;k++){op($('h1s1'+k),pr(t,2.3,.3))}},
+ function(t){up($('c2t'),t,.15,.4,40);if(t>3){op($('c2t'),1-pr(t,3.0,.3))}
+   up($('c2l1'),t,3.2,.25,12);pop($('c2b1'),t,3.35,.45);up($('c2l2'),t,6.05,.25,12);pop($('c2b2'),t,6.2,.45);pop($('c2il'),t,7.4,.35)},
+ function(t){up($('d3l'),t,.15,.3,16);up($('d3a'),t,.25,.4,30);draw($('d3x'),t,1.2,.35);
+   var k=E.out(pr(t,2.3,.5));op($('d3b'),cl(k*3));tf($('d3b'),'rotate(-4deg) scale('+(.6+.4*k)+')');draw($('d3u'),t,3.2,.5)},
+ function(t){pop($('t4c'),t,.3,.35);draw($('t4l'),t,.6,1.6);pop($('t4n1'),t,2.4,.35);up($('t4a'),t,2.8,.4,24);pop($('t4n2'),t,6.1,.35);up($('t4b'),t,6.4,.4,24);up($('t4h'),t,7.7,.4,30)},
+ function(t){var a=E.out(pr(t,.05,.55));tf($('p5ar'),'scaleY('+a+')');$('p5ar').style.transformOrigin='50% 100%';op($('p5al'),pr(t,.4,.3));
+   var b=E.out(pr(t,.9,.8));tf($('p5br'),'scaleY('+b+')');op($('p5bl'),pr(t,1.5,.3));op($('p5bt'),pr(t,.9,.3))},
+ function(t){pop($('j6a'),t,.2,.45);draw($('j6l'),t,.9,.35);pop($('j6b'),t,1.5,.45);up($('j6h'),t,2.5,.4,30)},
+ function(t){up($('o7h'),t,.2,.45,50);var d=E.out(pr(t,1.0,.6));op($('o7door'),cl(d*3));tf($('o7door'),'translateX('+((1-d)*80)+'px)');up($('o7p'),t,2.7,.4,24);
+   [0,1,2].forEach(function(k){pop($('o7t'+k),t,5.8+k*.28,.4)})},
+ function(t){kcard('b8',t,.3,.9,1.7);var a=E.out(pr(t,1.8,.9));tf($('g8n'),'rotate('+(-70+a*80)+'deg)');draw($('g8a'),t,1.8,.9)},
+ function(t){kcard('b9',t,.3,.9,1.5);Array.prototype.forEach.call($('b9').querySelectorAll('.q'),function(q,k){op(q,pr(t,1.5+k*.16,.25))})},
+ function(t){kcard('b10',t,.3,.8,1.6);Array.prototype.forEach.call($('c10').children,function(q,k){op(q,pr(t,1.6+k*.2,.25))})},
+ function(t){pop($('x11il'),t,.3,.3);up($('x11l0'),t,1.4,.3,16);op($('x11bar'),pr(t,1.4,.3));op($('x11cap'),pr(t,1.6,.3));
+   var q=E.io(pr(t,2.9,.8));op($('x11q'),q>0?1:0);tf($('x11q'),'scaleX('+q+')');up($('x11tq'),t,3.0,.3,16);
+   var n=E.io(pr(t,4.4,.8));op($('x11n'),n>0?1:0);tf($('x11n'),'scaleX('+n+')');up($('x11tn'),t,4.5,.3,16);up($('x11r'),t,5.9,.45,40)},
+ function(t){draw($('m12l'),t,.2,.5);pop($('m12n1'),t,.2,.3);pop($('m12n3'),t,.7,.3);up($('m12a'),t,.3,.3,12);up($('m12c'),t,.8,.3,12);
+   pop($('m12n2'),t,1.2,.35);up($('m12b'),t,1.35,.4,24);up($('m12h'),t,2.6,.4,30)},
+ function(t){pop($('e13s'),t,.05,.45);up($('e13h1'),t,.2,.35,40);up($('e13h2'),t,.35,.35,40);up($('e13sub'),t,.6,.35,30);[0,1,2].forEach(function(k){up($('e13p'+k),t,.8+k*.18,.35,40)});op($('e13h'),pr(t,1.5,.4))}];
+var TR=[null,'zoom','drop','whip','whip','drop','whip','whip','drop','drop','drop','whip','drop'];var TD=.42;
+"""
+fin2 = fin.replace('cur===14','cur===12')
+JS = eng + OBJ + cap + SCN + fin2
+JS = JS.replace('__DEF__', DEF)
+open(A + 'animatic-sales.html', 'w', encoding='utf-8').write(head + BODY + tail + JS)
+anch = {"_petunjuk":"Adegan dimulai pada kata pembukanya.","scenes":[{"start":a,"act":b,"chap":c} for a,b,c in SC],"beats":[
+ [[0.2,"sales"],[1.1,"dua"],[2.0,"tim"],[3.4,"lima"]],
+ [[0.2,"di"],[3.2,"sales"],[6.0,"operasional"]],
+ [[0.2,"pelanggan"],[1.1,"telat"],[2.3,"mereka"]],
+ [[0.2,"perusahaan"],[1.9,"tesla"],[6.3,"targetnya"]],
+ [[0.2,"dan"],[2.0,"dua"]],
+ [[0.2,"janjinya"],[1.6,"kapasitasnya"]],
+ [[0.2,"saya"],[2.7,"tanggal"],[5.8,"setelah"]],
+ [[0.2,"pertama"],[1.3,"kapasitas"]],
+ [[0.2,"kedua"],[1.1,"antrean"]],
+ [[0.2,"ketiga"],[1.0,"tanggal"],[2.7,"plus"]],
+ [[0.2,"contohnya"],[1.6,"sanggup"],[3.0,"antrean"],[4.5,"pesanan"],[6.0,"berarti"]],
+ [[0.2,"kalo"],[1.3,"kabari"],[2.8,"sebelum"]],
+ [[0.2,"simpan"],[1.6,"pas"]]]}
+json.dump(anch, open(A + 'anchors-sales.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+print('ok')
