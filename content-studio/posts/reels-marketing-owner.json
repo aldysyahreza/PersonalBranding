@@ -27,7 +27,7 @@
     "contoh": ""
    },
    {
-    "say": "Di bisnis yang saya dampingi, usulan marketing sering mentok di meja owner. Marketing: “Konten lama perlu di-refresh.” Owner: “Jadi ada biaya baru lagi?” Dua-duanya gak salah. Bahasanya aja beda.",
+    "say": "Di bisnis yang saya dampingi, usulan marketing sering mentok di meja owner. Marketing: “Konten lama perlu di-refresh.” Owner: “Jadi ada biaya baru lagi?” Dua-duanya gak salah. Marketing bicara soal hasil. Owner bicara soal uang keluar. Bahasanya aja beda.",
     "txt": "Beda *bahasa*",
     "shot": "med",
     "dur": "",
@@ -36,7 +36,7 @@
     "contoh": ""
    },
    {
-    "say": "Perusahaan besar juga begitu. Tahun 2010, Pepsi melewatkan iklan Super Bowl untuk pertama kalinya dalam 23 tahun, dan memindahkan dananya ke kampanye sosial sekitar dua puluh juta dolar. Kampanye begitu biasanya dinilai dari partisipasi. Tapi pertanyaan owner tetap: berapa yang terjual?",
+    "say": "Perusahaan besar juga begitu. Tahun 2010, Pepsi melewatkan iklan Super Bowl untuk pertama kalinya dalam 23 tahun. Dananya dipindah ke kampanye sosial sekitar dua puluh juta dolar. Kampanye begitu biasanya dinilai dari partisipasi dan obrolan. Tapi pertanyaan owner tetap sama: berapa yang terjual? Kalau dua bahasa ini gak dijembatani, usulan sebagus apa pun susah disetujui.",
     "txt": "Partisipasi vs *terjual*",
     "shot": "close",
     "dur": "",
@@ -45,16 +45,16 @@
     "contoh": ""
    },
    {
-    "say": "Pakai kerangka yang sudah dikenal tim growth: ICE, dari Sean Ellis. Minta tim marketing kasih skor satu sampai sepuluh untuk tiga hal. Impact: seberapa besar efeknya ke penjualan. Confidence: seberapa yakin, dan apa dasarnya. Ease: seberapa mudah dan cepat dikerjakan. Contohnya refresh konten lama: impact enam, confidence delapan karena sudah pernah dibaca, ease sembilan. Skor tertinggi dikerjakan duluan.",
+    "say": "Jembatannya pakai kerangka yang sudah dikenal tim growth: ICE, dari Sean Ellis. ICE itu tiga skor, satu sampai sepuluh, untuk tiap usulan. Pertama, Impact: seberapa besar efeknya ke penjualan. Kedua, Confidence: seberapa yakin tim, dan apa dasarnya. Ketiga, Ease: seberapa mudah dan cepat dikerjakan. Contohnya, ada dua usulan. Refresh konten lama: impact enam, confidence delapan karena sudah pernah dibaca, ease sembilan. Kampanye baru: impact delapan, confidence empat karena belum pernah dicoba, ease tiga. Refresh jalan duluan. Kampanye baru boleh maju, kalau tim bisa kasih dasar yang lebih kuat.",
     "txt": "Skor *ICE* dulu",
     "shot": "card",
     "dur": "",
     "case": "ICE (Impact, Confidence, Ease): kerangka prioritas yang dipopulerkan Sean Ellis (growth hacking; Hacking Growth, Ellis & Morgan Brown). Rumus asli (jumlah vs kali) diperdebatkan di sumber; naskah tidak menyebut rumus. Penilaian subjektif, bukan prediksi hasil.",
     "solusi": "Satu aturan: tiap usulan marketing diberi skor ICE 1-10 sebelum owner setuju.",
-    "contoh": "Refresh konten lama: impact 6, confidence 8, ease 9 (contoh hitungan, ilustrasi)."
+    "contoh": "Dua usulan: refresh konten lama (impact 6, confidence 8, ease 9) vs kampanye baru (impact 8, confidence 4, ease 3). Refresh duluan; kampanye maju bila dasarnya lebih kuat (contoh hitungan, ilustrasi). Skor dipakai mengurutkan, bukan meramal hasil."
    },
    {
-    "say": "Kirim ke tim marketing kamu, dan minta setiap usulan berikutnya dikasih skor ICE sebelum kamu setujui.",
+    "say": "Kirim ke tim marketing kamu. Minta setiap usulan berikutnya datang dengan skor ICE, sebelum kamu setujui.",
     "txt": "*Kirim* ke tim marketing",
     "shot": "med",
     "dur": "",
