@@ -7,15 +7,15 @@
  "job": "Share",
  "pillar": "Brand Diagnosis",
  "hue": "terracotta",
- "caption": "Marketing dan owner sering salah dengar karena beda mata uang, jadi minta tiap usulan dijawab dengan biaya, risiko, dan kecepatan, lalu kirim ke tim marketing kamu buat dipakai di usulan berikutnya. #brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #usulanmarketing #komunikasitim",
- "pinned": "Sumber: Pepsi melewatkan Super Bowl 2010 setelah 23 tahun beruntun dan meluncurkan Pepsi Refresh Project senilai lebih dari 20 juta dolar AS (ABC News, BevNET, Chronicle of Philanthropy). Hasil penjualannya tidak diklaim di video ini. Dialog marketing dan owner adalah ilustrasi dari pola, bukan satu klien. Kerangka biaya, risiko, kecepatan diadaptasi dari artikel NP Digital tentang menjelaskan strategi konten ke non-marketer.",
+ "caption": "Marketing dan owner sering salah dengar karena beda bahasa, jadi minta tiap usulan dikasih skor ICE (impact, confidence, ease) sebelum kamu setujui, lalu kirim ke tim marketing kamu. #brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #usulanmarketing #komunikasitim",
+ "pinned": "Sumber: Pepsi melewatkan Super Bowl 2010 setelah 23 tahun beruntun dan meluncurkan Pepsi Refresh Project senilai lebih dari 20 juta dolar AS (ABC News, BevNET, Chronicle of Philanthropy); hasil penjualannya tidak diklaim di video ini. ICE (Impact, Confidence, Ease) dipopulerkan Sean Ellis; skornya penilaian kasar, bukan prediksi. Dialog marketing dan owner serta angka contoh adalah ilustrasi, bukan satu klien. Ide menerjemahkan strategi ke bahasa lawan bicara diadaptasi dari artikel NP Digital.",
  "story": "Usulan marketing paling sering mentok karena apa? Biaya / Risiko / Kecepatan",
  "reel": {
   "v": 2,
   "angle": "kutipan",
   "exec": "banding",
   "coverH": "Marketing vs Owner",
-  "coverHi": "tiga mata uang",
+  "coverHi": "skor ICE",
   "beats": [
    {
     "say": "Marketing bilang “konten perlu refresh”. Owner dengar: “biaya lagi”.",
@@ -45,16 +45,16 @@
     "contoh": ""
    },
    {
-    "say": "Saya sebut ini tiga mata uang owner: biaya, risiko, kecepatan. Sebelum setuju, minta tim marketing jawab tiga hal. Biaya: lebih murah atau lebih mahal dari cara sekarang. Risiko: apa yang bisa salah, seberapa besar. Kecepatan: kapan hasil pertama kelihatan. Contohnya refresh konten lama: lebih murah dari bikin baru, risikonya kecil karena sudah pernah dibaca, hasil pertama dua minggu.",
-    "txt": "Tiga *mata uang* owner",
+    "say": "Pakai kerangka yang sudah dikenal tim growth: ICE, dari Sean Ellis. Minta tim marketing kasih skor satu sampai sepuluh untuk tiga hal. Impact: seberapa besar efeknya ke penjualan. Confidence: seberapa yakin, dan apa dasarnya. Ease: seberapa mudah dan cepat dikerjakan. Contohnya refresh konten lama: impact enam, confidence delapan karena sudah pernah dibaca, ease sembilan. Skor tertinggi dikerjakan duluan.",
+    "txt": "Skor *ICE* dulu",
     "shot": "card",
     "dur": "",
-    "case": "Kerangka diadaptasi dari artikel NP Digital (biaya, risiko, kecepatan), dibalik untuk audiens owner. Bukan klaim data.",
-    "solusi": "Satu aturan: tiap usulan marketing dijawab dengan tiga hal: biaya, risiko, kecepatan.",
-    "contoh": "Refresh konten lama: lebih murah dari bikin baru, risiko kecil karena sudah pernah dibaca, hasil pertama dua minggu (ilustrasi)."
+    "case": "ICE (Impact, Confidence, Ease): kerangka prioritas yang dipopulerkan Sean Ellis (growth hacking; Hacking Growth, Ellis & Morgan Brown). Rumus asli (jumlah vs kali) diperdebatkan di sumber; naskah tidak menyebut rumus. Penilaian subjektif, bukan prediksi hasil.",
+    "solusi": "Satu aturan: tiap usulan marketing diberi skor ICE 1-10 sebelum owner setuju.",
+    "contoh": "Refresh konten lama: impact 6, confidence 8, ease 9 (contoh hitungan, ilustrasi)."
    },
    {
-    "say": "Kirim ke tim marketing kamu, dan minta setiap usulan berikutnya dijawab dengan tiga hal ini.",
+    "say": "Kirim ke tim marketing kamu, dan minta setiap usulan berikutnya dikasih skor ICE sebelum kamu setujui.",
     "txt": "*Kirim* ke tim marketing",
     "shot": "med",
     "dur": "",
