@@ -1,0 +1,152 @@
+"""Efek suara + musik latar buatan kode untuk animatic-owner (bebas lisensi).
+Pakai:
+  python3 animatic/sfx-meja.py out/sfx.wav                          -> satu file gabungan, waktu rancangan
+  python3 animatic/sfx-meja.py out/dir --timing out/vo/timing.json  -> out/dir/music.wav + fx.wav mengikuti voice over
+Musik dan efek dipisah supaya hanya musik yang mengecil saat Anda bicara (ducking di build_reel.py)."""
+import json, os, sys, wave
+import numpy as np
+
+SR = 48000
+DESIGN = [5.6,4.7,4.5,8.4,3.0,4.7,5.0,3.1,3.1,5.1,5.2,4.4,4.1,4.6,3.9,8.1,5.8,6.1,10.0]   # durasi rancangan tiap langkah (sama dengan DEF di animatic-owner.html)
+args = sys.argv[1:]
+TIMING = args[args.index('--timing') + 1] if '--timing' in args else None
+if TIMING:
+    tl = json.load(open(TIMING, encoding='utf-8'))
+    T0 = [b['start'] for b in tl['beats']]; DURS = [b['dur'] for b in tl['beats']]; DUR = tl['duration']
+else:
+    T0 = list(np.cumsum([0] + DESIGN[:-1])); DURS = DESIGN; DUR = float(sum(DESIGN))
+SPEED = [max(1, d / a) for d, a in zip(DESIGN, DURS)]
+WARP = [None] * len(DESIGN)
+ANCH_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'anchors-owner.json')
+if TIMING and os.path.exists(ANCH_FILE):  # jangkar kata: sama persis dengan LOCAL() di animatic-owner.html
+    anch = json.load(open(ANCH_FILE, encoding='utf-8'))['beats']
+    nrm = lambda s: ''.join(c for c in s.lower() if c.isalnum())
+    for i, b in enumerate(tl['beats']):
+        pts, frm = [(0.0, 0.0)], 0
+        for d, word in anch[i]:
+            for k in range(frm, len(b['words'])):
+                if nrm(b['words'][k]['w']).startswith(word):
+                    r = b['words'][k]['t'] - T0[i]
+                    if r > pts[-1][1] + 0.05 and d > pts[-1][0]: pts.append((d, r))
+                    frm = k + 1; break
+        WARP[i] = pts if len(pts) > 1 else None
+
+
+def at(i, off):  # waktu event = waktu nyata saat animasi langkah i mencapai detik rancangan off
+    p = WARP[i]
+    if not p: return T0[i] + off / SPEED[i]
+    for k in range(1, len(p)):
+        if off <= p[k][0]: return T0[i] + p[k - 1][1] + (off - p[k - 1][0]) * (p[k][1] - p[k - 1][1]) / (p[k][0] - p[k - 1][0])
+    d, r = p[-1]; tail = max(1, (DESIGN[i] - d) / max(0.3, DURS[i] - r))
+    return T0[i] + r + (off - d) / tail
+rng = np.random.default_rng(7)
+out = np.zeros(int(SR * (DUR + 1)))
+mus = np.zeros(int(SR * (DUR + 1)))
+
+def env(n, a=0.005, r=0.1):
+    t = np.arange(n) / SR
+    e = np.minimum(1, t / max(a, 1e-4)) * np.exp(-t / max(r, 1e-4))
+    return e
+
+def lowpass(x, cut0, cut1):  # filter satu kutub dengan frekuensi potong yang bergerak
+    y = np.zeros_like(x); s = 0.0
+    cuts = np.linspace(cut0, cut1, len(x))
+    k = 1 - np.exp(-2 * np.pi * cuts / SR)
+    for i in range(len(x)):
+        s += k[i] * (x[i] - s); y[i] = s
+    return y
+
+def add(t, sig, gain):
+    i = int(t * SR); out[i:i + len(sig)] += sig[:len(out) - i] * gain
+
+def whoosh(t, up=True, d=0.42, g=0.4):
+    n = int(d * SR); x = rng.standard_normal(n)
+    y = lowpass(lowpass(x, 250, 1800), 250, 1800) if up else lowpass(lowpass(x, 1800, 250), 1800, 250)  # dua kutub: lebih lembut, tanpa desis
+    w = np.sin(np.linspace(0, np.pi, n)) ** 2
+    add(t - d * 0.4, y * w, g)
+
+def pop(t, f0=700, f1=320, g=0.35):
+    n = int(0.09 * SR); ph = np.cumsum(np.linspace(f0, f1, n)) / SR * 2 * np.pi
+    add(t, np.sin(ph) * env(n, 0.002, 0.03), g)
+
+def tick(t, g=0.18):
+    n = int(0.03 * SR); tt = np.arange(n) / SR; add(t, np.sin(2 * np.pi * 1700 * tt) * env(n, 0.0008, 0.006), g * 0.8)  # klik bernada, bukan derau
+
+def thud(t, g=0.8):
+    n = int(0.35 * SR); tt = np.arange(n) / SR
+    s = np.sin(2 * np.pi * (95 - 40 * tt / 0.35) * tt) * np.exp(-tt / 0.09) + 0.12 * rng.standard_normal(n) * np.exp(-tt / 0.02)
+    add(t, s, g)
+
+def scratch(t, d=0.25, g=0.16):
+    n = int(d * SR); x = rng.standard_normal(n); y = lowpass(x, 2200, 2200) - lowpass(x, 700, 700)  # pita 0,7-2,2 kHz, tanpa desis tinggi
+    am = 0.6 + 0.4 * np.sin(np.linspace(0, d * 2 * np.pi * 18, n))
+    add(t, y * am * np.sin(np.linspace(0, np.pi, n)), g)
+
+def sweep(t, d=0.9, g=0.18):
+    n = int(d * SR); ph = np.cumsum(np.linspace(240, 1400, n)) / SR * 2 * np.pi
+    add(t, (np.sin(ph) + 0.3 * np.sin(2 * ph)) * np.sin(np.linspace(0, np.pi, n)), g)
+
+def buzz(t, d, g=0.07):
+    n = int(d * SR); tt = np.arange(n) / SR
+    add(t, np.sign(np.sin(2 * np.pi * 120 * tt)) * (0.5 + 0.5 * np.sin(2 * np.pi * 9 * tt)) * np.minimum(1, tt / 0.05) * np.minimum(1, (d - tt) / 0.05), g)
+
+def chime(t, g=0.2):
+    for k, f in enumerate([1046.5, 1318.5, 1568]):
+        n = int(0.6 * SR); tt = np.arange(n) / SR
+        add(t + k * 0.06, np.sin(2 * np.pi * f * tt) * np.exp(-tt / 0.18), g * 0.6)
+
+# ---------- musik latar: pad lembut + denyut pelan, 96 bpm ----------
+n = len(out); tt = np.arange(n) / SR
+chords = [[220, 261.6, 329.6], [196, 246.9, 293.7], [174.6, 220, 261.6], [196, 246.9, 329.6]]
+bar = 60 / 96 * 4
+pad = np.zeros(n)
+for i in range(int(DUR / bar) + 2):
+    a, b = int(i * bar * SR), int((i + 1) * bar * SR)
+    seg = tt[a:b] - i * bar
+    if not len(seg): break
+    e = np.minimum(1, seg / 0.8) * np.minimum(1, (bar - seg) / 0.6)
+    pad[a:b] += sum(np.sin(2 * np.pi * f * tt[a:b]) + 0.3 * np.sin(4 * np.pi * f * tt[a:b]) for f in chords[i % 4]) * e
+pad = lowpass(pad, 900, 900) * 0.05
+beat = 60 / 96
+for k in range(int(DUR / beat)):
+    tk = k * beat
+    m = int(0.12 * SR); s = np.sin(2 * np.pi * 55 * np.arange(m) / SR) * np.exp(-np.arange(m) / SR / 0.05)
+    i = int(tk * SR); pad[i:i + m] += s * (0.10 if k % 2 == 0 else 0.05)
+fade = np.minimum(1, tt / 1.0) * np.minimum(1, np.maximum(0, (DUR + 0.5 - tt)) / 1.2)
+mus += pad * fade
+
+# ---------- event per adegan ----------
+pop(at(0, 0.4), 700, 320, 0.28); pop(at(0, 4.2), 700, 320, 0.28); scratch(at(0, 3.0), 0.4, 0.15)
+whoosh(T0[1], up=True); pop(at(1, 0.3)); pop(at(1, 0.5)); whoosh(at(1, 1.7), up=True, d=0.3, g=0.25); thud(at(1, 2.9), 0.45)
+whoosh(T0[2], up=False, d=0.3, g=0.3); pop(at(2, 0.3), 700, 320, 0.25); pop(at(2, 2.35), 900, 450, 0.25); pop(at(2, 3.6))
+whoosh(T0[3], up=False); pop(at(3, 2.0), 800, 400, 0.24); pop(at(3, 4.3), 800, 400, 0.24); thud(at(3, 5.8), 0.4); scratch(at(3, 6.8), 0.5, 0.15)
+whoosh(T0[4], up=False); pop(at(4, 0.3), 700, 320, 0.3); chime(at(4, 1.0), 0.15)
+whoosh(T0[5], up=False); pop(at(5, 0.2)); scratch(at(5, 1.0), 0.4, 0.18); [tick(at(5, 3.6 + k * 0.035), 0.06) for k in range(23)]; thud(at(5, 4.5), 0.45)
+whoosh(T0[6], up=True); pop(at(6, 0.2)); sweep(at(6, 0.8), 0.7); pop(at(6, 1.4), 700, 330, 0.3); chime(at(6, 2.7), 0.16)
+whoosh(T0[7], up=False, d=0.3, g=0.3); pop(at(7, 0.2)); pop(at(7, 1.3), 800, 400, 0.24); pop(at(7, 2.2), 800, 400, 0.24)
+whoosh(T0[8], up=True); [pop(at(8, 0.3 + k * 0.12), 850, 420, 0.18) for k in range(6)]; pop(at(8, 2.0), 700, 330, 0.3); scratch(at(8, 2.8), 0.5, 0.15)
+whoosh(T0[9], up=False); pop(at(9, 0.1)); pop(at(9, 0.3)); pop(at(9, 2.4), 800, 400, 0.22); thud(at(9, 3.7), 0.55); scratch(at(9, 3.75), 0.4, 0.16)
+whoosh(T0[10], up=True); pop(at(10, 0.1)); sweep(at(10, 0.6), 1.0); chime(at(10, 2.9), 0.2); pop(at(10, 4.2))
+whoosh(T0[11], up=False); [pop(at(11, 0.2 + k * 0.3), 800, 400, 0.22) for k in range(3)]; tick(at(11, 1.5), 0.2); tick(at(11, 2.3), 0.2)
+whoosh(T0[12], up=False, d=0.3, g=0.3); pop(at(12, 0.3), 800, 400, 0.22); pop(at(12, 1.0)); tick(at(12, 1.6), 0.2)
+whoosh(T0[13], up=False, d=0.3, g=0.3); pop(at(13, 0.3), 800, 400, 0.22); pop(at(13, 1.1)); chime(at(13, 2.6), 0.14)
+whoosh(T0[14], up=False, d=0.3, g=0.3); pop(at(14, 0.3), 800, 400, 0.22); pop(at(14, 1.1)); tick(at(14, 1.5), 0.15)
+whoosh(T0[15], up=True); pop(at(15, 2.1)); tick(at(15, 3.5), 0.2); tick(at(15, 4.7), 0.2); tick(at(15, 7.0), 0.2); chime(at(15, 7.5), 0.14)
+whoosh(T0[16], up=False, d=0.3, g=0.3); tick(at(16, 1.4), 0.2); tick(at(16, 2.6), 0.2); tick(at(16, 4.8), 0.2); scratch(at(16, 3.2), 0.5, 0.14)
+whoosh(T0[17], up=False, d=0.3, g=0.3); pop(at(17, 0.3), 700, 330, 0.28); chime(at(17, 0.8), 0.18); pop(at(17, 2.1)); pop(at(17, 4.0), 700, 330, 0.25)
+whoosh(T0[18], up=False, d=0.3, g=0.3); pop(at(18, 0.1), 700, 330, 0.3); chime(at(18, 0.9), 0.2)
+for a in (3.8, 4.1, 4.4): pop(at(18, a), 850, 420, 0.2)
+chime(at(18, 7.4), 0.18)
+
+def save(p, x, peak):
+    x = x[:int(SR * DUR)]; x = x / max(1e-9, np.max(np.abs(x))) * peak
+    with wave.open(p, 'wb') as w:
+        w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR); w.writeframes((x * 32767).astype('<i2').tobytes())
+
+
+if TIMING:
+    os.makedirs(args[0], exist_ok=True)
+    save(os.path.join(args[0], 'music.wav'), mus, 0.5); save(os.path.join(args[0], 'fx.wav'), out, 0.8)
+    print('ok', args[0], 'music.wav + fx.wav', round(DUR, 1), 'dtk')
+else:
+    save(args[0], out + mus, 0.85); print('ok', args[0], round(DUR, 1), 'dtk')

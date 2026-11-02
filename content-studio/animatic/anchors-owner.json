@@ -1,0 +1,372 @@
+{
+ "_petunjuk": "Adegan dimulai pada kata pembukanya.",
+ "scenes": [
+  {
+   "start": "marketing",
+   "act": "HOOK",
+   "chap": 1
+  },
+  {
+   "start": "di",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "konten",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "dua",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "perusahaan",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "tahun",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "dananya",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "biasanya",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "tapi",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "kalau",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "jembatannya",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "ice",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "pertama",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "kedua",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "ketiga",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "contohnya",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "kampanye",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "refresh",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "kirim",
+   "act": "CTA",
+   "chap": 5
+  }
+ ],
+ "beats": [
+  [
+   [
+    0.3,
+    "marketing"
+   ],
+   [
+    3.3,
+    "owner"
+   ],
+   [
+    4.3,
+    "biaya"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "di"
+   ],
+   [
+    1.7,
+    "usulan"
+   ],
+   [
+    2.9,
+    "mentok"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "konten"
+   ],
+   [
+    2.2,
+    "owner"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "dua"
+   ],
+   [
+    1.9,
+    "marketing"
+   ],
+   [
+    4.2,
+    "owner"
+   ],
+   [
+    6.8,
+    "bahasanya"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "perusahaan"
+   ],
+   [
+    1.9,
+    "begitu"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "tahun"
+   ],
+   [
+    1.0,
+    "melewatkan"
+   ],
+   [
+    3.7,
+    "dalam"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "dananya"
+   ],
+   [
+    1.4,
+    "kampanye"
+   ],
+   [
+    2.7,
+    "dua"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "biasanya"
+   ],
+   [
+    1.4,
+    "partisipasi"
+   ],
+   [
+    2.3,
+    "obrolan"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "tapi"
+   ],
+   [
+    2.0,
+    "berapa"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "kalau"
+   ],
+   [
+    1.4,
+    "dijembatani"
+   ],
+   [
+    2.4,
+    "usulan"
+   ],
+   [
+    3.7,
+    "susah"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "jembatannya"
+   ],
+   [
+    2.9,
+    "ice"
+   ],
+   [
+    4.3,
+    "sean"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "ice"
+   ],
+   [
+    0.8,
+    "tiga"
+   ],
+   [
+    1.5,
+    "satu"
+   ],
+   [
+    2.3,
+    "sepuluh"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "pertama"
+   ],
+   [
+    1.0,
+    "impact"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "kedua"
+   ],
+   [
+    1.1,
+    "confidence"
+   ],
+   [
+    2.0,
+    "seberapa"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "ketiga"
+   ],
+   [
+    1.0,
+    "ease"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "contohnya"
+   ],
+   [
+    2.1,
+    "refresh"
+   ],
+   [
+    3.4,
+    "impact"
+   ],
+   [
+    4.5,
+    "confidence"
+   ],
+   [
+    6.9,
+    "ease"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "kampanye"
+   ],
+   [
+    1.3,
+    "impact"
+   ],
+   [
+    2.5,
+    "confidence"
+   ],
+   [
+    4.7,
+    "ease"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "refresh"
+   ],
+   [
+    2.0,
+    "kampanye"
+   ],
+   [
+    3.5,
+    "kalau"
+   ]
+  ],
+  [
+   [
+    0.2,
+    "kirim"
+   ],
+   [
+    2.0,
+    "minta"
+   ],
+   [
+    4.6,
+    "skor"
+   ]
+  ]
+ ]
+}
