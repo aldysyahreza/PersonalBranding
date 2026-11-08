@@ -258,6 +258,7 @@ def main(src, script, outdir, take='auto'):
             if b_ - c1 >= 0.2: ns.append([c1, b_, r_])
         segs = ns
     drop_d, notes_d = retakes(x, segs, take)
+    if os.environ.get('VO_NORETAKE'): drop_d, notes_d = set(), []   # pemotongan hanya manual (VO_CUTS)
     phr = phrases(beats)
 
     def coba(drop):
