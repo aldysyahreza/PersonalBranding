@@ -18,16 +18,16 @@
   "coverHi": "satu kebiasaan kita",
   "beats": [
    {
-    "say": "Saham Reddit anjlok 29% dalam sehari. Reddit menunjuk satu kebiasaan kita.",
+    "say": "Saham Reddit anjlok 29% dalam sehari. Reddit menunjuk satu kebiasaan kita. Hai, kenalin, saya Aldy Syahreza. Belasan tahun saya membangun dan mendampingi lebih dari seratus brand, lintas industri, dari branding sampai strategi marketing.",
     "txt": "Anjlok *29%*. Gara-gara kebiasaan?",
     "shot": "phone",
     "dur": "",
-    "case": "Saham turun ±29% pada 30 Okt 2026 (TheStreet, Yahoo Finance, Quartz); angka beragam antar media (23-36%). 'Reddit menunjuk' = CEO mengaitkan penurunan trafik Google dengan AI Overviews/AI Mode (dugaan manajemen, belum terbukti).",
+    "case": "Saham turun ±29% pada 30 Okt 2026 (TheStreet, Yahoo Finance, Quartz); angka beragam antar media (23-36%). 'Reddit menunjuk' = CEO mengaitkan penurunan trafik Google dengan AI Overviews/AI Mode (dugaan manajemen, belum terbukti). Perkenalan Aldy (klaim Aldy sendiri: belasan tahun, 100+ brand lintas industri, 360) ditampilkan dengan foto profil; tanpa menyebut nama klien.",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Kebiasaan apa? Dulu orang mencari sesuatu di Google, lalu klik hasil Reddit untuk baca pendapat orang lain. Sekarang Google menjawab langsung di atas hasil pencarian. Orang membaca jawabannya, lalu berhenti. Tidak ada klik ke Reddit.",
+    "say": "Balik ke Reddit. Kebiasaan apa? Dulu orang mencari sesuatu di Google, lalu klik hasil Reddit untuk baca pendapat orang lain. Sekarang Google menjawab langsung di atas hasil pencarian. Orang membaca jawabannya, lalu berhenti. Tidak ada klik ke Reddit.",
     "txt": "Dulu klik, sekarang *berhenti*",
     "shot": "med",
     "dur": "",
@@ -63,6 +63,11 @@
     "contoh": ""
    }
   ],
-  "prod": {}
+  "prod": {},
+  "intro": {
+   "text": "Hai, kenalin, saya Aldy Syahreza. Belasan tahun saya membangun dan mendampingi lebih dari seratus brand, lintas industri, dari branding sampai strategi marketing.",
+   "short": "Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand, dari branding sampai strategi marketing.",
+   "foto": "foto/cover-aldy.jpg"
+  }
  }
 }
