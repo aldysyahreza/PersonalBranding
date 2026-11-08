@@ -1,7 +1,7 @@
 """Adegan perkenalan standar (setelah hook) untuk semua reels. Dipakai oleh generator set adegan lewat INTRO_HTML(pid) dan INTRO_JS.
 Foto: foto/profil-seminar.jpg (foto pertama di Profile - Aldy Syahreza.pdf, dipotong dari gambar asli 853x1280). Aturan lama 'foto wajah hanya di cover carousel' dikecualikan untuk adegan ini (izin Aldy, 8 Nov 2026)."""
 INTRO_TEXT = "Hai, kenalin, saya Aldy Syahreza. Belasan tahun saya membangun dan mendampingi lebih dari seratus brand, lintas industri, dari branding sampai strategi marketing."
-INTRO_SHORT = "Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand, dari branding sampai strategi marketing."
+INTRO_SHORT = "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, dari branding sampai strategi marketing."
 def INTRO_HTML(p='in'):
     card = lambda i, top, big, sub, col: ('<div class="a" id="%s%d" data-obj style="left:560px;top:%dpx;width:440px;height:128px;border-radius:26px;background:#fff;box-shadow:var(--sh);padding:20px 26px">'
         '<div class="disp" style="font-size:40px;line-height:1;white-space:nowrap;color:%s">%s</div><div style="margin-top:10px;font:700 24px/1.2 var(--f-body);color:#6B6560;white-space:nowrap">%s</div></div>') % (p, i, top, col, big, sub)
