@@ -27,16 +27,16 @@
     "contoh": ""
    },
    {
-    "say": "Bayangkan pelangganmu. Dulu dia googling, lalu klik tokomu. Sekarang dia tanya AI, dapat jawaban, dan berhenti di situ. Kalau AI menjawab, apakah nama brand kamu disebut?",
-    "txt": "Berhenti di *jawaban*",
+    "say": "Kenapa bisa begitu? Dulu orang mencari sesuatu di Google, lalu klik hasil Reddit untuk baca pendapat orang lain. Sekarang Google menjawab langsung di atas hasil pencarian. Orang membaca jawabannya, lalu berhenti. Tidak ada klik ke Reddit.",
+    "txt": "Dulu klik, sekarang *berhenti*",
     "shot": "med",
     "dur": "",
-    "case": "Skenario ilustrasi, bukan klaim tentang klien. Selaras temuan Pew (Jul 2025, data AS): klik 8% vs 15% saat ada ringkasan AI; Google membantah.",
+    "case": "Mekanisme perilaku: trafik Reddit banyak datang dari pencarian Google (terutama pengunjung tidak login). Sumber: SERoundtable, TipRanks (Okt-Nov 2026). Selaras Pew (Jul 2025, AS): klik 8% vs 15% saat ada ringkasan AI; Google membantah.",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Akhir Oktober, Reddit melaporkan kuartal ketiga 2026. Sahamnya turun sekitar 29% dalam sehari. CEO-nya mengaitkan turunnya trafik Google dengan jawaban AI. Itu dugaan Reddit sendiri, belum terbukti. Tapi satu hal jelas: yang turun pengunjung yang tidak login. Pengguna aplikasi dan yang login justru naik. Yang tahan adalah yang punya hubungan langsung.",
+    "say": "Akhir Oktober, Reddit melaporkan kuartal ketiga 2026. Sahamnya turun sekitar 29% dalam sehari. CEO-nya mengaitkan turunnya trafik Google dengan jawaban AI. Itu dugaan Reddit sendiri, belum terbukti. Tapi satu hal jelas: yang turun pengunjung dari Google yang tidak login. Pengguna aplikasi dan yang login justru naik. Yang tahan adalah yang punya hubungan langsung.",
     "txt": "Yang tahan: *hubungan langsung*",
     "shot": "close",
     "dur": "",
@@ -45,11 +45,11 @@
     "contoh": ""
    },
    {
-    "say": "Jadi brand harus belajar AI. Tapi aturan lamanya tetap berlaku: garbage in, garbage out. AI cuma mengalikan logika yang kamu kasih. Lima langkah. Satu, tulis satu kalimat brand: untuk siapa, masalah apa, kenapa kamu. Dua, pilih satu masalah pelanggan, bukan satu fitur AI. Contohnya chat yang telat dibalas. Tiga, siapkan bahan yang benar: harga, kebijakan, nada bicara. Empat, uji dua puluh pertanyaan asli pelanggan sebelum dipakai. Lima, tentukan batasnya: diskon, refund, dan klaim tetap manusia yang putuskan. Dan jaga jalur langsung ke pelanggan: WhatsApp, member, pembeli berulang.",
+    "say": "Sekarang taruh brand kamu di posisi Reddit. Pelangganmu juga makin sering tanya AI dulu, dan berhenti di jawabannya. Waktu AI menjawab, apakah nama brand kamu disebut? Jadi brand harus belajar AI. Tapi aturan lamanya tetap berlaku: garbage in, garbage out. AI cuma mengalikan logika yang kamu kasih. Lima langkah. Satu, tulis satu kalimat brand: untuk siapa, masalah apa, kenapa kamu. Dua, pilih satu masalah pelanggan, bukan satu fitur AI. Contohnya chat yang telat dibalas. Tiga, siapkan bahan yang benar: harga, kebijakan, nada bicara. Empat, uji dua puluh pertanyaan asli pelanggan sebelum dipakai. Lima, tentukan batasnya: diskon, refund, dan klaim tetap manusia yang putuskan. Dan jaga jalur langsung ke pelanggan: WhatsApp, member, pembeli berulang.",
     "txt": "Lima langkah *sebelum* AI",
     "shot": "card",
     "dur": "",
-    "case": "Prinsip yang sudah dikenal: garbage in, garbage out; human-in-the-loop. Bukan teori baru. Tips jalur langsung = pelajaran dari Reddit (pengguna login/aplikasi bertahan).",
+    "case": "Prinsip yang sudah dikenal: garbage in, garbage out; human-in-the-loop. Bukan teori baru. Tips jalur langsung = pelajaran dari Reddit (pengguna login/aplikasi bertahan). Kalimat 'pelangganmu makin sering tanya AI dulu' = pengamatan umum, bukan data Indonesia (label ilustrasi di layar).",
     "solusi": "Lima langkah menyiapkan AI: kalimat brand, satu masalah, bahan benar, uji 20 pertanyaan, batas keputusan manusia.",
     "contoh": "Contoh masalah: chat yang telat dibalas (ilustrasi)."
    },
