@@ -7,8 +7,8 @@
  "job": "Share",
  "pillar": "Brand Diagnosis",
  "hue": "terracotta",
- "caption": "Saham Reddit anjlok 29% dalam sehari karena kebiasaan orang berhenti di jawaban AI, jadi sebelum pasang AI di bisnismu, simpan lima langkah ini: tulis logika brand, pilih satu masalah, siapkan bahan, uji, dan tetapkan batas. #brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #aiuntukbisnis #brandeaai",
- "pinned": "Sumber: laporan kuartal ketiga Reddit dan reaksi saham 30 Okt 2026 (TheStreet, Yahoo Finance, SERoundtable, Quartz, TipRanks). Besar penurunan saham berbeda antar media (23-36%). Kaitan dengan AI Overviews/AI Mode adalah dugaan manajemen Reddit, belum terbukti. Data klik 8% vs 15%: Pew Research, Jul 2025, pengguna AS. Garbage in, garbage out dan human-in-the-loop adalah prinsip umum; lima langkah adalah rangkuman praktik, bukan hasil riset.",
+ "caption": "Saham Reddit anjlok 29% dalam sehari karena orang berhenti di jawaban AI, jadi simpan lima langkah ini dan mulai satu hari ini supaya brand kamu tetap disebut saat pelanggan tanya AI. #brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #aiuntukbisnis #brandeaai",
+ "pinned": "Sumber: laporan kuartal ketiga Reddit dan reaksi saham 30 Okt 2026 (TheStreet, Yahoo Finance, SERoundtable, Quartz, TipRanks). Besar penurunan saham berbeda antar media (23-36%). Kaitan dengan AI Overviews/AI Mode adalah dugaan manajemen Reddit, belum terbukti. Data klik 8% vs 15%: Pew Research, Jul 2025, pengguna AS. Analogi karyawan baru dan contoh sepatu kerja adalah ilustrasi. Lima langkah adalah rangkuman praktik (prinsip human-in-the-loop), bukan hasil riset.",
  "story": "Brand kamu paling siap pakai AI di bagian mana? Chat CS / Konten / Laporan",
  "reel": {
   "v": 2,
@@ -45,17 +45,17 @@
     "contoh": ""
    },
    {
-    "say": "Sekarang taruh brand kamu di posisi Reddit. Pelangganmu juga makin sering tanya AI dulu, dan berhenti di jawabannya. Waktu AI menjawab, apakah nama brand kamu disebut? Jadi brand harus belajar AI. Tapi aturan lamanya tetap berlaku: garbage in, garbage out. AI cuma mengalikan logika yang kamu kasih. Lima langkah. Satu, tulis satu kalimat brand: untuk siapa, masalah apa, kenapa kamu. Dua, pilih satu masalah pelanggan, bukan satu fitur AI. Contohnya chat yang telat dibalas. Tiga, siapkan bahan yang benar: harga, kebijakan, nada bicara. Empat, uji dua puluh pertanyaan asli pelanggan sebelum dipakai. Lima, tentukan batasnya: diskon, refund, dan klaim tetap manusia yang putuskan. Dan jaga jalur langsung ke pelanggan: WhatsApp, member, pembeli berulang.",
-    "txt": "Lima langkah *sebelum* AI",
+    "say": "Terus apa hubungannya sama kamu? Bayangin pelangganmu lagi cari sepatu kerja. Dia tanya AI, dan AI nyebut brand lain. Bukan karena sepatumu jelek. Tapi AI belum punya cukup alasan buat nyebut kamu. Anggap AI itu karyawan baru yang pintar banget, tapi belum tahu apa-apa soal brand kamu. Kamu yang harus ngajarin. Ini lima hal yang bisa kamu lakuin. Pertama, tulis satu kalimat tentang brand kamu: untuk siapa, masalahnya apa, kenapa harus kamu. Kalau kamu sendiri belum bisa jawab, AI juga gak bisa. Kedua, pilih satu masalah aja. Misalnya chat pelanggan yang telat dibalas. Jangan semuanya sekaligus. Ketiga, kasih bahan yang benar: harga, kebijakan, dan gaya bicara brand kamu. Karyawan baru juga butuh buku panduan, kan? Keempat, coba dulu sebelum dipakai. Ambil dua puluh pertanyaan asli dari pelanggan, lalu lihat jawaban AI-nya. Benar gak? Gayanya masih kaya brand kamu? Kelima, tentuin batasnya. Soal diskon, refund, dan klaim, tetap kamu yang putuskan.",
+    "txt": "AI itu *karyawan baru*",
     "shot": "card",
     "dur": "",
-    "case": "Prinsip yang sudah dikenal: garbage in, garbage out; human-in-the-loop. Bukan teori baru. Tips jalur langsung = pelajaran dari Reddit (pengguna login/aplikasi bertahan). Kalimat 'pelangganmu makin sering tanya AI dulu' = pengamatan umum, bukan data Indonesia (label ilustrasi di layar).",
-    "solusi": "Lima langkah menyiapkan AI: kalimat brand, satu masalah, bahan benar, uji 20 pertanyaan, batas keputusan manusia.",
-    "contoh": "Contoh masalah: chat yang telat dibalas (ilustrasi)."
+    "case": "Analogi karyawan baru = ilustrasi, bukan klaim data. Skenario sepatu kerja = ilustrasi. Lima langkah = rangkuman praktik (human-in-the-loop), bukan hasil riset. 'AI nyebut brand lain' = skenario umum, bukan data Indonesia (label ilustrasi di layar).",
+    "solusi": "Lima hal untuk menyiapkan brand dan AI: satu kalimat brand, satu masalah, bahan benar, uji 20 pertanyaan, batas keputusan manusia.",
+    "contoh": "Contoh masalah: chat pelanggan yang telat dibalas; contoh brand: sepatu kerja (ilustrasi)."
    },
    {
-    "say": "Simpan video ini. Sebelum kamu pasang AI apa pun di bisnismu, buka lagi dan cek lima langkah tadi.",
-    "txt": "*Simpan* lima langkah",
+    "say": "Gak harus sempurna. Mulai dari satu hal dulu hari ini. Reddit gak bisa ngatur Google, tapi kamu bisa ngatur seberapa jelas brand kamu. Simpan video ini, dan kerjain satu langkah dulu. Minggu depan, balik lagi ke sini buat lanjut ke langkah berikutnya.",
+    "txt": "*Simpan*, mulai satu langkah",
     "shot": "med",
     "dur": "",
     "case": "",
