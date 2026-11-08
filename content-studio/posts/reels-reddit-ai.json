@@ -1,0 +1,68 @@
+{
+ "id": "reels-reddit-ai",
+ "title": "Reddit anjlok, brand dan AI (Era AI)",
+ "format": "reels",
+ "stage": "naskah",
+ "dx": 6,
+ "job": "Share",
+ "pillar": "Brand Diagnosis",
+ "hue": "terracotta",
+ "caption": "Reddit anjlok 29% dalam sehari saat orang berhenti klik, jadi sebelum pasang AI di bisnismu, simpan lima langkah ini: tulis logika brand, pilih satu masalah, siapkan bahan, uji, dan tetapkan batas. #brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #aiuntukbisnis #brandeaai",
+ "pinned": "Sumber: laporan kuartal ketiga Reddit dan reaksi saham 30 Okt 2026 (TheStreet, Yahoo Finance, SERoundtable, Quartz, TipRanks). Besar penurunan berbeda antar media (23-36%). Kaitan dengan AI Overviews/AI Mode adalah dugaan manajemen Reddit, belum terbukti. Data klik 8% vs 15%: Pew Research, Jul 2025, pengguna AS. Garbage in, garbage out dan human-in-the-loop adalah prinsip umum; langkah-langkahnya rangkuman praktik, bukan hasil riset.",
+ "story": "Brand kamu paling siap pakai AI di bagian mana? Chat CS / Konten / Laporan",
+ "reel": {
+  "v": 2,
+  "angle": "angka",
+  "exec": "banding",
+  "coverH": "Reddit anjlok 29%",
+  "coverHi": "orang berhenti klik",
+  "beats": [
+   {
+    "say": "Reddit anjlok 29% dalam sehari. Pemicunya: orang berhenti klik.",
+    "txt": "Reddit *anjlok* 29%",
+    "shot": "phone",
+    "dur": "",
+    "case": "Angka saham beragam antar media (23-36%); 29% = laporan TheStreet/Yahoo Finance untuk 30 Okt 2026.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Bayangkan pelangganmu. Dulu dia googling, lalu klik tokomu. Sekarang dia tanya AI, dapat jawaban, dan berhenti di situ. Kalau AI menjawab, apakah nama brand kamu disebut?",
+    "txt": "Berhenti di *jawaban*",
+    "shot": "med",
+    "dur": "",
+    "case": "Skenario ilustrasi, bukan klaim tentang klien. Selaras temuan Pew (Jul 2025, data AS): klik 8% vs 15% saat ada ringkasan AI; Google membantah.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Akhir Oktober, Reddit melaporkan kuartal ketiga 2026. Sahamnya turun sekitar 29% dalam sehari. CEO-nya mengaitkan turunnya trafik Google dengan jawaban AI. Itu dugaan Reddit sendiri, belum terbukti. Tapi satu hal jelas: yang turun pengunjung yang tidak login. Pengguna aplikasi dan yang login justru naik. Yang tahan adalah yang punya hubungan langsung.",
+    "txt": "Yang tahan: *hubungan langsung*",
+    "shot": "close",
+    "dur": "",
+    "case": "Sumber: TheStreet, Yahoo Finance, SERoundtable, Quartz, TipRanks (30 Okt-3 Nov 2026). Kausalitas = hipotesis Reddit. Pengguna harian global +12% YoY tapi di bawah ekspektasi; peringatan Q4 turun 'persentase rendah dua digit' bila tren berlanjut. Data berpusat AS.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Jadi brand harus belajar AI. Tapi aturan lamanya tetap berlaku: garbage in, garbage out. AI cuma mengalikan logika yang kamu kasih. Lima langkah. Satu, tulis satu kalimat brand: untuk siapa, masalah apa, kenapa kamu. Dua, pilih satu masalah pelanggan, bukan satu fitur AI. Contohnya chat yang telat dibalas. Tiga, siapkan bahan yang benar: harga, kebijakan, nada bicara. Empat, uji dua puluh pertanyaan asli pelanggan sebelum dipakai. Lima, tentukan batasnya: diskon, refund, dan klaim tetap manusia yang putuskan. Dan jaga jalur langsung ke pelanggan: WhatsApp, member, pembeli berulang.",
+    "txt": "Lima langkah *sebelum* AI",
+    "shot": "card",
+    "dur": "",
+    "case": "Prinsip yang sudah dikenal: garbage in, garbage out; human-in-the-loop. Bukan teori baru. Tips jalur langsung = pelajaran dari Reddit (pengguna login/aplikasi bertahan).",
+    "solusi": "Lima langkah menyiapkan AI: kalimat brand, satu masalah, bahan benar, uji 20 pertanyaan, batas keputusan manusia.",
+    "contoh": "Contoh masalah: chat yang telat dibalas (ilustrasi)."
+   },
+   {
+    "say": "Simpan video ini. Sebelum kamu pasang AI apa pun di bisnismu, buka lagi dan cek lima langkah tadi.",
+    "txt": "*Simpan* lima langkah",
+    "shot": "med",
+    "dur": "",
+    "case": "",
+    "solusi": "",
+    "contoh": ""
+   }
+  ],
+  "prod": {}
+ }
+}
