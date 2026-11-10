@@ -1,0 +1,139 @@
+{
+ "_petunjuk": "Adegan dimulai pada kata pembukanya.",
+ "scenes": [
+  {
+   "start": "saham",
+   "act": "HOOK",
+   "chap": 1
+  },
+  {
+   "start": "menunjuk",
+   "act": "HOOK",
+   "chap": 1
+  },
+  {
+   "start": "sebelumnya",
+   "act": "HOOK",
+   "chap": 1
+  },
+  {
+   "start": "nah",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "dulu",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "sekarang",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "orang",
+   "act": "RELATE",
+   "chap": 2
+  },
+  {
+   "start": "akhir",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "sahamnya",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "ceo",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "itu",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "tapi",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "tahan",
+   "act": "INSIGHT",
+   "chap": 3
+  },
+  {
+   "start": "terus",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "dia",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "tujuannya",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "dan",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "jadi",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "satu",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "dua",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "tiga",
+   "act": "REFRAME",
+   "chap": 4
+  },
+  {
+   "start": "gak",
+   "act": "CTA",
+   "chap": 5
+  }
+ ],
+ "beats": [
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  []
+ ]
+}

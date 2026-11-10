@@ -66,7 +66,8 @@ SETS = {'v3': ('animatic-v3.html', 'anchors-v3.json', 'sfx-v3.py'),
         'iklan': ('animatic-iklan.html', 'anchors-iklan.json', 'sfx-iklan.py'),
         'meja': ('animatic-meja.html', 'anchors-meja.json', 'sfx-meja.py'),
         'sales': ('animatic-sales.html', 'anchors-sales.json', 'sfx-sales.py'),
-        'owner': ('animatic-owner.html', 'anchors-owner.json', 'sfx-owner.py')}
+        'owner': ('animatic-owner.html', 'anchors-owner.json', 'sfx-owner.py'),
+        'reddit': ('animatic-reddit.html', 'anchors-reddit.json', 'sfx-reddit.py')}
 
 
 def main(rec, script, outdir, setname='v3', take='auto'):
