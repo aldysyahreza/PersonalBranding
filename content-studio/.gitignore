@@ -6,3 +6,6 @@ tests/out_*.png
 animatic/models/
 publish/
 foto/aset/
+voiceover/ref.wav
+voiceover/hasil/
+naskah/*.wav

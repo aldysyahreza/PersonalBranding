@@ -73,7 +73,11 @@ SETS = {'v3': ('animatic-v3.html', 'anchors-v3.json', 'sfx-v3.py'),
 def main(rec, script, outdir, setname='v3', take='auto'):
     html, anchors, sfx = SETS[setname]
     os.makedirs(outdir, exist_ok=True)
-    run([sys.executable, os.path.join(HERE, 'vo_prep.py'), rec, script, outdir, take])
+    if os.path.isdir(rec):   # suara klon per kalimat (voiceover/generate_batch.ps1): folder berisi kalimat_*.wav + kalimat.json
+        rows = os.path.join(rec, 'kalimat.json')
+        run([sys.executable, os.path.join(ROOT, 'tools', 'assemble_vo.py'), rec, rows, script, outdir])
+    else:
+        run([sys.executable, os.path.join(HERE, 'vo_prep.py'), rec, script, outdir, take])
     timing = to_scenes(os.path.join(outdir, 'timing.json'), os.path.join(HERE, anchors), os.path.join(outdir, 'timing_scenes.json'))
     run([sys.executable, os.path.join(HERE, sfx), outdir, '--timing', timing])
     vo, mu, fx = (os.path.join(outdir, n) for n in ('vo_clean.wav', 'music.wav', 'fx.wav'))
