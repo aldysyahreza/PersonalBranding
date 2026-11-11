@@ -3,6 +3,7 @@ sys.path.insert(0, '/home/user/content-studio/scratch')
 from intro_scene import INTRO_HTML
 A = '/home/user/content-studio/animatic/'
 TIMING = sys.argv[1] if len(sys.argv) > 1 else '/home/user/content-studio/out/reel11/timing.json'
+NOINS = len(sys.argv) > 2 and sys.argv[2] == 'noinsight'
 M = open('/home/user/content-studio/scratch/gen_meja.py', encoding='utf-8').read()
 O = open('/home/user/content-studio/scratch/gen_owner.py', encoding='utf-8').read()
 v3 = open(A + 'animatic-v3.html', encoding='utf-8').read()
@@ -22,6 +23,8 @@ SC = [("saham","HOOK",1),("menunjuk","HOOK",1),("sebelumnya","HOOK",1),
  ("akhir","INSIGHT",3),("sahamnya","INSIGHT",3),("ceo","INSIGHT",3),("itu","INSIGHT",3),("tapi","INSIGHT",3),("tahan","INSIGHT",3),
  ("terus","REFRAME",4),("dia","REFRAME",4),("tujuannya","REFRAME",4),("dan","REFRAME",4),("jadi","REFRAME",4),("satu","REFRAME",4),("dua","REFRAME",4),("tiga","REFRAME",4),
  ("gak","CTA",5)]
+KEEP = [i for i, c in enumerate(SC) if not (NOINS and c[2] == 3)]
+SC_ALL = SC; SC = [SC[i] for i in KEEP]
 nrm = lambda s: ''.join(c for c in s.lower() if c.isalnum())
 tl = json.load(open(TIMING, encoding='utf-8'))
 words, beat_of = [], []
@@ -60,7 +63,7 @@ S = []   # (html, js)
 S.append(('<section class="sc" id="b1"><span class="chip a" id="a1c" style="left:84px;top:410px;background:var(--ink);color:#fff">REDDIT · RDDT · 30 OKT 2026</span>'
  '<svg class="a" viewBox="0 0 912 440" style="left:84px;top:470px;width:912px;height:440px" fill="none" stroke-linecap="round" stroke-linejoin="round"><path id="a1l" d="M10 70 L150 90 L290 50 L420 110 L520 150 L600 330 L680 410 L890 425" stroke="#B84A2E" stroke-width="14"/><path id="a1f" d="M10 70 L150 90 L290 50 L420 110 L520 150 L600 330 L680 410 L890 425 L890 440 L10 440Z" fill="rgba(184,74,46,.12)" stroke="none"/></svg>'
  '<div class="a disp" id="a1n" style="left:84px;top:930px;font-size:230px;color:#B84A2E;line-height:1">−29%</div><div class="a" id="a1s" style="left:92px;top:1170px;font:800 54px/1 var(--f-display)">dalam sehari</div>'
- + src('Sumber: TheStreet, Yahoo Finance (30 Okt 2026). Besar penurunan berbeda antar media: 23-36%.') + '</section>',
+ + src('Sumber: TheStreet, Yahoo Finance (30 Okt 2026). Besar penurunan berbeda antar media: 23-36%. Kaitan dengan jawaban AI adalah dugaan manajemen Reddit, belum terbukti.') + '</section>',
  "function(t){up($('a1c'),t,.15,.3,16);draw($('a1l'),t,w(0,'anjlok',.9)-.3,1.3);op($('a1f'),pr(t,w(0,'anjlok',.9)+.8,.5));pop($('a1n'),t,w(0,'29',1.8),.45);up($('a1s'),t,w(0,'sehari',3),.3,20)}"))
 # 2 menunjuk
 S.append(('<section class="sc" id="b2"><svg class="a" viewBox="0 0 300 520" id="a2p" style="left:90px;top:440px;width:330px;height:572px" fill="none" stroke="#0F0E0C" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"><rect x="40" y="20" width="220" height="440" rx="34" fill="#fff"/><rect x="62" y="60" width="176" height="14" rx="7" fill="#E0D8CA" stroke="none"/><rect x="62" y="96" width="176" height="90" rx="12" fill="#F2EDE3" stroke="none"/><rect x="62" y="204" width="176" height="90" rx="12" fill="#F2EDE3" stroke="none"/><g id="a2t"><path d="M230 330 C230 300 262 296 262 330 L262 420 C262 470 190 480 170 440 L130 380" fill="#F1C9A3"/></g></svg>'
@@ -177,6 +180,14 @@ S.append(('<section class="sc" id="b22"><div class="a" style="left:0;top:0;width
  + '<div class="a mono" id="u22h" style="left:0;right:0;top:1310px;text-align:center;font-size:34px;color:#fff;letter-spacing:.06em">@aldysyahreza</div></section>',
  "function(t){pop($('u22s'),t,.05,.45);up($('u22h1'),t,.2,.35,40);up($('u22h2'),t,.35,.35,40);up($('u22sub'),t,w(21,'mulai',1.6),.35,30);for(var i=0;i<3;i++)up($('u22p'+i),t,w(21,'simpan',3)-.2+i*.25,.35,40);op($('u22h'),pr(t,w(21,'simpan',3)+.9,.4))}"))
 
+S2 = []
+for new, old in enumerate(KEEP):
+    h, j = S[old]
+    j = re.sub(r'\bw\(%d,' % old, 'w(%d,' % new, j)
+    h = h.replace('<section class="sc" id="b%d"' % (old + 1), '<section class="sc" id="b%d"' % (new + 1), 1)
+    S2.append((h, j))
+S = S2
+fin = fin.replace('cur===14', 'cur===%d' % (len(S) - 1)).replace('cur===21', 'cur===%d' % (len(S) - 1))
 BODY = '<div class="bgpaper" id="bgp"></div><div class="bgdx" id="bgd"></div>\n' + '\n'.join(h for h, j in S)
 helpers = r"""
 function RT(id,a,cx,cy){var e=$(id);if(e)e.setAttribute('transform','rotate('+a.toFixed(2)+' '+cx+' '+cy+')')}

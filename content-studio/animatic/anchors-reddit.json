@@ -37,36 +37,6 @@
    "chap": 2
   },
   {
-   "start": "akhir",
-   "act": "INSIGHT",
-   "chap": 3
-  },
-  {
-   "start": "sahamnya",
-   "act": "INSIGHT",
-   "chap": 3
-  },
-  {
-   "start": "ceo",
-   "act": "INSIGHT",
-   "chap": 3
-  },
-  {
-   "start": "itu",
-   "act": "INSIGHT",
-   "chap": 3
-  },
-  {
-   "start": "tapi",
-   "act": "INSIGHT",
-   "chap": 3
-  },
-  {
-   "start": "tahan",
-   "act": "INSIGHT",
-   "chap": 3
-  },
-  {
    "start": "terus",
    "act": "REFRAME",
    "chap": 4
@@ -113,12 +83,6 @@
   }
  ],
  "beats": [
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
   [],
   [],
   [],

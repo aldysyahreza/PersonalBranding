@@ -7,7 +7,7 @@ import json, os, sys, wave
 import numpy as np
 
 SR = 48000
-DESIGN = [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]   # durasi rancangan tiap langkah (sama dengan DEF di animatic-reddit.html)
+DESIGN = [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]   # durasi rancangan tiap langkah (sama dengan DEF di animatic-reddit.html)
 args = sys.argv[1:]
 TIMING = args[args.index('--timing') + 1] if '--timing' in args else None
 if TIMING:
@@ -123,12 +123,12 @@ N = len(T0)
 for i in range(N):
     whoosh(T0[i], up=(i % 2 == 0), d=0.3, g=0.28)
     pop(at(i, 0.3), 700, 330, 0.24)
-thud(at(0, 1.4), 0.45); scratch(at(0, 1.0), 0.5, 0.16)
+sweep(at(0, 0.9), 1.0); thud(at(0, 2.0), 0.45); scratch(at(0, 1.0), 0.5, 0.16)
 for k in range(3): pop(at(2, 3.4 + k * 1.8), 850, 420, 0.22)
-tick(at(5, 1.2), 0.2); tick(at(4, 2.2), 0.2)
-thud(at(10, 0.3), 0.5); chime(at(10, 0.4), 0.14)
-for i in (13, 14, 15, 16): chime(at(i, 1.2), 0.12)
-for i in (18, 19, 20): tick(at(i, 1.2), 0.2); chime(at(i, 2.4), 0.12)
+tick(at(4, 2.4), 0.22); pop(at(5, 1.3), 700, 330, 0.26); thud(at(6, 2.2), 0.4)
+for i in (7, 8, 9, 10): chime(at(i, 1.2), 0.12)
+chime(at(11, 0.8), 0.14)
+for i in (12, 13, 14): tick(at(i, 1.4), 0.2); chime(at(i, 2.8), 0.12)
 chime(at(N - 1, 0.9), 0.2); chime(at(N - 1, 4.4), 0.18)
 
 def save(p, x, peak):

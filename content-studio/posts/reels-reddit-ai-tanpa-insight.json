@@ -1,0 +1,74 @@
+{
+ "id": "reels-reddit-ai-tanpa-insight",
+ "title": "Reddit anjlok, brand dan AI (Era AI) (tanpa Insight)",
+ "format": "reels",
+ "stage": "naskah",
+ "dx": 6,
+ "job": "Share",
+ "pillar": "Brand Diagnosis",
+ "hue": "terracotta",
+ "caption": "Saham Reddit anjlok 29% dalam sehari karena orang berhenti di jawaban AI, jadi simpan tiga langkah ini dan mulai hari ini dengan satu kalimat jelas tentang brand kamu supaya lebih mudah disebut saat pelanggan tanya AI. #brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #aiuntukbisnis #brandeaai",
+ "pinned": "Sumber: laporan kuartal ketiga Reddit dan reaksi saham 30 Okt 2026 (TheStreet, Yahoo Finance, SERoundtable, Quartz, TipRanks). Besar penurunan saham berbeda antar media (23-36%). Kaitan dengan AI Overviews/AI Mode adalah dugaan manajemen Reddit, belum terbukti. Data klik 8% vs 15%: Pew Research, Jul 2025, pengguna AS. Contoh sepatu kerja adalah ilustrasi. Tiga langkah adalah rangkuman praktik; bukti yang ada (Google Search Central, studi Ahrefs tentang sebutan brand) bersifat panduan atau korelasi, bukan jaminan brand pasti direkomendasikan AI.",
+ "story": "Brand kamu paling siap pakai AI di bagian mana? Chat CS / Konten / Laporan",
+ "reel": {
+  "v": 2,
+  "angle": "tanya",
+  "exec": "angka",
+  "coverH": "Reddit anjlok 29%",
+  "coverHi": "satu kebiasaan kita",
+  "beats": [
+   {
+    "say": "Saham Reddit anjlok 29% dalam sehari. Reddit menunjuk satu kebiasaan kita. Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, dari branding sampai strategi marketing.",
+    "txt": "Anjlok *29%*. Gara-gara kebiasaan?",
+    "shot": "phone",
+    "dur": "",
+    "case": "Saham turun ±29% pada 30 Okt 2026 (TheStreet, Yahoo Finance, Quartz); angka beragam antar media (23-36%). 'Reddit menunjuk' = CEO mengaitkan penurunan trafik Google dengan AI Overviews/AI Mode (dugaan manajemen, belum terbukti). Perkenalan Aldy (klaim Aldy sendiri: belasan tahun, 100+ brand lintas industri, 360) ditampilkan dengan foto profil; tanpa menyebut nama klien.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Nah, kebiasaan yang saya maksud begini. Dulu orang mencari sesuatu di Google, lalu klik hasil Reddit untuk baca pendapat orang lain. Sekarang Google menjawab langsung di atas hasil pencarian. Orang membaca jawabannya, lalu berhenti. Tidak ada klik ke Reddit.",
+    "txt": "Dulu klik, sekarang *berhenti*",
+    "shot": "med",
+    "dur": "",
+    "case": "Mekanisme perilaku: trafik Reddit banyak datang dari pencarian Google (terutama pengunjung tidak login). Sumber: SERoundtable, TipRanks (Okt-Nov 2026). Selaras Pew (Jul 2025, AS): klik 8% vs 15% saat ada ringkasan AI; Google membantah.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "",
+    "txt": "",
+    "shot": "close",
+    "dur": "",
+    "case": "Sumber: TheStreet, Yahoo Finance, SERoundtable, Quartz, TipRanks (30 Okt-3 Nov 2026). Kausalitas = hipotesis Reddit. Pengguna harian global +12% YoY tapi di bawah ekspektasi; peringatan Q4 turun 'persentase rendah dua digit' bila tren berlanjut. Data berpusat AS.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Terus apa hubungannya sama kamu? Bayangin pelangganmu lagi cari sepatu kerja. Dia tanya AI, dan AI nyebut brand lain. Bukan karena sepatumu jelek. Tapi AI belum punya cukup alasan buat nyebut kamu. Tujuannya satu: pas orang tanya AI, nama brand kamu ikut disebut. Dan AI gak punya tempat buat kamu titip data. Dia cuma baca apa yang ada di internet tentang kamu. Jadi ada tiga hal yang bisa kamu lakuin. Satu, tulis jelas di rumahmu sendiri. Satu kalimat aja: brand kamu jual apa, untuk siapa, dan kenapa beda. Taruh di website, profil Google bisnis, dan deskripsi toko online kamu. Dua, bikin orang lain yang ngomongin kamu. Ulasan pelanggan, liputan, video, atau obrolan di forum. AI lebih percaya apa yang disebut banyak tempat daripada omongan kita sendiri. Tiga, samain di semua tempat, lalu cek tiap bulan. Tanya AI lima pertanyaan yang biasa diajukan pelangganmu. Nama brand kamu muncul gak?",
+    "txt": "Tujuannya: *disebut* AI",
+    "shot": "card",
+    "dur": "",
+    "case": "Tujuan = brand disebut saat pelanggan tanya AI. Dasar: Google (Search Central) menyatakan fitur AI memakai praktik SEO standar, halaman harus terindeks, tanpa optimasi khusus; studi Ahrefs (75 ribu brand) menemukan sebutan brand di web berkorelasi paling kuat dengan kemunculan di AI Overviews (korelasi, bukan sebab; Ahrefs penjual alat SEO); studi vendor menunjukkan hasil ChatGPT berubah banyak saat mode cari aktif dan sering mengambil dari ulasan/pembanding. Bukti sebagian korelasional/vendor: tulis sebagai praktik yang masuk akal, bukan jaminan. Skenario sepatu kerja = ilustrasi.",
+    "solusi": "Tiga hal: tulis jelas di rumah sendiri, bikin orang lain menyebut brand, samakan dan cek tiap bulan.",
+    "contoh": "Satu kalimat brand ditaruh di website, profil Google bisnis, deskripsi toko online; cek 5 pertanyaan pelanggan ke AI tiap bulan (ilustrasi)."
+   },
+   {
+    "say": "Gak harus sempurna. Mulai minggu ini dari satu kalimat tadi. Simpan video ini, dan tulis kalimatnya hari ini.",
+    "txt": "*Simpan*, tulis satu kalimat",
+    "shot": "med",
+    "dur": "",
+    "case": "",
+    "solusi": "",
+    "contoh": ""
+   }
+  ],
+  "prod": {},
+  "intro": {
+   "text": "Hai, kenalin, saya Aldy Syahreza. Belasan tahun saya membangun dan mendampingi lebih dari seratus brand, lintas industri, dari branding sampai strategi marketing.",
+   "short": "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, dari branding sampai strategi marketing.",
+   "foto": "foto/cover-aldy.jpg",
+   "pakai": "short"
+  }
+ }
+}
