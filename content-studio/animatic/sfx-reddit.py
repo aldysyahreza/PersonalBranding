@@ -7,7 +7,7 @@ import json, os, sys, wave
 import numpy as np
 
 SR = 48000
-DESIGN = [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]   # durasi rancangan tiap langkah (sama dengan DEF di animatic-reddit.html)
+DESIGN = [5] * 22   # durasi rancangan tiap langkah; panjang = jumlah adegan (22 dengan Insight)
 args = sys.argv[1:]
 TIMING = args[args.index('--timing') + 1] if '--timing' in args else None
 if TIMING:
