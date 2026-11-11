@@ -5,6 +5,30 @@ import sys, os, json, glob, subprocess
 import numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'animatic'))
 import vo_prep as v
+# Jeda suara klon (lebih rapat dari rekaman asli; Aldy: jeda terlalu lama, 11 Nov 2026)
+JEDA = {'kalimat': 0.26, 'langkah': 0.42, 'akhir': float(os.environ.get('VO_TAIL', 3.0))}
+JEDA_DALAM = 0.13      # jeda di dalam kalimat (koma) dipadatkan menjadi ini
+JEDA_DALAM_MIN = 0.17  # hanya jeda yang lebih panjang dari ini yang dipadatkan
+
+def padatkan(p):
+    """Padatkan keheningan di dalam kalimat (>0.17 dtk -> 0.13 dtk) dengan sambungan halus."""
+    h = int(0.005 * v.SR); n = len(p) // h
+    env = np.array([np.abs(p[i * h:(i + 1) * h]).max() for i in range(n)])
+    thr = max(0.008, float(np.percentile(np.abs(p), 99)) * 0.03)
+    sil = env < thr; out = []; i = 0; f = int(0.006 * v.SR)
+    while i < n:
+        if not sil[i]: out.append(p[i * h:(i + 1) * h]); i += 1; continue
+        j = i
+        while j < n and sil[j]: j += 1
+        d = (j - i) * 0.005
+        if d > JEDA_DALAM_MIN and i > 0 and j < n:
+            keep = int(JEDA_DALAM * v.SR); seg = p[i * h:j * h]
+            out.append(seg[:keep // 2]); out.append(seg[-(keep - keep // 2):])
+        else: out.append(p[i * h:j * h])
+        i = j
+    q = np.concatenate(out) if out else p
+    return q
+
 def main(wavdir, rows_json, post, outdir):
     os.makedirs(outdir, exist_ok=True)
     rows = json.load(open(rows_json, encoding='utf-8'))
@@ -22,14 +46,14 @@ def main(wavdir, rows_json, post, outdir):
         env = np.abs(x); thr = max(0.01, float(np.percentile(env, 99)) * 0.04)
         idx = np.where(env > thr)[0]
         a, b = (max(0, idx[0] - int(0.03 * v.SR)), min(len(x), idx[-1] + int(0.06 * v.SR))) if len(idx) else (0, len(x))
-        p = x[a:b].copy(); nf = int(v.FADE * v.SR); p[:nf] *= np.linspace(0, 1, nf); p[-nf:] *= np.linspace(1, 0, nf)
+        p = padatkan(x[a:b].copy()); nf = int(v.FADE * v.SR); p[:nf] *= np.linspace(0, 1, nf); p[-nf:] *= np.linspace(1, 0, nf)
         d = len(p) / v.SR
         ws = r['tampil'].split(); tot = sum(v.syllables(w) for w in ws) or 1; acc = 0
         for w in ws:
             words.append({'w': w, 't': round(t + d * acc / tot, 3), 'beat': r['beat']}); acc += v.syllables(w)
         out.append(p); t += d
         kind = 'akhir' if k == len(rows) - 1 else ('langkah' if last_beat_of[r['beat']] == r['i'] else 'kalimat')
-        out.append(np.zeros(int(v.PAUSE[kind] * v.SR))); t += v.PAUSE[kind]
+        out.append(np.zeros(int(JEDA[kind] * v.SR))); t += JEDA[kind]
         rep.append('kalimat %02d  %.2f dtk  jeda %s  %s' % (r['i'], d, kind, r['tampil']))
     y = np.concatenate(out); total = len(y) / v.SR
     starts = []
