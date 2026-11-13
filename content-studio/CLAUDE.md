@@ -188,3 +188,12 @@ Dasar: 3 sampel tulisan Aldy (voice/sampel-aldy.md). Tingkat disetujui Aldy: "pe
 - Speed 1.1 + ejaan v1 ("Redit", "anjlok") disetujui; tapi intonasi klon dinilai Aldy kaku/robotik, tidak menyambung, baik per kalimat maupun per paragraf.
 - ref_A / ref_B (potongan dari rekaman asli) tidak lebih baik dari ref.wav (ASR: "anjlok"->"unlock"). Per paragraf memperbaiki nama sedikit, bukan intonasi.
 - Keputusan: untuk konten yang butuh natural, pakai rekaman asli Aldy. Klon hanya untuk draf/panduan, bukan voice over final.
+
+## Sistem produksi reels v1 (disetujui Aldy 13 Nov 2026) - strategi/reels-system-v1.md, strategi/creative-log.md
+- KELAS DURASI (pagar, tempo terukur 2,2 kata/dtk): Pendek 30-45 dtk maks 95 kata; Standar 45-60 dtk maks 130 kata (bawaan); Cerita 60-90 dtk maks 195 kata (alasan ditulis di brief); di atas 90 dtk DITOLAK sampai ada data retensi. Perkenalan dihitung dalam anggaran. Revisi "biar jelas" tidak boleh menambah kata tanpa membuang kata lain.
+- UJI PERKENALAN (dua reels berikutnya): versi 2 = ucapan pendek "Saya Aldy Syahreza, belasan tahun mendampingi brand." + kartu nama/100+ brand 3 dtk di atas adegan (dipakai di reels AI chat); versi 1 = perkenalan penuh (reels sesudahnya). Bandingkan retensi detik 15 dari Insights. Topiknya beda, jadi hasilnya indikasi, bukan bukti.
+- Sebelum konsep baru: baca creative-log.md (jangan ulang sudut cerita 2 reels terakhir, bentuk penutup reels sebelumnya, representasi dominan 3x berturut). Reframe = SATU tindakan. Hindari penutup "tiga hal" berturut-turut dan tema AI berturut-turut.
+- Tipe A tetap kode; video AI hanya sisipan 2-3 dtk tanpa teks dan tanpa wajah. Tipe B (talking head) belum punya mesin: menunggu rekaman uji Aldy (vertikal, sejajar mata, mikrofon sama).
+- Gerbang mutu 14 metrik (lulus >= 85/100, metrik inti >= 8); skor = heuristik, bukan prediksi. Aturan CTA lama tetap (tanpa keyword/DM/komentar) walau instruksi master menyebut opsi keyword.
+- Menunggu dari Aldy: tangkapan layar Insights tiap reels (retensi 3 dtk, rata-rata tonton, simpan, kirim, non-pengikut) untuk kolom performa creative-log.
+- Reels AI chat (posts/reels-ai-chat.json, 116 kata): klaim "AI belajar dari arsip chat" DIBUANG (tidak ada sumber); diganti "jawab dari informasi yang kamu isi" (SWA, Warta Ekonomi). Dokumentasi resmi Meta belum dibaca.

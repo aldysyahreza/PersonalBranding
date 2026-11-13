@@ -1,0 +1,79 @@
+{
+ "id": "reels-ai-chat",
+ "title": "AI balas chat: pakai suara siapa? (Era AI)",
+ "format": "reels",
+ "stage": "naskah",
+ "dx": 6,
+ "job": "Share",
+ "pillar": "Brand Diagnosis",
+ "hue": "amber",
+ "caption": "AI bisa bales chat pelangganmu 24 jam, tapi dia cuma pakai jawaban yang kamu kasih, jadi kirim video ini ke admin chat kamu supaya lima jawaban standar brand ditulis dulu sebelum AI-nya dinyalain. #brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #whatsappbusiness #aiuntukbisnis",
+ "pinned": "Sumber: Meta Business Agent diumumkan untuk bisnis di Indonesia pada WhatsApp Business Summit, 11 Agu 2026 (Tirto, ANTARA, Warta Ekonomi, Fortune Indonesia); versi untuk usaha kecil dirilis April 2026 (Bisnis.com). Menurut pemberitaan, agen menjawab dari informasi yang ditentukan bisnis. Contoh toko sepatu kerja adalah ilustrasi. Lima jawaban standar adalah saran praktik, bukan syarat dari WhatsApp.",
+ "story": "Admin chat kamu punya jawaban standar tertulis? Sudah / Belum / Baru sebagian",
+ "reel": {
+  "v": 2,
+  "angle": "tanya",
+  "exec": "chat",
+  "coverH": "AI bales chat 24 jam",
+  "coverHi": "pakai suara siapa?",
+  "beats": [
+   {
+    "say": "AI bales chat pelangganmu 24 jam. Pakai suara siapa? Saya Aldy Syahreza, belasan tahun mendampingi brand.",
+    "txt": "Pakai *suara siapa*?",
+    "shot": "phone",
+    "dur": "",
+    "case": "Meta Business Agent diumumkan untuk bisnis di Indonesia di WhatsApp Business Summit, 11 Agu 2026 (Tirto, ANTARA, Warta Ekonomi, Fortune Indonesia). Versi awal untuk usaha kecil (Business AI) dirilis April 2026 (Bisnis.com).",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Nah, coba cek chat toko kamu. Pertanyaannya sama: “bisa kurang, kak?” Admin pagi jawab begini. Admin malam jawab begitu.",
+    "txt": "Satu pertanyaan, *dua jawaban*",
+    "shot": "med",
+    "dur": "",
+    "case": "Pola dari pengalaman mendampingi (bukan data): jawaban admin tidak seragam. Tanpa nama klien.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Tahun ini WhatsApp Business punya agen AI. Dia jawab dari informasi yang kamu isi. Jadi AI gak bikin suara brand. Dia cuma pakai yang kamu kasih. Isinya seadanya, jawabannya ikut seadanya.",
+    "txt": "AI pakai yang *kamu kasih*",
+    "shot": "close",
+    "dur": "",
+    "case": "Media melaporkan agen memakai informasi yang ditentukan bisnis dan gaya bahasa disesuaikan karakter bisnis (SWA, Warta Ekonomi). TIDAK ada sumber yang menyebut agen belajar dari arsip chat: klaim itu dibuang 13 Nov 2026. Dokumentasi resmi Meta belum dibaca.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Jadi sebelum dinyalain, tulis dulu lima jawaban standar: harga, stok, kapan kirim, komplain, dan kalo ditawar. Contoh toko sepatu kerja. Ditawar? Jawabnya: “Harganya tetap, kak. Tapi kalo ukurannya gak pas, gratis tukar tujuh hari.”",
+    "txt": "Tulis *lima jawaban* dulu",
+    "shot": "card",
+    "dur": "",
+    "case": "",
+    "solusi": "Satu tindakan: tulis satu lembar berisi lima jawaban standar sebelum agen AI diaktifkan.",
+    "contoh": "Toko sepatu kerja (ilustrasi, menyambung reels iklan): saat ditawar, harga tetap, gratis tukar ukuran tujuh hari."
+   },
+   {
+    "say": "Kirim video ini ke admin yang pegang chat kamu. Biar lima jawabannya ditulis minggu ini.",
+    "txt": "*Kirim* ke admin chat",
+    "shot": "med",
+    "dur": "",
+    "case": "",
+    "solusi": "",
+    "contoh": ""
+   }
+  ],
+  "prod": {},
+  "intro": {
+   "short": "Saya Aldy Syahreza, belasan tahun mendampingi brand.",
+   "pakai": "kartu",
+   "catatan": "Uji perkenalan versi 2: ucapan 7 kata + kartu nama 3 detik di atas adegan, tanpa adegan perkenalan tersendiri. Reels berikutnya memakai versi 1 (penuh) sebagai pembanding."
+  }
+ },
+ "sistem": {
+  "kelas_durasi": "standar (maks 130 kata)",
+  "sudut_cerita": "kesalahan umum",
+  "arah_kreatif": "dua admin, satu pertanyaan",
+  "tipe": "A"
+ }
+}
