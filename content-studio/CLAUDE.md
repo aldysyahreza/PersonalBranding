@@ -196,4 +196,4 @@ Dasar: 3 sampel tulisan Aldy (voice/sampel-aldy.md). Tingkat disetujui Aldy: "pe
 - Tipe A tetap kode; video AI hanya sisipan 2-3 dtk tanpa teks dan tanpa wajah. Tipe B (talking head) belum punya mesin: menunggu rekaman uji Aldy (vertikal, sejajar mata, mikrofon sama).
 - Gerbang mutu 14 metrik (lulus >= 85/100, metrik inti >= 8); skor = heuristik, bukan prediksi. Aturan CTA lama tetap (tanpa keyword/DM/komentar) walau instruksi master menyebut opsi keyword.
 - Menunggu dari Aldy: tangkapan layar Insights tiap reels (retensi 3 dtk, rata-rata tonton, simpan, kirim, non-pengikut) untuk kolom performa creative-log.
-- Reels AI chat (posts/reels-ai-chat.json, 116 kata): klaim "AI belajar dari arsip chat" DIBUANG (tidak ada sumber); diganti "jawab dari informasi yang kamu isi" (SWA, Warta Ekonomi). Dokumentasi resmi Meta belum dibaca.
+- Reels AI chat (posts/reels-ai-chat.json, 115 kata): klaim "AI belajar dari arsip chat" DIBUANG (tidak ada sumber); diganti "jawab dari informasi yang kamu isi" (SWA, Warta Ekonomi). Dokumentasi resmi Meta belum dibaca.
