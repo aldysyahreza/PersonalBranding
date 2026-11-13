@@ -1,0 +1,105 @@
+{
+ "_petunjuk": "Adegan dimulai pada kata pembukanya.",
+ "scenes": [
+  {
+   "start": "kamu",
+   "act": "HOOK",
+   "chap": 1,
+   "skip": 0
+  },
+  {
+   "start": "justru",
+   "act": "HOOK",
+   "chap": 1,
+   "skip": 0
+  },
+  {
+   "start": "kenalin",
+   "act": "HOOK",
+   "chap": 1,
+   "skip": 0
+  },
+  {
+   "start": "pagi",
+   "act": "RELATE",
+   "chap": 2,
+   "skip": 0
+  },
+  {
+   "start": "malam",
+   "act": "RELATE",
+   "chap": 2,
+   "skip": 0
+  },
+  {
+   "start": "michael",
+   "act": "INSIGHT",
+   "chap": 3,
+   "skip": 0
+  },
+  {
+   "start": "kerja",
+   "act": "INSIGHT",
+   "chap": 3,
+   "skip": 1
+  },
+  {
+   "start": "dan",
+   "act": "INSIGHT",
+   "chap": 3,
+   "skip": 0
+  },
+  {
+   "start": "kalo",
+   "act": "INSIGHT",
+   "chap": 3,
+   "skip": 0
+  },
+  {
+   "start": "jadi",
+   "act": "REFRAME",
+   "chap": 4,
+   "skip": 0
+  },
+  {
+   "start": "di",
+   "act": "REFRAME",
+   "chap": 4,
+   "skip": 1
+  },
+  {
+   "start": "pilih",
+   "act": "REFRAME",
+   "chap": 4,
+   "skip": 0
+  },
+  {
+   "start": "tulis",
+   "act": "REFRAME",
+   "chap": 4,
+   "skip": 0
+  },
+  {
+   "start": "simpan",
+   "act": "CTA",
+   "chap": 5,
+   "skip": 0
+  }
+ ],
+ "beats": [
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  []
+ ]
+}

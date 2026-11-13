@@ -43,8 +43,12 @@ def to_scenes(timing_path, anchors_path, out_path):
     starts, k = [], 0
     for s in sc:   # kata pembuka dicari hanya di dalam babak HRIRC adegan itu (chap), supaya "harga." di babak lain tidak tertangkap
         bi = s['chap'] - 1
-        while k < len(words) and not (beat_of[k] == bi and nrm(words[k]['w']).startswith(s['start'])): k += 1
-        if k >= len(words): raise SystemExit('Kata pembuka adegan "%s" tidak ditemukan di babak %d naskah' % (s['start'], s['chap']))
+        n = s.get('skip', 0)   # lewati n kemunculan pertama (kata yang muncul lebih dari sekali di babak itu)
+        while True:
+            while k < len(words) and not (beat_of[k] == bi and nrm(words[k]['w']).startswith(s['start'])): k += 1
+            if k >= len(words): raise SystemExit('Kata pembuka adegan "%s" tidak ditemukan di babak %d naskah' % (s['start'], s['chap']))
+            if n == 0: break
+            n -= 1; k += 1
         starts.append(k); k += 1
     out = []
     for i, s in enumerate(sc):
@@ -60,6 +64,7 @@ def to_scenes(timing_path, anchors_path, out_path):
 
 
 SETS = {'v3': ('animatic-v3.html', 'anchors-v3.json', 'sfx-v3.py'),
+        'kerja': ('animatic-kerja.html', 'anchors-kerja.json', 'sfx-kerja.py'),
         'omzet': ('animatic-omzet.html', 'anchors-omzet.json', 'sfx-omzet.py'),
         'arah': ('animatic-arah.html', 'anchors-arah.json', 'sfx-arah.py'),
         'pillar': ('animatic-pillar.html', 'anchors-pillar.json', 'sfx-pillar.py'),

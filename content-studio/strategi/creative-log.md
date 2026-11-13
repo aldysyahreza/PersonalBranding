@@ -15,6 +15,7 @@ Kolom yang belum bisa saya isi dari data proyek ditandai "?".
 | 7 | Sales vs operasional | A | 75 dtk | angka | banding | berbasis kasus | dua sisi | tiga hal | simpan | - | ? |
 | 8 | Marketing vs owner | A | 99 dtk | kutipan | banding | berbasis kasus | figur orang + dua sisi | skor ICE | kirim ke marketing | figur bergerak, emblem Pepsi | ? |
 | 9 | Reddit dan jawaban AI | A | 135 dtk | tanya | angka | bedah berita | grafik + layar cari + figur | tiga langkah | simpan | perkenalan berfoto, grafik saham | ? |
+| 10 | Kerja paling keras = masalahnya (E-Myth) | A | 65 dtk | kontradiksi | cermin | cermin + teori dikenal | figur owner + jadwal + rumah bisnis | satu tindakan (blok 2 jam) | simpan | perkenalan pendek (uji v2), adegan kalender | ? |
 
 ## Pola yang terbaca (13 Nov 2026)
 - Durasi naik dari 38 ke 135 detik.

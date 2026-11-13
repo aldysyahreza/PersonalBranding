@@ -18,8 +18,8 @@
   "coverHi": "justru itu masalahnya",
   "beats": [
    {
-    "say": "Kamu kerja paling keras di kantor. Justru itu masalahnya. Saya Aldy Syahreza, belasan tahun mendampingi brand.",
-    "baca": "Kamu kerja paling keras di kantor. Justru itu masalahnya. Saya Aldy Syahreza, belasan tahun mendampingi brand.",
+    "say": "Kamu kerja paling keras di kantor. Justru itu masalahnya. Kenalin, saya Aldy Syahreza. Belasan tahun mendampingi brand lintas industri.",
+    "baca": "Kamu kerja paling keras di kantor. Justru itu masalahnya. Kenalin, saya Aldy Syahreza. Belasan tahun mendampingi brand lintas industri.",
     "txt": "Kerja paling keras = *masalah*?",
     "shot": "close",
     "dur": "",
@@ -70,7 +70,7 @@
   ],
   "prod": {},
   "intro": {
-   "short": "Saya Aldy Syahreza, belasan tahun mendampingi brand.",
+   "short": "Kenalin, saya Aldy Syahreza. Belasan tahun mendampingi brand lintas industri.",
    "pakai": "kartu",
    "catatan": "Uji perkenalan versi 2 (pendek + kartu 3 dtk)."
   }
