@@ -1,0 +1,84 @@
+{
+ "id": "reels-kerja-pada-bisnis",
+ "title": "Kerja paling keras = masalahnya (E-Myth)",
+ "format": "reels",
+ "stage": "naskah",
+ "dx": 6,
+ "job": "Save",
+ "pillar": "Brand Diagnosis",
+ "hue": "terracotta",
+ "caption": "Kalo kamu kerja paling keras di kantor tapi bisnisnya gak tumbuh, simpan video ini dan blok dua jam minggu ini buat kerja pada bisnis, bukan di dalamnya. #brandstrategy #personalbranding #strategibisnis #pemilikbisnis #umkmindonesia #thebrandfixer #growthmindset #emyth",
+ "pinned": "Dasar: Michael E. Gerber, The E-Myth Revisited (1995), tentang kerja pada bisnis (on) lawan kerja di dalam bisnis (in). Contoh jadwal harian owner adalah gambaran umum, bukan kasus klien.",
+ "story": "Minggu ini kamu lebih banyak kerja di dalam bisnis atau pada bisnis? Di dalam / Pada / Seimbang",
+ "reel": {
+  "v": 2,
+  "angle": "kontradiksi",
+  "exec": "cermin",
+  "coverH": "Kerja paling keras",
+  "coverHi": "justru itu masalahnya",
+  "beats": [
+   {
+    "say": "Kamu kerja paling keras di kantor. Justru itu masalahnya. Saya Aldy Syahreza, belasan tahun mendampingi brand.",
+    "baca": "Kamu kerja paling keras di kantor. Justru itu masalahnya. Saya Aldy Syahreza, belasan tahun mendampingi brand.",
+    "txt": "Kerja paling keras = *masalah*?",
+    "shot": "close",
+    "dur": "",
+    "case": "Hook kontradiksi x cermin.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Pagi bales chat pelanggan. Siang cek stok. Sore approve desain konten. Malam baru sempat mikir bisnis, tapi udah capek.",
+    "baca": "Pagi bales chat pelanggan. Siang cek stok. Sore approve desain konten. Malam baru sempat mikir bisnis, tapi udah capek.",
+    "txt": "Malam baru *sempat mikir*",
+    "shot": "med",
+    "dur": "",
+    "case": "Pola dari pengalaman mendampingi owner, bukan data; tanpa nama klien.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Michael Gerber, dalam bukunya The E-Myth, membedakan dua jenis kerja. Kerja di dalam bisnis: ngerjain tugas harian. Dan kerja pada bisnis: membangun cara kerja, supaya tugas itu jalan tanpa kamu. Kalo owner terus di dalam, bisnisnya cuma sebesar tenaganya.",
+    "baca": "Maikel Gerber, dalam bukunya, Di I-mit, membedakan dua jenis kerja. Kerja di dalam bisnis: ngerjain tugas harian. Dan kerja pada bisnis: membangun cara kerja, supaya tugas itu jalan tanpa kamu. Kalo owner terus di dalam, bisnisnya cuma sebesar tenaganya.",
+    "txt": "Kerja *pada* bisnis, bukan di dalamnya",
+    "shot": "card",
+    "dur": "",
+    "case": "Michael E. Gerber, The E-Myth Revisited (1995): 'work ON your business, not IN it'. Kalimat 'bisnisnya cuma sebesar tenaganya' = tafsir Aldy/Claude, bukan kutipan.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Jadi mulai minggu ini, blok dua jam di kalender, hari dan jam yang sama tiap minggu. Di dua jam itu, gak boleh ngerjain tugas harian. Pilih satu pekerjaan yang paling sering kamu ulang. Tulis caranya, biar tim bisa ambil alih.",
+    "baca": "Jadi mulai minggu ini, blok dua jam di kalender, hari dan jam yang sama tiap minggu. Di dua jam itu, gak boleh ngerjain tugas harian. Pilih satu pekerjaan yang paling sering kamu ulang. Tulis caranya, biar tim bisa ambil alih.",
+    "txt": "Blok *2 jam*, tulis caranya",
+    "shot": "card",
+    "dur": "",
+    "case": "Satu tindakan: blok dua jam mingguan untuk menulis satu cara kerja.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Simpan video ini. Buka lagi pas kamu ngerasa gak punya waktu buat mikir.",
+    "baca": "Simpan video ini. Buka lagi pas kamu ngerasa gak punya waktu buat mikir.",
+    "txt": "*Simpan*, blok 2 jam",
+    "shot": "med",
+    "dur": "",
+    "case": "",
+    "solusi": "",
+    "contoh": ""
+   }
+  ],
+  "prod": {},
+  "intro": {
+   "short": "Saya Aldy Syahreza, belasan tahun mendampingi brand.",
+   "pakai": "kartu",
+   "catatan": "Uji perkenalan versi 2 (pendek + kartu 3 dtk)."
+  }
+ },
+ "sistem": {
+  "kelas_durasi": "standar (maks 130 kata)",
+  "sudut_cerita": "cermin",
+  "tipe": "A",
+  "suara": "VoiceStudio (klon), atas keputusan Aldy 13 Nov 2026; tanpa keterbukaan di caption"
+ }
+}
