@@ -1,0 +1,83 @@
+{
+ "id": "reels-bocor-01-iklan-chat",
+ "title": "Bocor di Mana? #01: Iklan Rp5 juta, yang beli 2",
+ "format": "reels",
+ "stage": "naskah",
+ "dx": 6,
+ "job": "Share",
+ "pillar": "Brand Diagnosis",
+ "hue": "terracotta",
+ "series": "Bocor di Mana? #01",
+ "caption": "Iklan Rp5 juta. Chat masuk 40. Yang beli 2.\nKalo ini kejadian tiap bulan, kemungkinan bocornya bukan di iklan, tapi di cara chat dibalas. Cek: berapa chat yang dibalas lebih dari satu jam?\nHari ini, pakai balasan yang nawarin langkah berikutnya, lalu tindak lanjut sekali besoknya.\nKirim ke admin chat kamu, minta dia pakai mulai chat berikutnya.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "pinned": "Angka iklan Rp5 juta, 40 chat, 2 pembeli adalah contoh hitungan. Contoh balasan adalah simulasi untuk toko gamis, bukan kasus klien.",
+ "story": "Rata-rata chat di toko kamu dibalas dalam berapa lama? Di bawah 15 menit / 15-60 menit / Lebih dari 1 jam",
+ "reel": {
+  "v": 2,
+  "angle": "angka",
+  "exec": "angka",
+  "coverH": "Iklan Rp5 juta",
+  "coverHi": "yang beli 2",
+  "beats": [
+   {
+    "say": "Iklan lima juta. Chat masuk empat puluh. Yang beli cuma dua. Kenalin, saya Aldy Syahreza. Belasan tahun mendampingi brand lintas industri.",
+    "txt": "Iklan Rp5 juta. Yang beli *2*.",
+    "shot": "A-MCU",
+    "dur": "",
+    "case": "0-8 dtk. Cold open, angka di tangan (catatan/HP). Teks frame 1. Angka = contoh hitungan.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Kalo ini kejadian tiap bulan, bocornya biasanya di cara chat dibalas. Cek: berapa chat yang dibalas lebih dari satu jam?",
+    "txt": "Bocornya di *sistem* balas chat",
+    "shot": "A-punch115",
+    "dur": "",
+    "case": "8-16 dtk. Diagnosis + cara cek. Panel kata SYSTEM. Sisipan motion: diagram Brand-Up, cap BOCOR DI SINI.",
+    "solusi": "Satu tindakan: admin memakai balasan yang menawarkan langkah berikutnya + satu tindak lanjut besoknya.",
+    "contoh": ""
+   },
+   {
+    "say": "Pembeli nanya jam sepuluh. Dibalas jam satu siang: “Ready kak.”",
+    "txt": "Sebelum",
+    "shot": "B-overhead",
+    "dur": "",
+    "case": "16-21 dtk. Chat dicetak; spidol melingkari jam 13.40.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Ganti jadi begini: “Ready kak, tinggal tiga. Mau saya simpan satu sambil kakak cek ongkir?” Besoknya, tindak lanjut sekali.",
+    "txt": "Sesudah",
+    "shot": "B-overhead",
+    "dur": "",
+    "case": "21-33 dtk. Aldy menulis balasan baru; cap BOCOR DI SINI di balasan lama.",
+    "solusi": "",
+    "contoh": "Sebelum: 'Ready kak' (3 jam kemudian). Sesudah: 'Ready kak, tinggal tiga. Mau saya simpan satu sambil kakak cek ongkir?' + tindak lanjut besok. Toko gamis, contoh simulasi."
+   },
+   {
+    "say": "Kirim ke admin chat kamu. Minta dia pakai balasan ini mulai hari ini.",
+    "txt": "*Kirim* ke admin chat",
+    "shot": "A-MCU",
+    "dur": "",
+    "case": "33-38 dtk. CTA share; sonic logo; kartu seri.",
+    "solusi": "",
+    "contoh": ""
+   }
+  ],
+  "prod": {},
+  "intro": {
+   "short": "Kenalin, saya Aldy Syahreza. Belasan tahun mendampingi brand lintas industri.",
+   "pakai": "ucap"
+  }
+ },
+ "sistem": {
+  "formula": "TH-1 Bedah 60 Detik + sisipan motion (diagram Brand-Up, cap)",
+  "tugas": "Share",
+  "set": "A + B",
+  "panel_kata": "SYSTEM",
+  "target_durasi": "<=40 dtk",
+  "teks_frame1": "Iklan Rp5 juta. Yang beli 2.",
+  "aset_khas": "spidol, cap BOCOR DI SINI, diagram Brand-Up",
+  "motion": "±6 dtk (15%)"
+ }
+}

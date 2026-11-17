@@ -31,7 +31,7 @@ const STILLS = +arg('stills', 0);
   if (BEATS && fs.existsSync(ANCH)) await pg.addInitScript((a) => { window.ANIMATIC_ANCHORS = a; }, JSON.parse(fs.readFileSync(ANCH, 'utf8')));
   await pg.goto('file://' + path.join(__dirname, arg('file', 'animatic.html')));
   await pg.addStyleTag({ path: path.join(ROOT, 'assets', 'fonts-embed.css') });
-  await pg.evaluate(() => Promise.all(['800 40px Archivo', 'italic 400 40px Fraunces', '600 40px Outfit', '600 40px Caveat', '500 40px "JetBrains Mono"'].map((f) => document.fonts.load(f))));
+  await pg.evaluate(() => Promise.all(['800 40px Archivo', '700 40px Fraunces', 'italic 400 40px Fraunces', '600 40px Outfit', '600 40px Caveat', '500 40px "JetBrains Mono"'].map((f) => document.fonts.load(f))));
   const dur = await pg.evaluate(() => window.ANIMATIC_DURATION);
   const n = Math.round(dur * FPS);
 

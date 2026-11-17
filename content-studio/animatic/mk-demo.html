@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Motion Kit demo</title>
+<link rel="stylesheet" href="motionkit/fonts-mk.css">
+</head><body>
+<script src="motionkit/kit.js"></script>
+<script>
+var C = MK.C;
+MK.run([
+ // 1. Frame 1: masalah nyata (angka rupiah), headline <= 7 kata, tanpa animasi masuk
+ {dur: 2.4, build: function (L) {
+   MK.Headline(L, {y: 330, size: 100, html: 'Iklan Rp5 juta.<br>Yang beli <span style="color:' + C.terra + '">2.</span>'});
+   MK.CountUp(L, {x: 96, y: 760, size: 150, prefix: 'Rp', from: 0, to: 5000000, at: .2, dur: .8});
+   MK.PaperCard(L, {x: 96, y: 1010, w: 400, at: .9, rot: -2, from: 'left', html: '<div class="mk-mono" style="font-size:22px;color:#6B6560">chat masuk</div><div class="mk-fr" style="font-size:96px">40</div>'});
+   MK.PaperCard(L, {x: 560, y: 1040, w: 400, at: 1.3, rot: 2, from: 'right', html: '<div class="mk-mono" style="font-size:22px;color:#6B6560">yang beli</div><div class="mk-fr" style="font-size:96px;color:' + C.terra + '">2</div>'});
+ }},
+ // 2. Pengganti footage (produksi: Kamera A, wajah Aldy)
+ {dur: 1.4, build: function (L) { MK.Slate(L, {text: 'KAMERA A<br>wajah Aldy: hook + perkenalan'}); }},
+ // 3. Diagram Brand-Up, titik SYSTEM menyala, cap BOCOR DI SINI (dentum = titik potong + guncang)
+ {dur: 4.2, tr: 'sweep', dolly: .06, build: function (L) {
+   var d = MK.InkDiagramBrandUp(L, {active: 4, at: .1, y: 400});
+   MK.StampBocor(L, {x: 40, y: d.y(4) - 40, at: 2.6, rot: -8, size: 50});
+   MK.Subtitle(L, [[.2, 'bocornya bukan di _iklan_'], [1.6, 'tapi di *sistem* balas chat']], {y: 1420});
+ }},
+ // 4. Sebelum: chat dibalas 3 jam kemudian, spidol melingkari jam, lalu dicoret
+ {dur: 4.0, tr: 'sweep', paper: 'white', build: function (L) {
+   MK.ChatPaper(L, {label: 'sebelum · contoh simulasi', y: 420, messages: [
+     {from: 'pb', text: 'Kak, gamis yang hijau ready ukuran L?', time: '10.12', at: .2},
+     {from: 'cs', text: 'Ready kak', time: '13.40', at: .7}]});
+   MK.MarkerCircle(L, {x: 925, y: 752, w: 86, h: 34, at: 1.5});
+   MK.Subtitle(L, [[.2, 'dibalas *3 jam* kemudian'], [2.3, 'pembeli udah pindah toko']], {y: 1420});
+ }},
+ // 5. Sesudah: balas cepat + pertanyaan + tindak lanjut, stabilo di kalimat kunci
+ {dur: 4.4, paper: 'white', build: function (L) {
+   MK.ChatPaper(L, {label: 'sesudah · contoh simulasi', y: 360, messages: [
+     {from: 'pb', text: 'Kak, gamis yang hijau ready ukuran L?', time: '10.12', at: .1},
+     {from: 'cs', text: 'Ready kak, tinggal 3. Mau saya simpan satu sambil kakak cek ongkir?', time: '10.15', at: .5},
+     {from: 'cs', text: 'Kak, yang hijau L masih saya simpan sampai jam 4 sore ya.', time: 'besok 10.00', at: 1.6}]});
+   MK.Subtitle(L, [[.3, 'balas *cepat*, tawarkan langkah'], [2.2, 'lalu _tindak lanjut_ sekali']], {y: 1460});
+ }},
+ // 6. Kartu seri (hard cut)
+ {dur: 2.0, build: function (L) { MK.SeriesCard(L, {series: 'BOCOR DI MANA? · #01', title: 'Iklan jalan,<br>chat dibiarkan.'}); }}
+]);
+</script>
+</body></html>
