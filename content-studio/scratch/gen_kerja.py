@@ -59,8 +59,8 @@ S = []
 S.append(('<section class="sc" id="b1">' + fig('a1p', 'p1', 90, 470, 330, 620)
  + '<div class="a" id="a1d" style="left:60px;top:1010px;width:960px;height:34px;border-radius:10px;background:#0F0E0C"></div>'
  + ''.join(chipb('a1t%d' % i, x, y, t, bg, col, 32) for i, (x, y, t, bg, col) in enumerate([(470, 470, 'chat pelanggan', '#fff', '#0F0E0C'), (560, 580, 'cek stok', '#C8944A', '#0F0E0C'), (480, 690, 'approve desain', '#fff', '#0F0E0C'), (600, 800, 'transfer', '#B84A2E', '#fff'), (500, 910, 'meeting', '#0F0E0C', '#fff')]))
- + '<div class="a disp" id="a1h" style="left:84px;top:1090px;font-size:96px;line-height:1">PALING <span style="color:#B84A2E">KERAS</span></div></section>',
- "function(t){op($('a1p'),pr(t,.05,.3));op($('a1d'),pr(t,.05,.3));BOB('p1',t,4);ARM('p1','ra',-60+Math.sin(t*9)*14);ARM('p1','la',50+Math.sin(t*8+1)*12);HEAD('p1',Math.sin(t*4)*5);for(var i=0;i<5;i++)pop($('a1t'+i),t,.4+i*.32,.35);up($('a1h'),t,w(0,'paling',1.2),.4,40)}"))
+ + '<div class="a disp" id="a1h" style="left:84px;top:1080px;width:920px;font-size:84px;line-height:1">KERJA PALING KERAS <span style="color:#B84A2E">= MASALAH?</span></div></section>',
+ "function(t){op($('a1p'),pr(t,.05,.3));op($('a1d'),pr(t,.05,.3));BOB('p1',t,4);ARM('p1','ra',-60+Math.sin(t*9)*14);ARM('p1','la',50+Math.sin(t*8+1)*12);HEAD('p1',Math.sin(t*4)*5);for(var i=0;i<5;i++)pop($('a1t'+i),t,.4+i*.32,.35);op($('a1h'),1);tf($('a1h'),'none')}"))
 # 2 justru itu masalahnya: stempel
 S.append(('<section class="sc" id="b2">' + fig('b2p', 'p2', 110, 470, 300, 560)
  + '<div class="a disp" id="b2s" style="left:380px;top:640px;font-size:96px;color:#B84A2E;transform:rotate(-8deg);border:12px solid #B84A2E;border-radius:26px;padding:8px 30px;line-height:1">MASALAH</div>'

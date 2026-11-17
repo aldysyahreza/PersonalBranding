@@ -23,9 +23,16 @@ Kolom yang belum bisa saya isi dari data proyek ditandai "?".
 - Representasi "dua sisi banding" tiga kali berturut-turut (#6, #7, #8).
 - Belum pernah dipakai: pengalaman pribadi, kesalahan umum, mitos vs fakta, sebelum-sesudah, reflektif.
 - Semua Tipe A. Tipe B: nol.
+- (17 Nov, data) Durasi 75-135 dtk vs tonton 6-13 dtk: penonton pergi sebelum Insight. Pembuka angka rupiah (#2) mengalahkan pembuka istilah (#6, #8) dan berita (#9).
 
-## Performa (diisi dari Instagram Insights)
+## Performa (Instagram Insights lewat Windsor.ai, 18 Okt - 16 Nov 2026; lihat strategi/laporan-visual-17nov.md)
 
-| # | Jangkauan | % non-pengikut | Retensi 3 dtk | Rata-rata tonton | Simpan | Kirim | Follow dari reels | Catatan |
+| # | Konten tayang | Views | Reach | Skip 3 dtk | Rata-rata tonton | Save | Share | Catatan |
 |---|---|---|---|---|---|---|---|---|
-| | | | | | | | | |
+| 2 | Marketplace Rp100 jt -> Rp79 jt | 929 | 719 | 46,5% | 17,0 dtk | 4 | 2 | Pembuka angka rupiah = terbaik |
+| 6 | Finance vs marketing | 293 | 205 | 64,2% | 12,6 dtk | 0 | 1 | Pembuka istilah/peran |
+| 8 | Owner vs marketing (ICE) | 243 | 185 | 64,9% | 12,8 dtk | 1 | 0 | Pembuka istilah |
+| 9 | Reddit anjlok 29% / AI | 228 | 171 | 67,2% | 5,9 dtk | 0 | 0 | Berita tanpa adegan owner; versi tanpa Insight 108 dtk |
+| - | Mulai lagi (cerita pendiri, bukan buatan sistem ini) | 1.556 | 847 | 59,6% | 18,2 dtk | 2 | 2 | 16 komentar, wajah Aldy |
+
+Reels #1, #3, #4, #5, #7 tidak ada di data 30 hari (belum tayang atau tayang di luar periode).

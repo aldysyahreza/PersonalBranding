@@ -202,3 +202,13 @@ Dasar: 3 sampel tulisan Aldy (voice/sampel-aldy.md). Tingkat disetujui Aldy: "pe
 - (13 Nov, Aldy) Uji VoiceStudio tidak dijalankan: Aldy memilih REKAMAN ASLI untuk reels kerja pada bisnis. Suara klon tidak dipakai sampai Aldy memintanya lagi.
 - (13 Nov) Reels kerja pada bisnis SELESAI: rekaman asli vo/vo14_raw.ogg (satu take bersih, ASR cek), set adegan "kerja" (scratch/gen_kerja.py -> animatic-kerja.html, 14 adegan, figur owner, jadwal pagi-siang-sore, rumah "bisnis" di dalam/pada, kalender 2 jam, coret tugas, kartu cara kerja -> tim). out/reel15/reel.mp4 65,3 dtk (3 dtk ekor CTA; bicara 62 dtk, sedikit di atas kelas Standar), -14,7 LUFS. Perkenalan diucapkan Aldy "Kenalin, saya Aldy Syahreza. Belasan tahun mendampingi brand lintas industri." (kartu 5,6 dtk, bukan 3).
 - build_reel.to_scenes kini mendukung "skip" di anchors scenes (lewati n kemunculan kata pembuka di babak yang sama).
+
+## LAPORAN VISUAL 17 NOV 2026 (data IG nyata) - strategi/laporan-visual-17nov.md - MENGGANTIKAN aturan lama bila bertentangan
+- PEMBUKA: adegan owner atau angka rupiah, bukan istilah (ICE/positioning/brand trust) dan bukan berita saham/platform. Teks layar pertama maks 7 kata, tampil di FRAME 1 tanpa animasi masuk. Target skip 3 dtk < 50% (sekarang 46-67%).
+- DURASI per tugas: Discovery kinetik+VO ±35 dtk (maks ~80 kata); Trust "Bedah 60 Detik" (wajah) <= 60 dtk; Koneksi cerita pendiri ±45 dtk. Data: tonton rata-rata 6-18 dtk.
+- ARTEFAK TERISI di setiap konten (balasan CS sebelum-sesudah, kartu penawaran, checklist 3 baris, label "contoh simulasi"); CTA menyebut alat itu dan penerimanya.
+- CAPTION 5 baris (menggantikan 1 kalimat HVC + 6-8 hashtag): 1 adegan = hook layar; 2 dugaan bocor + cara cek; 3 satu langkah hari ini; 4 satu CTA; 5 "Dikenal itu murah. Dipilih itu dibangun." + MAKS 3 hashtag: #TheBrandFixer #BrandingBisnis #PemilikBisnis. QC: satu ID satu caption, tanpa "Anda", hook-ucapan-contoh-caption-CTA cocok.
+- LENSA & SERI: "Brand kamu bocor di mana?" (pembuka khas). Seri: Bocor di Mana? #NN (kinetik/carousel), Bedah 60 Detik (wajah), Bedah Brand Indonesia (carousel kasus publik). Hindari: berita tanpa adegan owner, vonis "Bukan X tapi Y" tanpa cara cek, AI sebagai pahlawan.
+- RITME 4 post/minggu, jeda maks 2 hari. Uji hook via Trial Reels (2 versi beda 3 dtk pertama, 72 jam, skip + share/reach).
+- Ukuran: Discovery skip <50% & share/reach >=0,6%; Carousel save/reach >=1%; Trust like/reach >=8% & >=5 komentar.
+- Konflik terbuka (tunggu Aldy): font Lora+Inter (usul laporan) vs Style Bible; "malam ini" di contoh laporan vs aturan "hari ini"; daftar 5 dimensi Brand-Up belum ada; CTA pin Cek Brand 15 Menit menunggu halamannya online. Bio dipertahankan (keputusan Aldy 17 Nov).
