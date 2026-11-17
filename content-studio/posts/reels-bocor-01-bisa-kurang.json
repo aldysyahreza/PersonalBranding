@@ -21,45 +21,45 @@
    {
     "say": "“Kak, bisa kurang?” Chat ini masuk lagi, tiap hari. Kenalin, saya Aldy Syahreza. Belasan tahun mendampingi brand lintas industri.",
     "txt": "“Kak, bisa *kurang*?”",
-    "shot": "phone",
+    "shot": "A-MCU",
     "dur": "",
-    "case": "Adegan chat tawar-menawar: pola umum toko online, bukan kasus klien.",
+    "case": "0-7 dtk. Cold open: Aldy memegang HP (chat disamarkan). Teks frame 1.",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Kalo ini terjadi tiap hari, bocornya biasanya bukan di harga.",
-    "txt": "Bocornya *bukan* di harga",
-    "shot": "close",
+    "say": "Kalo ini terjadi tiap hari, bocornya biasanya di trust, bukan di harga. Pembeli belum lihat alasan milih kamu, jadi yang ditawar cuma angka.",
+    "txt": "Bocornya di *trust*",
+    "shot": "A-punch115",
     "dur": "",
-    "case": "",
+    "case": "7-16 dtk. Diagnosis + cara cek. Panel kata TRUST di belakang.",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Cek satu hal: alasan milih kamu udah kelihatan sebelum harga disebut? Kalo belum, yang ditawar cuma angka.",
-    "txt": "Alasan dulu, *baru* harga",
-    "shot": "card",
+    "say": "Ini balasan yang biasa dikirim: “Maaf kak, sudah harga pas.”",
+    "txt": "Sebelum",
+    "shot": "B-overhead",
     "dur": "",
-    "case": "Dugaan + cara cek (bukan vonis).",
+    "case": "16-21 dtk. Chat dicetak; spidol terracotta melingkari 'harga pas'.",
     "solusi": "Satu tindakan: CS memakai balasan yang menyebut alasan memilih sebelum membahas harga.",
     "contoh": ""
    },
    {
-    "say": "Bandingin dua balasan ini. Satu: “Maaf kak, sudah harga pas.” Dua: “Harganya tetap, kak. Tapi kalo ukurannya gak pas, tukar gratis tujuh hari.”",
-    "txt": "Balasan *nomor 2*",
-    "shot": "phone",
+    "say": "Ganti jadi begini: “Harganya tetap, kak. Tapi kalo ukurannya gak pas, tukar gratis tujuh hari.”",
+    "txt": "Sesudah",
+    "shot": "B-overhead",
     "dur": "",
-    "case": "Artefak: dua balasan CS sebelum-sesudah, toko gamis (contoh simulasi).",
+    "case": "21-31 dtk. Aldy menulis versi baru di sebelahnya; cap BOCOR DI SINI di versi lama (cut di dentum).",
     "solusi": "",
-    "contoh": "Balasan 2: harga tetap + alasan memilih (tukar gratis 7 hari) sebelum pembeli minta diskon."
+    "contoh": "Sebelum: 'Maaf kak, sudah harga pas.' Sesudah: 'Harganya tetap, kak. Tapi kalo ukurannya gak pas, tukar gratis tujuh hari.' (toko gamis, contoh simulasi)"
    },
    {
-    "say": "Kirim video ini ke CS kamu. Minta dia pakai balasan nomor dua mulai hari ini.",
+    "say": "Kirim ke CS kamu. Minta dia pakai balasan ini mulai hari ini.",
     "txt": "*Kirim* ke CS kamu",
-    "shot": "med",
+    "shot": "A-MCU",
     "dur": "",
-    "case": "",
+    "case": "31-36 dtk. CTA share; sonic logo; kartu seri 2 dtk.",
     "solusi": "",
     "contoh": ""
    }
@@ -71,11 +71,13 @@
   }
  },
  "sistem": {
-  "tugas": "Discovery (kinetik + VO)",
-  "target_durasi": "±35-40 dtk",
+  "formula": "TH-1 Bedah 60 Detik (skill brand-fixer-reels-system)",
+  "tugas": "Share",
+  "set": "A Ruang Strategi + B Meja Bedah",
+  "panel_kata": "TRUST",
+  "target_durasi": "<=40 dtk",
   "teks_frame1": "“Kak, bisa kurang?”",
-  "artefak": "dua balasan CS (sebelum/sesudah)",
-  "sudut_cerita": "kesalahan umum",
-  "tipe": "A"
+  "aset_khas": "spidol terracotta, cap BOCOR DI SINI",
+  "motion": "hanya kartu seri + subtitle (<10%)"
  }
 }
