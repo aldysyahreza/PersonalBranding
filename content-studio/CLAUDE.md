@@ -212,3 +212,5 @@ Dasar: 3 sampel tulisan Aldy (voice/sampel-aldy.md). Tingkat disetujui Aldy: "pe
 - RITME 4 post/minggu, jeda maks 2 hari. Uji hook via Trial Reels (2 versi beda 3 dtk pertama, 72 jam, skip + share/reach).
 - Ukuran: Discovery skip <50% & share/reach >=0,6%; Carousel save/reach >=1%; Trust like/reach >=8% & >=5 komentar.
 - Konflik terbuka (tunggu Aldy): font Lora+Inter (usul laporan) vs Style Bible; "malam ini" di contoh laporan vs aturan "hari ini"; daftar 5 dimensi Brand-Up belum ada; CTA pin Cek Brand 15 Menit menunggu halamannya online. Bio dipertahankan (keputusan Aldy 17 Nov).
+- (17 Nov, Aldy) Keputusan konflik: (1) font tetap Style Bible (Archivo/Fraunces/Inter/Caveat), bukan Lora; (2) tetap "hari ini", bukan "malam ini"; (3) "lima dimensi Brand-Up" BUKAN keharusan, laporan hanya referensi: Claude bebas mengembangkan lensa "bocor di mana" per topik; (4) perkenalan TETAP DIUCAPKAN di reels (uji perkenalan versi kartu-saja dibatalkan).
+- Episode berikut: posts/reels-bocor-01-bisa-kurang.json (Bocor di Mana? #01, Discovery, 84 kata ±40 dtk, frame-1 "Kak, bisa kurang?", artefak dua balasan CS toko gamis simulasi, CTA kirim ke CS). Menunggu rekaman Aldy.
