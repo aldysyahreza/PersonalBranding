@@ -1,0 +1,81 @@
+{
+ "id": "reels-cerita-iht-mama",
+ "title": "Cerita Lapangan #01: Seratus orang, satu cerita",
+ "format": "reels",
+ "stage": "naskah",
+ "dx": 6,
+ "job": "Share",
+ "pillar": "Koneksi (cerita perjalanan Aldy)",
+ "hue": "amber",
+ "series": "Cerita Lapangan #01",
+ "caption": "Minggu lalu saya cerita ke seratus staf klinik anak tentang satu mama yang anaknya demam.\nGak ada yang salah di cerita itu. Semua sedang kerja. Tapi rasa percayanya habis sedikit-sedikit, dari lobi sampai farmasi.\nCoba hari ini jalan sendiri dari pintu masuk sampai kasir bisnismu, dan catat di mana pelanggan nunggu tanpa kabar.\nKirim ke orang di tim kamu yang paling sering ketemu pelanggan.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "pinned": "Cerita mama di video adalah cerita rekaan yang saya pakai di pelatihan, bukan pasien sungguhan. Nama klinik sengaja tidak disebut.",
+ "story": "Kalo jalan dari pintu masuk sampai kasir di bisnismu, di mana pelanggan paling sering nunggu? Pintu masuk / Antre bayar / Pengiriman",
+ "reel": {
+  "v": 2,
+  "angle": "cermin",
+  "exec": "layar",
+  "coverH": "Seratus orang",
+  "coverHi": "satu cerita",
+  "beats": [
+   {
+    "say": "Minggu lalu saya berdiri di depan seratus staf klinik anak. Saya Aldy Syahreza, dan hari itu saya gak buka pakai teori.",
+    "txt": "Seratus orang. *Satu cerita.*",
+    "shot": "D-MCU",
+    "dur": "",
+    "case": "0-9 dtk. Set D cahaya jendela. Frame 1: foto panggung IHT (tanpa wajah peserta/logo klien) + teks.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Saya cerita tentang satu mama. Anaknya demam, pertama kali datang. Cerita rekaan, tapi semua pernah lihat.",
+    "txt": "Satu mama. *Pertama kali datang.*",
+    "shot": "D-MCU",
+    "dur": "",
+    "case": "9-17 dtk. Shot panjang, jeda dibiarkan.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Di lobi, dia bingung lift di mana. Di registrasi, gak tahu habis ini ke mana. Di farmasi, nunggu tanpa kabar.",
+    "txt": "Rasa percaya: *turun*",
+    "shot": "B-roll + motion",
+    "dur": "",
+    "case": "17-27 dtk. Slide perjalanan dari materi IHT (dipotong tanpa nama klien) atau motion: meter rasa percaya turun per pos.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Gak ada orang jahat di cerita itu. Semua sedang kerja. Tapi rasa percayanya habis sedikit-sedikit.",
+    "txt": "_Semua sedang kerja._",
+    "shot": "D-close",
+    "dur": "",
+    "case": "27-34 dtk. Close-up, jeda 1 dtk sebelum kalimat terakhir.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Pelanggan kamu gak ketemu SOP. Mereka ketemu tim kamu. Kirim ini ke orang di tim kamu yang paling sering ketemu pelanggan.",
+    "txt": "Mereka ketemu *tim kamu*",
+    "shot": "D-MCU",
+    "dur": "",
+    "case": "34-42 dtk. CTA share; tutup kalimat khas tanpa musik naik berlebihan.",
+    "solusi": "Refleksi, bukan tutorial: pelanggan menilai brand dari orang yang mereka temui di tiap titik.",
+    "contoh": ""
+   }
+  ],
+  "prod": {},
+  "intro": {
+   "short": "Saya Aldy Syahreza (disisipkan di kalimat pertama cerita)",
+   "pakai": "ucap-sisip"
+  }
+ },
+ "sistem": {
+  "formula": "TH-3 Cerita Pendiri/Lapangan (35-45 dtk)",
+  "tugas": "Koneksi + Share",
+  "set": "D (cahaya jendela) + sisipan B-roll/slide",
+  "target_durasi": "±42 dtk",
+  "teks_frame1": "Seratus orang. Satu cerita.",
+  "privasi": "Tanpa nama klien, tanpa wajah peserta tanpa izin, cerita mama = rekaan (disebut di video)"
+ }
+}
