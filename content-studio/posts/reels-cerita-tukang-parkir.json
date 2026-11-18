@@ -8,7 +8,7 @@
  "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
  "hue": "terracotta",
  "series": "Catatan Meja Aldy",
- "caption": "Makanannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma tukang parkirnya.\nOrang gak inget semua momen, cuma momen paling kuat dan momen terakhir (peak-end rule, Daniel Kahneman). Cek: apa yang terakhir dirasain pelangganmu?\nHari ini, perbaiki satu titik terakhir: kemasan, balasan setelah transfer, atau pesan setelah layanan.\nKirim ke orang yang pegang bagian paling akhir di bisnismu.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "caption": "Makanannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma tukang parkirnya, padahal dia bukan karyawan restoran itu.\nOrang menilai pengalaman dari momen paling kuat dan momen terakhir (peak-end rule, Daniel Kahneman). Masalahnya, momen terakhir pelangganmu sering terjadi pas kamu gak ada.\nHari ini, cari titik terakhir itu: kemasan, kurir, atau balasan setelah transfer.\nKirim ke orang yang pegang bagian paling akhir di bisnismu.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
  "pinned": "Dasar: peak-end rule dari penelitian Daniel Kahneman dkk. (1993). Cerita tukang parkir adalah analogi umum, contoh paket dan chat adalah simulasi.",
  "story": "Titik terakhir di bisnismu yang paling sering bikin kesan jelek: Kemasan / Balasan setelah bayar / Pengiriman",
  "reel": {
@@ -19,54 +19,54 @@
   "coverHi": "yang diingat tukang parkirnya",
   "beats": [
    {
-    "say": "Kamu pasti pernah. Makan di tempat yang enak banget, pelayannya ramah. Pas keluar, tukang parkirnya marah-marah soal dua ribu.",
+    "say": "Kamu pasti pernah. Makan di tempat yang enak banget, pelayannya ramah. Pas keluar, tukang parkir marah-marah soal dua ribu.",
     "txt": "Makanannya enak. Yang diingat: *tukang parkirnya.*",
     "shot": "A-MCU",
     "dur": "",
-    "case": "0-7 dtk. Frame 1 teks. Cold open, wajah. (Analogi umum, bukan kasus klien.)",
+    "case": "0-7 dtk. Frame 1 teks. Cold open.",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Di jalan pulang, yang kamu ceritain cuma satu: tukang parkirnya.",
-    "txt": "Yang diceritain: *cuma satu*",
+    "say": "Di jalan pulang, yang kamu ceritain cuma tukang parkirnya. Padahal dia bukan karyawan restoran itu.",
+    "txt": "Padahal *bukan karyawannya*",
     "shot": "A-punch115",
     "dur": "",
-    "case": "7-10 dtk. Jeda sebentar sebelum 'tukang parkirnya'.",
+    "case": "7-12 dtk. Jeda sebelum 'Padahal'.",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Saya Aldy Syahreza. Belasan tahun mendampingi brand, polanya sama. Orang gak inget semuanya. Yang diinget cuma momen paling kuat dan momen terakhir. Daniel Kahneman nyebutnya peak-end rule.",
+    "say": "Saya Aldy Syahreza. Daniel Kahneman, peraih Nobel, menemukan polanya. Orang menilai pengalaman dari momen paling kuat dan momen terakhir.",
     "txt": "Momen *puncak* + momen *terakhir*",
     "shot": "A-MCU + motion",
     "dur": "",
-    "case": "10-22 dtk. Sisipan motion 3 dtk: garis pengalaman, titik puncak & titik akhir disorot (InkPath + MarkerCircle). Dasar: peak-end rule, Kahneman dkk. (1993) 'When more pain is preferred to less' (eksperimen air dingin).",
+    "case": "12-21 dtk. Motion 3 dtk: garis pengalaman, puncak & akhir dilingkari. Dasar: Kahneman dkk. 1993; Nobel Ekonomi 2002.",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Coba cek bisnismu. Apa yang terakhir dirasain pelangganmu? Paket yang diselotip asal? Chat yang gak dibales setelah transfer?",
-    "txt": "Apa yang *terakhir*?",
+    "say": "Sekarang lihat bisnismu. Kamu udah bayar iklan, foto produk, admin yang ramah. Tapi momen terakhir pelangganmu terjadi pas kamu gak ada. Paket penyok di tangan kurir. Chat “udah transfer, kak” yang gak dibales semalaman.",
+    "txt": "Terjadi *pas kamu gak ada*",
     "shot": "B-overhead",
     "dur": "",
-    "case": "22-32 dtk. Sebelum: paket diselotip asal / layar chat 'udah transfer kak' tanpa balasan. Sesudah: paket rapi + kartu ucapan / balasan 'Terima kasih kak, paket dikirim besok pagi.'",
+    "case": "21-35 dtk. Sebelum: paket penyok / chat tanpa balasan. Sesudah: paket rapi + kartu, balasan 'Terima kasih kak, dikirim besok pagi'.",
     "solusi": "Satu tindakan: perbaiki satu titik terakhir yang dirasakan pelanggan (pengemasan / balasan setelah transfer / pesan setelah layanan).",
     "contoh": ""
    },
    {
-    "say": "Jaga dua ribu terakhir itu. Kirim ke orang yang pegang bagian paling akhir di bisnismu.",
-    "txt": "Jaga *dua ribu terakhir*",
+    "say": "Jadi, di bisnismu, siapa tukang parkirnya? Cari dia hari ini. Kirim video ini ke orang yang pegang bagian paling akhir.",
+    "txt": "Siapa *tukang parkirnya?*",
     "shot": "A-MCU",
     "dur": "",
-    "case": "32-38 dtk. CTA share ke tim.",
+    "case": "35-43 dtk. Pertanyaan besar, jeda 1 dtk, lalu CTA share.",
     "solusi": "",
     "contoh": ""
    }
   ],
   "prod": {},
   "intro": {
-   "short": "Saya Aldy Syahreza. Belasan tahun mendampingi brand (disisipkan)",
+   "short": "Saya Aldy Syahreza. (disisipkan sebelum Kahneman)",
    "pakai": "ucap-sisip"
   }
  },
