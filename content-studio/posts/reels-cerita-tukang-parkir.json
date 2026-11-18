@@ -8,9 +8,9 @@
  "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
  "hue": "terracotta",
  "series": "Catatan Meja Aldy",
- "caption": "Makanannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma tukang parkirnya.\nOrang mengingat akhirnya (eksperimen Daniel Kahneman). Di bisnismu, akhir itu sering terjadi pas barang rusak, dan admin cuma bisa jawab \"silakan klaim ke kurir\" karena dia gak dikasih izin.\nHari ini, bikin dua aturan: barang rusak cukup kirim foto lalu langsung diganti, dan admin boleh ganti sendiri di bawah angka yang kamu tentukan.\nKirim video ini ke admin kamu.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
- "pinned": "Dasar: Kahneman, Fredrickson, Schreiber & Redelmeier (1993), \"When More Pain Is Preferred to Less\", Psychological Science: mayoritas peserta memilih mengulang rendaman air dingin yang lebih lama karena akhirnya sedikit lebih hangat. Ide batas wewenang dikenal dari kebijakan Ritz-Carlton. Cerita tukang parkir analogi umum; contoh chat simulasi.",
- "story": "Kalo ada barang rusak, admin kamu boleh langsung ganti tanpa nanya kamu? Boleh / Harus nanya dulu / Belum ada aturan",
+ "caption": "Makanannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma tukang parkirnya.\nOrang mengingat akhirnya (eksperimen Daniel Kahneman). Di bisnismu, akhir itu sering terjadi pas barang sampai rusak, dan admin cuma bisa jawab \"silakan klaim ke kurir\" karena belum ada sistemnya.\nHari ini, pasang asuransi pengiriman di tiap paket dan ubah jawaban admin: minta video buka paket, lalu klaimnya kalian yang urus.\nKirim video ini ke admin kamu.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "pinned": "Dasar: Kahneman, Fredrickson, Schreiber & Redelmeier (1993), Psychological Science: mayoritas peserta memilih mengulang rendaman air dingin yang lebih lama karena akhirnya sedikit lebih hangat. Tarif dan syarat asuransi berbeda tiap ekspedisi: cek dulu, termasuk standar kemasan agar klaim diterima. Cerita tukang parkir analogi umum; contoh chat simulasi.",
+ "story": "Kalo paket sampai rusak, di bisnismu siapa yang ngurus klaimnya? Pelanggan sendiri / Admin kami / Belum pernah kepikiran",
  "reel": {
   "v": 2,
   "angle": "cermin",
@@ -37,7 +37,7 @@
     "contoh": ""
    },
    {
-    "say": "Di bisnismu, tukang parkir itu muncul pas ada masalah. Produk sampai rusak, pelanggan komplain. Admin jawab: “Itu dari ekspedisi, kak. Silakan klaim ke kurir.” Benar. Tapi itu akhir yang dibawa pulang.",
+    "say": "Di bisnismu, tukang parkir itu muncul pas produk sampai rusak. Admin jawab: “Itu dari ekspedisi, kak. Silakan klaim ke kurir.” Benar. Tapi itu akhir yang dibawa pulang.",
     "txt": "“Silakan klaim ke kurir.”",
     "shot": "anim",
     "dur": "",
@@ -46,16 +46,16 @@
     "contoh": ""
    },
    {
-    "say": "Admin jarang judes karena orangnya. Dia gak dikasih izin. Orang yang gak boleh ngasih solusi, cuma bisa ngasih alasan. Jadi bikin dua aturan. Satu: kalau barang rusak, pelanggan cukup kirim foto, langsung kami ganti. Gak ditanya-tanya, gak disuruh klaim ke kurir. Dua: admin boleh ganti sendiri tanpa nunggu kamu, asal harganya di bawah, misalnya, dua ratus ribu.",
-    "txt": "Rusak? Foto. *Langsung ganti.*",
+    "say": "Admin bukan judes. Bisnisnya aja yang belum punya sistem. Solusinya bukan ganti gratis. Satu, pasang asuransi pengiriman di tiap paket. Biayanya kecil, bisa masuk ke ongkir. Dua, ubah jawaban admin: “Kirim video buka paketnya, kak. Klaim dan penggantinya biar kami yang urus.” Rugi ditanggung asuransi. Video mencegah klaim palsu.",
+    "txt": "Bukan ganti gratis. *Ambil alih repotnya.*",
     "shot": "anim",
     "dur": "",
-    "case": "ANIM: figur admin dengan tangan terikat/gembok 'izin'; kalimat inti; Kartu 1 'RUSAK? Kirim foto -> langsung kami ganti'; Kartu 2 'Admin boleh ganti sendiri < Rp200.000' (label contoh) + gembok terbuka; putar ulang chat versi baru 'Siap kak, pengganti dikirim hari ini' -> bubble pelanggan 'adminnya baik banget'",
-    "solusi": "Satu paket kebijakan: garansi tanpa debat + batas wewenang admin (nilai ditentukan owner).",
-    "contoh": "Kartu 1: 'Rusak? Kirim foto. Langsung kami ganti.' Kartu 2: 'Admin boleh ganti sendiri tanpa tanya owner, di bawah Rp200.000 (contoh angka, sesuaikan).'"
+    "case": "ANIM: admin bukan judes -> ikon 'belum ada sistem'; Kartu 1 'ASURANSI PENGIRIMAN di tiap paket (masuk ongkir)'; Kartu 2 jawaban baru admin; timbangan: rugi -> asuransi, repot -> kamu; ikon video buka paket = tameng klaim palsu; putar ulang chat versi baru.",
+    "solusi": "Sistem 2 langkah: (1) asuransi pengiriman di tiap paket, biaya dimasukkan ke ongkir; (2) admin mengambil alih klaim dengan syarat video buka paket. Kerugian barang ditanggung asuransi, risiko klaim palsu ditahan video.",
+    "contoh": "Jawaban admin: “Kirim video buka paketnya, kak. Klaim dan penggantinya biar kami yang urus.”"
    },
    {
-    "say": "Di bisnismu, siapa tukang parkirnya? Tentukan angkanya hari ini, lalu kirim video ini ke admin kamu.",
+    "say": "Kamu gak harus nanggung ruginya. Cukup ambil alih repotnya. Di bisnismu, siapa tukang parkirnya? Kirim video ini ke admin kamu.",
     "txt": "Siapa *tukang parkirnya?*",
     "shot": "anim",
     "dur": "",
