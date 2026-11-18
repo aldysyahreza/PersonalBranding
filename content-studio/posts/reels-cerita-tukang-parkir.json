@@ -19,7 +19,7 @@
   "coverHi": "yang diingat tukang parkirnya",
   "beats": [
    {
-    "say": "Kamu pasti pernah. Makan di tempat yang enak banget, pelayannya ramah. Pas keluar, tukang parkir marah-marah soal dua ribu.",
+    "say": "Makan di tempat yang enak banget, pelayannya ramah. Pas keluar, tukang parkir marah-marah soal dua ribu.",
     "txt": "Makanannya enak. Yang diingat: *tukang parkirnya.*",
     "shot": "A-MCU",
     "dur": "",
@@ -46,7 +46,7 @@
     "contoh": ""
    },
    {
-    "say": "Sekarang lihat bisnismu. Kamu udah bayar iklan, foto produk, admin yang ramah. Tapi momen terakhir pelangganmu terjadi pas kamu gak ada. Paket penyok di tangan kurir. Chat “udah transfer, kak” yang gak dibales semalaman.",
+    "say": "Lihat bisnismu. Kamu udah bayar iklan, foto produk, admin yang ramah. Tapi momen terakhir pelangganmu terjadi pas kamu gak ada. Paket penyok di tangan kurir. Chat “udah transfer, kak” yang gak dibales semalaman.",
     "txt": "Terjadi *pas kamu gak ada*",
     "shot": "B-overhead",
     "dur": "",
@@ -55,7 +55,7 @@
     "contoh": ""
    },
    {
-    "say": "Jadi, di bisnismu, siapa tukang parkirnya? Cari dia hari ini. Kirim video ini ke orang yang pegang bagian paling akhir.",
+    "say": "Di bisnismu, siapa tukang parkirnya? Kirim video ini ke orang yang pegang bagian paling akhir.",
     "txt": "Siapa *tukang parkirnya?*",
     "shot": "A-MCU",
     "dur": "",
