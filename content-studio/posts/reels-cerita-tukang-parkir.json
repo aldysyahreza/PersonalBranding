@@ -8,9 +8,9 @@
  "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
  "hue": "terracotta",
  "series": "Catatan Meja Aldy",
- "caption": "Makanannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma tukang parkirnya, padahal dia bukan karyawan restoran itu.\nDi eksperimen Daniel Kahneman, orang memilih mengulang rasa sakit yang lebih lama asal akhirnya lebih enak. Yang diingat: akhirnya. Di bisnismu, akhir itu sering terjadi pas kamu gak ada, di tangan kurir.\nHari ini, pasang pesan penutup: sehari setelah paket diterima, tanya kabarnya dan tawarkan ganti kalau ada yang rusak.\nKirim ke admin yang pegang chat setelah transaksi.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
- "pinned": "Dasar: Kahneman, Fredrickson, Schreiber & Redelmeier (1993), \"When More Pain Is Preferred to Less\", Psychological Science. Peserta mencelupkan tangan ke air dingin 60 detik, lalu 90 detik dengan 30 detik terakhir sedikit lebih hangat; mayoritas memilih mengulang yang 90 detik. Cerita tukang parkir adalah analogi umum, contoh pesan adalah simulasi.",
- "story": "Titik terakhir di bisnismu yang paling sering bikin kesan jelek: Kemasan / Balasan setelah bayar / Pengiriman",
+ "caption": "Makanannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma tukang parkirnya.\nOrang mengingat akhirnya (eksperimen Daniel Kahneman). Di bisnismu, akhir itu sering terjadi pas ada masalah, dan admin cuma bisa jawab \"silakan klaim ke kurir\" karena dia gak punya wewenang.\nHari ini, pasang garansi tanpa debat dan tentukan sampai nilai berapa admin boleh langsung ganti tanpa nanya kamu.\nKirim video ini ke admin kamu.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "pinned": "Dasar: Kahneman, Fredrickson, Schreiber & Redelmeier (1993), \"When More Pain Is Preferred to Less\", Psychological Science: mayoritas peserta memilih mengulang rendaman air dingin yang lebih lama karena akhirnya sedikit lebih hangat. Ide batas wewenang dikenal dari kebijakan Ritz-Carlton. Cerita tukang parkir analogi umum; contoh chat simulasi.",
+ "story": "Kalo ada barang rusak, admin kamu boleh langsung ganti tanpa nanya kamu? Boleh / Harus nanya dulu / Belum ada aturan",
  "reel": {
   "v": 2,
   "angle": "cermin",
@@ -19,56 +19,47 @@
   "coverHi": "yang diingat tukang parkirnya",
   "beats": [
    {
-    "say": "Makan di tempat yang enak, pelayannya ramah. Pas keluar, tukang parkir marah-marah soal dua ribu. Yang kamu ceritain di jalan pulang? Tukang parkirnya. Padahal dia bukan karyawan restoran itu.",
+    "say": "Makan di tempat yang enak, pelayannya ramah. Pas keluar, tukang parkir marah-marah soal dua ribu. Yang kamu ceritain di jalan pulang? Tukang parkirnya. Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, dari branding sampai strategi marketing.",
     "txt": "Makanannya enak. Yang diingat: *tukang parkirnya.*",
     "shot": "A-MCU",
     "dur": "",
-    "case": "0-11 dtk. Frame 1 teks. Jeda sebelum 'Padahal'.",
+    "case": "0-17 dtk. Frame 1 teks. Perkenalan LENGKAP (tidak dipotong) + kartu nama kecil.",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, dari branding sampai strategi marketing.",
-    "txt": "Aldy Syahreza · *100+ brand*",
-    "shot": "A-MCU + kartu nama",
-    "dur": "",
-    "case": "11-19 dtk. Perkenalan lengkap (tidak dipotong). Kartu nama kecil, satu lapis teks.",
-    "solusi": "",
-    "contoh": ""
-   },
-   {
-    "say": "Daniel Kahneman, peraih Nobel, pernah menguji ini. Orang mencelupkan tangan ke air dingin enam puluh detik. Lalu sembilan puluh detik, tapi di akhir airnya sedikit lebih hangat. Kebanyakan memilih mengulang yang lebih lama. Sakitnya lebih panjang, tapi akhirnya lebih enak. Yang diingat: akhirnya.",
-    "txt": "Sakit lebih lama, *akhir lebih enak*",
+    "say": "Daniel Kahneman, peraih Nobel, pernah menguji ini. Orang mencelupkan tangan ke air dingin enam puluh detik. Lalu sembilan puluh detik, tapi di akhir airnya sedikit lebih hangat. Kebanyakan memilih mengulang yang lebih lama. Yang diingat: akhirnya.",
+    "txt": "Yang diingat: *akhirnya.*",
     "shot": "Motion 8 dtk",
     "dur": "",
-    "case": "19-35 dtk. Motion: dua gelas/garis waktu 60 dtk vs 90 dtk (30 dtk terakhir sedikit hangat), label 'mayoritas memilih yang lebih lama' (angka persen tidak ditampilkan sebelum dicek ke paper asli). Dasar: Kahneman, Fredrickson, Schreiber, Redelmeier (1993), Psychological Science.",
+    "case": "17-33 dtk. Motion: dua garis waktu 60 vs 90 dtk, 30 dtk terakhir sedikit hangat; label 'mayoritas memilih yang lebih lama'. Dasar: Kahneman dkk. (1993).",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Di bisnismu, momen terakhir sering terjadi pas kamu gak ada. Paket penyok di tangan kurir. Kurirnya di luar kuasamu. Tapi kamu bisa jadi yang ngomong paling terakhir.",
-    "txt": "Kamu bisa jadi *yang terakhir ngomong*",
-    "shot": "A-punch115",
+    "say": "Di bisnismu, tukang parkir itu muncul pas ada masalah. Produk sampai rusak, pelanggan komplain. Admin jawab: “Itu dari ekspedisi, kak. Silakan klaim ke kurir.” Benar. Tapi itu akhir yang dibawa pulang.",
+    "txt": "“Silakan klaim ke kurir.”",
+    "shot": "B-overhead",
     "dur": "",
-    "case": "35-45 dtk. Panel kata TRUST/SYSTEM di belakang.",
-    "solusi": "Satu tindakan: perbaiki satu titik terakhir yang dirasakan pelanggan (pengemasan / balasan setelah transfer / pesan setelah layanan).",
+    "case": "33-46 dtk. SEBELUM: chat balasan admin dicetak, spidol melingkari 'klaim ke kurir', cap BOCOR DI SINI.",
+    "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Biasanya, paket sampai, lalu sepi. Ganti jadi begini. Sehari setelah paket diterima, kirim satu pesan: “Paketnya sudah sampai, kak? Kalau ada yang penyok, foto aja. Hari ini juga kami ganti.”",
-    "txt": "Sehari setelah diterima: *satu pesan*",
-    "shot": "B-overhead",
+    "say": "Admin jarang judes karena orangnya. Dia gak dikasih wewenang. Orang yang gak boleh ngasih solusi, cuma bisa ngasih alasan. Jadi pasang dua hal. Satu, garansi tanpa debat: rusak, kirim foto, kami ganti. Dua, batas wewenang: admin boleh langsung ganti sampai nilai tertentu, tanpa nanya kamu.",
+    "txt": "Gak boleh kasih solusi = *cuma kasih alasan*",
+    "shot": "A-punch115 -> B-overhead",
     "dur": "",
-    "case": "45-58 dtk. Meja: SEBELUM = paket penyok + chat kosong, cap BOCOR DI SINI. SESUDAH = Aldy menulis pesan penutup di kertas/HP, lalu foto penyok dibalas 'kami kirim pengganti hari ini'.",
-    "solusi": "Satu tindakan: pesan penutup sehari setelah paket diterima, dengan tawaran ganti hari itu juga (service recovery).",
-    "contoh": "“Paketnya sudah sampai, kak? Kalau ada yang penyok, foto aja. Hari ini juga kami ganti.”"
+    "case": "46-66 dtk. Kalimat inti di wajah. SESUDAH di meja: Aldy menulis 2 kartu: 'GARANSI TANPA DEBAT: rusak -> foto -> kami ganti' dan 'WEWENANG ADMIN: ganti langsung s.d. Rp____ tanpa tanya owner'.",
+    "solusi": "Satu paket kebijakan: garansi tanpa debat + batas wewenang admin (nilai ditentukan owner).",
+    "contoh": "Kartu 1: 'Rusak? Kirim foto. Kami ganti.' Kartu 2: 'Admin boleh ganti langsung sampai Rp___ tanpa tanya owner.' (Pola dikenal: Ritz-Carlton memberi wewenang karyawan menyelesaikan masalah tamu tanpa izin atasan, sampai batas nilai tertentu.)"
    },
    {
-    "say": "Yang tadinya kesal sama kurir, pulangnya cerita tentang kamu. Di bisnismu, siapa tukang parkirnya? Kirim ini ke admin yang pegang chat setelah transaksi.",
+    "say": "Di bisnismu, siapa tukang parkirnya? Tentukan batas wewenangnya hari ini, lalu kirim video ini ke admin kamu.",
     "txt": "Siapa *tukang parkirnya?*",
     "shot": "A-MCU",
     "dur": "",
-    "case": "58-68 dtk. Tatap kamera, jeda 1 dtk sebelum CTA. Sonic logo.",
+    "case": "66-75 dtk. Tatap kamera, jeda 1 dtk sebelum CTA. Sonic logo.",
     "solusi": "",
     "contoh": ""
    }
