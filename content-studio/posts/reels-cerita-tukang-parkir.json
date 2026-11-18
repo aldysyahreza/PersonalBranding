@@ -21,45 +21,45 @@
    {
     "say": "Makan di tempat yang enak, pelayannya ramah. Pas keluar, tukang parkir marah-marah soal dua ribu. Yang kamu ceritain di jalan pulang? Tukang parkirnya. Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, dari branding sampai strategi marketing.",
     "txt": "Makanannya enak. Yang diingat: *tukang parkirnya.*",
-    "shot": "A-MCU",
+    "shot": "anim",
     "dur": "",
-    "case": "0-17 dtk. Frame 1 teks. Perkenalan LENGKAP (tidak dipotong) + kartu nama kecil.",
+    "case": "ANIM: frame 1 piring+bintang 5 & teks; tukang parkir ilustrasi + bubble 'DUA RIBU!'; mobil pulang dengan bubble cerita; lalu kartu perkenalan berfoto (foto/profil-seminar.jpg) + 100+ BRAND",
     "solusi": "",
     "contoh": ""
    },
    {
     "say": "Daniel Kahneman, peraih Nobel, pernah menguji ini. Orang mencelupkan tangan ke air dingin enam puluh detik. Lalu sembilan puluh detik, tapi di akhir airnya sedikit lebih hangat. Kebanyakan memilih mengulang yang lebih lama. Yang diingat: akhirnya.",
     "txt": "Yang diingat: *akhirnya.*",
-    "shot": "Motion 8 dtk",
+    "shot": "anim",
     "dur": "",
-    "case": "17-33 dtk. Motion: dua garis waktu 60 vs 90 dtk, 30 dtk terakhir sedikit hangat; label 'mayoritas memilih yang lebih lama'. Dasar: Kahneman dkk. (1993).",
+    "case": "ANIM: dua garis waktu tangan di air (60 dtk biru vs 90 dtk, 30 dtk terakhir amber/hangat); label 'mayoritas pilih ulang yang 90 detik'; teks 'Yang diingat: akhirnya.' + lingkaran spidol di ujung garis",
     "solusi": "",
     "contoh": ""
    },
    {
     "say": "Di bisnismu, tukang parkir itu muncul pas ada masalah. Produk sampai rusak, pelanggan komplain. Admin jawab: “Itu dari ekspedisi, kak. Silakan klaim ke kurir.” Benar. Tapi itu akhir yang dibawa pulang.",
     "txt": "“Silakan klaim ke kurir.”",
-    "shot": "B-overhead",
+    "shot": "anim",
     "dur": "",
-    "case": "33-46 dtk. SEBELUM: chat balasan admin dicetak, spidol melingkari 'klaim ke kurir', cap BOCOR DI SINI.",
+    "case": "ANIM: garis perjalanan pelanggan iklan -> chat -> bayar -> kirim -> RUSAK (ujung); ChatPaper 'Silakan klaim ke kurir.' dilingkari + cap BOCOR DI SINI",
     "solusi": "",
     "contoh": ""
    },
    {
     "say": "Admin jarang judes karena orangnya. Dia gak dikasih izin. Orang yang gak boleh ngasih solusi, cuma bisa ngasih alasan. Jadi bikin dua aturan. Satu: kalau barang rusak, pelanggan cukup kirim foto, langsung kami ganti. Gak ditanya-tanya, gak disuruh klaim ke kurir. Dua: admin boleh ganti sendiri tanpa nunggu kamu, asal harganya di bawah, misalnya, dua ratus ribu.",
     "txt": "Rusak? Foto. *Langsung ganti.*",
-    "shot": "A-punch115 -> B-overhead",
+    "shot": "anim",
     "dur": "",
-    "case": "46-68 dtk. Kalimat inti di wajah. SESUDAH di meja: Aldy menulis 2 kartu: 'RUSAK? Kirim foto -> langsung kami ganti' dan 'ADMIN BOLEH GANTI SENDIRI di bawah Rp200.000 (contoh)'.",
+    "case": "ANIM: figur admin dengan tangan terikat/gembok 'izin'; kalimat inti; Kartu 1 'RUSAK? Kirim foto -> langsung kami ganti'; Kartu 2 'Admin boleh ganti sendiri < Rp200.000' (label contoh) + gembok terbuka; putar ulang chat versi baru 'Siap kak, pengganti dikirim hari ini' -> bubble pelanggan 'adminnya baik banget'",
     "solusi": "Satu paket kebijakan: garansi tanpa debat + batas wewenang admin (nilai ditentukan owner).",
     "contoh": "Kartu 1: 'Rusak? Kirim foto. Langsung kami ganti.' Kartu 2: 'Admin boleh ganti sendiri tanpa tanya owner, di bawah Rp200.000 (contoh angka, sesuaikan).'"
    },
    {
     "say": "Di bisnismu, siapa tukang parkirnya? Tentukan angkanya hari ini, lalu kirim video ini ke admin kamu.",
     "txt": "Siapa *tukang parkirnya?*",
-    "shot": "A-MCU",
+    "shot": "anim",
     "dur": "",
-    "case": "66-75 dtk. Tatap kamera, jeda 1 dtk sebelum CTA. Sonic logo.",
+    "case": "ANIM: 'Di bisnismu, siapa tukang parkirnya?' + kartu seri + ikon kirim",
     "solusi": "",
     "contoh": ""
    }
@@ -71,10 +71,10 @@
   }
  },
  "sistem": {
-  "formula": "TH-2 + motion + meja (MK-2)",
+  "formula": "Tipe A: animasi penuh + voice over (Motion Kit Tinta & Kertas), TANPA talking head (keputusan Aldy 18 Nov, pengecualian aturan skill 'manusia di setiap reels' & 'motion <=30%')",
   "tugas": "Share",
-  "set": "A + B + motion 3 dtk",
-  "target_durasi": "±75 dtk (171 kata; pengecualian atas izin Aldy, jauh di atas batas skill 45 dtk)",
+  "set": "-",
+  "target_durasi": "±80 dtk (182 kata)",
   "teks_frame1": "Makanannya enak. Yang diingat: tukang parkirnya.",
   "asal": "Pola IHT dipakai: adegan sehari-hari -> twist -> kalimat besar -> putar ulang sebelum/sesudah. Isi baru, bukan materi klien."
  }
