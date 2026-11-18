@@ -1,0 +1,83 @@
+{
+ "id": "reels-bocor-02-campaign-gagal",
+ "title": "Bocor di Mana? #02: Campaign Rp10 juta gagal, ganti semua",
+ "format": "reels",
+ "stage": "naskah",
+ "dx": 6,
+ "job": "Share",
+ "pillar": "Brand Diagnosis",
+ "hue": "terracotta",
+ "series": "Bocor di Mana? #02",
+ "caption": "Campaign Rp10 juta gagal. Besoknya semua diganti.\nKalo ini kebiasaan, kemungkinan bocornya bukan di campaign, tapi di cara tim belajar dari gagal. Cek: laporan campaign terakhir kamu nyebut apa yang jalan, atau cuma \"gagal\"?\nSebelum ganti konsep, isi tiga baris: yang jalan, yang gak jalan, satu hal yang diuji ulang.\nKirim ke tim marketing kamu, minta tiga baris ini sebelum campaign berikutnya.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "pinned": "Dasar: Carol S. Dweck, Mindset (2006): kegagalan bisa dibaca sebagai vonis atau sebagai informasi untuk belajar. Penerapan ke evaluasi campaign adalah adaptasi saya. Angka Rp10 juta dan contoh tiga baris adalah simulasi.",
+ "story": "Kalo campaign gagal, di tim kamu biasanya... Ganti semua / Evaluasi dulu / Diam aja",
+ "reel": {
+  "v": 2,
+  "angle": "angka",
+  "exec": "angka",
+  "coverH": "Rp10 juta. Gagal.",
+  "coverHi": "lalu ganti semua",
+  "beats": [
+   {
+    "say": "Campaign sepuluh juta gagal. Besoknya tim ganti semua: desain, caption, target. Kenalin, saya Aldy Syahreza. Belasan tahun mendampingi brand lintas industri.",
+    "txt": "Rp10 juta. Gagal. *Ganti semua.*",
+    "shot": "A-MCU",
+    "dur": "",
+    "case": "0-8 dtk. Cold open, memegang laporan campaign. Angka = contoh hitungan.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Kalo ini kebiasaan, bocornya bukan di campaign. Kamu udah bayar mahal, tapi gak ambil pelajarannya. Carol Dweck dari Stanford bilang: gagal itu bisa jadi vonis, atau jadi data.",
+    "txt": "Gagal: *vonis* atau *data*?",
+    "shot": "A-punch115",
+    "dur": "",
+    "case": "8-19 dtk. Panel kata SYSTEM. Dweck, Mindset (2006): kegagalan sebagai penilaian diri vs informasi untuk belajar (adaptasi ke tim).",
+    "solusi": "Satu tindakan: evaluasi campaign 3 baris sebelum mengganti apa pun.",
+    "contoh": ""
+   },
+   {
+    "say": "Ini laporan yang biasa: “Campaign gagal. Ganti konsep.”",
+    "txt": "Sebelum",
+    "shot": "B-overhead",
+    "dur": "",
+    "case": "19-23 dtk. Laporan dicetak; spidol melingkari 'Ganti konsep'.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Ganti jadi tiga baris: yang jalan apa, yang gak jalan apa, dan satu hal yang diuji ulang.",
+    "txt": "Sesudah",
+    "shot": "B-overhead",
+    "dur": "",
+    "case": "23-31 dtk. Aldy menulis 3 baris; cap BOCOR DI SINI di laporan lama.",
+    "solusi": "",
+    "contoh": "Contoh simulasi: Jalan: klik tinggi di video testimoni. Gak jalan: halaman checkout, banyak berhenti di ongkir. Uji ulang: video yang sama + gratis ongkir minggu depan."
+   },
+   {
+    "say": "Kirim ke tim marketing kamu. Minta tiga baris ini sebelum campaign berikutnya diganti.",
+    "txt": "*Kirim* ke tim marketing",
+    "shot": "A-MCU",
+    "dur": "",
+    "case": "31-36 dtk. CTA share; kartu seri.",
+    "solusi": "",
+    "contoh": ""
+   }
+  ],
+  "prod": {},
+  "intro": {
+   "short": "Kenalin, saya Aldy Syahreza. Belasan tahun mendampingi brand lintas industri.",
+   "pakai": "ucap"
+  }
+ },
+ "sistem": {
+  "formula": "TH-1 Bedah 60 Detik",
+  "tugas": "Share",
+  "set": "A + B",
+  "panel_kata": "SYSTEM",
+  "target_durasi": "<=40 dtk",
+  "teks_frame1": "Rp10 juta. Gagal. Ganti semua.",
+  "aset_khas": "spidol, cap BOCOR DI SINI",
+  "sudut_cerita": "kesalahan umum + teori dikenal (growth mindset)"
+ }
+}
