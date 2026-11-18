@@ -4,11 +4,11 @@
  "format": "reels",
  "stage": "naskah",
  "dx": 6,
- "job": "Share",
+ "job": "Follow",
  "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
  "hue": "terracotta",
  "series": "Catatan Meja Aldy",
- "caption": "Restorannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma satpamnya, padahal dia digaji restoran itu sendiri.\nOrang mengingat akhirnya (eksperimen Daniel Kahneman). Di bisnis online, akhir itu ada di tangan tim packing: selotip berantakan atau produk kegencet bisa menghapus semua kerja iklan dan admin.\nHari ini, tempel tiga standar di meja packing: rapi, bersih, satu kartu terima kasih. Lalu sebulan sekali, beli produkmu sendiri dan buka seperti pelanggan.\nKirim video ini ke tim packing kamu.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "caption": "Restorannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma satpamnya.\nOrang mengingat akhirnya (eksperimen Daniel Kahneman). Di bisnis online, akhir itu ada di tangan tim packing: selotip berantakan atau produk kegencet bisa menghapus semua kerja iklan dan admin.\nHari ini, tempel tiga standar di meja packing: rapi, bersih, satu kartu terima kasih. Lalu ajak admin dan tim packing buka paket kalian sendiri, rasakan jadi pelanggan.\nFollow, tiap minggu saya bedah satu momen kecil yang diam-diam bikin pelanggan pergi.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
  "pinned": "Dasar: Kahneman, Fredrickson, Schreiber & Redelmeier (1993), Psychological Science: mayoritas peserta memilih mengulang rendaman air dingin yang lebih lama karena akhirnya sedikit lebih hangat. Cerita satpam adalah analogi umum; contoh paket adalah simulasi.",
  "story": "Kapan terakhir kamu buka paket dari tokomu sendiri? Bulan ini / Udah lama / Belum pernah",
  "reel": {
@@ -19,11 +19,11 @@
   "coverHi": "yang diingat satpamnya",
   "beats": [
    {
-    "say": "Makan di restoran yang enak, pelayannya ramah. Pas pulang, satpamnya nyuruh mundurin mobil sambil main HP. Yang kamu ceritain di jalan? Satpamnya. Padahal satpam itu digaji restoran itu sendiri. Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, dari branding sampai strategi marketing.",
+    "say": "Makan di restoran yang enak, pelayannya ramah. Pas pulang, satpamnya nyuruh mundurin mobil sambil main HP. Yang kamu ceritain di jalan? Satpamnya. Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, membenahi bisnisnya secara tiga ratus enam puluh derajat, dari hulu sampai hilir.",
     "txt": "Restorannya enak. Yang diingat: *satpamnya.*",
     "shot": "anim",
     "dur": "",
-    "case": "ANIM: frame 1 teks; meja makan bintang 5 -> satpam ilustrasi main HP sambil memberi aba-aba; mobil pulang dengan bubble 'satpamnya...'; label 'digaji restoran sendiri'; kartu perkenalan berfoto + 100+ BRAND",
+    "case": "ANIM: frame 1 teks; meja makan bintang 5 -> satpam ilustrasi main HP sambil memberi aba-aba; mobil pulang dengan bubble 'satpamnya...'; kartu perkenalan berfoto + 100+ BRAND",
     "solusi": "",
     "contoh": ""
    },
@@ -46,27 +46,27 @@
     "contoh": ""
    },
    {
-    "say": "Mereka bukan malas. Mereka cuma gak pernah dikasih tahu bahwa merekalah akhir ceritanya. Jadi dua hal. Satu, tempel tiga standar di meja packing: rapi, bersih, satu kartu terima kasih. Dua, sebulan sekali beli produkmu sendiri pakai nama lain. Buka paketnya kayak pelanggan.",
-    "txt": "Beli produkmu sendiri. *Buka kayak pelanggan.*",
+    "say": "Mereka bukan malas. Mereka cuma gak pernah dikasih tahu bahwa merekalah akhir ceritanya. Jadi dua hal. Satu, tempel tiga standar di meja packing: rapi, bersih, satu kartu terima kasih. Dua, ajak admin dan tim packing evaluasi bareng. Buka paket kalian sendiri, dan rasakan jadi pelanggan.",
+    "txt": "Buka paketmu sendiri. *Rasakan jadi pelanggan.*",
     "shot": "anim",
     "dur": "",
-    "case": "ANIM: figur packer menoleh, label 'akhir cerita'; kartu standar ditempel di meja packing: RAPI / BERSIH / 1 KARTU TERIMA KASIH (centang satu per satu); kalender 1x sebulan + paket atas nama lain; putar ulang buka paket versi rapi + kartu",
-    "solusi": "Biaya hampir nol: (1) 3 standar tertempel di meja packing; (2) owner beli produk sendiri sebulan sekali dengan nama lain (mystery shopper diri sendiri).",
+    "case": "ANIM: figur packer menoleh, label 'akhir cerita'; kartu standar ditempel di meja packing: RAPI / BERSIH / 1 KARTU TERIMA KASIH (centang satu per satu); owner + admin + packer membuka paket bersama, bubble 'kalau aku pelanggannya...'; putar ulang buka paket versi rapi + kartu",
+    "solusi": "Biaya hampir nol: (1) 3 standar tertempel di meja packing; (2) evaluasi bareng admin & tim packing: membuka paket sendiri dari sudut pandang pelanggan.",
     "contoh": "Kartu standar meja packing: RAPI (selotip lurus, sudut terlindung) / BERSIH (tanpa debu, label lurus) / 1 KARTU TERIMA KASIH."
    },
    {
-    "say": "Orang yang pegang momen terakhir sering yang paling jarang kamu ajak ngobrol. Kirim video ini ke tim packing kamu.",
-    "txt": "Kirim ke *tim packing* kamu",
+    "say": "Orang yang pegang momen terakhir sering yang paling jarang kamu ajak ngobrol. Follow, karena tiap minggu saya bedah satu momen kecil yang diam-diam bikin pelanggan pergi.",
+    "txt": "*Follow* untuk bedah momen kecil berikutnya",
     "shot": "anim",
     "dur": "",
-    "case": "ANIM: kalimat penutup; kartu seri; ikon kirim",
+    "case": "ANIM: kalimat penutup; kartu seri; tombol FOLLOW",
     "solusi": "",
     "contoh": ""
    }
   ],
   "prod": {},
   "intro": {
-   "short": "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, dari branding sampai strategi marketing.",
+   "short": "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, membenahi bisnisnya secara tiga ratus enam puluh derajat, dari hulu sampai hilir.",
    "pakai": "ucap-lengkap"
   }
  },
