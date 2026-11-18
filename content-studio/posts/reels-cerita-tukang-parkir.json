@@ -8,7 +8,7 @@
  "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
  "hue": "terracotta",
  "series": "Catatan Meja Aldy",
- "caption": "Makanannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma tukang parkirnya.\nOrang mengingat akhirnya (eksperimen Daniel Kahneman). Di bisnismu, akhir itu sering terjadi pas ada masalah, dan admin cuma bisa jawab \"silakan klaim ke kurir\" karena dia gak punya wewenang.\nHari ini, pasang garansi tanpa debat dan tentukan sampai nilai berapa admin boleh langsung ganti tanpa nanya kamu.\nKirim video ini ke admin kamu.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "caption": "Makanannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma tukang parkirnya.\nOrang mengingat akhirnya (eksperimen Daniel Kahneman). Di bisnismu, akhir itu sering terjadi pas barang rusak, dan admin cuma bisa jawab \"silakan klaim ke kurir\" karena dia gak dikasih izin.\nHari ini, bikin dua aturan: barang rusak cukup kirim foto lalu langsung diganti, dan admin boleh ganti sendiri di bawah angka yang kamu tentukan.\nKirim video ini ke admin kamu.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
  "pinned": "Dasar: Kahneman, Fredrickson, Schreiber & Redelmeier (1993), \"When More Pain Is Preferred to Less\", Psychological Science: mayoritas peserta memilih mengulang rendaman air dingin yang lebih lama karena akhirnya sedikit lebih hangat. Ide batas wewenang dikenal dari kebijakan Ritz-Carlton. Cerita tukang parkir analogi umum; contoh chat simulasi.",
  "story": "Kalo ada barang rusak, admin kamu boleh langsung ganti tanpa nanya kamu? Boleh / Harus nanya dulu / Belum ada aturan",
  "reel": {
@@ -46,16 +46,16 @@
     "contoh": ""
    },
    {
-    "say": "Admin jarang judes karena orangnya. Dia gak dikasih wewenang. Orang yang gak boleh ngasih solusi, cuma bisa ngasih alasan. Jadi pasang dua hal. Satu, garansi tanpa debat: rusak, kirim foto, kami ganti. Dua, batas wewenang: admin boleh langsung ganti sampai nilai tertentu, tanpa nanya kamu.",
-    "txt": "Gak boleh kasih solusi = *cuma kasih alasan*",
+    "say": "Admin jarang judes karena orangnya. Dia gak dikasih izin. Orang yang gak boleh ngasih solusi, cuma bisa ngasih alasan. Jadi bikin dua aturan. Satu: kalau barang rusak, pelanggan cukup kirim foto, langsung kami ganti. Gak ditanya-tanya, gak disuruh klaim ke kurir. Dua: admin boleh ganti sendiri tanpa nunggu kamu, asal harganya di bawah, misalnya, dua ratus ribu.",
+    "txt": "Rusak? Foto. *Langsung ganti.*",
     "shot": "A-punch115 -> B-overhead",
     "dur": "",
-    "case": "46-66 dtk. Kalimat inti di wajah. SESUDAH di meja: Aldy menulis 2 kartu: 'GARANSI TANPA DEBAT: rusak -> foto -> kami ganti' dan 'WEWENANG ADMIN: ganti langsung s.d. Rp____ tanpa tanya owner'.",
+    "case": "46-68 dtk. Kalimat inti di wajah. SESUDAH di meja: Aldy menulis 2 kartu: 'RUSAK? Kirim foto -> langsung kami ganti' dan 'ADMIN BOLEH GANTI SENDIRI di bawah Rp200.000 (contoh)'.",
     "solusi": "Satu paket kebijakan: garansi tanpa debat + batas wewenang admin (nilai ditentukan owner).",
-    "contoh": "Kartu 1: 'Rusak? Kirim foto. Kami ganti.' Kartu 2: 'Admin boleh ganti langsung sampai Rp___ tanpa tanya owner.' (Pola dikenal: Ritz-Carlton memberi wewenang karyawan menyelesaikan masalah tamu tanpa izin atasan, sampai batas nilai tertentu.)"
+    "contoh": "Kartu 1: 'Rusak? Kirim foto. Langsung kami ganti.' Kartu 2: 'Admin boleh ganti sendiri tanpa tanya owner, di bawah Rp200.000 (contoh angka, sesuaikan).'"
    },
    {
-    "say": "Di bisnismu, siapa tukang parkirnya? Tentukan batas wewenangnya hari ini, lalu kirim video ini ke admin kamu.",
+    "say": "Di bisnismu, siapa tukang parkirnya? Tentukan angkanya hari ini, lalu kirim video ini ke admin kamu.",
     "txt": "Siapa *tukang parkirnya?*",
     "shot": "A-MCU",
     "dur": "",
