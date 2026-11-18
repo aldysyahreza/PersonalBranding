@@ -8,8 +8,8 @@
  "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
  "hue": "terracotta",
  "series": "Catatan Meja Aldy",
- "caption": "Makanannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma tukang parkirnya, padahal dia bukan karyawan restoran itu.\nOrang menilai pengalaman dari momen paling kuat dan momen terakhir (peak-end rule, Daniel Kahneman). Masalahnya, momen terakhir pelangganmu sering terjadi pas kamu gak ada.\nHari ini, cari titik terakhir itu: kemasan, kurir, atau balasan setelah transfer.\nKirim ke orang yang pegang bagian paling akhir di bisnismu.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
- "pinned": "Dasar: peak-end rule dari penelitian Daniel Kahneman dkk. (1993). Cerita tukang parkir adalah analogi umum, contoh paket dan chat adalah simulasi.",
+ "caption": "Makanannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma tukang parkirnya, padahal dia bukan karyawan restoran itu.\nDi eksperimen Daniel Kahneman, orang memilih mengulang rasa sakit yang lebih lama asal akhirnya lebih enak. Yang diingat: akhirnya. Di bisnismu, akhir itu sering terjadi pas kamu gak ada, di tangan kurir.\nHari ini, pasang pesan penutup: sehari setelah paket diterima, tanya kabarnya dan tawarkan ganti kalau ada yang rusak.\nKirim ke admin yang pegang chat setelah transaksi.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "pinned": "Dasar: Kahneman, Fredrickson, Schreiber & Redelmeier (1993), \"When More Pain Is Preferred to Less\", Psychological Science. Peserta mencelupkan tangan ke air dingin 60 detik, lalu 90 detik dengan 30 detik terakhir sedikit lebih hangat; mayoritas memilih mengulang yang 90 detik. Cerita tukang parkir adalah analogi umum, contoh pesan adalah simulasi.",
  "story": "Titik terakhir di bisnismu yang paling sering bikin kesan jelek: Kemasan / Balasan setelah bayar / Pengiriman",
  "reel": {
   "v": 2,
@@ -19,62 +19,71 @@
   "coverHi": "yang diingat tukang parkirnya",
   "beats": [
    {
-    "say": "Makan di tempat yang enak banget, pelayannya ramah. Pas keluar, tukang parkir marah-marah soal dua ribu.",
+    "say": "Makan di tempat yang enak, pelayannya ramah. Pas keluar, tukang parkir marah-marah soal dua ribu. Yang kamu ceritain di jalan pulang? Tukang parkirnya. Padahal dia bukan karyawan restoran itu.",
     "txt": "Makanannya enak. Yang diingat: *tukang parkirnya.*",
     "shot": "A-MCU",
     "dur": "",
-    "case": "0-7 dtk. Frame 1 teks. Cold open.",
+    "case": "0-11 dtk. Frame 1 teks. Jeda sebelum 'Padahal'.",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Di jalan pulang, yang kamu ceritain cuma tukang parkirnya. Padahal dia bukan karyawan restoran itu.",
-    "txt": "Padahal *bukan karyawannya*",
+    "say": "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, dari branding sampai strategi marketing.",
+    "txt": "Aldy Syahreza · *100+ brand*",
+    "shot": "A-MCU + kartu nama",
+    "dur": "",
+    "case": "11-19 dtk. Perkenalan lengkap (tidak dipotong). Kartu nama kecil, satu lapis teks.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Daniel Kahneman, peraih Nobel, pernah menguji ini. Orang mencelupkan tangan ke air dingin enam puluh detik. Lalu sembilan puluh detik, tapi di akhir airnya sedikit lebih hangat. Kebanyakan memilih mengulang yang lebih lama. Sakitnya lebih panjang, tapi akhirnya lebih enak. Yang diingat: akhirnya.",
+    "txt": "Sakit lebih lama, *akhir lebih enak*",
+    "shot": "Motion 8 dtk",
+    "dur": "",
+    "case": "19-35 dtk. Motion: dua gelas/garis waktu 60 dtk vs 90 dtk (30 dtk terakhir sedikit hangat), label 'mayoritas memilih yang lebih lama' (angka persen tidak ditampilkan sebelum dicek ke paper asli). Dasar: Kahneman, Fredrickson, Schreiber, Redelmeier (1993), Psychological Science.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Di bisnismu, momen terakhir sering terjadi pas kamu gak ada. Paket penyok di tangan kurir. Kurirnya di luar kuasamu. Tapi kamu bisa jadi yang ngomong paling terakhir.",
+    "txt": "Kamu bisa jadi *yang terakhir ngomong*",
     "shot": "A-punch115",
     "dur": "",
-    "case": "7-12 dtk. Jeda sebelum 'Padahal'.",
-    "solusi": "",
-    "contoh": ""
-   },
-   {
-    "say": "Saya Aldy Syahreza. Daniel Kahneman, peraih Nobel, menemukan polanya. Orang menilai pengalaman dari momen paling kuat dan momen terakhir.",
-    "txt": "Momen *puncak* + momen *terakhir*",
-    "shot": "A-MCU + motion",
-    "dur": "",
-    "case": "12-21 dtk. Motion 3 dtk: garis pengalaman, puncak & akhir dilingkari. Dasar: Kahneman dkk. 1993; Nobel Ekonomi 2002.",
-    "solusi": "",
-    "contoh": ""
-   },
-   {
-    "say": "Lihat bisnismu. Kamu udah bayar iklan, foto produk, admin yang ramah. Tapi momen terakhir pelangganmu terjadi pas kamu gak ada. Paket penyok di tangan kurir. Chat “udah transfer, kak” yang gak dibales semalaman.",
-    "txt": "Terjadi *pas kamu gak ada*",
-    "shot": "B-overhead",
-    "dur": "",
-    "case": "21-35 dtk. Sebelum: paket penyok / chat tanpa balasan. Sesudah: paket rapi + kartu, balasan 'Terima kasih kak, dikirim besok pagi'.",
+    "case": "35-45 dtk. Panel kata TRUST/SYSTEM di belakang.",
     "solusi": "Satu tindakan: perbaiki satu titik terakhir yang dirasakan pelanggan (pengemasan / balasan setelah transfer / pesan setelah layanan).",
     "contoh": ""
    },
    {
-    "say": "Di bisnismu, siapa tukang parkirnya? Kirim video ini ke orang yang pegang bagian paling akhir.",
+    "say": "Biasanya, paket sampai, lalu sepi. Ganti jadi begini. Sehari setelah paket diterima, kirim satu pesan: “Paketnya sudah sampai, kak? Kalau ada yang penyok, foto aja. Hari ini juga kami ganti.”",
+    "txt": "Sehari setelah diterima: *satu pesan*",
+    "shot": "B-overhead",
+    "dur": "",
+    "case": "45-58 dtk. Meja: SEBELUM = paket penyok + chat kosong, cap BOCOR DI SINI. SESUDAH = Aldy menulis pesan penutup di kertas/HP, lalu foto penyok dibalas 'kami kirim pengganti hari ini'.",
+    "solusi": "Satu tindakan: pesan penutup sehari setelah paket diterima, dengan tawaran ganti hari itu juga (service recovery).",
+    "contoh": "“Paketnya sudah sampai, kak? Kalau ada yang penyok, foto aja. Hari ini juga kami ganti.”"
+   },
+   {
+    "say": "Yang tadinya kesal sama kurir, pulangnya cerita tentang kamu. Di bisnismu, siapa tukang parkirnya? Kirim ini ke admin yang pegang chat setelah transaksi.",
     "txt": "Siapa *tukang parkirnya?*",
     "shot": "A-MCU",
     "dur": "",
-    "case": "35-43 dtk. Pertanyaan besar, jeda 1 dtk, lalu CTA share.",
+    "case": "58-68 dtk. Tatap kamera, jeda 1 dtk sebelum CTA. Sonic logo.",
     "solusi": "",
     "contoh": ""
    }
   ],
   "prod": {},
   "intro": {
-   "short": "Saya Aldy Syahreza. (disisipkan sebelum Kahneman)",
-   "pakai": "ucap-sisip"
+   "short": "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, dari branding sampai strategi marketing.",
+   "pakai": "ucap-lengkap"
   }
  },
  "sistem": {
-  "formula": "TH-2 Diagnosis Langsung + sisipan meja (MK-2 ringan)",
+  "formula": "TH-2 + motion + meja (MK-2)",
   "tugas": "Share",
   "set": "A + B + motion 3 dtk",
-  "target_durasi": "±38 dtk",
+  "target_durasi": "±75 dtk (171 kata; pengecualian atas izin Aldy, jauh di atas batas skill 45 dtk)",
   "teks_frame1": "Makanannya enak. Yang diingat: tukang parkirnya.",
   "asal": "Pola IHT dipakai: adegan sehari-hari -> twist -> kalimat besar -> putar ulang sebelum/sesudah. Isi baru, bukan materi klien."
  }
