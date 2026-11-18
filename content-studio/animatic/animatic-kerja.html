@@ -42,7 +42,7 @@ html,body{margin:0;background:#000}
 #hdl{position:absolute;left:84px;top:236px;font:700 26px/1 var(--f-mono);letter-spacing:.1em}
 #hdl i{font-style:normal;font-weight:500;opacity:.55}
 #hdr{position:absolute;right:84px;top:226px;display:flex;gap:14px;align-items:center}
-#chap{font:500 24px/1 var(--f-mono);letter-spacing:.08em;color:var(--terra)}
+#chap{font:500 24px/1 var(--f-mono);letter-spacing:.08em;color:var(--terra)}#chap{display:none}
 #topic{background:var(--amber);color:var(--ink)}
 #cap{position:absolute;left:0;right:0;top:1360px;display:flex;justify-content:center}
 #cap span{display:inline-block;background:var(--ink);color:#fff;border-radius:18px;padding:16px 28px 18px;font:800 52px/1.1 var(--f-display);letter-spacing:-.02em;box-shadow:0 10px 24px rgba(15,14,12,.22)}
@@ -83,20 +83,20 @@ html,body{margin:0;background:#000}
 (function(){
 'use strict';
 var DEF=[
-  {dur:3.68,name:'HOOK',chap:1,say:"Kamu kerja paling keras di kantor."},
-  {dur:1.92,name:'HOOK',chap:1,say:"Justru itu masalahnya."},
-  {dur:5.65,name:'HOOK',chap:1,say:"Kenalin, saya Aldy Syahreza. Belasan tahun mendampingi brand lintas industri."},
-  {dur:5.69,name:'RELATE',chap:2,say:"Pagi bales chat pelanggan. Siang cek stok. Sore approve desain konten."},
-  {dur:4.04,name:'RELATE',chap:2,say:"Malam baru sempat mikir bisnis, tapi udah capek."},
-  {dur:4.56,name:'INSIGHT',chap:3,say:"Michael Gerber, dalam bukunya The E-Myth, membedakan dua jenis kerja."},
+  {dur:2.82,name:'HOOK',chap:1,say:"Kamu kerja paling keras di kantor."},
+  {dur:1.96,name:'HOOK',chap:1,say:"Justru itu masalahnya."},
+  {dur:5.51,name:'HOOK',chap:1,say:"Kenalin, saya Aldy Syahreza. Belasan tahun mendampingi brand lintas industri."},
+  {dur:5.61,name:'RELATE',chap:2,say:"Pagi bales chat pelanggan. Siang cek stok. Sore approve desain konten."},
+  {dur:4.03,name:'RELATE',chap:2,say:"Malam baru sempat mikir bisnis, tapi udah capek."},
+  {dur:4.57,name:'INSIGHT',chap:3,say:"Michael Gerber, dalam bukunya The E-Myth, membedakan dua jenis kerja."},
   {dur:3.03,name:'INSIGHT',chap:3,say:"Kerja di dalam bisnis: ngerjain tugas harian."},
   {dur:6.23,name:'INSIGHT',chap:3,say:"Dan kerja pada bisnis: membangun cara kerja, supaya tugas itu jalan tanpa kamu."},
-  {dur:4.78,name:'INSIGHT',chap:3,say:"Kalo owner terus di dalam, bisnisnya cuma sebesar tenaganya."},
-  {dur:7.13,name:'REFRAME',chap:4,say:"Jadi mulai minggu ini, blok dua jam di kalender, hari dan jam yang sama tiap minggu."},
-  {dur:3.74,name:'REFRAME',chap:4,say:"Di dua jam itu, gak boleh ngerjain tugas harian."},
+  {dur:4.77,name:'INSIGHT',chap:3,say:"Kalo owner terus di dalam, bisnisnya cuma sebesar tenaganya."},
+  {dur:7.17,name:'REFRAME',chap:4,say:"Jadi mulai minggu ini, blok dua jam di kalender, hari dan jam yang sama tiap minggu."},
+  {dur:3.6,name:'REFRAME',chap:4,say:"Di dua jam itu, gak boleh ngerjain tugas harian."},
   {dur:3.57,name:'REFRAME',chap:4,say:"Pilih satu pekerjaan yang paling sering kamu ulang."},
-  {dur:3.37,name:'REFRAME',chap:4,say:"Tulis caranya, biar tim bisa ambil alih."},
-  {dur:7.9,name:'CTA',chap:5,say:"Simpan video ini. Buka lagi pas kamu ngerasa gak punya waktu buat mikir."}];
+  {dur:3.35,name:'REFRAME',chap:4,say:"Tulis caranya, biar tim bisa ambil alih."},
+  {dur:7.67,name:'CTA',chap:5,say:"Simpan video ini. Buka lagi pas kamu ngerasa gak punya waktu buat mikir."}];
 var BEATS=window.ANIMATIC_BEATS?DEF.map(function(d,i){return Object.assign({},d,window.ANIMATIC_BEATS[i]||{})}):DEF;
 var SPEED=BEATS.map(function(b,i){return Math.max(1,DEF[i].dur/b.dur)});
 var T0=[],acc=0;BEATS.forEach(function(b){T0.push(acc);acc+=b.dur});window.ANIMATIC_DURATION=acc;
@@ -123,7 +123,7 @@ function odoSet(el,v){var n=el.children.length,str=String(Math.max(0,Math.round(
   var place=Math.pow(10,n-1-i),d=Math.floor(v/place)%10;tf(c.firstChild,'translateY('+(-d*100/11)+'%)')}}
 
 
-var WT=[{"kamu": 0.3, "kerja": 0.862, "paling": 1.424, "keras": 1.985, "di": 2.547, "kantor": 2.828}, {"justru": 0.2, "itu": 0.557, "masalahnya": 0.915}, {"kenalin": 0.2, "saya": 0.843, "aldy": 1.272, "syahreza": 1.487, "belasan": 2.62, "tahun": 3.128, "mendampingi": 3.467, "brand": 4.144, "lintas": 4.313, "industri": 4.652}, {"pagi": 0.2, "bales": 0.573, "chat": 0.945, "pelanggan": 1.131, "siang": 2.18, "cek": 2.487, "stok": 2.793, "sore": 3.59, "approve": 3.992, "desain": 4.596, "konten": 4.998}, {"malam": 0.2, "baru": 0.638, "sempat": 1.076, "mikir": 1.514, "bisnis": 1.952, "tapi": 2.71, "udah": 2.99, "capek": 3.27}, {"michael": 0.2, "gerber": 0.627, "dalam": 1.055, "bukunya": 1.482, "the": 2.123, "emyth": 2.336, "membedakan": 2.87, "dua": 3.492, "jenis": 3.648, "kerja": 3.959}, {"kerja": 0.2, "di": 0.551, "dalam": 0.726, "bisnis": 1.077, "ngerjain": 1.428, "tugas": 2.038, "harian": 2.389}, {"dan": 0.2, "kerja": 0.398, "pada": 0.794, "bisnis": 1.189, "membangun": 1.585, "cara": 2.439, "supaya": 3.55, "tugas": 4.102, "itu": 4.469, "jalan": 4.837, "tanpa": 5.205, "kamu": 5.572}, {"kalo": 0.2, "owner": 0.54, "terus": 0.88, "di": 1.22, "dalam": 1.39, "bisnisnya": 2.05, "cuma": 2.61, "sebesar": 2.983, "tenaganya": 3.543}, {"jadi": 0.2, "mulai": 0.568, "minggu": 1.195, "ini": 1.563, "blok": 2.25, "dua": 2.489, "jam": 2.727, "di": 2.966, "kalender": 3.204, "hari": 4.24, "dan": 4.708, "yang": 5.176, "sama": 5.41, "tiap": 6.138}, {"di": 0.2, "dua": 0.428, "jam": 0.656, "itu": 0.884, "gak": 1.66, "boleh": 1.859, "ngerjain": 2.257, "tugas": 2.654, "harian": 3.052}, {"pilih": 0.2, "satu": 0.553, "pekerjaan": 0.905, "yang": 1.434, "paling": 1.61, "sering": 2.223, "kamu": 2.575, "ulang": 2.928}, {"tulis": 0.2, "caranya": 0.58, "biar": 1.47, "tim": 1.646, "bisa": 1.823, "ambil": 2.175, "alih": 2.528}, {"simpan": 0.2, "video": 0.643, "ini": 1.087, "buka": 2.02, "lagi": 2.33, "pas": 2.64, "kamu": 2.795, "ngerasa": 3.105, "gak": 3.57, "punya": 3.725, "waktu": 4.035, "buat": 4.345, "mikir": 4.5}];
+var WT=[{"kamu": 0.33, "kerja": 0.94, "paling": 1.26, "keras": 1.62, "di": 1.99, "kantor": 2.18}, {"justru": 0.2, "itu": 0.63, "masalahnya": 0.96}, {"kenalin": 0.2, "saya": 0.91, "aldy": 1.23, "syahreza": 1.38, "belasan": 2.45, "tahun": 2.93, "mendampingi": 3.23, "brand": 3.84, "lintas": 4.0, "industri": 4.36}, {"pagi": 0.2, "bales": 0.51, "chat": 0.79, "pelanggan": 1.08, "siang": 2.11, "cek": 2.35, "stok": 2.59, "sore": 3.51, "approve": 3.81, "desain": 4.64, "konten": 4.96}, {"malam": 0.2, "baru": 0.58, "sempat": 1.03, "mikir": 1.45, "bisnis": 1.91, "tapi": 2.7, "udah": 2.94, "capek": 3.18}, {"michael": 0.2, "gerber": 0.59, "dalam": 0.96, "bukunya": 1.5, "the": 2.14, "emyth": 2.35, "membedakan": 2.88, "dua": 3.48, "jenis": 3.62, "kerja": 3.9}, {"kerja": 0.2, "di": 0.51, "dalam": 0.67, "bisnis": 0.97, "ngerjain": 1.33, "tugas": 1.94, "harian": 2.34}, {"dan": 0.2, "kerja": 0.35, "pada": 0.92, "bisnis": 1.32, "membangun": 1.69, "cara": 2.41, "supaya": 3.56, "tugas": 4.08, "itu": 4.48, "jalan": 4.89, "tanpa": 5.14, "kamu": 5.48}, {"kalo": 0.2, "owner": 0.51, "terus": 0.86, "di": 1.21, "dalam": 1.36, "bisnisnya": 2.05, "cuma": 2.56, "sebesar": 2.99, "tenaganya": 3.54}, {"jadi": 0.2, "mulai": 0.56, "minggu": 1.16, "ini": 1.51, "blok": 2.26, "dua": 2.51, "jam": 2.8, "di": 2.99, "kalender": 3.19, "hari": 4.24, "dan": 4.62, "yang": 5.21, "sama": 5.4, "tiap": 6.13}, {"di": 0.2, "dua": 0.35, "jam": 0.51, "itu": 0.7, "gak": 1.51, "boleh": 1.67, "ngerjain": 2.1, "tugas": 2.46, "harian": 2.89}, {"pilih": 0.2, "satu": 0.45, "pekerjaan": 0.78, "yang": 1.43, "paling": 1.6, "sering": 2.25, "kamu": 2.56, "ulang": 2.89}, {"tulis": 0.2, "caranya": 0.55, "biar": 1.42, "tim": 1.55, "bisa": 1.67, "ambil": 2.08, "alih": 2.44}, {"simpan": 0.2, "video": 0.57, "ini": 0.9, "buka": 1.8, "lagi": 2.06, "pas": 2.31, "kamu": 2.44, "ngerasa": 2.93, "gak": 3.28, "punya": 3.42, "waktu": 3.76, "buat": 4.08, "mikir": 4.2}];
 function w(i,k,d){var v=WT[i]&&WT[i][k];return v==null?d:v}
 
 function RT(id,a,cx,cy){var e=$(id);if(e)e.setAttribute('transform','rotate('+a.toFixed(2)+' '+cx+' '+cy+')')}
@@ -174,9 +174,9 @@ window.seek=function(t){
   var dark=cur===DI&&LOCAL(DI,t-T0[DI])>SCAN_A+.7;
   $('hdl').style.color=dark?'#FFE2B0':(cur===13?'#fff':'#0F0E0C');
   $('chap').textContent='// 0'+(BEATS[cur].chap||cur+1)+' · '+BEATS[cur].name;$('chap').style.color=dark?'#FFE2B0':(cur===13?'#fff':'#B84A2E');
-  var span=$('cap').firstChild,list=CAP[cur],c=null;for(var k=0;k<list.length;k++)if(t>=list[k].words[0].t-.05)c=list[k];
-  if(!c||t>list[list.length-1].end+.1){op(span,0)}else{op(span,1);span.innerHTML=c.words.map(function(w){return '<u style="color:'+(t>=w.t?'#fff':'rgba(255,255,255,.38)')+'">'+w.w+'</u>'}).join(' ');
-    var kk=pr(t,c.words[0].t-.05,.12);tf(span,'scale('+(.92+.08*E.back(kk))+')')}
+  var span=$('cap').firstChild,list=CAP[cur],c=null;for(var k=0;k<list.length;k++)if(t>=list[k].words[0].t+.03)c=list[k];
+  if(!c||t>list[list.length-1].end+.1){op(span,0)}else{op(span,1);span.innerHTML=c.words.map(function(w){return '<u style="color:'+(t>=w.t+.03?'#fff':'rgba(255,255,255,.38)')+'">'+w.w+'</u>'}).join(' ');
+    var kk=pr(t,c.words[0].t+.03,.12);tf(span,'scale('+(.92+.08*E.back(kk))+')')}
 };
 window.seek(0);
 })();

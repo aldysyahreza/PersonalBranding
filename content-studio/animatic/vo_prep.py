@@ -283,6 +283,15 @@ def main(src, script, outdir, take='auto'):
         retake_notes = ['Kemiripan bunyi antar potongan ditemukan, tapi tanpa membuang apa pun susunannya lebih cocok dengan naskah (kata yang memang diulang di naskah): tidak ada take ulang yang dibuang.']
     # susun ulang: potongan bicara + jeda baku (antar unit) / jeda alami pendek (di dalam unit)
     out, t, words, rep = [np.zeros(int(PAUSE['awal'] * SR))], PAUSE['awal'], [], []
+    def trim_edges(a, b):
+        # 18 Nov: buang napas/desis pelan di tepi potongan (di bawah puncak -22 dB): suara pertama tidak lagi telat dari subtitle
+        hop = int(0.01 * SR); i0, i1 = int(a * SR), int(b * SR)
+        if i1 - i0 < hop * 6: return a, b
+        e = np.array([np.sqrt(np.mean(x[j:j + hop] ** 2)) + 1e-9 for j in range(i0, i1 - hop, hop)])
+        db = 20 * np.log10(e / e.max()); on = np.where(db > -22)[0]
+        if not len(on): return a, b
+        return a + max(0, on[0] * 0.01 - 0.04), a + min((b - a), on[-1] * 0.01 + 0.08)
+    segs = [(lambda ab: (ab[0], ab[1], sg[2]))(trim_edges(sg[0], sg[1])) for sg in segs]
     def cut(si):
         a, b, _ = segs[si]; a2 = max(0, a - PAD_PRE); b2 = min(len(x) / SR, b + PAD_POST)
         if si: a2 = max(a2, (segs[si - 1][1] + a) / 2)
@@ -290,20 +299,29 @@ def main(src, script, outdir, take='auto'):
         p = x[int(a2 * SR):int(b2 * SR)].copy(); nf = int(FADE * SR); p[:nf] *= np.linspace(0, 1, nf); p[-nf:] *= np.linspace(1, 0, nf)
         return p, a - a2, b - a
     for ui, (sidx, pidx) in enumerate(units):
-        u0 = t; spans = []
+        u0 = t; spans = []; oi0 = len(out)
         for k, si in enumerate(sidx):
             p, lead, d = cut(si); spans.append((t + lead, t + lead + d)); out.append(p); t += len(p) / SR
             if k < len(sidx) - 1:
                 g = min(0.12, segs[sidx[k + 1]][0] - segs[si][1]); out.append(np.zeros(int(g * SR))); t += g
         # kata dibagi menurut suku kata sepanjang waktu bicara unit (jeda di dalam unit dilewati)
         ws = [(w, phr[j]['beat']) for j in pidx for w in phr[j]['text'].split()]
-        tot = sum(syllables(w) for w, _ in ws); speech = sum(b - a for a, b in spans); acc = 0
+        tot = sum(syllables(w) for w, _ in ws); acc = 0
+        # 18 Nov: suku kata dipetakan ke "massa bicara" (frame 10 ms yang bersuara, diberi bobot energi),
+        # bukan ke waktu rata: kata tidak lagi muncul lebih cepat dari suara saat tempo bicara berubah.
+        yu = np.concatenate(out[oi0:]); hop = int(0.01 * SR); fr_t, fr_m = [], []
+        for a, b in spans:
+            i0 = int((a - u0) * SR); i1 = int((b - u0) * SR)
+            for j in range(i0, max(i0, i1 - hop), hop):
+                fr_t.append(u0 + j / SR); fr_m.append(float(np.sqrt(np.mean(yu[j:j + hop] ** 2)) + 1e-9))
+        fr_m = np.array(fr_m)
+        if len(fr_m) > 4:
+            db = 20 * np.log10(fr_m / fr_m.max()); mass = np.clip(db + 30, 0, None)  # 0 di bawah -30 dB dari puncak unit
+            cum = np.cumsum(mass); cum = cum / max(cum[-1], 1e-9)
         for w, bi in ws:
-            pos = speech * acc / tot
-            for a, b in spans:
-                if pos <= b - a: tw = a + pos; break
-                pos -= b - a
-            else: tw = spans[-1][1]
+            f = acc / tot
+            if len(fr_m) > 4: tw = fr_t[min(len(fr_t) - 1, int(np.searchsorted(cum, f + 0.004, side='left')))]
+            else: tw = spans[0][0] + (spans[-1][1] - spans[0][0]) * f
             words.append({'w': w, 't': round(tw, 3), 'beat': bi}); acc += syllables(w)
         kind = phr[pidx[-1]]['after'] if ui < len(units) - 1 else 'akhir'
         out.append(np.zeros(int(PAUSE[kind] * SR))); t += PAUSE[kind]
