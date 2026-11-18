@@ -1,13 +1,24 @@
-# Bank Cerita (pilar Koneksi) - ATM dari materi IHT, digeneralkan
+# Bank Cerita v2 (pilar Koneksi) - POLA dari IHT, ISI baru
 
-Prinsip: pola diambil (Amati-Tiru-Modifikasi), isi eksklusif klien TIDAK dipakai (nama klinik, Mama Sari, RAMAH/SIAP, alur lantai, video pendiri). Cerita pribadi Aldy hanya dari kata-kata Aldy sendiri.
+Materi IHT klien eksklusif: TIDAK dipakai isinya (klinik, Mama Sari, marshmallow, lipat kertas, benang, menunggu tanpa kabar, kali pertama, RAMAH/SIAP). Yang diambil hanya polanya.
 
-| # | Pola di materi IHT | Versi general untuk owner | Frame 1 | Butuh dari Aldy |
-|---|---|---|---|---|
-| 1 | Menara Marshmallow: yang terpenting dipasang terakhir | Owner membangun bisnis tinggi, kesehatan/keluarga/waktu mikir dipasang belakangan | "Yang paling penting, dipasang terakhir." | Rekam menara spageti roboh (Set B) |
-| 2 | Hidup penuh kali pertama: menunggu atau mengejar | Kali pertama jadi owner: gaji tim pertama, pelanggan besar pertama yang pergi, gagal pertama | "Pertama kali saya telat bayar gaji tim." (contoh) | Kali pertama versi Aldy (nyata) |
-| 3 | Menunggu tanpa kabar terasa lebih lama | Pengalaman sehari-hari: nunggu pesanan/hasil tanpa kabar; 20 menit terasa 1 jam | "Dua puluh menit. Terasa satu jam." | Pengalaman nyata Aldy sebagai pelanggan |
-| 4 | Yang hadir tapi tidak terlihat | Orang di balik bisnis: admin yang bales chat jam 11 malam, kurir, tim gudang | "Pelanggan kamu gak pernah lihat dia." | Satu orang nyata di tim Aldy (izin) |
-| 5 | Tidak ada orang jahat, semua sedang kerja | Owner menyalahkan orang, padahal yang bocor sambungan antar orang | "Gak ada yang salah. Tapi pelanggannya pergi." | - |
-| 6 | Afirmasi: maafkan diri yang terlalu keras | Owner juga manusia: lelah yang disimpan sendiri | "Owner juga boleh capek." | Kesiapan Aldy bicara personal |
-| 7 | Orang tua pasien (cerita Kanaya) | Hanya bila Aldy siap; tanpa CTA | - | Voice note Aldy |
+## Pola cerita yang dipelajari dari materi Aldy
+1. Adegan konkret + waktu/tempat kecil (bukan teori di depan).
+2. Tokoh biasa, taruhan kecil, semua orang pernah mengalaminya.
+3. Twist: yang diingat/yang benar ternyata kebalikan dugaan.
+4. Benda sehari-hari jadi simbol (satu benda = satu makna).
+5. Kalimat besar yang bisa diulang orang.
+6. Putar ulang adegan yang sama dalam versi diperbaiki (sebelum -> sesudah).
+7. Belokan ke penonton: "cerita ini sebenarnya tentang kamu".
+
+## Analogi & studi kasus baru
+| # | Judul | Benda/adegan | Twist | Kalimat besar | Dasar | Topik owner |
+|---|---|---|---|---|---|---|
+| 1 | Tukang parkir | Makan enak, tukang parkir marah soal Rp2.000 | Yang diceritakan cuma tukang parkirnya | "Jaga dua ribu terakhir." | Peak-end rule (Kahneman dkk. 1993) | Pengalaman pelanggan di titik akhir |
+| 2 | GPS yang gak pernah marah | Salah belok jam 11 malam | GPS gak bilang "kamu bodoh", cuma "menghitung ulang rute" | "Yang bikin nyasar bukan belokannya, tapi berhenti mau dihitung ulang." | Analogi | Bangkit setelah keputusan bisnis salah |
+| 3 | Ban serep | Mobil kempes di tol, ban serep ternyata juga kempes | Semua merasa aman karena "ada ban serep" | "Bisnis kamu punya ban serep, atau cuma punya kamu?" | Analogi | Owner sebagai satu-satunya titik gagal (delegasi) |
+| 4 | Warung langganan | Ibu warung hafal kopi kamu tanpa gula | Kamu balik walau ada yang lebih murah | "Orang balik bukan karena murah, tapi karena diingat." | Analogi; riset retensi relasional | Loyalitas & retensi |
+| 5 | Jam dinding mati | Jam di ruang tamu mati 2 tahun, semua terbiasa | Tamu yang pertama sadar | "Yang kamu anggap normal, buat pelanggan baru itu aneh." | Analogi (habituasi) | Kebiasaan bisnis yang owner tidak lagi lihat |
+| 6 | Kunci pas | Tukang bengkel cuma butuh satu kunci yang pas, bukan kotak perkakas | Owner beli semua tools marketing | "Bukan alatnya yang kurang. Ukurannya yang belum pas." | Analogi | Tools/AI vs diagnosis |
+
+Semua cerita = analogi umum atau pola pengalaman mendampingi (bukan kasus klien tertentu). Bila memakai pengalaman pribadi Aldy, Aldy yang menceritakan dulu.

@@ -1,0 +1,81 @@
+{
+ "id": "reels-cerita-tukang-parkir",
+ "title": "Cerita #03: Makanannya enak, yang diingat tukang parkirnya",
+ "format": "reels",
+ "stage": "naskah",
+ "dx": 6,
+ "job": "Share",
+ "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
+ "hue": "terracotta",
+ "series": "Catatan Meja Aldy",
+ "caption": "Makanannya enak, pelayannya ramah. Tapi yang diceritain di jalan pulang cuma tukang parkirnya.\nOrang gak inget semua momen, cuma momen paling kuat dan momen terakhir (peak-end rule, Daniel Kahneman). Cek: apa yang terakhir dirasain pelangganmu?\nHari ini, perbaiki satu titik terakhir: kemasan, balasan setelah transfer, atau pesan setelah layanan.\nKirim ke orang yang pegang bagian paling akhir di bisnismu.\nDikenal itu murah. Dipilih itu dibangun.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "pinned": "Dasar: peak-end rule dari penelitian Daniel Kahneman dkk. (1993). Cerita tukang parkir adalah analogi umum, contoh paket dan chat adalah simulasi.",
+ "story": "Titik terakhir di bisnismu yang paling sering bikin kesan jelek: Kemasan / Balasan setelah bayar / Pengiriman",
+ "reel": {
+  "v": 2,
+  "angle": "cermin",
+  "exec": "banding",
+  "coverH": "Makanannya enak",
+  "coverHi": "yang diingat tukang parkirnya",
+  "beats": [
+   {
+    "say": "Kamu pasti pernah. Makan di tempat yang enak banget, pelayannya ramah. Pas keluar, tukang parkirnya marah-marah soal dua ribu.",
+    "txt": "Makanannya enak. Yang diingat: *tukang parkirnya.*",
+    "shot": "A-MCU",
+    "dur": "",
+    "case": "0-7 dtk. Frame 1 teks. Cold open, wajah. (Analogi umum, bukan kasus klien.)",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Di jalan pulang, yang kamu ceritain cuma satu: tukang parkirnya.",
+    "txt": "Yang diceritain: *cuma satu*",
+    "shot": "A-punch115",
+    "dur": "",
+    "case": "7-10 dtk. Jeda sebentar sebelum 'tukang parkirnya'.",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Saya Aldy Syahreza. Belasan tahun mendampingi brand, polanya sama. Orang gak inget semuanya. Yang diinget cuma momen paling kuat dan momen terakhir. Daniel Kahneman nyebutnya peak-end rule.",
+    "txt": "Momen *puncak* + momen *terakhir*",
+    "shot": "A-MCU + motion",
+    "dur": "",
+    "case": "10-22 dtk. Sisipan motion 3 dtk: garis pengalaman, titik puncak & titik akhir disorot (InkPath + MarkerCircle). Dasar: peak-end rule, Kahneman dkk. (1993) 'When more pain is preferred to less' (eksperimen air dingin).",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Coba cek bisnismu. Apa yang terakhir dirasain pelangganmu? Paket yang diselotip asal? Chat yang gak dibales setelah transfer?",
+    "txt": "Apa yang *terakhir*?",
+    "shot": "B-overhead",
+    "dur": "",
+    "case": "22-32 dtk. Sebelum: paket diselotip asal / layar chat 'udah transfer kak' tanpa balasan. Sesudah: paket rapi + kartu ucapan / balasan 'Terima kasih kak, paket dikirim besok pagi.'",
+    "solusi": "Satu tindakan: perbaiki satu titik terakhir yang dirasakan pelanggan (pengemasan / balasan setelah transfer / pesan setelah layanan).",
+    "contoh": ""
+   },
+   {
+    "say": "Jaga dua ribu terakhir itu. Kirim ke orang yang pegang bagian paling akhir di bisnismu.",
+    "txt": "Jaga *dua ribu terakhir*",
+    "shot": "A-MCU",
+    "dur": "",
+    "case": "32-38 dtk. CTA share ke tim.",
+    "solusi": "",
+    "contoh": ""
+   }
+  ],
+  "prod": {},
+  "intro": {
+   "short": "Saya Aldy Syahreza. Belasan tahun mendampingi brand (disisipkan)",
+   "pakai": "ucap-sisip"
+  }
+ },
+ "sistem": {
+  "formula": "TH-2 Diagnosis Langsung + sisipan meja (MK-2 ringan)",
+  "tugas": "Share",
+  "set": "A + B + motion 3 dtk",
+  "target_durasi": "±38 dtk",
+  "teks_frame1": "Makanannya enak. Yang diingat: tukang parkirnya.",
+  "asal": "Pola IHT dipakai: adegan sehari-hari -> twist -> kalimat besar -> putar ulang sebelum/sesudah. Isi baru, bukan materi klien."
+ }
+}
