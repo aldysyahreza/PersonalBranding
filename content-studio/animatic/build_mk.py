@@ -32,7 +32,11 @@ def stamp(t, g=.55):   # dentum cap (pendek, tanpa boom)
 def chime(t, g=.18):
     for k, f in enumerate([880, 1108.7, 1318.5]):
         m = int(.6 * SR); tt = np.arange(m) / SR; add(fx, t + k * .06, np.sin(2 * np.pi * f * tt) * np.exp(-tt / .18), g * .6)
-K = {'slide': paper, 'sweep': lambda t: paper(t, .3), 'pop': pop, 'tick': tick, 'scratch': scratch, 'draw': lambda t: scratch(t, .6, .1), 'stamp': stamp, 'chime': chime}
+def splash(t, g=.3):   # celup air: desis basah + beberapa gelembung
+    m = int(.45 * SR); x = rng.standard_normal(m); y = (lp(x, 1800) - lp(x, 300)) * np.exp(-np.arange(m) / SR / .12); add(fx, t, y, g)
+    for k in range(4):
+        q = int(.05 * SR); f0 = 500 + 180 * k; ph = np.cumsum(np.linspace(f0, f0 * 1.8, q)) / SR * 2 * np.pi; add(fx, t + .08 + k * .07, np.sin(ph) * env(q, .002, .015), g * .5)
+K = {'splash': splash, 'slide': paper, 'sweep': lambda t: paper(t, .3), 'pop': pop, 'tick': tick, 'scratch': scratch, 'draw': lambda t: scratch(t, .6, .1), 'stamp': stamp, 'chime': chime}
 for t, k in E['events']: K[k](t)
 # musik: pad hangat (piano-ish) 84 bpm, akor I-vi-IV-V, fade in/out
 tt = np.arange(n) / SR; bar = 60 / 84 * 4

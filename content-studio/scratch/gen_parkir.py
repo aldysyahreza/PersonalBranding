@@ -81,30 +81,51 @@ S.append("""{dur:%s, tr:'sweep', build:function(L){
  MK.PaperCard(L,{x:96,y:470,w:888,at:.15,from:'left',rot:-1,html:'<div class="mk-mono" style="font-size:24px;color:#6B6560">psikolog · peraih Nobel Ekonomi 2002</div><div class="mk-fr" style="font-size:96px;line-height:1;margin-top:14px">Daniel<br>Kahneman</div>'});
  MK.Subtitle(L,%s,{y:1390});
 }}""" % (DUR[4], json.dumps(chunks(4), ensure_ascii=False))); ev(4, 0, 'sweep')
-# 6-7 dua garis waktu air dingin
-def bars(i, second):
-    return """{dur:%s, build:function(L){
- var lab=MK.el('div','left:96px;top:430px;font-size:26px;color:#6B6560','tangan di air dingin',L.root);lab.className='mk-a mk-mono';
- var a=MK.el('div','left:96px;top:520px;width:600px;height:90px;border-radius:10px;background:#2A2824;transform-origin:left',' ',L.root);a.className='mk-a';
- var al=MK.el('div','left:96px;top:625px;font-size:34px','60 detik',L.root);al.className='mk-a mk-ou';
- var b=MK.el('div','left:96px;top:760px;width:600px;height:90px;border-radius:10px 0 0 10px;background:#2A2824;transform-origin:left',' ',L.root);b.className='mk-a';
- var w=MK.el('div','left:696px;top:760px;width:300px;height:90px;border-radius:0 10px 10px 0;background:#C8944A;transform-origin:left',' ',L.root);w.className='mk-a';
- var bl=MK.el('div','left:96px;top:865px;font-size:34px','90 detik · <span style="color:#C8944A">30 detik terakhir sedikit lebih hangat</span>',L.root);bl.className='mk-a mk-ou';
- MK.Subtitle(L,%s,{y:1390});
- var SEC=%s, TB=%s, TW=%s;
- L.on(function(t){var ka=SEC?1:MK.E.out(MK.pr(t,.2,1));a.style.transform='scaleX('+ka+')';al.style.opacity=SEC?1:MK.pr(t,.9,.3);
-  var kb=SEC?MK.E.out(MK.pr(t,TB,1)):0;b.style.transform='scaleX('+kb+')';b.style.opacity=SEC?1:0;bl.style.opacity=SEC?MK.pr(t,TW,.3):0;
-  var kw=SEC?MK.E.out(MK.pr(t,TW,.6)):0;w.style.transform='scaleX('+kw+')';w.style.opacity=SEC?1:0});
-}}""" % (DUR[i], json.dumps(chunks(i), ensure_ascii=False), 'true' if second else 'false', W(i, 'sembilan', .3), W(i, 'hangat', W(i, 'akhir', 2)) - .4)
-S.append(bars(5, False)); ev(5, .2, 'draw')
-S.append(bars(6, True)); ev(6, W(6, 'sembilan', .3), 'draw'); ev(6, W(6, 'hangat', 2) - .4, 'pop')
-# 8 kebanyakan memilih yang lebih lama
+# 6-8 tangan & baskom air (eksperimen Kahneman)
+BASIN = r"""
+function basin(L,o){ // o: x,y,s(scale),label,dur(detik eksperimen),tDip,tWarm(null=tanpa hangat),tEnd(waktu lokal hitungan selesai),dim
+ var W=420*o.s,H=520*o.s,box=MK.el('div','left:'+o.x+'px;top:'+o.y+'px;width:'+W+'px;height:'+H+'px',' ',L.root);box.className='mk-a';
+ var sv='<svg viewBox="0 0 420 520" width="'+W+'" height="'+H+'" style="overflow:visible">'
+ +'<g id="'+o.id+'hand"><rect x="170" y="-40" width="80" height="220" rx="36" fill="#F1C9A3" stroke="#0F0E0C" stroke-width="6"/>'
+ +'<path d="M150 170 Q150 130 190 128 L232 128 Q272 130 272 170 L272 300 Q272 330 250 332 L236 332 L236 360 Q236 372 226 372 Q216 372 216 360 L216 336 L204 336 L204 366 Q204 378 194 378 Q184 378 184 366 L184 336 L172 334 Q150 330 150 300Z" fill="#F1C9A3" stroke="#0F0E0C" stroke-width="6" stroke-linejoin="round"/></g>'
+ +'<g id="'+o.id+'brr" stroke="#2A2824" stroke-width="5" stroke-linecap="round" fill="none"><path d="M118 200 l-26 -8 M114 240 l-30 0 M118 280 l-26 8"/><path d="M302 200 l26 -8 M306 240 l30 0 M302 280 l26 8"/></g>'
+ +'<path d="M40 300 Q40 470 210 470 Q380 470 380 300Z" fill="#E8E1D5" stroke="#0F0E0C" stroke-width="7"/>'
+ +'<clipPath id="'+o.id+'cp"><path d="M44 306 Q44 466 210 466 Q376 466 376 306Z"/></clipPath>'
+ +'<g clip-path="url(#'+o.id+'cp)"><rect id="'+o.id+'cold" x="30" y="318" width="360" height="160" fill="#B9BFC2"/><rect id="'+o.id+'warm" x="30" y="318" width="360" height="160" fill="#C8944A" opacity="0"/>'
+ +'<rect x="150" y="300" width="122" height="90" fill="#F1C9A3" opacity=".55"/></g>'
+ +'<ellipse id="'+o.id+'r1" cx="210" cy="320" rx="80" ry="10" fill="none" stroke="#FBF8F3" stroke-width="4"/>'
+ +'<ellipse cx="210" cy="300" rx="170" ry="26" fill="none" stroke="#0F0E0C" stroke-width="7"/>'
+ +'<g id="'+o.id+'steam" stroke="#C8944A" stroke-width="6" stroke-linecap="round" fill="none" opacity="0"><path d="M110 270 q-14 -24 0 -48 q14 -24 0 -48"/><path d="M320 270 q-14 -24 0 -48 q14 -24 0 -48"/></g>'
+ +'</svg>';
+ box.innerHTML=sv;
+ var lab=MK.el('div','left:'+o.x+'px;top:'+(o.y+H+12)+'px;width:'+W+'px;text-align:center;font-size:'+(44*o.s+6)+'px',' ',L.root);lab.className='mk-a mk-fr';
+ var cap=MK.el('div','left:'+o.x+'px;top:'+(o.y+H+12+60*o.s+14)+'px;width:'+W+'px;text-align:center;font-size:'+(26*o.s+6)+'px;color:#6B6560',o.label||'',L.root);cap.className='mk-a mk-ou';
+ var $=function(i){return document.getElementById(o.id+i)};
+ L.on(function(t){
+  var k=MK.E.out(MK.pr(t,o.tDip,.6)),h=$('hand');if(h)h.setAttribute('transform','translate('+(o.dim?0:Math.sin(t*38)*1.6*(t>o.tDip?1:0))+','+(k*140-140)+')');
+  var c=Math.round(MK.pr(t,o.tDip,Math.max(.1,o.tEnd-o.tDip))*o.dur);lab.innerHTML=c+'<span class="mk-ou" style="font-size:.5em"> detik</span>';
+  var r=$('r1');if(r){var q=((t-o.tDip)%1.2+1.2)%1.2/1.2;r.setAttribute('rx',80+q*80);r.setAttribute('opacity',t>o.tDip?1-q:0)}
+  var wk=o.tWarm==null?0:MK.pr(t,o.tWarm,.6);var w=$('warm');if(w)w.setAttribute('opacity',wk);var st=$('steam');if(st)st.setAttribute('opacity',wk);
+  var br=$('brr');if(br)br.setAttribute('opacity',(t>o.tDip&&wk<.5&&!o.dim)?(Math.floor(t*6)%2?1:.35):0);
+  box.style.opacity=o.dim?.45:1;lab.style.opacity=o.dim?.45:1;cap.style.opacity=o.dim?.45:1;
+ });
+ return box;
+}
+"""
 S.append("""{dur:%s, build:function(L){
- var a=MK.el('div','left:96px;top:520px;width:600px;height:90px;border-radius:10px;background:#2A2824;opacity:.45',' ',L.root);a.className='mk-a';
- var b=MK.el('div','left:96px;top:760px;width:600px;height:90px;border-radius:10px 0 0 10px;background:#2A2824',' ',L.root);b.className='mk-a';
- var w=MK.el('div','left:696px;top:760px;width:300px;height:90px;border-radius:0 10px 10px 0;background:#C8944A',' ',L.root);w.className='mk-a';
- var lb=MK.el('div','left:96px;top:880px;font-size:40px','mayoritas memilih mengulang <span style="color:#B84A2E">yang ini</span>',L.root);lb.className='mk-a mk-ou';
- MK.MarkerCircle(L,{x:96,y:760,w:900,h:90,at:W8});
+ basin(L,{id:'b6',x:330,y:430,s:1,dur:60,tDip:.3,tWarm:null,tEnd:%s,label:'air dingin'});
+ MK.Subtitle(L,%s,{y:1390});
+}}""" % (DUR[5], max(1.0, DUR[5] - .4), json.dumps(chunks(5), ensure_ascii=False))); ev(5, .3, 'splash')
+S.append("""{dur:%s, build:function(L){
+ basin(L,{id:'b7',x:330,y:430,s:1,dur:90,tDip:.2,tWarm:%s,tEnd:%s,label:'30 detik terakhir sedikit lebih hangat'});
+ MK.Subtitle(L,%s,{y:1390});
+}}""" % (DUR[6], W(6, 'hangat', 3) - .5, max(1.0, DUR[6] - .4), json.dumps(chunks(6), ensure_ascii=False))); ev(6, .2, 'splash'); ev(6, W(6, 'hangat', 3) - .5, 'pop')
+# 8 kebanyakan memilih yang 90 detik: dua baskom, yang hangat dilingkari
+S.append("""{dur:%s, build:function(L){
+ basin(L,{id:'b8a',x:90,y:470,s:.78,dur:60,tDip:-5,tWarm:null,tEnd:-4,label:'60 detik, dingin',dim:true});
+ basin(L,{id:'b8b',x:600,y:470,s:.78,dur:90,tDip:-5,tWarm:-4,tEnd:-4,label:'90 detik, akhirnya hangat'});
+ var lb=MK.el('div','left:96px;top:1090px;width:888px;text-align:center;font-size:42px','mayoritas memilih mengulang <span style="color:#B84A2E">yang ini</span>',L.root);lb.className='mk-a mk-ou';
+ MK.MarkerCircle(L,{x:600,y:470,w:330,h:520,at:W8});
  MK.Subtitle(L,%s,{y:1390});
  L.on(function(t){lb.style.opacity=MK.pr(t,W8,.3)});
 }}""".replace('W8', str(W(7, 'mengulang', 1))) % (DUR[7], json.dumps(chunks(7), ensure_ascii=False))); ev(7, W(7, 'mengulang', 1), 'scratch')
@@ -166,7 +187,7 @@ S.append("""{dur:%s, build:function(L){
  L.on(function(t){var k=MK.pr(t,.8,.3);b.style.opacity=k;b.style.transform='scale('+(.8+.2*MK.E.over(k))+')'});
 }}""" % DUR[15]); ev(15, .8, 'chime')
 html = ('<!DOCTYPE html>\n<html><head><meta charset="utf-8"><title>Cerita #03 satpam</title><link rel="stylesheet" href="motionkit/fonts-mk.css"></head><body>\n'
-        '<script src="motionkit/kit.js"></script>\n<script>\nvar C=MK.C;\nMK.run([\n' + ',\n'.join(S) + '\n]);\n</script>\n</body></html>\n')
+        '<script src="motionkit/kit.js"></script>\n<script>\nvar C=MK.C;\n' + BASIN + '\nMK.run([\n' + ',\n'.join(S) + '\n]);\n</script>\n</body></html>\n')
 open(A + 'mk-parkir.html', 'w', encoding='utf-8').write(html)
 json.dump({'duration': tl['duration'], 'events': EV, 'cuts': T0}, open(os.path.join(OUT, 'events.json'), 'w'))
 print('ok', len(S), 'adegan', round(sum(DUR), 1), 'dtk'); print([(SC[i][0], DUR[i]) for i in range(len(SC))])
