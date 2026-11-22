@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Cerita #03 satpam</title><link rel="stylesheet" href="motionkit/fonts-mk.css"></head><body>
+<script src="motionkit/kit.js"></script>
+<script>
+var C=MK.C;
+MK.run([
+{dur:4.03, build:function(L){
+ MK.Headline(L,{y:300,size:96,html:'Restorannya enak.<br>Yang diingat: <span style="color:'+C.terra+'">satpamnya.</span>'});
+ MK.PaperCard(L,{x:120,y:780,w:840,at:.15,from:'bottom',rot:-1,html:'<div style="display:flex;align-items:center;gap:34px"><svg viewBox="0 0 120 120" width="190" height="190"><circle cx="60" cy="60" r="52" fill="#fff" stroke="#0F0E0C" stroke-width="5"/><circle cx="60" cy="60" r="34" fill="none" stroke="#C8944A" stroke-width="5"/><path d="M44 62 Q60 40 76 62 Q60 80 44 62Z" fill="#B84A2E"/></svg><div><div class="mk-mono" style="font-size:24px;color:#6B6560">ulasan pelanggan</div><div class="mk-fr" style="font-size:74px;color:#C8944A;letter-spacing:.06em">★★★★★</div><div class="mk-ou" style="font-size:40px">makanannya enak, pelayannya ramah</div></div></div>'});
+}},
+{dur:3.66, build:function(L){
+ var f=MK.el('div','left:120px;top:470px;width:330px;height:620px',"<svg viewBox=\"0 0 200 380\" style=\"overflow:visible;display:block\" width=\"100%%\" height=\"100%%\"><ellipse cx=\"100\" cy=\"366\" rx=\"64\" ry=\"9\" fill=\"rgba(15,14,12,.16)\"/><g id=\"p2_ll\"><rect x=\"73\" y=\"214\" width=\"26\" height=\"146\" rx=\"13\" fill=\"#2a2622\"/></g><g id=\"p2_lr\"><rect x=\"101\" y=\"214\" width=\"26\" height=\"146\" rx=\"13\" fill=\"#2a2622\"/></g><g id=\"p2_b\"><g id=\"p2_la\"><rect x=\"62\" y=\"126\" width=\"22\" height=\"104\" rx=\"11\" fill=\"#4a4540\"/><circle cx=\"73\" cy=\"236\" r=\"12\" fill=\"#F1C9A3\"/></g><rect x=\"66\" y=\"112\" width=\"68\" height=\"124\" rx=\"28\" fill=\"#6B6560\"/><g id=\"p2_ra\"><rect x=\"116\" y=\"126\" width=\"22\" height=\"104\" rx=\"11\" fill=\"#4a4540\"/><circle cx=\"127\" cy=\"236\" r=\"12\" fill=\"#F1C9A3\"/></g><g id=\"p2_h\"><rect x=\"90\" y=\"96\" width=\"20\" height=\"22\" fill=\"#F1C9A3\"/><circle cx=\"100\" cy=\"70\" r=\"35\" fill=\"#F1C9A3\"/><path d=\"M65 66 A35 35 0 0 1 135 66 Q118 44 100 47 Q82 44 65 66Z\" fill=\"#2a1d14\"/><circle cx=\"88\" cy=\"76\" r=\"3.4\" fill=\"#0F0E0C\"/><circle cx=\"114\" cy=\"76\" r=\"3.4\" fill=\"#0F0E0C\"/><path id=\"p2_m\" d=\"M91 92 Q101 99 111 92\" fill=\"none\" stroke=\"#0F0E0C\" stroke-width=\"3.4\" stroke-linecap=\"round\"/></g></g></svg>",L.root);f.className='mk-a';
+ var ph=MK.el('div','left:380px;top:770px;width:70px;height:120px;border-radius:12px;background:#0F0E0C',' ',L.root);ph.className='mk-a';
+ var b=MK.PaperCard(L,{x:500,y:520,w:470,at:1.53,from:'right',rot:2,html:'<div class="mk-fr" style="font-size:64px;line-height:1">“Mundur…<br>mundur.”</div><div class="mk-ou" style="font-size:30px;color:#6B6560;margin-top:14px">(sambil lihat HP)</div>'});
+ MK.Subtitle(L,[[0.2, "Pas pulang"], [0.76, "*satpamnya* nyuruh mundurin"], [2.3, "mobil sambil main"], [3.09, "HP"]],{y:1390});
+ L.on(function(t){f.style.transform='translateY('+(Math.sin(t*3)*4)+'px)';ph.style.transform='rotate('+(Math.sin(t*2)*4)+'deg)'});
+}},
+{dur:3.04, build:function(L){
+ MK.PaperCard(L,{x:96,y:500,w:888,at:.1,from:'bottom',rot:-1.5,html:'<div class="mk-mono" style="font-size:24px;color:#6B6560">cerita di mobil, perjalanan pulang</div><div class="mk-ou" style="font-size:52px;line-height:1.25;margin-top:18px">“Makanannya enak sih…<br>tapi satpamnya, ya ampun.”</div>'});
+ MK.MarkerCircle(L,{x:240,y:684,w:230,h:36,at:2.08});
+ MK.Subtitle(L,[[0.2, "Yang kamu ceritain"], [1.1, "di jalan?"], [2.08, "*Satpamnya*"]],{y:1390});
+}},
+{dur:12.53, build:function(L){
+ var ph=MK.el('div','left:96px;top:420px;width:420px;height:560px;border-radius:12px;overflow:hidden;box-shadow:0 18px 40px -18px rgba(15,14,12,.45);background:#B84A2E','<img src="../foto/profil-seminar.jpg" style="width:100%;height:100%;object-fit:cover;object-position:50% 20%">',L.root);ph.className='mk-a';
+ var nm=MK.el('div','left:560px;top:430px;width:430px;font-size:76px;line-height:.95','ALDY<br>SYAHREZA',L.root);nm.className='mk-a mk-fr';
+ var c1=MK.PaperCard(L,{x:560,y:650,w:420,at:5.37,from:'right',rot:1,html:'<div class="mk-fr" style="font-size:46px">100+ BRAND</div><div class="mk-ou" style="font-size:26px;color:#6B6560">lintas industri</div>'});
+ var c2=MK.PaperCard(L,{x:560,y:830,w:420,at:8.59,from:'right',rot:-1,html:'<div class="mk-fr" style="font-size:46px;color:#B84A2E">360°</div><div class="mk-ou" style="font-size:26px;color:#6B6560">dari hulu sampai hilir</div>'});
+ MK.Subtitle(L,[[0.2, "Sebelumnya"], [0.8, "kenalin"], [1.89, "Saya Aldy Syahreza"], [3.58, "Belasan tahun mendampingi"], [4.78, "lebih dari seratus"], [5.83, "brand lintas industri"], [7.23, "membenahi bisnisnya secara"], [8.59, "tiga ratus enam"], [9.49, "puluh derajat"], [10.5, "dari hulu sampai"], [11.62, "hilir"]],{y:1390});
+ L.on(function(t){var k=MK.pr(t,.05,.4);ph.style.opacity=k;ph.style.transform='rotate(-2deg) translateY('+((1-MK.E.out(k))*40)+'px)';nm.style.opacity=MK.pr(t,2.0799999999999996,.3)});
+}},
+{dur:3.64, tr:'sweep', build:function(L){
+ MK.PaperCard(L,{x:96,y:470,w:888,at:.15,from:'left',rot:-1,html:'<div class="mk-mono" style="font-size:24px;color:#6B6560">psikolog · peraih Nobel Ekonomi 2002</div><div class="mk-fr" style="font-size:96px;line-height:1;margin-top:14px">Daniel<br>Kahneman</div>'});
+ MK.Subtitle(L,[[0.2, "Daniel *Kahneman*"], [1.0, "peraih *Nobel*"], [1.86, "pernah menguji ini"]],{y:1390});
+}},
+{dur:3.52, build:function(L){
+ var lab=MK.el('div','left:96px;top:430px;font-size:26px;color:#6B6560','tangan di air dingin',L.root);lab.className='mk-a mk-mono';
+ var a=MK.el('div','left:96px;top:520px;width:600px;height:90px;border-radius:10px;background:#2A2824;transform-origin:left',' ',L.root);a.className='mk-a';
+ var al=MK.el('div','left:96px;top:625px;font-size:34px','60 detik',L.root);al.className='mk-a mk-ou';
+ var b=MK.el('div','left:96px;top:760px;width:600px;height:90px;border-radius:10px 0 0 10px;background:#2A2824;transform-origin:left',' ',L.root);b.className='mk-a';
+ var w=MK.el('div','left:696px;top:760px;width:300px;height:90px;border-radius:0 10px 10px 0;background:#C8944A;transform-origin:left',' ',L.root);w.className='mk-a';
+ var bl=MK.el('div','left:96px;top:865px;font-size:34px','90 detik · <span style="color:#C8944A">30 detik terakhir sedikit lebih hangat</span>',L.root);bl.className='mk-a mk-ou';
+ MK.Subtitle(L,[[0.2, "Orang mencelupkan tangan"], [1.6, "ke air *dingin*"], [2.17, "enam puluh detik"]],{y:1390});
+ var SEC=false, TB=0.3, TW=1.6;
+ L.on(function(t){var ka=SEC?1:MK.E.out(MK.pr(t,.2,1));a.style.transform='scaleX('+ka+')';al.style.opacity=SEC?1:MK.pr(t,.9,.3);
+  var kb=SEC?MK.E.out(MK.pr(t,TB,1)):0;b.style.transform='scaleX('+kb+')';b.style.opacity=SEC?1:0;bl.style.opacity=SEC?MK.pr(t,TW,.3):0;
+  var kw=SEC?MK.E.out(MK.pr(t,TW,.6)):0;w.style.transform='scaleX('+kw+')';w.style.opacity=SEC?1:0});
+}},
+{dur:5.77, build:function(L){
+ var lab=MK.el('div','left:96px;top:430px;font-size:26px;color:#6B6560','tangan di air dingin',L.root);lab.className='mk-a mk-mono';
+ var a=MK.el('div','left:96px;top:520px;width:600px;height:90px;border-radius:10px;background:#2A2824;transform-origin:left',' ',L.root);a.className='mk-a';
+ var al=MK.el('div','left:96px;top:625px;font-size:34px','60 detik',L.root);al.className='mk-a mk-ou';
+ var b=MK.el('div','left:96px;top:760px;width:600px;height:90px;border-radius:10px 0 0 10px;background:#2A2824;transform-origin:left',' ',L.root);b.className='mk-a';
+ var w=MK.el('div','left:696px;top:760px;width:300px;height:90px;border-radius:0 10px 10px 0;background:#C8944A;transform-origin:left',' ',L.root);w.className='mk-a';
+ var bl=MK.el('div','left:96px;top:865px;font-size:34px','90 detik · <span style="color:#C8944A">30 detik terakhir sedikit lebih hangat</span>',L.root);bl.className='mk-a mk-ou';
+ MK.Subtitle(L,[[0.2, "Lalu sembilan puluh"], [1.75, "detik"], [2.55, "tapi di *akhir*"], [3.45, "airnya sedikit lebih"], [5.09, "*hangat*"]],{y:1390});
+ var SEC=true, TB=0.54, TW=4.6899999999999995;
+ L.on(function(t){var ka=SEC?1:MK.E.out(MK.pr(t,.2,1));a.style.transform='scaleX('+ka+')';al.style.opacity=SEC?1:MK.pr(t,.9,.3);
+  var kb=SEC?MK.E.out(MK.pr(t,TB,1)):0;b.style.transform='scaleX('+kb+')';b.style.opacity=SEC?1:0;bl.style.opacity=SEC?MK.pr(t,TW,.3):0;
+  var kw=SEC?MK.E.out(MK.pr(t,TW,.6)):0;w.style.transform='scaleX('+kw+')';w.style.opacity=SEC?1:0});
+}},
+{dur:2.77, build:function(L){
+ var a=MK.el('div','left:96px;top:520px;width:600px;height:90px;border-radius:10px;background:#2A2824;opacity:.45',' ',L.root);a.className='mk-a';
+ var b=MK.el('div','left:96px;top:760px;width:600px;height:90px;border-radius:10px 0 0 10px;background:#2A2824',' ',L.root);b.className='mk-a';
+ var w=MK.el('div','left:696px;top:760px;width:300px;height:90px;border-radius:0 10px 10px 0;background:#C8944A',' ',L.root);w.className='mk-a';
+ var lb=MK.el('div','left:96px;top:880px;font-size:40px','mayoritas memilih mengulang <span style="color:#B84A2E">yang ini</span>',L.root);lb.className='mk-a mk-ou';
+ MK.MarkerCircle(L,{x:96,y:760,w:900,h:90,at:1.37});
+ MK.Subtitle(L,[[0.2, "Kebanyakan memilih mengulang"], [1.76, "yang lebih *lama*"]],{y:1390});
+ L.on(function(t){lb.style.opacity=MK.pr(t,1.37,.3)});
+}},
+{dur:2.29, build:function(L){
+ MK.Headline(L,{y:560,size:120,at:.05,html:'Yang diingat:<br><span style="color:#B84A2E">akhirnya.</span>'});
+ MK.InkPath(L,{d:'M120 1050 C320 1000 420 1110 600 1040 S860 980 940 1040',w:8,at:.2,dur:.7});
+ MK.MarkerCircle(L,{x:880,y:1010,w:90,h:60,at:1.13});
+}},
+{dur:6.83, tr:'sweep', build:function(L){
+ MK.InkPath(L,{d:'M150 760 L930 760',w:8,at:.1,dur:.8});
+ var lab=['iklan','foto produk','admin','paket dibuka'],xs=[150,410,670,930],at=[.3,4.27,5.67,2.27],dots=[],tx=[];
+ for(var i=0;i<4;i++){var last=i===3;var d=MK.el('div','left:'+(xs[i]-28)+'px;top:732px;width:56px;height:56px;border-radius:50%;border:6px solid '+(last?'#B84A2E':'#0F0E0C')+';background:'+(last?'#B84A2E':'#FBF8F3'),' ',L.root);d.className='mk-a';dots.push(d);
+  var x=MK.el('div','left:'+(xs[i]-110)+'px;width:220px;top:'+(i%2?640:820)+'px;text-align:center;font-size:32px;color:'+(last?'#B84A2E':'#0F0E0C'),lab[i],L.root);x.className='mk-a mk-ou';tx.push(x)}
+ var tag=MK.el('div','left:640px;top:470px;font-size:30px;color:#6B6560;text-align:center;width:420px','satpammu ada di sini ↓',L.root);tag.className='mk-a mk-mono';
+ MK.Subtitle(L,[[0.2, "Di bisnis online"], [2.27, "*satpammu* adalah tim"], [3.36, "*packing*"], [4.27, "Foto produk bagus"], [5.67, "admin ramah"]],{y:1390});
+ L.on(function(t){for(var i=0;i<4;i++){var k=MK.pr(t,at[i],.3);dots[i].style.opacity=k;tx[i].style.opacity=k;dots[i].style.transform='scale('+(.6+.4*MK.E.out(k))+')'}tag.style.opacity=MK.pr(t,3.36,.3)});
+}},
+{dur:7.7, build:function(L){
+ var bx=MK.el('div','left:170px;top:440px;width:740px;height:620px','<svg viewBox="0 0 740 620" width="740" height="620"><path d="M40 120 L700 100 L720 590 L30 600Z" fill="#C8944A" stroke="#0F0E0C" stroke-width="6"/><path d="M90 170 L650 160 L660 540 L80 550Z" fill="#8a6a3c"/><path d="M120 300 Q260 240 380 330 L520 300 L560 470 L150 500Z" fill="#FBF8F3" stroke="#0F0E0C" stroke-width="5"/><path d="M300 340 L330 380 L300 420" fill="none" stroke="#0F0E0C" stroke-width="4"/><path d="M20 130 L310 240 M720 110 L430 250 M60 80 L240 300 M600 90 L700 330" stroke="#d9d0bd" stroke-width="26" stroke-linecap="round" opacity=".9"/></svg>',L.root);bx.className='mk-a';
+ var e=MK.el('div','left:250px;top:1080px;width:580px;text-align:center;font-size:30px;color:#6B6560','(kosong. tanpa satu kata pun dari kamu)',L.root);e.className='mk-a mk-mono';
+ MK.StampBocor(L,{x:560,y:450,at:6.01,rot:-8,size:54});
+ MK.Subtitle(L,[[0.2, "Tapi pas paket"], [1.41, "dibuka"], [2.31, "selotip *berantakan*"], [3.83, "produk *kegencet*"], [5.33, "gak ada satu"], [6.01, "kata pun dari"], [6.87, "kamu"]],{y:1390});
+ L.on(function(t){var k=MK.pr(t,.05,.35);bx.style.opacity=k;bx.style.transform='translateY('+((1-MK.E.out(k))*50)+'px)';e.style.opacity=MK.pr(t,5.33,.3)});
+}},
+{dur:7.5, tr:'sweep', build:function(L){
+ var f=MK.el('div','left:140px;top:480px;width:330px;height:620px',"<svg viewBox=\"0 0 200 380\" style=\"overflow:visible;display:block\" width=\"100%%\" height=\"100%%\"><ellipse cx=\"100\" cy=\"366\" rx=\"64\" ry=\"9\" fill=\"rgba(15,14,12,.16)\"/><g id=\"p12_ll\"><rect x=\"73\" y=\"214\" width=\"26\" height=\"146\" rx=\"13\" fill=\"#2a2622\"/></g><g id=\"p12_lr\"><rect x=\"101\" y=\"214\" width=\"26\" height=\"146\" rx=\"13\" fill=\"#2a2622\"/></g><g id=\"p12_b\"><g id=\"p12_la\"><rect x=\"62\" y=\"126\" width=\"22\" height=\"104\" rx=\"11\" fill=\"#a57a35\"/><circle cx=\"73\" cy=\"236\" r=\"12\" fill=\"#F1C9A3\"/></g><rect x=\"66\" y=\"112\" width=\"68\" height=\"124\" rx=\"28\" fill=\"#C8944A\"/><g id=\"p12_ra\"><rect x=\"116\" y=\"126\" width=\"22\" height=\"104\" rx=\"11\" fill=\"#a57a35\"/><circle cx=\"127\" cy=\"236\" r=\"12\" fill=\"#F1C9A3\"/></g><g id=\"p12_h\"><rect x=\"90\" y=\"96\" width=\"20\" height=\"22\" fill=\"#F1C9A3\"/><circle cx=\"100\" cy=\"70\" r=\"35\" fill=\"#F1C9A3\"/><path d=\"M65 66 A35 35 0 0 1 135 66 Q118 44 100 47 Q82 44 65 66Z\" fill=\"#2a1d14\"/><circle cx=\"88\" cy=\"76\" r=\"3.4\" fill=\"#0F0E0C\"/><circle cx=\"114\" cy=\"76\" r=\"3.4\" fill=\"#0F0E0C\"/><path id=\"p12_m\" d=\"M91 92 Q101 99 111 92\" fill=\"none\" stroke=\"#0F0E0C\" stroke-width=\"3.4\" stroke-linecap=\"round\"/></g></g></svg>",L.root);f.className='mk-a';
+ var tag=MK.PaperCard(L,{x:520,y:600,w:440,at:4.55,from:'right',rot:-3,html:'<div class="mk-mono" style="font-size:22px;color:#6B6560">tim packing</div><div class="mk-fr" style="font-size:58px;line-height:1;color:#B84A2E;margin-top:8px">AKHIR<br>CERITA</div>'});
+ MK.Subtitle(L,[[0.2, "Mereka bukan malas"], [1.87, "Mereka cuma gak"], [2.73, "pernah dikasih tahu"], [3.98, "bahwa merekalah *akhir*"], [5.2, "*ceritanya*"], [6.39, "Jadi dua hal"]],{y:1390});
+ L.on(function(t){f.style.transform='translateY('+(Math.sin(t*3)*4)+'px)'});
+}},
+{dur:7.65, build:function(L){
+ var rows=['RAPI','BERSIH','1 KARTU TERIMA KASIH'],at=[4.11,4.95,6.0],h='<div class="mk-mono" style="font-size:24px;color:#6B6560">ditempel di meja packing</div><div class="mk-fr" style="font-size:54px;margin:10px 0 18px">Standar akhir</div>';
+ for(var i=0;i<3;i++)h+='<div style="display:flex;align-items:center;gap:22px;margin:16px 0"><div id="ck'+i+'" style="width:54px;height:54px;border:5px solid #0F0E0C;border-radius:10px;font:800 46px/44px Outfit;text-align:center;color:#B84A2E"></div><div class="mk-ou" style="font-size:44px">'+rows[i]+'</div></div>';
+ MK.PaperCard(L,{x:120,y:470,w:840,at:.1,from:'bottom',rot:-1.2,html:h});
+ MK.Subtitle(L,[[0.2, "Satu"], [0.75, "tempel tiga standar"], [2.42, "di meja *packing*"], [4.11, "*Rapi*"], [4.95, "*bersih*"], [5.29, "satu kartu terima"], [6.93, "kasih"]],{y:1390});
+ L.on(function(t){for(var i=0;i<3;i++){var c=document.getElementById('ck'+i);if(c)c.textContent=t>=at[i]?'✓':''}});
+}},
+{dur:7.91, build:function(L){
+ var xs=[70,390,710],cs=[['#B84A2E','#8f3a24'],['#0F0E0C','#2a2622'],['#C8944A','#a57a35']],nm=['owner','admin','packing'];
+ var f0=MK.el('div','left:70px;top:560px;width:280px;height:520px',"<svg viewBox=\"0 0 200 380\" style=\"overflow:visible;display:block\" width=\"100%%\" height=\"100%%\"><ellipse cx=\"100\" cy=\"366\" rx=\"64\" ry=\"9\" fill=\"rgba(15,14,12,.16)\"/><g id=\"p140_ll\"><rect x=\"73\" y=\"214\" width=\"26\" height=\"146\" rx=\"13\" fill=\"#2a2622\"/></g><g id=\"p140_lr\"><rect x=\"101\" y=\"214\" width=\"26\" height=\"146\" rx=\"13\" fill=\"#2a2622\"/></g><g id=\"p140_b\"><g id=\"p140_la\"><rect x=\"62\" y=\"126\" width=\"22\" height=\"104\" rx=\"11\" fill=\"#8f3a24\"/><circle cx=\"73\" cy=\"236\" r=\"12\" fill=\"#F1C9A3\"/></g><rect x=\"66\" y=\"112\" width=\"68\" height=\"124\" rx=\"28\" fill=\"#B84A2E\"/><g id=\"p140_ra\"><rect x=\"116\" y=\"126\" width=\"22\" height=\"104\" rx=\"11\" fill=\"#8f3a24\"/><circle cx=\"127\" cy=\"236\" r=\"12\" fill=\"#F1C9A3\"/></g><g id=\"p140_h\"><rect x=\"90\" y=\"96\" width=\"20\" height=\"22\" fill=\"#F1C9A3\"/><circle cx=\"100\" cy=\"70\" r=\"35\" fill=\"#F1C9A3\"/><path d=\"M65 66 A35 35 0 0 1 135 66 Q118 44 100 47 Q82 44 65 66Z\" fill=\"#2a1d14\"/><circle cx=\"88\" cy=\"76\" r=\"3.4\" fill=\"#0F0E0C\"/><circle cx=\"114\" cy=\"76\" r=\"3.4\" fill=\"#0F0E0C\"/><path id=\"p140_m\" d=\"M91 92 Q101 99 111 92\" fill=\"none\" stroke=\"#0F0E0C\" stroke-width=\"3.4\" stroke-linecap=\"round\"/></g></g></svg>",L.root);f0.className='mk-a';var n0=MK.el('div','left:70px;top:1170px;width:280px;text-align:center;font-size:26px;color:#6B6560','owner',L.root);n0.className='mk-a mk-mono';var f1=MK.el('div','left:400px;top:560px;width:280px;height:520px',"<svg viewBox=\"0 0 200 380\" style=\"overflow:visible;display:block\" width=\"100%%\" height=\"100%%\"><ellipse cx=\"100\" cy=\"366\" rx=\"64\" ry=\"9\" fill=\"rgba(15,14,12,.16)\"/><g id=\"p141_ll\"><rect x=\"73\" y=\"214\" width=\"26\" height=\"146\" rx=\"13\" fill=\"#2a2622\"/></g><g id=\"p141_lr\"><rect x=\"101\" y=\"214\" width=\"26\" height=\"146\" rx=\"13\" fill=\"#2a2622\"/></g><g id=\"p141_b\"><g id=\"p141_la\"><rect x=\"62\" y=\"126\" width=\"22\" height=\"104\" rx=\"11\" fill=\"#2a2622\"/><circle cx=\"73\" cy=\"236\" r=\"12\" fill=\"#F1C9A3\"/></g><rect x=\"66\" y=\"112\" width=\"68\" height=\"124\" rx=\"28\" fill=\"#0F0E0C\"/><g id=\"p141_ra\"><rect x=\"116\" y=\"126\" width=\"22\" height=\"104\" rx=\"11\" fill=\"#2a2622\"/><circle cx=\"127\" cy=\"236\" r=\"12\" fill=\"#F1C9A3\"/></g><g id=\"p141_h\"><rect x=\"90\" y=\"96\" width=\"20\" height=\"22\" fill=\"#F1C9A3\"/><circle cx=\"100\" cy=\"70\" r=\"35\" fill=\"#F1C9A3\"/><path d=\"M65 66 A35 35 0 0 1 135 66 Q118 44 100 47 Q82 44 65 66Z\" fill=\"#2a1d14\"/><circle cx=\"88\" cy=\"76\" r=\"3.4\" fill=\"#0F0E0C\"/><circle cx=\"114\" cy=\"76\" r=\"3.4\" fill=\"#0F0E0C\"/><path id=\"p141_m\" d=\"M91 92 Q101 99 111 92\" fill=\"none\" stroke=\"#0F0E0C\" stroke-width=\"3.4\" stroke-linecap=\"round\"/></g></g></svg>",L.root);f1.className='mk-a';var n1=MK.el('div','left:400px;top:1170px;width:280px;text-align:center;font-size:26px;color:#6B6560','admin',L.root);n1.className='mk-a mk-mono';var f2=MK.el('div','left:730px;top:560px;width:280px;height:520px',"<svg viewBox=\"0 0 200 380\" style=\"overflow:visible;display:block\" width=\"100%%\" height=\"100%%\"><ellipse cx=\"100\" cy=\"366\" rx=\"64\" ry=\"9\" fill=\"rgba(15,14,12,.16)\"/><g transform=\"translate(200,0) scale(-1,1)\"><g id=\"p142_ll\"><rect x=\"73\" y=\"214\" width=\"26\" height=\"146\" rx=\"13\" fill=\"#2a2622\"/></g><g id=\"p142_lr\"><rect x=\"101\" y=\"214\" width=\"26\" height=\"146\" rx=\"13\" fill=\"#2a2622\"/></g><g id=\"p142_b\"><g id=\"p142_la\"><rect x=\"62\" y=\"126\" width=\"22\" height=\"104\" rx=\"11\" fill=\"#a57a35\"/><circle cx=\"73\" cy=\"236\" r=\"12\" fill=\"#F1C9A3\"/></g><rect x=\"66\" y=\"112\" width=\"68\" height=\"124\" rx=\"28\" fill=\"#C8944A\"/><g id=\"p142_ra\"><rect x=\"116\" y=\"126\" width=\"22\" height=\"104\" rx=\"11\" fill=\"#a57a35\"/><circle cx=\"127\" cy=\"236\" r=\"12\" fill=\"#F1C9A3\"/></g><g id=\"p142_h\"><rect x=\"90\" y=\"96\" width=\"20\" height=\"22\" fill=\"#F1C9A3\"/><circle cx=\"100\" cy=\"70\" r=\"35\" fill=\"#F1C9A3\"/><path d=\"M65 66 A35 35 0 0 1 135 66 Q118 44 100 47 Q82 44 65 66Z\" fill=\"#2a1d14\"/><circle cx=\"88\" cy=\"76\" r=\"3.4\" fill=\"#0F0E0C\"/><circle cx=\"114\" cy=\"76\" r=\"3.4\" fill=\"#0F0E0C\"/><path id=\"p142_m\" d=\"M91 92 Q101 99 111 92\" fill=\"none\" stroke=\"#0F0E0C\" stroke-width=\"3.4\" stroke-linecap=\"round\"/></g></g></g></svg>",L.root);f2.className='mk-a';var n2=MK.el('div','left:730px;top:1170px;width:280px;text-align:center;font-size:26px;color:#6B6560','packing',L.root);n2.className='mk-a mk-mono';
+ var box=MK.el('div','left:400px;top:1000px;width:280px;height:150px;background:#C8944A;border:6px solid #0F0E0C;border-radius:8px',' ',L.root);box.className='mk-a';
+ var bub=MK.PaperCard(L,{x:250,y:420,w:580,at:5.75,from:'bottom',rot:1,html:'<div class="mk-fr" style="font-size:50px;line-height:1.1">“Kalau aku<br>pelanggannya…”</div>'});
+ MK.Subtitle(L,[[0.2, "Dua"], [0.32, "ajak admin dan"], [1.36, "tim *packing* *evaluasi*"], [2.6, "bareng"], [3.5, "Buka paket kalian"], [4.85, "sendiri"], [5.52, "dan rasakan jadi"], [6.8, "*pelanggan*"]],{y:1390});
+}},
+{dur:4.54, tr:'sweep', build:function(L){
+ MK.PaperCard(L,{x:96,y:520,w:888,at:.1,from:'bottom',rot:-1,html:'<div class="mk-fri" style="font-size:64px;line-height:1.15">Orang yang pegang momen terakhir sering yang <span style="color:#B84A2E">paling jarang</span> kamu ajak ngobrol.</div>'});
+}},
+{dur:8.8, build:function(L){
+ MK.SeriesCard(L,{series:'CATATAN MEJA ALDY',title:'Momen kecil<br>berikutnya.'});
+ var b=MK.el('div','left:96px;top:1180px;padding:20px 44px;border-radius:999px;background:#B84A2E;color:#FBF8F3;font-size:44px','Follow',L.root);b.className='mk-a mk-ou';
+ L.on(function(t){var k=MK.pr(t,.8,.3);b.style.opacity=k;b.style.transform='scale('+(.8+.2*MK.E.over(k))+')'});
+}}
+]);
+</script>
+</body></html>
