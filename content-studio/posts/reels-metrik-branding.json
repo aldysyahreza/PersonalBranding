@@ -1,0 +1,81 @@
+{
+ "id": "reels-metrik-branding",
+ "title": "Campaign branding dimatikan di minggu kedua",
+ "format": "reels",
+ "stage": "naskah",
+ "dx": 6,
+ "job": "Follow",
+ "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
+ "hue": "terracotta",
+ "series": "Catatan Meja Aldy",
+ "caption": "Campaign brand bukan cuma iklan, dan gak bisa dinilai dari omzet minggu kedua; simpan daftar cek ini sebelum kamu menilai campaign berikutnya.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "pinned": "Sumber: Nielsen Catalina Solutions (2015), 31 studi: efek jangka pendek diukur sampai 12 minggu setelah iklan, efek jangka panjang 1-2 tahun sesudahnya, rata-rata ±2x efek jangka pendek (angka rata-rata, beda per brand). Binet & Field, The Long and the Short of It (IPA, 2013). Rp30 juta di video = contoh hitungan.",
+ "story": "Poll: Campaign branding kamu selama ini dinilai pakai apa? Omzet bulan itu / ROAS iklan / Belum pernah diukur",
+ "reel": {
+  "v": 2,
+  "angle": "cermin",
+  "exec": "banding",
+  "coverH": "Restorannya enak",
+  "coverHi": "yang diingat satpamnya",
+  "beats": [
+   {
+    "say": "Campaign branding tiga puluh juta. Dua minggu kemudian dimatikan, karena omzet dari iklannya cuma balik modal. Yang salah bukan campaign-nya. Yang salah alat ukurnya. Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, membenahi bisnisnya secara tiga ratus enam puluh derajat, dari hulu sampai hilir.",
+    "txt": "Rp30 juta. Dimatikan di *minggu kedua.*",
+    "shot": "anim",
+    "dur": "",
+    "case": "ANIM: frame 1 teks + struk Rp30 juta (label contoh hitungan); saklar campaign dimatikan; cap 'cuma balik modal'; kartu perkenalan berfoto",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Banyak owner ngira campaign brand itu sama dengan iklan. Padahal iklan cuma satu bagian. Campaign brand dimulai dari tujuan: kamu mau dikenal sebagai apa, oleh siapa. Dari situ lahir konsep. Lalu aktivasi, misalnya event offline, live, atau photoshoot. Baru diperbesar lewat iklan dan KOL.",
+    "txt": "Tujuan. Konsep. Aktivasi. *Iklan & KOL.*",
+    "shot": "anim",
+    "dur": "",
+    "case": "ANIM: owner menunjuk satu kartu IKLAN; kamera mundur: kartu itu ternyata bagian dari alur 4 kartu TUJUAN -> KONSEP -> AKTIVASI (event, live, photoshoot) -> IKLAN & KOL",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Dan campaign brand itu perjalanan panjang. Efeknya datang bertahap, dan bisa juga gak berefek sama sekali. Riset Nielsen nunjukin, efek iklan ke penjualan paling kerasa sampai dua belas minggu. Tapi efek jangka panjangnya, satu sampai dua tahun, rata-rata dua kali lebih besar. Jadi ukurnya harus pakai rentang waktu.",
+    "txt": "Perjalanan panjang. Ukur pakai *rentang waktu.*",
+    "shot": "anim",
+    "dur": "",
+    "case": "ANIM: jalan panjang di kertas dengan 3 patok waktu (4 MINGGU / 3 BULAN / 1-2 TAHUN); dua batang: efek 12 minggu vs efek jangka panjang ±2x; label sumber Nielsen",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Empat minggu pertama, cek tanda awal. Aktivasi: berapa yang datang atau nonton live, dan berapa yang posting sambil tag brand kamu. Iklan: reach, berapa orang yang lihat. Impression, berapa kali iklannya tampil. Frequency, tiap orang lihat berapa kali. ThruPlay, berapa yang nonton sampai habis atau minimal lima belas detik. KOL: save, share, dan komentar yang nyebut nama brand kamu. Kalau tanda awal ini gak gerak, jangan nunggu setahun. Perbaiki konsepnya. Sampai tiga bulan: makin banyak orang nyari nama brand kamu? Biaya dapat satu pelanggan baru, atau CAC, turun? Satu sampai dua tahun: pelanggan balik lagi, dan kamu makin jarang butuh diskon. Kuncinya: catat semua angka ini sebelum campaign jalan.",
+    "txt": "Setiap bagian punya *angkanya.*",
+    "shot": "anim",
+    "dur": "",
+    "case": "ANIM: jalan bertahap dengan 3 patok; di patok 4 MINGGU kartu kamus metrik AKTIVASI / IKLAN / KOL dibalik; lampu 'gak gerak? perbaiki konsep'; patok 3 BULAN: branded search, CAC turun; patok 1-2 TAHUN: repeat order, diskon makin jarang; kartu 'angka sebelum mulai' diisi tangan",
+    "solusi": "Biaya hampir nol: (1) 3 standar tertempel di meja packing; (2) evaluasi bareng admin & tim packing: membuka paket sendiri dari sudut pandang pelanggan.",
+    "contoh": "Kartu standar meja packing: RAPI (selotip lurus, sudut terlindung) / BERSIH (tanpa debu, label lurus) / 1 KARTU TERIMA KASIH."
+   },
+   {
+    "say": "Simpan video ini sebagai daftar cek. Buka lagi sebelum kamu menilai campaign branding berikutnya.",
+    "txt": "Simpan *sebelum* menilai.",
+    "shot": "anim",
+    "dur": "",
+    "case": "ANIM: kartu angka masuk map; SeriesCard + ikon simpan",
+    "solusi": "",
+    "contoh": ""
+   }
+  ],
+  "prod": {},
+  "intro": {
+   "short": "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, membenahi bisnisnya secara tiga ratus enam puluh derajat, dari hulu sampai hilir.",
+   "pakai": "ucap-lengkap"
+  }
+ },
+ "sistem": {
+  "formula": "Tipe A: animasi penuh + voice over (Motion Kit Tinta & Kertas), TANPA talking head (keputusan Aldy 18 Nov, pengecualian aturan skill 'manusia di setiap reels' & 'motion <=30%')",
+  "tugas": "Share",
+  "set": "-",
+  "target_durasi": "±80 dtk (182 kata)",
+  "teks_frame1": "Makanannya enak. Yang diingat: tukang parkirnya.",
+  "asal": "Pola IHT dipakai: adegan sehari-hari -> twist -> kalimat besar -> putar ulang sebelum/sesudah. Isi baru, bukan materi klien."
+ }
+}
