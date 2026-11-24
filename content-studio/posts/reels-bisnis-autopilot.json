@@ -28,7 +28,7 @@
     "contoh": ""
    },
    {
-    "say": "Kata autopilot itu dari pesawat. Di sana, mesin memang menerbangkan pesawat hampir sepanjang perjalanan. Tapi kokpitnya gak pernah kosong. Pilot yang pasang rute, pilot yang pantau layar, dan pilot yang ambil alih saat cuaca berubah.",
+    "say": "Kata autopilot itu dari pesawat. Di sana, mesin memang menerbangkan pesawat hampir sepanjang perjalanan. Tapi kokpitnya gak pernah kosong. Pilot punya tiga tugas: pasang rute sebelum terbang, pantau layar selama terbang, dan ambil alih saat cuaca berubah.",
     "txt": "Kokpitnya gak pernah *kosong.*",
     "shot": "anim",
     "dur": "",
@@ -37,20 +37,20 @@
     "contoh": ""
    },
    {
-    "say": "Bisnis juga begitu. Autopilot-nya bukan aplikasi. Autopilot-nya adalah cara kerja yang ditulis. Atul Gawande, dokter bedah dan penulis The Checklist Manifesto, menguji ini di delapan rumah sakit. Setelah tim bedah pakai checklist sembilan belas poin, angka kematian pasien turun hampir separuh.",
+    "say": "Bisnis juga begitu. Autopilot-nya bukan aplikasi. Autopilot-nya adalah cara kerja yang ditulis. Atul Gawande, dokter bedah dan penulis The Checklist Manifesto, menemukan bahwa kesalahan di ruang operasi lebih sering terjadi bukan karena gak tahu, tapi karena lupa langkah sederhana. Timnya lalu menguji checklist sembilan belas poin di delapan rumah sakit. Setelah dipakai, angka kematian pasien turun hampir separuh.",
     "txt": "Autopilot = cara kerja yang *ditulis.*",
     "shot": "anim",
     "dur": "",
-    "case": "ANIM: ikon aplikasi dicoret -> papan klip checklist; KARTU TOKOH Atul Gawande (ilustrasi, bukan foto): 'Dokter bedah & penulis The Checklist Manifesto (2009)'; peta 8 rumah sakit menyala; checklist 19 poin tercentang cepat; batang kematian 1,5% -> 0,8% (label sumber NEJM 2009)",
+    "case": "ANIM: ikon aplikasi dicoret -> papan klip checklist; dokter sibuk dengan gelembung pikiran 'lupa satu langkah' (ikon centang kosong); KARTU TOKOH Atul Gawande (ilustrasi, bukan foto): 'Dokter bedah & penulis The Checklist Manifesto (2009)'; peta 8 rumah sakit menyala; checklist 19 poin tercentang cepat; batang kematian 1,5% -> 0,8% (label sumber NEJM 2009)",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Jadi mulai dari satu hal. Pilih pekerjaan yang minggu ini paling sering ditanyakan tim ke kamu. Tulis jadi checklist lima baris. Serahkan, lalu cek hasilnya tiap Jumat. Kamu tetap pilotnya. Bedanya, sekarang kamu pantau layar, bukan pegang kemudi seharian.",
+    "say": "Di bisnismu, rumusnya begini. Autopilot-nya: checklist kerja. Rutenya: standar yang jelas, misalnya chat dibalas maksimal lima menit. Layarnya: dua atau tiga angka yang kamu cek tiap Jumat. Dan kamu ambil alih cuma saat angkanya meleset. Mulai dari satu checklist. Pilih pekerjaan yang paling sering ditanyakan tim ke kamu, misalnya balas chat calon pembeli. Tulis lima baris: balas maksimal lima menit, sapa pakai nama, tanya kebutuhannya, kasih dua pilihan produk, catat hasilnya. Kalau ada yang meleset, perbaiki checklist-nya dulu, bukan langsung marahin orangnya. Kamu tetap pilotnya. Bedanya, sekarang kamu pantau layar, bukan pegang kemudi seharian.",
     "txt": "Kamu tetap *pilotnya.*",
     "shot": "anim",
     "dur": "",
-    "case": "ANIM: bubble pertanyaan tim menumpuk di meja owner, satu dipilih -> checklist 5 baris ditulis tangan, diserahkan ke figur tim; kalender Jumat dilingkari; owner pindah dari kemudi ke kursi pantau dengan dashboard",
+    "case": "ANIM: kokpit dibedah jadi 4 label yang dipetakan ke bisnis: AUTOPILOT = checklist kerja, RUTE = standar (jam pasir 5 menit), LAYAR = 3 angka (dashboard, kalender Jumat), AMBIL ALIH = lampu merah saat angka meleset; lalu papan klip 'Balas chat calon pembeli' ditulis tangan 5 baris satu per satu sesuai ucapan, diserahkan ke figur admin; baris meleset -> pensil merevisi checklist (bukan figur dimarahi); owner pindah dari kemudi ke kursi pantau",
     "solusi": "Biaya hampir nol: (1) 3 standar tertempel di meja packing; (2) evaluasi bareng admin & tim packing: membuka paket sendiri dari sudut pandang pelanggan.",
     "contoh": "Kartu standar meja packing: RAPI (selotip lurus, sudut terlindung) / BERSIH (tanpa debu, label lurus) / 1 KARTU TERIMA KASIH."
    },
