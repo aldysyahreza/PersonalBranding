@@ -162,12 +162,12 @@ GOLD = ('<svg viewBox="0 0 260 360" width="300" height="415"><rect x="40" y="200
         '<path d="M74 104 Q80 56 130 56 Q180 56 186 104 Q170 82 130 82 Q92 82 74 104Z" fill="#6B6560"/>'
         '<g fill="none" stroke="#0F0E0C" stroke-width="5"><circle cx="108" cy="118" r="17"/><circle cx="152" cy="118" r="17"/><path d="M125 118 h10"/></g>'
         '<g transform="rotate(-8 200 300)"><rect x="150" y="250" width="100" height="120" rx="6" fill="#C8944A" stroke="#0F0E0C" stroke-width="5"/>'
-        '<text x="200" y="318" text-anchor="middle" font-family="Fraunces,serif" font-weight="800" font-size="24" fill="#0F0E0C">THE GOAL</text></g></svg>')
+        '<text x="200" y="318" text-anchor="middle" font-family="Fraunces,serif" font-weight="800" font-size="19" fill="#0F0E0C">THE GOAL</text></g></svg>')
 scene(3, R("""var fr=MK.el('div','left:96px;top:330px;width:888px;height:920px;border-radius:24px;background:#FBF8F3;border:6px solid #0F0E0C;box-shadow:0 30px 60px -30px rgba(15,14,12,.5)',' ',L.root);fr.className='mk-a';
 var tg=MK.el('div','left:140px;top:370px;font-size:26px;letter-spacing:.1em;color:#B84A2E','KARTU TOKOH',L.root);tg.className='mk-a mk-mono';
 var pt=MK.el('div','left:390px;top:410px;width:300px;height:415px','@G@',L.root);pt.className='mk-a';
 var nm=MK.el('div','left:140px;top:850px;width:800px;text-align:center;font-size:74px;line-height:1','ELIYAHU GOLDRATT',L.root);nm.className='mk-a mk-fr';
-var s1=MK.el('div','left:140px;top:945px;width:800px;text-align:center;font-size:32px','Fisikawan & pakar manajemen · Israel (1947–2011)',L.root);s1.className='mk-a mk-ou';
+var s1=MK.el('div','left:140px;top:945px;width:800px;text-align:center;font-size:32px','Fisikawan & pakar manajemen bisnis (1947–2011)',L.root);s1.className='mk-a mk-ou';
 var s2=MK.el('div','left:140px;top:995px;width:800px;text-align:center;font-size:32px;color:#B84A2E','Penulis <i>The Goal</i> (1984), pencetus Theory of Constraints',L.root);s2.className='mk-a mk-ou';
 var bt=MK.el('div','left:270px;top:1140px;width:540px;text-align:center;padding:14px 0;border-radius:999px;background:#0F0E0C;color:#FBF8F3;font-size:40px','“hambatan” = bottleneck',L.root);bt.className='mk-a mk-ou';
 L.on(function(t){var k=MK.E.over(MK.pr(t,.05,.45));fr.style.opacity=k>0?1:0;fr.style.transform='rotate(-1.5deg) scale('+(.8+.2*k)+')';tg.style.opacity=MK.pr(t,.2,.3);

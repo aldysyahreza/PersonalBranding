@@ -216,7 +216,14 @@ def main(src, script, outdir, take='auto'):
     beats = [b['say'] for b in post['reel']['beats']] if 'reel' in post else [b['say'] for b in post['beats']]
     raw = os.path.join(outdir, '_raw.wav'); clean = os.path.join(outdir, '_clean.wav')
     ff('-i', src, '-ac', '1', '-ar', str(SR), raw)
-    xr = read_wav(raw); hop = int(0.02 * SR); fr = xr[:len(xr) // hop * hop].reshape(-1, hop)
+    xr = read_wav(raw)
+    # rekaman pecah (clipping): puncak datar >= 3 sampel berturut -> pulihkan dengan adeclip (24 Nov 2026, vo18)
+    c = np.abs(xr) > .97 * np.abs(xr).max(); runs = np.diff(np.flatnonzero(np.diff(np.r_[0, c.astype(int), 0])))[::2]
+    if (runs >= 3).sum() > 20:
+        ff('-i', src, '-ac', '1', '-af', 'volume=-6dB,adeclip=window=55:overlap=75:arorder=8:threshold=10:hsize=1000:method=s', '-ar', str(SR), raw)
+        print('Rekaman pecah di %d titik: dipulihkan dengan adeclip' % int((runs >= 3).sum()))
+        xr = read_wav(raw)
+    hop = int(0.02 * SR); fr = xr[:len(xr) // hop * hop].reshape(-1, hop)
     fdb = 20 * np.log10(np.sqrt((fr ** 2).mean(1)) + 1e-9)
     lantai = float(np.percentile(fdb, 20))   # lantai bising: 20% bingkai terpelan
     snr = float(np.percentile(fdb, 90)) - lantai
