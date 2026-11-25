@@ -217,12 +217,16 @@ def main(src, script, outdir, take='auto'):
     raw = os.path.join(outdir, '_raw.wav'); clean = os.path.join(outdir, '_clean.wav')
     # 25 Nov 2026: Opus/AAC hasil decode bisa melewati 0 dBFS (vo20: puncak 156%); turunkan 6 dB SEBELUM jadi 16-bit
     # supaya puncak tidak terpotong (inilah sumber 'glitch' di reels sebelumnya, bukan rekamannya)
-    ff('-i', src, '-ac', '1', '-af', 'volume=-6dB', '-ar', str(SR), raw)
+    # 25 Nov 2026: decoder Opus bawaan ffmpeg menyisipkan lonjakan nada ~6 kHz di awal kalimat pada rekaman WhatsApp (PTT);
+    # libopus (decoder resmi) bersih. Selalu pakai libopus untuk sumber Opus.
+    codec = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'a:0', '-show_entries', 'stream=codec_name', '-of', 'csv=p=0', src], capture_output=True, text=True).stdout.strip()
+    dec = ['-c:a', 'libopus'] if codec == 'opus' else []
+    ff(*dec, '-i', src, '-ac', '1', '-af', 'volume=-6dB', '-ar', str(SR), raw)
     xr = read_wav(raw)
     # rekaman pecah (clipping): puncak datar >= 3 sampel berturut -> pulihkan dengan adeclip (24 Nov 2026, vo18)
     c = np.abs(xr) > .97 * np.abs(xr).max(); runs = np.diff(np.flatnonzero(np.diff(np.r_[0, c.astype(int), 0])))[::2]
     if (runs >= 3).sum() > 20 and not os.environ.get('VO_NODECLIP'):
-        ff('-i', src, '-ac', '1', '-af', 'volume=-6dB,adeclip=window=55:overlap=75:arorder=8:threshold=10:hsize=1000:method=s', '-ar', str(SR), raw)
+        ff(*dec, '-i', src, '-ac', '1', '-af', 'volume=-6dB,adeclip=window=55:overlap=75:arorder=8:threshold=10:hsize=1000:method=s', '-ar', str(SR), raw)
         print('Rekaman pecah di %d titik: dipulihkan dengan adeclip' % int((runs >= 3).sum()))
         xr = read_wav(raw)
     hop = int(0.02 * SR); fr = xr[:len(xr) // hop * hop].reshape(-1, hop)
