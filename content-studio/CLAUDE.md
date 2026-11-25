@@ -264,3 +264,17 @@ Dasar: 3 sampel tulisan Aldy (voice/sampel-aldy.md). Tingkat disetujui Aldy: "pe
 - Penyebab utama: decoder Opus bawaan ffmpeg menyisipkan lonjakan derau keras (nada ~3–6 kHz, ~0,1 dtk) di awal kalimat setelah hening pada rekaman WhatsApp PTT. libopus (decoder resmi) bersih. vo_prep kini selalu decode Opus dengan `-c:a libopus`. Berlaku juga untuk ffmpeg lain yang membaca .ogg (ASR, cek).
 - Reel17–22 dibuat dengan decoder lama → kemungkinan berisi lonjakan ini.
 - Aldy: jeda poros 1 dtk tidak perlu lagi (Fabel #04 pakai jeda kalimat normal).
+
+## SOP VOICE OVER — TERKUNCI (Aldy, 25 Nov 2026). Wajib diikuti setiap VO, tanpa pengecualian.
+1. Simpan rekaman: `cp <upload>.ogg vo/voNN_raw.ogg` (nomor = nomor reel).
+2. Transkrip untuk cari pengulangan/salah ucap: decode **dengan libopus** →
+   `ffmpeg -c:a libopus -i vo/voNN_raw.ogg -ac 1 -ar 16000 -af volume=-6dB /tmp/vNN.wav` lalu
+   `python3 -I tools/asr_pieces.py vo/voNN_raw.ogg /tmp/vNN.wav /tmp/vNN.txt`.
+   Bandingkan dengan naskah; untuk tiap kalimat yang diulang, pilih take yang LENGKAP & sesuai naskah, buang sisanya lewat VO_CUTS (mulai-selesai detik, ambil tepi hening).
+3. Proses: `VO_CUTS=a-b,c-d VO_NORETAKE=1 VO_TAIL=3.0 python3 animatic/vo_prep.py vo/voNN_raw.ogg posts/<post>.json out/reelNN`
+   (vo_prep otomatis decode Opus dengan libopus + headroom -6 dB; JANGAN pernah decode .ogg WhatsApp dengan decoder bawaan ffmpeg).
+   Cek out/reelNN/laporan.txt: setiap kalimat naskah muncul sekali, urut, tanpa sisa take.
+4. Jeda khusus hanya bila Aldy minta: `python3 tools/vo_jeda.py out/reelNN "Kata." 1.0`. Bawaan sejak Fabel #04: TANPA jeda 1 dtk di poros.
+5. GERBANG MUTU: `python3 tools/vo_cek.py vo/voNN_raw.ogg out/reelNN` harus **LULUS** (0 lonjakan nada, 0 sampel mentok, puncak ≤ -1 dBFS). Gagal = jangan render.
+6. Kirim `vo_cek.m4a` (aac 192k dari vo_clean.wav) ke Aldy bila ada pemotongan, sebelum visual dikerjakan.
+7. Render: `MK_MOOD=dark python3 animatic/build_mk.py out/reelNN mk-xxx.html` (mix: kompresor lembut → ukur → gain → alimiter lambat, -16 LUFS). Cek mp4 akhir: -16 ±0,5 LUFS.
