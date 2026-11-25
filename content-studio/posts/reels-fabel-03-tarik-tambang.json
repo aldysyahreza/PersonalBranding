@@ -19,7 +19,7 @@
   "coverHi": "yang diingat satpamnya",
   "beats": [
    {
-    "say": "Tim yang orangnya lebih banyak, kalah tarik tambang. Tujuh belasan di kampung. Ada dua tipe tim. Tim pertama, sepuluh orang. Badannya besar-besar. Gak ada yang ngatur, pokoknya semua narik. Tim kedua, cuma enam orang. Tapi tiap orang punya posisi, dan ada satu yang kasih aba-aba.",
+    "say": "Tim yang orangnya lebih banyak, kalah tarik tambang. Tujuh belasan di kampung. Tim pertama, sepuluh orang. Gak ada yang ngatur, pokoknya semua narik. Tim kedua, cuma enam orang. Tapi tiap orang punya posisi, dan ada satu yang kasih aba-aba.",
     "txt": "Lebih banyak orang, *kalah.*",
     "shot": "anim",
     "dur": "",
@@ -28,7 +28,7 @@
     "contoh": ""
    },
    {
-    "say": "Peluit bunyi. Tim pertama narik sambil lihat kiri kanan. Semua mikir, yang lain pasti udah narik kuat. Tim kedua narik barengan. Satu, dua, tarik! Talinya pelan-pelan bergeser. Tim yang lebih banyak, jatuh duluan.",
+    "say": "Peluit bunyi. Tim pertama narik sambil lihat kiri kanan. Semua mikir, yang lain pasti udah narik kuat. Tim kedua? Satu, dua, tarik! Tim yang lebih banyak, jatuh duluan.",
     "txt": "Satu, dua, *tarik!*",
     "shot": "anim",
     "dur": "",
@@ -37,16 +37,16 @@
     "contoh": ""
    },
    {
-    "say": "Di dunia bisnis, ini ada namanya. Efek Ringelmann. Maximilien Ringelmann, insinyur pertanian, meneliti orang yang menarik tali bareng-bareng. Makin banyak orangnya, makin kecil tenaga tiap orang. Peneliti setelahnya menemukan sebabnya. Tiap orang merasa, gak kelihatan juga kalau aku kurang narik. Dan kabar baiknya, begitu kerja tiap orang kelihatan, efek ini hilang.",
+    "say": "Di dunia bisnis, ini ada namanya. Efek Ringelmann. Makin banyak orang dalam satu kelompok, makin kecil tenaga tiap orang. Sebabnya sederhana. Tiap orang merasa, gak kelihatan juga kalau aku kurang narik.",
     "txt": "Gak kelihatan juga *kalau aku kurang narik.*",
     "shot": "anim",
     "dur": "",
-    "case": "POROS: gelap + sorot; jeda 1 dtk setelah 'Efek Ringelmann'; KARTU TOKOH Maximilien Ringelmann ('Insinyur pertanian (1861-1931)', 'Percobaan menarik tali'); grafik batang: 1 orang batang penuh, 4 orang tiap batang memendek, 8 orang makin pendek (ilustrasi tanpa angka); lalu tiap batang diberi label nama -> semua batang kembali penuh ('begitu kerja tiap orang kelihatan, efek ini hilang')",
+    "case": "POROS: gelap + sorot; jeda 1 dtk setelah 'Efek Ringelmann'; KARTU TOKOH Maximilien Ringelmann ('Insinyur pertanian (1861-1931)', 'Percobaan menarik tali, 1913'); grafik batang: 1 orang batang penuh, 4 orang memendek, 8 orang makin pendek (tanpa angka)",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Di bisnismu, ini kejadian di grup WhatsApp tim. Ada yang nulis, stok produk terlaris tinggal sedikit. Semua baca. Semua kasih jempol. Seminggu kemudian, stoknya habis. Gak ada yang order ulang. Semua mikir, pasti udah ada yang urus. Di bisnis-bisnis yang saya dampingi, masalahnya jarang karena kurang orang. Masalahnya, pekerjaan gak punya nama.",
+    "say": "Di bisnismu, ini terjadi di grup WhatsApp tim. Ada yang nulis, stok produk terlaris tinggal sedikit. Semua kasih jempol. Seminggu kemudian, stoknya habis. Semua mikir, pasti udah ada yang urus. Di bisnis yang saya dampingi, masalahnya jarang karena kurang orang. Masalahnya, pekerjaan gak punya nama.",
     "txt": "Semua kasih jempol. *Gak ada yang urus.*",
     "shot": "anim",
     "dur": "",
@@ -55,7 +55,7 @@
     "contoh": "Kartu standar meja packing: RAPI (selotip lurus, sudut terlindung) / BERSIH (tanpa debu, label lurus) / 1 KARTU TERIMA KASIH."
    },
    {
-    "say": "Perusahaan besar pakai matriks RACI buat ngatur ini. RACI itu singkatan. R, responsible, yang mengerjakan. A, accountable, yang menanggung hasilnya. C, consulted, yang dimintai pendapat. I, informed, yang cukup dikabari. Intinya, tiap pekerjaan jelas siapa pegang apa. Buat bisnismu, cukup mulai dari empat hal. Satu nama, bukan nama divisi. Satu tenggat, tanggal dan jamnya. Satu ukuran selesai, bentuknya apa. Dan satu tempat lapor, di mana dicek. Tulis empat hal ini di setiap pekerjaan. Karena kalau semua orang pegang tali, siapa yang benar-benar narik?",
+    "say": "Perusahaan besar pakai RACI. Responsible, yang mengerjakan. Accountable, yang menanggung hasilnya. Consulted, yang dimintai pendapat. Informed, yang cukup dikabari. Buat bisnismu, mulai dari yang paling penting. Tiap pekerjaan punya satu nama, satu tenggat, satu ukuran selesai, dan satu tempat lapor. Karena kalau semua orang pegang tali, siapa yang benar-benar narik?",
     "txt": "Nama. Tenggat. Ukuran selesai. *Tempat lapor.*",
     "shot": "anim",
     "dur": "",
