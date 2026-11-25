@@ -102,7 +102,7 @@ function FACADE(L,x,o){var c=MK.el('div','left:'+x+'px;top:560px;width:520px;hei
  L.on(function(t){var n=typeof o.n=='function'?o.n(t):o.n;for(var i=0;i<4;i++){pp[i].style.opacity=i<n?1:0;pp[i].style.transform='translateY('+(Math.sin(t*3+i)*3)+'px)'}var w=document.getElementById('fw'+o.id);if(w)w.setAttribute('fill',(typeof o.lit=='function'?o.lit(t):o.lit)?'#F0C77E':'#2b241d')});return c}
 
 MK.run([
-{dur:2.7, build:function(L){
+{dur:2.69, build:function(L){
 DARK(L,{stars:true,moon:true});
 var hl=MK.el('div','left:96px;top:250px;width:900px;font-size:84px;line-height:1.04;color:#F4EBD9','Komplain itu gangguan,<br>atau <span style="color:#C8944A">masukan?</span>',L.root);hl.className='mk-a mk-fr';L.headline=true;
 FACADE(L,10,{id:'a0',type:1,n:4,lit:true});FACADE(L,550,{id:'b0',type:2,n:4,lit:true});
@@ -113,16 +113,16 @@ DARK(L,{stars:true});var tl=MK.el('div','left:96px;top:300px;width:888px;font-si
 FACADE(L,280,{id:'a1',type:1,n:4,lit:true});var er=MK.el('div','left:760px;top:540px;width:240px;height:280px',"<svg viewBox=\"0 0 120 140\" width=\"240\" height=\"280\"><path d=\"M60 10 Q110 10 110 64 Q110 96 82 110 Q70 116 70 130 Q70 140 56 140 Q40 140 40 124\" fill=\"none\" stroke=\"#F4EBD9\" stroke-width=\"10\" stroke-linecap=\"round\"/><path d=\"M50 60 Q50 34 72 34 Q92 34 92 60\" fill=\"none\" stroke=\"#F4EBD9\" stroke-width=\"8\" stroke-linecap=\"round\"/><rect x=\"20\" y=\"20\" width=\"100\" height=\"110\" rx=\"40\" fill=\"#6B6560\" stroke=\"#0F0E0C\" stroke-width=\"6\" transform=\"rotate(-18 70 75)\"/></svg>",L.root);er.className='mk-a';L.on(function(t){er.style.opacity=MK.pr(t,.5,.4)});
 MK.Subtitle(L,[[0.23, "Tipe"], [0.53, "pertama"], [1.36, "nganggap"], [1.67, "komplain"], [2.08, "itu"], [2.48, "*gangguan*"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:2.93, tr:'fade', dolly:0.027999999999999997, build:function(L){
+{dur:2.92, tr:'fade', dolly:0.027999999999999997, build:function(L){
 DARK(L,{stars:true});var tl=MK.el('div','left:96px;top:300px;width:888px;font-size:66px;line-height:1.05;color:#F4EBD9','<span class="mk-mono" style="font-size:28px;color:#C8944A">TIPE 2</span><br>Komplain = <span style="color:#C8944A">masukan.</span>',L.root);tl.className='mk-a mk-fr';L.on(function(t){var k=MK.pr(t,0.05,.4);tl.style.opacity=k;tl.style.transform='translateY('+((1-MK.E.out(k))*24)+'px)'});
 FACADE(L,280,{id:'b2',type:2,n:4,lit:true});var er=MK.el('div','left:780px;top:540px;width:240px;height:280px',"<svg viewBox=\"0 0 120 140\" width=\"240\" height=\"280\"><path d=\"M60 10 Q110 10 110 64 Q110 96 82 110 Q70 116 70 130 Q70 140 56 140 Q40 140 40 124\" fill=\"none\" stroke=\"#F4EBD9\" stroke-width=\"10\" stroke-linecap=\"round\"/><path d=\"M50 60 Q50 34 72 34 Q92 34 92 60\" fill=\"none\" stroke=\"#F4EBD9\" stroke-width=\"8\" stroke-linecap=\"round\"/><path d=\"M-10 50 q-14 20 0 40 M-30 36 q-24 34 0 68\" fill=\"none\" stroke=\"#C8944A\" stroke-width=\"8\" stroke-linecap=\"round\"/></svg>",L.root);er.className='mk-a';L.on(function(t){er.style.opacity=MK.pr(t,.5,.4);er.style.transform='scale('+(1+Math.sin(t*4)*.03)+')'});
-MK.Subtitle(L,[[0.23, "Tipe"], [0.61, "kedua"], [1.29, "nganggap"], [1.52, "komplain"], [1.87, "itu"], [2.14, "*masukan*"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Tipe"], [0.61, "kedua"], [1.28, "nganggap"], [1.51, "komplain"], [1.86, "itu"], [2.13, "*masukan*"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:4.0, tr:'fade', dolly:0.034999999999999996, build:function(L){
+{dur:3.98, tr:'fade', dolly:0.034999999999999996, build:function(L){
 CAFE(L,{type:1});TABLE(L,360,1130);CUP(L,450,1100);
 var rk=FIG(L,'r3',250,820,230,false);var wt=FIG(L,'w3',0,800,240,true);
-L.on(function(t){var w=MK.E.io(MK.pr(t,.2,1.4));wt.style.transform='translateX('+(1100-w*480)+'px) scaleX(-1)';WALK('w3',t,t>.2&&t<1.6);ARM('r3','ra',t>2.15-.6?-150+Math.sin(t*6)*8:-5);SMILE('r3',0)});
-MK.Subtitle(L,[[0.23, "Di"], [0.34, "cafe"], [0.67, "tipe"], [1.0, "pertama"], [1.76, "Raka"], [2.18, "komplain"], [3.08, "Cuma"], [3.29, "sekali"]],{y:1420,color:"#FBF8F3",dark:true});
+L.on(function(t){var w=MK.E.io(MK.pr(t,.2,1.4));wt.style.transform='translateX('+(1100-w*480)+'px) scaleX(-1)';WALK('w3',t,t>.2&&t<1.6);ARM('r3','ra',t>2.14-.6?-150+Math.sin(t*6)*8:-5);SMILE('r3',0)});
+MK.Subtitle(L,[[0.23, "Di"], [0.34, "cafe"], [0.67, "tipe"], [0.99, "pertama"], [1.75, "Raka"], [2.17, "komplain"], [3.07, "Cuma"], [3.28, "sekali"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
 {dur:2.51, tr:'fade', dolly:0.041999999999999996, build:function(L){
 CAFE(L,{type:1});TABLE(L,300,1130);
@@ -130,22 +130,22 @@ var rk=FIG(L,'r4',180,820,230,false);var wt=FIG(L,'w4',620,780,250,true);
 BUB(L,120,520,460,'“Mas, menu yang<br>paling enak apa?”',.1);BUB(L,560,440,440,'“...ya baca aja<br>menunya.”',.9,'#D98C7A');
 var an=MK.el('div','left:760px;top:740px;width:120px;height:60px','<svg viewBox="0 0 60 30" width="120" height="60"><path d="M6 6 L26 16 M54 6 L34 16" stroke="#0F0E0C" stroke-width="6" stroke-linecap="round"/></svg>',L.root);an.className='mk-a';
 L.on(function(t){SMILE('w4',-.8);HEAD('w4',t>.9?-10:0);ARM('w4','la',t>.9?40:0);SMILE('r4',t>1.2?-.6:.2);HEAD('r4',t>1.2?8:0);an.style.opacity=t>.9?1:0});
-MK.Subtitle(L,[[0.23, "Pelayannya"], [0.74, "*ketus*"], [1.0, "waktu"], [1.53, "dia"], [1.68, "nanya"], [1.94, "menu"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Pelayannya"], [0.74, "*ketus*"], [1.01, "waktu"], [1.53, "dia"], [1.68, "nanya"], [1.95, "menu"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:5.25, tr:'fade', dolly:0.027999999999999997, build:function(L){
+{dur:5.22, tr:'fade', dolly:0.027999999999999997, build:function(L){
 CAFE(L,{type:1});
 var ow=FIG(L,'o5',160,700,260,false);var rk=FIG(L,'r5',700,820,220,true);
 BUB(L,520,540,460,'“Pelayannya<br>ketus, Pak.”',.0,'#F4EBD9',1.6);
 var th=MK.el('div','left:60px;top:430px;width:500px;height:240px','<svg viewBox="0 0 250 120" width="500" height="240"><ellipse cx="130" cy="50" rx="115" ry="45" fill="#F4EBD9" stroke="#0F0E0C" stroke-width="4"/><circle cx="60" cy="104" r="9" fill="#F4EBD9" stroke="#0F0E0C" stroke-width="3"/><circle cx="44" cy="116" r="5" fill="#F4EBD9" stroke="#0F0E0C" stroke-width="3"/><text x="130" y="44" text-anchor="middle" font-family="Outfit,sans-serif" font-size="26" fill="#0F0E0C">hal kecil...</text><text x="130" y="74" text-anchor="middle" font-family="Outfit,sans-serif" font-size="26" fill="#0F0E0C">badmood aja</text></svg>',L.root);th.className='mk-a';
 L.on(function(t){var s=t>1.6?Math.sin((t-1.6)*8)*.5+.5:0;ARM('o5','la',-40*s-10);ARM('o5','ra',40*s+10);HEAD('o5',t>1.6?-8:0);th.style.opacity=MK.pr(t,3.07-1,.4);SMILE('r5',-.5)});
-MK.Subtitle(L,[[0.23, "Pemiliknya"], [0.65, "mikir"], [1.3, "hal"], [1.51, "kecil"], [2.21, "mungkin"], [2.43, "pelayannya"], [2.88, "lagi"], [3.1, "*badmood*"], [3.39, "aja"], [4.14, "Gak"], [4.24, "ditanggapi"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Pemiliknya"], [0.65, "mikir"], [1.3, "hal"], [1.51, "kecil"], [2.21, "mungkin"], [2.43, "pelayannya"], [2.89, "lagi"], [3.1, "*badmood*"], [3.39, "aja"], [4.13, "Gak"], [4.23, "ditanggapi"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
 {dur:2.94, tr:'fade', dolly:0.034999999999999996, build:function(L){
 CAFE(L,{type:2});TABLE(L,300,1130);CUP(L,400,1100);
 var dt=FIG(L,'d6',180,820,230,false);var wt=FIG(L,'w6',620,780,250,true);
 BUB(L,560,460,420,'“...ya baca aja<br>menunya.”',.3,'#D98C7A',1.6);
 L.on(function(t){SMILE('w6',-.8);SMILE('d6',t>.8?-.6:0);ARM('d6','ra',t>1.8?-150:-5)});
-MK.Subtitle(L,[[0.23, "Di"], [0.34, "cafe"], [0.63, "tipe"], [0.96, "kedua"], [1.55, "Dita"], [1.78, "ngalamin"], [2.11, "hal"], [2.22, "yang"], [2.34, "sama"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Di"], [0.34, "cafe"], [0.64, "tipe"], [0.96, "kedua"], [1.55, "Dita"], [1.78, "ngalamin"], [2.11, "hal"], [2.22, "yang"], [2.34, "sama"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
 {dur:3.59, tr:'fade', dolly:0.027999999999999997, build:function(L){
 CAFE(L,{type:2});
@@ -155,43 +155,43 @@ L.on(function(t){var w=MK.E.io(MK.pr(t,0,1.2));ow.style.transform='translateX('+
 HEAD('w7',t>1.88+.8?Math.sin(t*6)*10:0);SMILE('w7',t>1.88+1.6?.2:-.5)});
 MK.Subtitle(L,[[0.23, "Pemiliknya"], [0.86, "langsung"], [1.17, "datang"], [1.91, "ngobrol"], [2.18, "sama"], [2.51, "pelayannya"], [3.18, "lalu"], [3.45, "bilang"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:3.33, tr:'fade', dolly:0.034999999999999996, build:function(L){
+{dur:3.32, tr:'fade', dolly:0.034999999999999996, build:function(L){
 CAFE(L,{type:2});TABLE(L,580,1130);CUP(L,680,1100);
 var ow=FIG(L,'o8',230,760,260,false);var dt=FIG(L,'d8',700,820,230,true);
 BUB(L,96,450,620,'“Mohon maaf, Kak.<br>Kami akan perbaiki<br>pelayanan kami.”',.1,'#F4EBD9');
 var hs=[];for(var i=0;i<5;i++){var e=MK.el('div','left:'+(760+i*30)+'px;top:760px;font-size:40px;color:#D98C7A','♥',L.root);e.className='mk-a';hs.push(e)}
 L.on(function(t){var b=Math.sin(Math.min(1,t/.6)*Math.PI)*.0;var bw=t>.1&&t<1.2?MK.E.io(Math.min(1,(t-.1)/.4))*18:0;RT('o8_b',bw,100,330);SMILE('o8',.4);SMILE('d8',MK.pr(t,1.4,.5));
 for(var i=0;i<5;i++){var p=((t-1.6)*.6+i*.2)%1;hs[i].style.transform='translateY('+(-p*200)+'px)';hs[i].style.opacity=t>1.6?1-p:0}});
-MK.Subtitle(L,[[0.23, "mohon"], [0.52, "*maaf*"], [0.67, "Kak"], [1.4, "Kami"], [1.59, "akan"], [1.84, "*perbaiki*"], [2.12, "pelayanan"], [2.59, "kami"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "mohon"], [0.52, "*maaf*"], [0.67, "Kak"], [1.4, "Kami"], [1.59, "akan"], [1.84, "*perbaiki*"], [2.11, "pelayanan"], [2.58, "kami"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:5.26, tr:'fade', dolly:0.020999999999999998, build:function(L){
+{dur:5.25, tr:'fade', dolly:0.020999999999999998, build:function(L){
 DARK(L,{stars:true,moon:true});
 FACADE(L,10,{id:'a9',type:1,n:function(t){return 4-Math.min(4,Math.floor(t*1.2))},lit:true});FACADE(L,550,{id:'b9',type:2,n:4,lit:true});
 var rd=MK.el('div','left:0;top:1320px;width:1080px;height:600px;background:#1b1612;border-top:6px solid #0F0E0C',' ',L.root);rd.className='mk-a';
 var cal=MK.el('div','left:400px;top:260px;width:280px;height:280px;background:#F4EBD9;border:5px solid #0F0E0C;border-radius:12px;overflow:hidden;text-align:center','<div style="height:60px;background:#B84A2E"></div><div id="c9" class="mk-fr" style="font-size:72px;line-height:120px">1</div><div class="mk-mono" style="font-size:24px">BULAN</div>',L.root);cal.className='mk-a';
 L.on(function(t){var c=$('c9');if(c)c.textContent=Math.min(3,1+Math.floor(t*1.2))});
-MK.Subtitle(L,[[0.23, "Tiga"], [0.47, "bulan"], [0.76, "kemudian"], [1.54, "cafe"], [1.79, "tipe"], [2.04, "pertama"], [2.47, "makin"], [2.73, "*sepi*"], [3.57, "Raka"], [3.92, "gak"], [4.04, "pernah"], [4.4, "datang"], [4.68, "lagi"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Tiga"], [0.47, "bulan"], [0.76, "kemudian"], [1.53, "cafe"], [1.78, "tipe"], [2.03, "pertama"], [2.47, "makin"], [2.72, "*sepi*"], [3.56, "Raka"], [3.91, "gak"], [4.03, "pernah"], [4.39, "datang"], [4.67, "lagi"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:5.48, tr:'fade', dolly:0.027999999999999997, build:function(L){
+{dur:5.47, tr:'fade', dolly:0.027999999999999997, build:function(L){
 CAFE(L,{type:1,dim:function(t){return .35+Math.min(.3,t*.08)}});
 var U=["c110", "c111", "c112", "c113"],vv=U.map(function(u,i){return FIG(L,u,0,820,200,true)});
 var dr=MK.el('div','left:900px;top:700px;width:160px;height:460px;background:#14100c;border:6px solid #5a3b24',' ',L.root);dr.className='mk-a';
 L.on(function(t){for(var i=0;i<4;i++){var s=.3+i*.9,w=MK.E.io(MK.pr(t,s,1.6));vv[i].style.transform='translateX('+(80+i*170+w*(820-i*170))+'px) scaleX(-1)';vv[i].style.opacity=w>.95?0:1;WALK(U[i],t+i,t>s&&w<1);SMILE(U[i],-.3)}});
-MK.Subtitle(L,[[0.23, "Pelanggan"], [0.66, "lain"], [0.81, "yang"], [0.97, "dulu"], [1.26, "diam"], [1.78, "ternyata"], [2.11, "ngerasain"], [2.45, "hal"], [2.56, "yang"], [2.71, "sama"], [3.47, "Mereka"], [3.86, "cuma"], [4.1, "gak"], [4.21, "bilang"], [4.67, "langsung"], [4.93, "*pindah*"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Pelanggan"], [0.66, "lain"], [0.82, "yang"], [0.97, "dulu"], [1.26, "diam"], [1.78, "ternyata"], [2.11, "ngerasain"], [2.45, "hal"], [2.56, "yang"], [2.71, "sama"], [3.47, "Mereka"], [3.86, "cuma"], [4.1, "gak"], [4.21, "bilang"], [4.67, "langsung"], [4.93, "*pindah*"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:3.65, tr:'fade', dolly:0.027999999999999997, build:function(L){
+{dur:3.64, tr:'fade', dolly:0.027999999999999997, build:function(L){
 CAFE(L,{type:2});
 var dr=MK.el('div','left:20px;top:700px;width:160px;height:460px;background:#F0C77E;border:6px solid #5a3b24',' ',L.root);dr.className='mk-a';
 var U=["g120", "g121", "g122", "g123"],vv=U.map(function(u,i){return FIG(L,u,0,820,200,false)});
 L.on(function(t){for(var i=0;i<4;i++){var s=.1+i*.35,w=MK.E.io(MK.pr(t,s,1.5));vv[i].style.transform='translateX('+(20+w*(620-i*150))+'px)';vv[i].style.opacity=t>s?1:0;WALK(U[i],t+i,t>s&&w<1);SMILE(U[i],.7)}});
-MK.Subtitle(L,[[0.23, "Cafe"], [0.48, "tipe"], [0.75, "kedua"], [1.53, "Dita"], [1.8, "datang"], [2.13, "bawa"], [2.47, "tiga"], [2.8, "temannya"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Cafe"], [0.48, "tipe"], [0.74, "kedua"], [1.52, "Dita"], [1.79, "datang"], [2.12, "bawa"], [2.46, "tiga"], [2.79, "temannya"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:4.02, tr:'fade', dolly:0.034999999999999996, build:function(L){
+{dur:4.0, tr:'fade', dolly:0.034999999999999996, build:function(L){
 CAFE(L,{type:2});TABLE(L,280,1130);TABLE(L,520,1130);for(var i=0;i<4;i++)CUP(L,330+i*130,1100);
 var U=["t130", "t131", "t132", "t133"],vv=U.map(function(u,i){return FIG(L,u,140+i*190,820,200,i>1)});
 BUB(L,96,440,800,'“Cafe ini ramah,<br>mau menghargai pendapat pelanggan.”',1.2,'#F4EBD9');
 L.on(function(t){for(var i=0;i<4;i++){SMILE(U[i],.6+Math.sin(t*6+i)*.3);HEAD(U[i],Math.sin(t*4+i)*8);BOB(U[i],t+i,3)}});
-MK.Subtitle(L,[[0.23, "Katanya"], [0.73, "cafe"], [1.18, "ini"], [1.45, "*ramah*"], [2.13, "mau"], [2.23, "menghargai"], [2.58, "pendapat"], [3.06, "pelanggan"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Katanya"], [0.73, "cafe"], [1.17, "ini"], [1.45, "*ramah*"], [2.11, "mau"], [2.21, "menghargai"], [2.56, "pendapat"], [3.04, "pelanggan"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
 {dur:5.88, tr:'fade', dolly:0.034999999999999996, build:function(L){
 DARK(L,{bg:'#080706'});
@@ -202,7 +202,7 @@ var ly=MK.el('div','left:470px;top:1120px;width:140px;font-size:120px;color:#D98
 L.on(function(t){sp.style.opacity=MK.pr(t,.2,.6);var a=MK.pr(t,2.61,.35),b=MK.pr(t,3.38,.35),c=MK.pr(t,4.12,.35);ex.style.opacity=a;ex.style.transform='translateY('+((1-MK.E.out(a))*60)+'px)';vc.style.opacity=b;vc.style.transform='translateY('+((1-MK.E.out(b))*60)+'px)';ly.style.opacity=c;ly.style.transform='scale('+(.5+.5*MK.E.over(c)+Math.sin(t*6)*.04)+')'});
 MK.Subtitle(L,[[0.23, "Di"], [0.35, "dunia"], [0.58, "bisnis"], [0.91, "ini"], [1.39, "ada"], [1.64, "namanya"], [2.64, "*Exit*"], [3.41, "*voice*"], [3.97, "and"], [4.15, "*loyalty*"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:3.73, tr:'fade', dolly:0.034999999999999996, build:function(L){
+{dur:3.72, tr:'fade', dolly:0.034999999999999996, build:function(L){
 DARK(L,{bg:'#080706'});
 var fr=MK.el('div','left:96px;top:330px;width:888px;height:900px;border-radius:24px;background:#F4EBD9;border:6px solid #0F0E0C;box-shadow:0 40px 80px -30px rgba(0,0,0,.8)',' ',L.root);fr.className='mk-a';
 var tg=MK.el('div','left:140px;top:370px;font-size:26px;letter-spacing:.1em;color:#B84A2E','KARTU TOKOH',L.root);tg.className='mk-a mk-mono';
@@ -211,33 +211,33 @@ var nm=MK.el('div','left:140px;top:850px;width:800px;text-align:center;font-size
 var s1=MK.el('div','left:140px;top:940px;width:800px;text-align:center;font-size:34px;color:#0F0E0C','Ekonom (1915–2012)',L.root);s1.className='mk-a mk-ou';
 var s2=MK.el('div','left:140px;top:990px;width:800px;text-align:center;font-size:34px;color:#B84A2E','Penulis <i>Exit, Voice, and Loyalty</i> (1970)',L.root);s2.className='mk-a mk-ou';
 L.on(function(t){var k=MK.E.over(MK.pr(t,0,.5));[fr,tg,pt,nm,s1,s2].forEach(function(e,i){e.style.opacity=MK.pr(t,i*.1,.3)});fr.style.transform='rotate(1.5deg) scale('+(.8+.2*k)+')';pt.style.transform='translateY('+((1-k)*60)+'px) rotate('+(Math.sin(t*1.5)*2)+'deg)'});
-MK.Subtitle(L,[[0.23, "Albert"], [0.61, "*Hirschman*"], [1.43, "ekonom"], [1.84, "yang"], [2.08, "menulis"], [2.42, "buku"], [2.71, "dengan"], [2.95, "judul"], [3.19, "yang"], [3.34, "sama"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Albert"], [0.61, "*Hirschman*"], [1.42, "ekonom"], [1.83, "yang"], [2.07, "menulis"], [2.41, "buku"], [2.7, "dengan"], [2.94, "judul"], [3.18, "yang"], [3.33, "sama"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:9.84, tr:'fade', dolly:0.034999999999999996, build:function(L){
+{dur:9.83, tr:'fade', dolly:0.034999999999999996, build:function(L){
 DARK(L);
 var rd=MK.el('div','left:0;top:0;width:1080px;height:1920px',LINE(1080,1920,'<path d="M540 1400 V1100 L240 700 M540 1100 L840 700" stroke-width="10"/>'),L.root);rd.className='mk-a';
 var ex=MK.el('div','left:130px;top:470px;width:220px;height:300px;border:6px solid #9a9590;text-align:center','<div class="mk-fr" style="font-size:44px;color:#9a9590;margin-top:110px">EXIT</div>',L.root);ex.className='mk-a';
 var vc=MK.el('div','left:720px;top:470px;width:240px;height:240px','<svg viewBox="0 0 165 160" width="240" height="233"><path d="M10 10 h145 v100 h-90 l-30 30 v-30 h-25z" fill="#C8944A" stroke="#0F0E0C" stroke-width="5"/></svg>',L.root);vc.className='mk-a';
 var p=FIG(L,'p16',440,1080,180,false);
 L.on(function(t){HEAD('p16',t<3.5?Math.sin(t*2)*14:(t<4.19?-14:14));var g=MK.pr(t,8.34,.5);vc.style.transform='scale('+(1+g*.15+Math.sin(t*5)*.03*g)+')';vc.style.filter=g>0?'drop-shadow(0 0 30px rgba(200,148,74,.8))':'none';ex.style.opacity=1-g*.6});
-MK.Subtitle(L,[[0.23, "bilang"], [0.44, "pelanggan"], [1.07, "yang"], [1.2, "kecewa"], [1.7, "cuma"], [2.12, "punya"], [2.42, "dua"], [2.55, "pilihan"], [3.53, "*Pergi*"], [3.77, "diam-diam"], [3.98, "atau"], [4.22, "*ngomong*"], [5.01, "Dan"], [5.19, "yang"], [5.34, "mau"], [5.49, "*ngomong*"], [6.19, "sebenarnya"], [7.0, "masih"], [7.6, "kasih"], [7.93, "kamu"], [8.37, "*kesempatan*"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "bilang"], [0.45, "pelanggan"], [1.07, "yang"], [1.2, "kecewa"], [1.7, "cuma"], [2.12, "punya"], [2.42, "dua"], [2.55, "pilihan"], [3.53, "*Pergi*"], [3.78, "diam-diam"], [3.98, "atau"], [4.22, "*ngomong*"], [5.01, "Dan"], [5.2, "yang"], [5.34, "mau"], [5.49, "*ngomong*"], [6.19, "sebenarnya"], [7.0, "masih"], [7.6, "kasih"], [7.94, "kamu"], [8.37, "*kesempatan*"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:5.63, tr:'fade', dolly:0.027999999999999997, build:function(L){
+{dur:5.61, tr:'fade', dolly:0.027999999999999997, build:function(L){
 DARK(L,{bg:'#101317'});var grid=MK.el('div','left:0;top:0;width:1080px;height:1920px;background-image:linear-gradient(rgba(244,235,217,.06) 2px,transparent 2px),linear-gradient(90deg,rgba(244,235,217,.06) 2px,transparent 2px);background-size:60px 60px',' ',L.root);grid.className='mk-a';
 var ph=MK.el('div','left:270px;top:400px;width:540px;height:860px;border:6px solid #F4EBD9;border-radius:56px',' ',L.root);ph.className='mk-a';
 var hd=MK.el('div','left:320px;top:460px;font-size:28px;color:#F4EBD9','DM · pelanggan',L.root);hd.className='mk-a mk-mono';
-BUB(L,320,560,420,'Kak, adminnya jutek ya.',4.93-1.2,'#F4EBD9');
+BUB(L,320,560,420,'Kak, adminnya jutek ya.',4.92-1.2,'#F4EBD9');
 L.on(function(t){});
-MK.Subtitle(L,[[0.23, "Di"], [0.46, "bisnismu"], [1.5, "Raka"], [1.79, "itu"], [2.13, "pelanggan"], [2.52, "yang"], [2.68, "komplain"], [2.95, "di"], [3.1, "DM"], [3.79, "Yang"], [3.91, "bilang"], [4.14, "admin"], [4.69, "kamu"], [4.96, "*jutek*"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Di"], [0.47, "bisnismu"], [1.5, "Raka"], [1.79, "itu"], [2.13, "pelanggan"], [2.52, "yang"], [2.68, "komplain"], [2.95, "di"], [3.08, "DM"], [3.78, "Yang"], [3.9, "bilang"], [4.13, "admin"], [4.68, "kamu"], [4.95, "*jutek*"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:10.68, tr:'fade', dolly:0.027999999999999997, build:function(L){
+{dur:10.66, tr:'fade', dolly:0.027999999999999997, build:function(L){
 DARK(L,{bg:'#101317'});var grid=MK.el('div','left:0;top:0;width:1080px;height:1920px;background-image:linear-gradient(rgba(244,235,217,.06) 2px,transparent 2px),linear-gradient(90deg,rgba(244,235,217,.06) 2px,transparent 2px);background-size:60px 60px',' ',L.root);grid.className='mk-a';
 var st=MK.el('div','left:96px;top:330px;padding:16px 28px;border:6px solid #C8944A;border-radius:12px;color:#C8944A;font-size:40px;transform:rotate(-3deg)','DARI BISNIS YANG SAYA DAMPINGI',L.root);st.className='mk-a mk-fr';
-var lb=['KOMPLAIN','DENGAR','SOLUSI','SELESAI'],AT=[6.25, 7.11, 9.01, 9.89],bx=[];for(var i=0;i<4;i++){var e=MK.el('div','left:'+(96+i*230)+'px;top:700px;width:200px;height:200px;border:5px solid #F4EBD9;border-radius:18px;text-align:center;color:#F4EBD9','<div class="mk-fr" style="font-size:30px;margin-top:40px">'+lb[i]+'</div><div class="ck" style="font-size:80px;color:#C8944A"></div>',L.root);e.className='mk-a';bx.push(e)}
+var lb=['KOMPLAIN','DENGAR','SOLUSI','SELESAI'],AT=[6.25, 7.1, 9.0, 9.88],bx=[];for(var i=0;i<4;i++){var e=MK.el('div','left:'+(96+i*230)+'px;top:700px;width:200px;height:200px;border:5px solid #F4EBD9;border-radius:18px;text-align:center;color:#F4EBD9','<div class="mk-fr" style="font-size:30px;margin-top:40px">'+lb[i]+'</div><div class="ck" style="font-size:80px;color:#C8944A"></div>',L.root);e.className='mk-a';bx.push(e)}
 var ar=MK.el('div','left:96px;top:940px;width:888px;height:60px',LINE(888,60,'<path d="M20 30 H860 M840 14 L862 30 L840 46"/>'),L.root);ar.className='mk-a';
 var lo=MK.el('div','left:96px;top:1080px;width:888px;font-size:64px;color:#F4EBD9;line-height:1.05','Yang komplain = <span style="color:#C8944A">pelanggan loyal.</span>',L.root);lo.className='mk-a mk-fr';
 L.on(function(t){var k=MK.pr(t,.1,.25);st.style.opacity=k;st.style.transform='rotate(-3deg) scale('+(1.3-.3*MK.E.out(k))+')';for(var i=0;i<4;i++){bx[i].style.opacity=MK.pr(t,.6+i*.15,.3);var c=bx[i].querySelector('.ck');if(c)c.textContent=t>AT[i]?'✓':''}lo.style.opacity=MK.pr(t,AT[0]-.3,.4)});
-MK.Subtitle(L,[[0.23, "Di"], [0.37, "bisnis-bisnis"], [0.83, "yang"], [0.96, "saya"], [1.25, "dampingi"], [1.59, "selama"], [2.01, "ini"], [2.61, "polanya"], [2.89, "selalu"], [3.25, "sama"], [3.99, "Pelanggan"], [4.45, "yang"], [4.78, "komplain"], [5.13, "justru"], [5.53, "pelanggan"], [6.13, "yang"], [6.28, "*loyal*"], [7.14, "Jangan"], [7.52, "dibiarkan"], [8.77, "Kasih"], [9.04, "*solusi*"], [9.65, "sampai"], [9.92, "*selesai*"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Di"], [0.37, "bisnis-bisnis"], [0.83, "yang"], [0.97, "saya"], [1.25, "dampingi"], [1.6, "selama"], [2.01, "ini"], [2.61, "polanya"], [2.89, "selalu"], [3.25, "sama"], [3.99, "Pelanggan"], [4.45, "yang"], [4.78, "komplain"], [5.13, "justru"], [5.53, "pelanggan"], [6.12, "yang"], [6.28, "*loyal*"], [7.13, "Jangan"], [7.51, "dibiarkan"], [8.76, "Kasih"], [9.03, "*solusi*"], [9.64, "sampai"], [9.91, "*selesai*"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
 {dur:4.52, tr:'fade', dolly:0.020999999999999998, build:function(L){
 DARK(L,{bg:'#101317'});var grid=MK.el('div','left:0;top:0;width:1080px;height:1920px;background-image:linear-gradient(rgba(244,235,217,.06) 2px,transparent 2px),linear-gradient(90deg,rgba(244,235,217,.06) 2px,transparent 2px);background-size:60px 60px',' ',L.root);grid.className='mk-a';
@@ -245,22 +245,22 @@ var hd=MK.el('div','left:96px;top:330px;width:888px;font-size:56px;color:#C8944A
 var a=MK.el('div','left:440px;top:760px;width:160px;height:320px',LINE(100,200,LFIG()),L.root);a.className='mk-a';a.firstChild.setAttribute('width',160);a.firstChild.setAttribute('height',320);a.firstChild.querySelector('g').setAttribute('stroke','#C8944A');
 var fr=[];for(var i=0;i<3;i++){var e=MK.el('div','left:0px;top:0px;width:130px;height:260px',LINE(100,200,LFIG()),L.root);e.className='mk-a';e.firstChild.setAttribute('width',130);e.firstChild.setAttribute('height',260);fr.push(e)}
 L.on(function(t){for(var i=0;i<3;i++){var k=MK.E.out(MK.pr(t,3.33-.4+i*.25,.8));fr[i].style.transform='translate('+(140+i*260+(1-k)*400)+'px,'+(1140)+'px)';fr[i].style.opacity=k}});
-MK.Subtitle(L,[[0.23, "Satu"], [0.61, "komplain"], [0.96, "yang"], [1.11, "kamu"], [1.48, "selesaikan"], [2.26, "bisa"], [2.75, "balik"], [3.05, "jadi"], [3.36, "*rekomendasi*"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Satu"], [0.61, "komplain"], [0.97, "yang"], [1.11, "kamu"], [1.49, "selesaikan"], [2.26, "bisa"], [2.76, "balik"], [3.05, "jadi"], [3.36, "*rekomendasi*"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:4.67, tr:'fade', dolly:0.020999999999999998, build:function(L){
+{dur:4.66, tr:'fade', dolly:0.020999999999999998, build:function(L){
 DARK(L,{bg:'#101317'});var grid=MK.el('div','left:0;top:0;width:1080px;height:1920px;background-image:linear-gradient(rgba(244,235,217,.06) 2px,transparent 2px),linear-gradient(90deg,rgba(244,235,217,.06) 2px,transparent 2px);background-size:60px 60px',' ',L.root);grid.className='mk-a';
 var hd=MK.el('div','left:96px;top:330px;width:888px;font-size:56px;color:#9a9590','Diabaikan →',L.root);hd.className='mk-a mk-fr';
 var fs=[];for(var i=0;i<7;i++){var e=MK.el('div','left:0px;top:0px;width:130px;height:260px',LINE(100,200,LFIG()),L.root);e.className='mk-a';e.firstChild.setAttribute('width',130);e.firstChild.setAttribute('height',260);fs.push(e)}
 L.on(function(t){for(var i=0;i<7;i++){var s=i==0?.2:1.2+i*.22,w=MK.E.io(MK.pr(t,s,1.6));var x=440+(i?((i*137)%600)-300:0)-w*900,y=760+(i?((i*71)%300):0);fs[i].style.transform='translate('+x+'px,'+y+'px) scaleX(-1)';fs[i].style.opacity=t>s-.3||i==0?Math.max(0,1-w):0}});
-MK.Subtitle(L,[[0.23, "Satu"], [0.56, "komplain"], [0.82, "yang"], [0.97, "kamu"], [1.25, "abaikan"], [2.09, "biasanya"], [2.5, "bukan"], [2.77, "cuma"], [3.25, "satu"], [3.53, "orang"], [3.93, "yang"], [4.06, "*pergi*"]],{y:1420,color:"#FBF8F3",dark:true});
+MK.Subtitle(L,[[0.23, "Satu"], [0.56, "komplain"], [0.82, "yang"], [0.97, "kamu"], [1.25, "abaikan"], [2.08, "biasanya"], [2.49, "bukan"], [2.76, "cuma"], [3.24, "satu"], [3.52, "orang"], [3.92, "yang"], [4.05, "*pergi*"]],{y:1420,color:"#FBF8F3",dark:true});
 }},
-{dur:7.22, tr:'fade', dolly:0.034999999999999996, build:function(L){
+{dur:7.2, tr:'fade', dolly:0.034999999999999996, build:function(L){
 DARK(L,{stars:true});
 FACADE(L,10,{id:'a21',type:1,n:0,lit:false});FACADE(L,550,{id:'b21',type:2,n:4,lit:true});GLOW(L,810,1000,300,0);
 var rd=MK.el('div','left:0;top:1320px;width:1080px;height:600px;background:#1b1612;border-top:6px solid #0F0E0C',' ',L.root);rd.className='mk-a';
 var q=MK.el('div','left:96px;top:270px;width:888px;text-align:center;font-size:88px;line-height:1.04;color:#F4EBD9','Kamu mau jadi<br><span style="color:#C8944A">tipe yang mana?</span>',L.root);q.className='mk-a mk-fr';
-L.on(function(t){var k=MK.pr(t,3.89-1,.5);q.style.opacity=k;q.style.transform='translateY('+((1-MK.E.out(k))*30)+'px)'});
-MK.Subtitle(L,[[0.23, "Jadi"], [0.53, "kalau"], [1.13, "besok"], [1.44, "ada"], [1.79, "yang"], [1.98, "komplain"], [2.69, "kamu"], [2.91, "mau"], [3.02, "jadi"], [3.26, "cafe"], [3.56, "tipe"], [3.81, "yang"], [3.92, "*mana*"]],{y:1420,color:"#FBF8F3",dark:true});
+L.on(function(t){var k=MK.pr(t,3.87-1,.5);q.style.opacity=k;q.style.transform='translateY('+((1-MK.E.out(k))*30)+'px)'});
+MK.Subtitle(L,[[0.23, "Jadi"], [0.53, "kalau"], [1.13, "besok"], [1.45, "ada"], [1.79, "yang"], [1.98, "komplain"], [2.68, "kamu"], [2.91, "mau"], [3.01, "jadi"], [3.25, "cafe"], [3.55, "tipe"], [3.8, "yang"], [3.9, "*mana*"]],{y:1420,color:"#FBF8F3",dark:true});
 }}
 ]);
 </script>

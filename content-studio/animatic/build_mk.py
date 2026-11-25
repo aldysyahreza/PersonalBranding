@@ -4,6 +4,7 @@ import json, os, sys, wave, subprocess
 import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_reel import loudness, run, TARGET_LUFS, LIMIT_DB
+TARGET_LUFS = float(os.environ.get('MK_LUFS', -16))   # 26 Nov 2026: -16 (bukan -14) supaya limiter tidak memecah suara keras
 SR = 48000
 out_dir, html = sys.argv[1], sys.argv[2]
 E = json.load(open(os.path.join(out_dir, 'events.json')))
@@ -65,7 +66,10 @@ pre = os.path.join(out_dir, '_mix.wav'); mix = os.path.join(out_dir, 'mix.wav')
 graph = ('[0:a]asplit=2[v1][v2];[1:a][v1]sidechaincompress=threshold=0.015:ratio=8:attack=20:release=400[md];[v2][md][2:a]amix=inputs=3:normalize=0:duration=first[a]')
 run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', vo, '-i', lv['m'], '-i', lv['f'], '-filter_complex', graph, '-map', '[a]', '-ar', '48000', pre])
 for p in lv.values(): os.remove(p)
-i0, _ = loudness(pre)
-run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', pre, '-af', 'volume=%.2fdB,alimiter=limit=%.4f:attack=3:release=60:level=disabled' % (TARGET_LUFS - i0, 10 ** (LIMIT_DB / 20)), '-ar', '48000', mix])
+# 26 Nov 2026: kompresi lembut DULU (puncak suara keras dijinakkan pelan), baru ukur loudness, naikkan, lalu limiter lambat
+pre2 = os.path.join(out_dir, '_mix2.wav')
+run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', pre, '-af', 'acompressor=threshold=0.12:ratio=2.5:attack=10:release=180:knee=6:makeup=1', '-ar', '48000', pre2])
+i0, _ = loudness(pre2)
+run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', pre2, '-af', 'volume=%.2fdB,alimiter=limit=%.4f:attack=8:release=160:level=disabled' % (TARGET_LUFS - i0, 10 ** (LIMIT_DB / 20)), '-ar', '48000', mix])
 os.remove(pre); i1, p1 = loudness(mix); print('   campuran: %.1f LUFS, puncak %.1f dBFS' % (i1, p1))
 run(['node', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'render-animatic.js'), '--file', html, '--audio', mix, '--out', os.path.join(out_dir, 'reel.mp4')])

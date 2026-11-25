@@ -234,7 +234,7 @@ def main(src, script, outdir, take='auto'):
         # dan HF kasar), jadi dilewati. Hanya filter dasar + kompresi lembut.
         dn_name = 'tidak dipakai (rekaman bersih, lantai %.0f dB, selisih ucapan-bising %.0f dB)' % (lantai, snr)
         chain = ','.join(['highpass=f=70', 'lowpass=f=15000',
-                          'acompressor=threshold=-24dB:ratio=2:attack=15:release=160:makeup=1', 'loudnorm=I=-16:TP=-1.5:LRA=11'])
+                          'acompressor=threshold=-24dB:ratio=2:attack=15:release=160:makeup=1', 'acompressor=threshold=-12dB:ratio=3:attack=10:release=120:knee=6:makeup=1', 'loudnorm=I=-17:TP=-3:LRA=11'])
     else:
         dn, dn_name = denoise_filter(); dn_name += ' (lantai bising %.0f dB)' % lantai
         # catatan: filter deesser bawaan ffmpeg menimbulkan artefak >16 kHz (terukur), jadi desis dijinakkan dengan EQ statis
