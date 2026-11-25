@@ -8,9 +8,9 @@
  "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
  "hue": "terracotta",
  "series": "Fabel Bisnis",
- "caption": "Satu komplain yang didengar bisa balik jadi rekomendasi, yang diabaikan jarang pergi sendirian; kirim ini ke tim yang tiap hari balas komplain.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "caption": "Pelanggan yang bilang pelayananmu ketus masih kasih kamu kesempatan, yang diam udah pindah; kirim ini ke tim yang tiap hari melayani pelanggan.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
  "pinned": "Teori: Albert O. Hirschman, Exit, Voice, and Loyalty (1970): pelanggan yang kecewa memilih pergi (exit) atau bersuara (voice). Kaitan komplain yang ditangani baik dengan rekomendasi dibahas di riset 'service recovery' (mis. McCollough & Bharadwaj 1992), hasilnya tidak selalu sama di tiap bisnis. Fabel, nama Raka dan Dita rekaan.",
- "story": "Poll: Kalau ada pelanggan komplain hal kecil, tim kamu... Langsung tanggapi / Tunggu dulu / Biasanya didiamkan",
+ "story": "Poll: Kalau ada pelanggan bilang timmu ketus, kamu biasanya... Ngobrol sama timnya / Bela tim dulu / Anggap hal kecil",
  "reel": {
   "v": 2,
   "angle": "cermin",
@@ -19,20 +19,20 @@
   "coverHi": "yang diingat satpamnya",
   "beats": [
    {
-    "say": "Ada dua cafe di jalan yang sama. Sama ramainya. Pelanggan tetapnya pun mirip. Suatu sore, di cafe yang satu, Raka komplain. Cuma sekali. Es kopinya terlalu encer. Hal kecil, pikir pemiliknya. Gak ditanggapi. Pelanggan yang diam lebih enak, gak ribet.",
+    "say": "Ada dua cafe di jalan yang sama. Sama ramainya. Pelanggan tetapnya pun mirip. Suatu sore, di cafe yang satu, Raka komplain. Cuma sekali. Pelayannya ketus waktu dia nanya menu. Hal kecil, pikir pemiliknya. Mungkin pelayannya lagi capek. Gak ditanggapi. Pelanggan yang diam lebih enak, gak ribet.",
     "txt": "Satu komplain. *Gak ditanggapi.*",
     "shot": "anim",
     "dur": "",
-    "case": "FABEL layar dibelah dua (kiri: cafe A, kanan: cafe B), sore hangat, keduanya ramai; KIRI: Raka (figur khas Aldy) angkat gelas es kopi pucat, gelembung 'kopinya encer'; pemilik mengangkat bahu, kembali ke kasir",
+    "case": "FABEL layar dibelah dua (kiri: cafe A, kanan: cafe B), sore hangat, keduanya ramai; KIRI: Raka (figur khas Aldy) bertanya menu; pelayan menjawab ketus (alis turun, gelembung tajam '...ya baca aja menunya'); Raka bilang ke pemilik; pemilik mengangkat bahu, kembali ke kasir",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Di cafe seberang, Dita komplain hal yang sama. Baristanya minta maaf, bikinin ulang, lalu nanya, enaknya gimana, Kak?",
+    "say": "Di cafe seberang, Dita ngalamin hal yang sama. Pemiliknya langsung minta maaf, ngobrol sama pelayannya, lalu nanya, biar kamu nyaman, kami harus gimana, Kak?",
     "txt": "Enaknya gimana, *Kak?*",
     "shot": "anim",
     "dur": "",
-    "case": "KANAN: Dita angkat gelas; barista membungkuk minta maaf, membuat ulang (uap, es), gelembung 'enaknya gimana, Kak?'; Dita tersenyum",
+    "case": "KANAN: Dita mengeluh pelayan ketus; pemilik datang ke meja, membungkuk minta maaf, lalu bicara pelan dengan pelayan di belakang (pelayan mengangguk); pemilik kembali, gelembung 'biar kamu nyaman, kami harus gimana, Kak?'; Dita tersenyum",
     "solusi": "",
     "contoh": ""
    },
@@ -55,11 +55,11 @@
     "contoh": "Kartu standar meja packing: RAPI (selotip lurus, sudut terlindung) / BERSIH (tanpa debu, label lurus) / 1 KARTU TERIMA KASIH."
    },
    {
-    "say": "Di bisnismu, Raka itu pelanggan yang komplain di DM. Yang kasih bintang tiga plus catatan. Yang nanya, kok paketnya telat. Satu komplain yang kamu dengerin, bisa balik jadi rekomendasi. Satu komplain yang kamu abaikan, biasanya bukan cuma satu orang yang pergi. Jadi kalau besok ada yang komplain, kamu mau jadi cafe yang mana?",
+    "say": "Di bisnismu, Raka itu pelanggan yang komplain di DM. Yang bilang admin kamu jutek. Yang kasih bintang tiga plus catatan soal pelayanan. Satu komplain yang kamu dengerin, bisa balik jadi rekomendasi. Satu komplain yang kamu abaikan, biasanya bukan cuma satu orang yang pergi. Jadi kalau besok ada yang komplain, kamu mau jadi cafe yang mana?",
     "txt": "Kamu mau jadi *cafe yang mana?*",
     "shot": "anim",
     "dur": "",
-    "case": "DUNIA CETAK BIRU dibelah dua: DM komplain / ulasan bintang 3 / chat 'kok telat?'; KIRI diabaikan -> figur garis memudar keluar (1 jadi banyak); KANAN dibalas -> figur garis membawa 3 figur baru; PENUTUP: kembali ke dua cafe berseberangan, kiri gelap kosong, kanan terang ramai; pertanyaan di layar",
+    "case": "DUNIA CETAK BIRU dibelah dua: DM komplain / chat 'adminnya jutek ya' / ulasan bintang 3 soal pelayanan; KIRI diabaikan -> figur garis memudar keluar (1 jadi banyak); KANAN dibalas -> figur garis membawa 3 figur baru; PENUTUP: kembali ke dua cafe berseberangan, kiri gelap kosong, kanan terang ramai; pertanyaan di layar",
     "solusi": "",
     "contoh": ""
    }
