@@ -259,3 +259,8 @@ Dasar: 3 sampel tulisan Aldy (voice/sampel-aldy.md). Tingkat disetujui Aldy: "pe
 ### 25 Nov — Fabel #03 v2 (reel22, mk-fabel03b)
 - Pembuka: close-up tali tegang → zoom-out ke lapangan; tim 10 orang jatuh di dtk ~2,6 (debu + headline bergetar). Pola "hook = hasil akhir cerita di 3 dtk pertama".
 - Prinsip: setiap kalimat narasi = satu visual literal (spanduk 17-an, posisi bernomor, gelembung pikiran tiap anggota, meteran tenaga per orang 100/85/49% dari data Ringelmann, kartu RACI dengan contoh kasus stok).
+
+### 25 Nov — Akar masalah "glitch/pecah" VO (vo23)
+- Penyebab utama: decoder Opus bawaan ffmpeg menyisipkan lonjakan derau keras (nada ~3–6 kHz, ~0,1 dtk) di awal kalimat setelah hening pada rekaman WhatsApp PTT. libopus (decoder resmi) bersih. vo_prep kini selalu decode Opus dengan `-c:a libopus`. Berlaku juga untuk ffmpeg lain yang membaca .ogg (ASR, cek).
+- Reel17–22 dibuat dengan decoder lama → kemungkinan berisi lonjakan ini.
+- Aldy: jeda poros 1 dtk tidak perlu lagi (Fabel #04 pakai jeda kalimat normal).
