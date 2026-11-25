@@ -19,16 +19,16 @@
   "coverHi": "yang diingat satpamnya",
   "beats": [
    {
-    "say": "Ada dua cafe di jalan yang sama. Sama ramainya. Pelanggan tetapnya pun mirip. Suatu sore, di cafe yang satu, Raka komplain. Cuma sekali. Pelayannya ketus waktu dia nanya menu. Hal kecil, pikir pemiliknya. Mungkin pelayannya lagi badmood aja. Gak ditanggapi. Pelanggan yang diam lebih enak, gak ribet.",
-    "txt": "Satu komplain. *Gak ditanggapi.*",
+    "say": "Ada dua tipe cafe. Tipe pertama, nganggap komplain itu gangguan. Tipe kedua, nganggap komplain itu masukan. Di cafe tipe pertama, Raka komplain. Cuma sekali. Pelayannya ketus waktu dia nanya menu. Pemiliknya mikir, hal kecil, mungkin pelayannya lagi badmood aja. Gak ditanggapi.",
+    "txt": "Komplain itu gangguan, atau *masukan?*",
     "shot": "anim",
     "dur": "",
-    "case": "FABEL layar dibelah dua (kiri: cafe A, kanan: cafe B), sore hangat, keduanya ramai; KIRI: Raka (figur khas Aldy) bertanya menu; pelayan menjawab ketus (alis turun, gelembung tajam '...ya baca aja menunya'); Raka bilang ke pemilik; pemilik mengangkat bahu, kembali ke kasir",
+    "case": "FRAME 1: layar dibelah dua dengan label besar KIRI 'TIPE 1: KOMPLAIN = GANGGUAN' (abu, ikon telinga ditutup) dan KANAN 'TIPE 2: KOMPLAIN = MASUKAN' (amber, ikon telinga mendengar); label tetap kecil di atas sepanjang fabel. KIRI: Raka bertanya menu, pelayan menjawab ketus, pemilik mengangkat bahu 'badmood aja'",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Di cafe seberang, Dita ngalamin hal yang sama. Pemiliknya langsung datang, ngobrol sama pelayannya, lalu bilang, mohon maaf, Kak. Kami akan perbaiki pelayanan kami.",
+    "say": "Di cafe tipe kedua, Dita ngalamin hal yang sama. Pemiliknya langsung datang, ngobrol sama pelayannya, lalu bilang, mohon maaf, Kak. Kami akan perbaiki pelayanan kami.",
     "txt": "Kami akan *perbaiki.*",
     "shot": "anim",
     "dur": "",
@@ -37,7 +37,7 @@
     "contoh": ""
    },
    {
-    "say": "Tiga bulan kemudian, cafe yang satu makin sepi. Raka udah gak datang. Pelanggan yang dulu diam, ternyata ngerasain hal yang sama. Mereka cuma gak bilang. Mereka langsung pindah. Di cafe seberang, Dita datang bawa tiga temannya. Katanya, cafe ini ramah, mau menghargai pendapat pelanggan.",
+    "say": "Tiga bulan kemudian, cafe tipe pertama makin sepi. Raka gak pernah datang lagi. Pelanggan lain yang dulu diam, ternyata ngerasain hal yang sama. Mereka cuma gak bilang, langsung pindah. Cafe tipe kedua? Dita datang bawa tiga temannya. Katanya, cafe ini ramah, mau menghargai pendapat pelanggan.",
     "txt": "Mau menghargai *pendapat.*",
     "shot": "anim",
     "dur": "",
@@ -55,8 +55,8 @@
     "contoh": "Kartu standar meja packing: RAPI (selotip lurus, sudut terlindung) / BERSIH (tanpa debu, label lurus) / 1 KARTU TERIMA KASIH."
    },
    {
-    "say": "Di bisnismu, Raka itu pelanggan yang komplain di DM. Yang bilang admin kamu jutek. Di bisnis-bisnis yang saya dampingi selama ini, polanya selalu sama. Pelanggan yang komplain justru pelanggan yang loyal. Jangan dibiarkan. Kasih solusi sampai selesai. Satu komplain yang kamu selesaikan, bisa balik jadi rekomendasi. Satu komplain yang kamu abaikan, biasanya bukan cuma satu orang yang pergi. Jadi kalau besok ada yang komplain, kamu mau jadi cafe yang mana?",
-    "txt": "Kamu mau jadi *cafe yang mana?*",
+    "say": "Di bisnismu, Raka itu pelanggan yang komplain di DM. Yang bilang admin kamu jutek. Di bisnis-bisnis yang saya dampingi selama ini, polanya selalu sama. Pelanggan yang komplain justru pelanggan yang loyal. Jangan dibiarkan. Kasih solusi sampai selesai. Satu komplain yang kamu selesaikan, bisa balik jadi rekomendasi. Satu komplain yang kamu abaikan, biasanya bukan cuma satu orang yang pergi. Jadi kalau besok ada yang komplain, kamu mau jadi cafe tipe yang mana?",
+    "txt": "Kamu mau jadi *tipe yang mana?*",
     "shot": "anim",
     "dur": "",
     "case": "DUNIA CETAK BIRU dibelah dua: DM komplain / chat 'adminnya jutek ya'; KIRI diabaikan -> figur garis memudar keluar (1 jadi banyak); KANAN dibalas -> figur garis membawa 3 figur baru; KESAKSIAN ALDY: stempel/catatan 'Dari bisnis yang saya dampingi' + papan alur KOMPLAIN -> DENGAR -> SOLUSI -> SELESAI (centang satu per satu); PENUTUP: kembali ke dua cafe berseberangan, kiri gelap kosong, kanan terang ramai; pertanyaan di layar",
