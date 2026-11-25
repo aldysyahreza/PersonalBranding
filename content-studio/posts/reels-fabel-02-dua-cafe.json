@@ -28,17 +28,17 @@
     "contoh": ""
    },
    {
-    "say": "Di cafe seberang, Dita ngalamin hal yang sama. Pemiliknya langsung minta maaf, ngobrol sama pelayannya, lalu nanya, biar kamu nyaman, kami harus gimana, Kak?",
-    "txt": "Enaknya gimana, *Kak?*",
+    "say": "Di cafe seberang, Dita ngalamin hal yang sama. Pemiliknya langsung datang, ngobrol sama pelayannya, lalu bilang, mohon maaf, Kak. Kami akan perbaiki pelayanan kami.",
+    "txt": "Kami akan *perbaiki.*",
     "shot": "anim",
     "dur": "",
-    "case": "KANAN: Dita mengeluh pelayan ketus; pemilik datang ke meja, membungkuk minta maaf, lalu bicara pelan dengan pelayan di belakang (pelayan mengangguk); pemilik kembali, gelembung 'biar kamu nyaman, kami harus gimana, Kak?'; Dita tersenyum",
+    "case": "KANAN: Dita mengeluh pelayan ketus; pemilik datang ke meja, membungkuk minta maaf, lalu bicara pelan dengan pelayan di belakang (pelayan mengangguk); pemilik kembali, gelembung 'Mohon maaf, Kak. Kami akan perbaiki pelayanan kami.'; Dita tersenyum",
     "solusi": "",
     "contoh": ""
    },
    {
-    "say": "Tiga bulan kemudian, cafe yang satu makin sepi. Raka udah gak datang. Pelanggan yang dulu diam, ternyata ngerasain hal yang sama. Mereka cuma gak bilang. Mereka langsung pindah. Di cafe seberang, Dita datang bawa tiga temannya. Katanya, di sini didengerin.",
-    "txt": "Di sini *didengerin.*",
+    "say": "Tiga bulan kemudian, cafe yang satu makin sepi. Raka udah gak datang. Pelanggan yang dulu diam, ternyata ngerasain hal yang sama. Mereka cuma gak bilang. Mereka langsung pindah. Di cafe seberang, Dita datang bawa tiga temannya. Katanya, cafe ini ramah, mau menghargai pendapat pelanggan.",
+    "txt": "Mau menghargai *pendapat.*",
     "shot": "anim",
     "dur": "",
     "case": "FABEL: kalender 3 bulan; KIRI: kursi kosong satu per satu, lampu redup; pelanggan diam berjalan menyeberang jalan ke KANAN; KANAN: Dita masuk bersama 3 teman, meja penuh, tawa",
@@ -55,11 +55,11 @@
     "contoh": "Kartu standar meja packing: RAPI (selotip lurus, sudut terlindung) / BERSIH (tanpa debu, label lurus) / 1 KARTU TERIMA KASIH."
    },
    {
-    "say": "Di bisnismu, Raka itu pelanggan yang komplain di DM. Yang bilang admin kamu jutek. Yang kasih bintang tiga plus catatan soal pelayanan. Satu komplain yang kamu dengerin, bisa balik jadi rekomendasi. Satu komplain yang kamu abaikan, biasanya bukan cuma satu orang yang pergi. Jadi kalau besok ada yang komplain, kamu mau jadi cafe yang mana?",
+    "say": "Di bisnismu, Raka itu pelanggan yang komplain di DM. Yang bilang admin kamu jutek. Yang kasih bintang tiga plus catatan soal pelayanan. Di bisnis-bisnis yang saya dampingi selama ini, polanya selalu sama. Pelanggan yang komplain justru pelanggan yang loyal. Jangan dibiarkan. Kasih solusi sampai selesai. Satu komplain yang kamu selesaikan, bisa balik jadi rekomendasi. Satu komplain yang kamu abaikan, biasanya bukan cuma satu orang yang pergi. Jadi kalau besok ada yang komplain, kamu mau jadi cafe yang mana?",
     "txt": "Kamu mau jadi *cafe yang mana?*",
     "shot": "anim",
     "dur": "",
-    "case": "DUNIA CETAK BIRU dibelah dua: DM komplain / chat 'adminnya jutek ya' / ulasan bintang 3 soal pelayanan; KIRI diabaikan -> figur garis memudar keluar (1 jadi banyak); KANAN dibalas -> figur garis membawa 3 figur baru; PENUTUP: kembali ke dua cafe berseberangan, kiri gelap kosong, kanan terang ramai; pertanyaan di layar",
+    "case": "DUNIA CETAK BIRU dibelah dua: DM komplain / chat 'adminnya jutek ya' / ulasan bintang 3 soal pelayanan; KIRI diabaikan -> figur garis memudar keluar (1 jadi banyak); KANAN dibalas -> figur garis membawa 3 figur baru; KESAKSIAN ALDY: stempel/catatan 'Dari bisnis yang saya dampingi' + papan alur KOMPLAIN -> DENGAR -> SOLUSI -> SELESAI (centang satu per satu); PENUTUP: kembali ke dua cafe berseberangan, kiri gelap kosong, kanan terang ramai; pertanyaan di layar",
     "solusi": "",
     "contoh": ""
    }
