@@ -233,8 +233,12 @@
   function seek(t) {
     var cur = SHOTS.length - 1;
     for (var i = 0; i < SHOTS.length; i++) if (t < SHOTS[i].t0 + SHOTS[i].dur) { cur = i; break; }
-    SHOTS.forEach(function (s, i) { s.L.root.style.visibility = i === cur ? 'visible' : 'hidden'; });
+    SHOTS.forEach(function (s, i) { s.L.root.style.visibility = i === cur ? 'visible' : 'hidden'; s.L.root.style.opacity = 1; });
     var s = SHOTS[cur], lt = t - s.t0;
+    // transisi 'fade': crossfade lembut 0,7 dtk dari shot sebelumnya (25 Nov 2026)
+    var FD = .7;
+    if (s.tr === 'fade' && lt < FD && cur > 0) { var p = SHOTS[cur - 1], plt = p.dur + lt; p.L.root.style.visibility = 'visible';
+      var pz = p.dolly ? 1 + p.dolly * E.io(cl(plt / p.dur)) : 1; p.L.root.style.transform = 'scale(' + pz + ')'; p.L.fns.forEach(function (f) { f(plt); }); s.L.root.style.opacity = E.io(lt / FD); }
     PAPER.style.backgroundImage = 'url(' + s.paper + ')';
     // kamera kertas: dolly-in 5-8% sepanjang shot (bila diminta)
     var z = s.dolly ? 1 + s.dolly * E.io(cl(lt / s.dur)) : 1;

@@ -44,8 +44,15 @@ def W(i, word, d):
         if nrm(words[j]['w']).startswith(word): return round(words[j]['t'] - T0[i], 2)
     return d
 EV = []
-def ev(i, local, kind): EV.append([round(T0[i] + local, 3), kind])
-sub = lambda i, c='#FBF8F3', y=1420: 'MK.Subtitle(L,%s,{y:%d,color:"%s",dark:true});' % (json.dumps(chunks(i), ensure_ascii=False), y, c)
+def ev(i, local, kind):
+    if i in globals().get('DROP', ()): return
+    EV.append([round(T0[i] + local, 3), kind])
+def chunks_all(i):
+    out = list(chunks(i)); j = i + 1
+    while j in globals().get('DROP', ()):
+        out += [[round(t + T0[j] - T0[i], 2), w] for t, w in chunks(j)]; j += 1
+    return out
+sub = lambda i, c='#FBF8F3', y=1420: 'MK.Subtitle(L,%s,{y:%d,color:"%s",dark:true});' % (json.dumps(chunks_all(i), ensure_ascii=False), y, c)
 def kam(name, mean, y, at, x=96, w=888, rot=-1, color='#0F0E0C'):
     h = ('<div class="mk-fr" style="font-size:58px;line-height:1;color:%s">%s</div>'
          '<div class="mk-ou" style="font-size:36px;color:#6B6560;margin-top:12px">%s</div>') % (color, name, mean)
@@ -106,9 +113,11 @@ TREEC = lambda st: "P(L,880,190,110,120,'<div style=\"transform:scale(.5);transf
 exec(O_PERSON)
 fig = lambda u, shirt, dark, flip=False: person(u, shirt, dark, '#2a1d14', flip).replace('"', '\\"').replace('\n', '')
 S = []
+DROP = {3, 10}
+for d_ in sorted(DROP): DUR[d_ - 1] = round(DUR[d_ - 1] + DUR[d_], 3)
 def scene(i, body, tr=False, dolly=0, paper=None):
-    S.append("{dur:%s,%s%s%s build:function(L){\n%s\n}}" % (DUR[i], " tr:'sweep'," if tr else '', " dolly:%s," % dolly if dolly else '', " paper:'%s'," % paper if paper else '', body))
-    if tr: ev(i, 0, 'sweep')
+    if i in DROP: return
+    S.append("{dur:%s,%s%s%s build:function(L){\n%s\n}}" % (DUR[i], " tr:'fade'," if i else '', " dolly:%s," % (dolly * .7) if dolly else '', " paper:'%s'," % paper if paper else '', body))
 
 FAB = r"""
 function DARK(L,o){o=o||{};var d=MK.el('div','left:0;top:0;width:1080px;height:1920px;background:'+(o.bg||'radial-gradient(120% 80% at 50% 30%,#2a231c 0%,#14110e 55%,#0b0a08 100%)'),' ',L.root);d.className='mk-a';
@@ -194,8 +203,9 @@ ev(1, .1, 'sweep'); [ev(1, .6 + i * .5, 'tick') for i in range(5)]
 u2 = LORDF('l2')
 scene(2, R("""DARK(L);GLOW(L,540,800,420,0);
 var lo=FIG(L,'@L@',190,330,700,false);
-var mn=MK.el('div','left:130px;top:1040px;width:820px;text-align:center;font-size:56px;color:#F4EBD9','“Desaku pasti sudah bersih.”',L.root);mn.className='mk-a mk-fri';
-L.on(function(t){HEAD('@L@',Math.sin(t*1.2)*5);SMILE('@L@',MK.pr(t,.3,.5));ARM('@L@','la',Math.sin(t*1.5)*6);ARM('@L@','ra',-Math.sin(t*1.5)*6);mn.style.opacity=MK.pr(t,1.2,.4)});""", L=u2), dolly=.09)
+var mn=MK.el('div','left:130px;top:1180px;width:820px;text-align:center;font-size:56px;color:#F4EBD9','“Desaku pasti sudah bersih.”',L.root);mn.className='mk-a mk-fri';
+L.on(function(t){HEAD('@L@',Math.sin(t*1.2)*5);SMILE('@L@',MK.pr(t,.3,.5));ARM('@L@','la',Math.sin(t*1.5)*6);ARM('@L@','ra',-Math.sin(t*1.5)*6);mn.style.opacity=MK.pr(t,1.2,.4)});
+@SUB@""", L=u2, SUB=sub(2)), dolly=.09)
 ev(2, .3, 'pop')
 # 3 desa tidur, lampu padam satu per satu
 scene(3, R("""VILLAGE(L,{y:520,off:.4,id:'d3'});
