@@ -219,7 +219,7 @@ def main(src, script, outdir, take='auto'):
     xr = read_wav(raw)
     # rekaman pecah (clipping): puncak datar >= 3 sampel berturut -> pulihkan dengan adeclip (24 Nov 2026, vo18)
     c = np.abs(xr) > .97 * np.abs(xr).max(); runs = np.diff(np.flatnonzero(np.diff(np.r_[0, c.astype(int), 0])))[::2]
-    if (runs >= 3).sum() > 20:
+    if (runs >= 3).sum() > 20 and not os.environ.get('VO_NODECLIP'):
         ff('-i', src, '-ac', '1', '-af', 'volume=-6dB,adeclip=window=55:overlap=75:arorder=8:threshold=10:hsize=1000:method=s', '-ar', str(SR), raw)
         print('Rekaman pecah di %d titik: dipulihkan dengan adeclip' % int((runs >= 3).sum()))
         xr = read_wav(raw)

@@ -23,8 +23,8 @@ def paper(t, g=.22):   # kertas geser: desis pita sempit, lembut
     m = int(.32 * SR); x = lp(rng.standard_normal(m), 2400) - lp(rng.standard_normal(m) * 0, 1); add(fx, t - .05, (x - lp(x, 600)) * np.sin(np.linspace(0, np.pi, m)) ** 2, g)
 def pop(t, g=.2):
     m = int(.09 * SR); ph = np.cumsum(np.linspace(760, 360, m)) / SR * 2 * np.pi; add(fx, t, np.sin(ph) * env(m, .002, .03), g)
-def tick(t, g=.18):
-    m = int(.03 * SR); tt = np.arange(m) / SR; add(fx, t, np.sin(2 * np.pi * 1700 * tt) * env(m, .0008, .006), g)
+def tick(t, g=.1):   # ketukan kayu lembut (sebelumnya klik 1,7 kHz terdengar seperti glitch)
+    m = int(.06 * SR); tt = np.arange(m) / SR; add(fx, t, lp(np.sin(2 * np.pi * 820 * tt) * env(m, .003, .018), 2500), g)
 def scratch(t, d=.35, g=.16):   # goresan spidol
     m = int(d * SR); x = rng.standard_normal(m); y = lp(x, 2200) - lp(x, 700); add(fx, t, y * (.6 + .4 * np.sin(np.linspace(0, d * 2 * np.pi * 18, m))) * np.sin(np.linspace(0, np.pi, m)), g)
 def stamp(t, g=.55):   # dentum cap (pendek, tanpa boom)
@@ -39,16 +39,18 @@ def splash(t, g=.3):   # celup air: desis basah + beberapa gelembung
 K = {'splash': splash, 'slide': paper, 'sweep': lambda t: paper(t, .3), 'pop': pop, 'tick': tick, 'scratch': scratch, 'draw': lambda t: scratch(t, .6, .1), 'stamp': stamp, 'chime': chime}
 for t, k in E['events']: K[k](t)
 # musik: pad hangat (piano-ish) 84 bpm, akor I-vi-IV-V, fade in/out
-tt = np.arange(n) / SR; bar = 60 / 84 * 4
-ch = [[261.6, 329.6, 392.0], [220.0, 261.6, 329.6], [174.6, 220.0, 261.6], [196.0, 246.9, 293.7]]
+tt = np.arange(n) / SR; DARK = os.environ.get('MK_MOOD') == 'dark'
+bar = 60 / (64 if DARK else 84) * 4; DECAY = 2.6 if DARK else 1.6
+ch = [[220.0, 261.6, 329.6], [174.6, 220.0, 261.6], [130.8, 164.8, 196.0], [146.8, 174.6, 220.0]] if DARK else [[261.6, 329.6, 392.0], [220.0, 261.6, 329.6], [174.6, 220.0, 261.6], [196.0, 246.9, 293.7]]
 for i in range(int(DUR / bar) + 2):
     a, b = int(i * bar * SR), min(n, int((i + 1) * bar * SR))
     if a >= n: break
     s = tt[a:b] - i * bar
     for j, f in enumerate(ch[i % 4]):   # tiga not dipetik berurutan, meluruh pelan
-        on = j * bar / 4; e = np.where(s >= on, np.exp(-(s - on) / 1.6), 0)
+        on = j * bar / 4; e = np.where(s >= on, np.exp(-(s - on) / DECAY) * np.minimum(1, np.maximum(0, s - on) / .015), 0)
         mus[a:b] += (np.sin(2 * np.pi * f * tt[a:b]) + .25 * np.sin(4 * np.pi * f * tt[a:b])) * e * .3
     mus[a:b] += np.sin(2 * np.pi * ch[i % 4][0] / 2 * tt[a:b]) * np.minimum(1, s / .5) * np.minimum(1, (bar - s) / .5) * .12
+if DARK: mus += (np.sin(2 * np.pi * 55 * tt) * .18 + np.sin(2 * np.pi * 110 * tt) * .06) * (.7 + .3 * np.sin(2 * np.pi * tt / 9))
 mus *= np.minimum(1, tt / 1.5) * np.minimum(1, np.maximum(0, DUR + .5 - tt) / 1.5)
 def save(p, x, peak):
     x = x[:int(SR * DUR)]; x = x / max(1e-9, np.max(np.abs(x))) * peak
