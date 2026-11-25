@@ -175,7 +175,9 @@ def LORDF(u): return F(u, 'lord')
 w0c = W(0, 'koin', 2.4)
 u0l, u0v = LORDF('l0'), F('v0a', 'v1', True)
 scene(0, R("""VILLAGE(L,{y:600});GLOW(L,800,1000,320,0);
-var hl=MK.el('div','left:96px;top:250px;width:900px;font-size:92px;line-height:1.02;color:#F4EBD9','Satu koin<br>untuk satu <span style="color:#D98C7A">ekor.</span>',L.root);hl.className='mk-a mk-fr';""" + LT + """
+var hl=MK.el('div','left:96px;top:250px;width:940px;font-size:84px;line-height:1.04;color:#F4EBD9','Satu koin untuk<br>satu <span style="color:#D98C7A">ekor tikus.</span>',L.root);hl.className='mk-a mk-fr';
+var hr=MK.el('div','left:0;top:0;width:160px;height:90px','<div style="transform:scale(.75);transform-origin:0 0">'+RAT('#8a827a',true)+'</div>',L.root);hr.className='mk-a';
+L.on(function(t){var x=600+((t*90)%520);hr.style.transform='translate('+(x>1000?1000:x)+'px,'+(440-Math.abs(Math.sin(t*12))*6)+'px)';hr.style.opacity=x>1000?0:1});""" + LT + """
 var tb=MK.el('div','left:560px;top:1130px;width:420px;height:40px;background:#5a3b24;border:6px solid #0F0E0C;border-radius:6px',' ',L.root);tb.className='mk-a';
 var lo=FIG(L,'@L@',760,820,230,true);var vi=FIG(L,'@V@',0,860,200,false);
 var tl=MK.el('div','left:0;top:0;width:80px;height:40px',TAIL(),L.root);tl.className='mk-a';

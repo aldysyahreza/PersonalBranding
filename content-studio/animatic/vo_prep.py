@@ -215,7 +215,9 @@ def main(src, script, outdir, take='auto'):
     post = json.load(open(script, encoding='utf-8'))
     beats = [b['say'] for b in post['reel']['beats']] if 'reel' in post else [b['say'] for b in post['beats']]
     raw = os.path.join(outdir, '_raw.wav'); clean = os.path.join(outdir, '_clean.wav')
-    ff('-i', src, '-ac', '1', '-ar', str(SR), raw)
+    # 25 Nov 2026: Opus/AAC hasil decode bisa melewati 0 dBFS (vo20: puncak 156%); turunkan 6 dB SEBELUM jadi 16-bit
+    # supaya puncak tidak terpotong (inilah sumber 'glitch' di reels sebelumnya, bukan rekamannya)
+    ff('-i', src, '-ac', '1', '-af', 'volume=-6dB', '-ar', str(SR), raw)
     xr = read_wav(raw)
     # rekaman pecah (clipping): puncak datar >= 3 sampel berturut -> pulihkan dengan adeclip (24 Nov 2026, vo18)
     c = np.abs(xr) > .97 * np.abs(xr).max(); runs = np.diff(np.flatnonzero(np.diff(np.r_[0, c.astype(int), 0])))[::2]
