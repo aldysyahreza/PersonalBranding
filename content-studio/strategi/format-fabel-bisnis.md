@@ -38,3 +38,8 @@
 - Satu fabel = satu benda simbol yang bisa dipanggil ulang di penutup (ekor, gergaji, ember). Benda harus bisa digambar dengan siluet sederhana.
 - Bagian bisnis: 3 contoh paralel maksimal, masing-masing 2 kalimat (kejadian -> akibat), ritme sama.
 - Penutup = pertanyaan biner dengan benda simbol ("tikusnya atau ekornya?"), tanpa CTA lisan; CTA di caption.
+
+## Fabel #02 (25 Nov 2026): Nenek di toko roti -> Exit, Voice, and Loyalty (Hirschman 1970)
+- Kalimat pertama langsung kontradiksi (pelajaran #01): "Hari nenek itu berhenti mengeluh, toko roti itu mulai mati."
+- Benda simbol: lonceng pintu toko (bunyi = suara pelanggan; lonceng diam berdebu = pelanggan pergi).
+- Naskah: posts/reels-fabel-02-nenek-roti.json.
