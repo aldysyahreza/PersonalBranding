@@ -1,9 +1,83 @@
 {
-  "id": "reel23",
-  "format": "Fabel Bisnis #04",
-  "judul": "Dua Tukang Sate — Sensory Marketing",
+  "id": "reels-fabel-04-dua-tukang-sate",
+  "title": "Fabel Bisnis #04: Dua tukang sate",
+  "format": "reels",
+  "stage": "vo",
+  "dx": 6,
+  "job": "Follow",
+  "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
+  "hue": "terracotta",
+  "series": "Fabel Bisnis",
+  "caption": "Toko sepi sering bukan kalah produk, tapi kalah jarak indra; komen \"SENSORY\" dan saya kirim checklist Sensory Marketing buat audit tokomu.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+  "pinned": "Teori: Sensory Marketing (Aradhna Krishna, University of Michigan). Bukti pendukung: North dkk. 1997 (musik & pilihan anggur), Milliman 1982 (tempo musik), Peck & Shu 2009 (sentuhan & rasa memiliki), Buell dkk. 2017 (dapur terbuka).",
+  "story": "Poll: Dari 20 meter, tokomu paling kuat di... Mata / Hidung / Telinga / Belum ada",
+  "reel": {
+    "v": 2,
+    "angle": "cermin",
+    "exec": "banding",
+    "coverH": "Satenya sama enak",
+    "coverHi": "yang satu kalah duluan",
+    "beats": [
+      {
+        "say": "Satu jalan, dua tukang sate. Rasanya sama enak. Pak Kardi bakar sate di belakang gerobak. Asapnya dikipas ke dalam, biar gak ganggu orang lewat. Pak Jono bakar di depan. Apinya kelihatan dari seberang jalan. Asapnya dikipas ke arah jalan. Desisnya kedengeran sampai parkiran. Motor yang lewat, pelan-pelan berhenti. Semuanya di Pak Jono. Pak Kardi gak kalah rasa. Dia kalah sebelum satenya sempat dicicipi.",
+        "txt": "Satenya sama enak. *Yang satu kalah duluan.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "FABEL: jalan malam, dua gerobak sate; Pak Kardi asap ke dalam, Pak Jono api di depan, asap ke jalan, desis; motor berhenti",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Di dunia bisnis, ini ada namanya. Sensory Marketing. Orang memutuskan mampir pakai indra, bukan logika. Dan indra bekerja berurutan, sesuai jarak. Mata menjangkau paling jauh, bikin orang menoleh. Hidung bikin orang mendekat. Telinga bikin orang masuk. Sentuhan dan rasa baru bekerja di dalam, bikin orang membeli, lalu kembali. Jadi kalau tokomu sepi, bisa jadi bukan kalah produk. Tapi kalah jarak indra.",
+        "txt": "Bukan kalah produk. *Kalah jarak indra.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "POROS: jeda 1 dtk setelah 'Sensory Marketing'; kartu tokoh Aradhna Krishna; tangga jarak indra mata>hidung>telinga>sentuh/rasa",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Di brand fashion yang saya dampingi, kami gak ubah produknya. Kami ubah cara toko itu menyapa indra pembelinya. Etalase kaca ditata elegan sesuai selera pembelinya, dengan satu produk andalan di tengah, kena sorot lampu. Begitu masuk, musiknya cocok di telinga mereka. Tokonya bersih dan wangi. Hasilnya, pembeli betah lebih lama, mulai mencoba, dan akhirnya membeli.",
+        "txt": "Kami gak ubah produknya. *Kami ubah indranya.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "KESAKSIAN brand fashion: etalase elegan, hero produk disorot, musik, bersih & wangi; pembeli mencoba lalu membeli",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Besok pagi, coba ini. Berdiri dua puluh meter dari tokomu. Apa yang kelihatan? Apa yang kecium? Apa yang kedengeran? Kalau jawabannya gak ada, pembeli juga gak berhenti. Dua aturan. Pertama, indranya harus cocok dengan pembelimu. Lagu dan wangi yang salah justru bikin orang pergi. Kedua, buat pembeli baru, mata pertama ada di Google Maps. Foto depan tokomu adalah etalase pertamamu.",
+        "txt": "Foto depan tokomu = *etalase pertamamu.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "SOLUSI: tes 20 meter (lihat/cium/dengar); aturan cocok; Google Maps",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Sekarang jujur. Tokomu lebih mirip gerobak Pak Kardi, atau Pak Jono? Mau checklist Sensory Marketing buat audit tokomu? Komen \"SENSORY\", nanti saya kirim.",
+        "txt": "Pak Kardi atau *Pak Jono?*",
+        "shot": "anim",
+        "dur": "",
+        "case": "PENUTUP + CTA komen SENSORY",
+        "solusi": "",
+        "contoh": ""
+      }
+    ],
+    "prod": {},
+    "intro": {
+      "short": "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, membenahi bisnisnya secara tiga ratus enam puluh derajat, dari hulu sampai hilir.",
+      "pakai": "ucap-lengkap"
+    }
+  },
+  "sistem": {
+    "formula": "Tipe A: animasi penuh + voice over (Motion Kit Tinta & Kertas), TANPA talking head (keputusan Aldy 18 Nov, pengecualian aturan skill 'manusia di setiap reels' & 'motion <=30%')",
+    "tugas": "Share",
+    "set": "-",
+    "target_durasi": "±80 dtk (182 kata)",
+    "teks_frame1": "Makanannya enak. Yang diingat: tukang parkirnya.",
+    "asal": "Pola IHT dipakai: adegan sehari-hari -> twist -> kalimat besar -> putar ulang sebelum/sesudah. Isi baru, bukan materi klien."
+  },
   "script": "Satu jalan, dua tukang sate. Rasanya sama enak.\nPak Kardi bakar sate di belakang gerobak. Asapnya dikipas ke dalam, biar gak ganggu orang lewat.\nPak Jono bakar di depan. Apinya kelihatan dari seberang jalan. Asapnya dikipas ke arah jalan. Desisnya kedengeran sampai parkiran.\nMotor yang lewat, pelan-pelan berhenti. Semuanya di Pak Jono.\nPak Kardi gak kalah rasa. Dia kalah sebelum satenya sempat dicicipi.\nDi dunia bisnis, ini ada namanya. Sensory Marketing.\nOrang memutuskan mampir pakai indra, bukan logika. Dan indra bekerja berurutan, sesuai jarak.\nMata menjangkau paling jauh, bikin orang menoleh. Hidung bikin orang mendekat. Telinga bikin orang masuk. Sentuhan dan rasa baru bekerja di dalam, bikin orang membeli, lalu kembali.\nJadi kalau tokomu sepi, bisa jadi bukan kalah produk. Tapi kalah jarak indra.\nDi brand fashion yang saya dampingi, kami gak ubah produknya. Kami ubah cara toko itu menyapa indra pembelinya.\nEtalase kaca ditata elegan sesuai selera pembelinya, dengan satu produk andalan di tengah, kena sorot lampu. Begitu masuk, musiknya cocok di telinga mereka. Tokonya bersih dan wangi.\nHasilnya, pembeli betah lebih lama, mulai mencoba, dan akhirnya membeli.\nBesok pagi, coba ini. Berdiri dua puluh meter dari tokomu. Apa yang kelihatan? Apa yang kecium? Apa yang kedengeran? Kalau jawabannya gak ada, pembeli juga gak berhenti.\nDua aturan. Pertama, indranya harus cocok dengan pembelimu. Lagu dan wangi yang salah justru bikin orang pergi. Kedua, buat pembeli baru, mata pertama ada di Google Maps. Foto depan tokomu adalah etalase pertamamu.\nSekarang jujur. Tokomu lebih mirip gerobak Pak Kardi, atau Pak Jono?\nMau checklist Sensory Marketing buat audit tokomu? Komen \"SENSORY\", nanti saya kirim.",
-  "caption": "Toko sepi sering bukan kalah produk, tapi kalah jarak indra; komen \"SENSORY\" dan saya kirim checklist Sensory Marketing buat audit tokomu. #TheBrandFixer #BrandingBisnis #PemilikBisnis",
-  "cta_keyword": "SENSORY",
-  "catatan": "Jeda 1 dtk setelah 'Sensory Marketing'. Kartu tokoh visual: Aradhna Krishna (Univ. of Michigan)."
+  "cta_keyword": "SENSORY"
 }
