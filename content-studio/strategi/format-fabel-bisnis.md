@@ -19,3 +19,22 @@
 1. Ekor tikus -> Hukum Goodhart (target KPI). DRAF: posts/reels-fabel-01-ekor-tikus.json
 2. Petani menyiram pohon mati 3 tahun -> sunk cost fallacy (produk/cabang rugi dipertahankan). Penutup: "Kamu menyiram pohon, atau menyiram gengsimu?"
 3. Delapan orang menarik tali, tiap orang makin ringan menarik -> efek Ringelmann / social loafing (grup chat "siapa yang handle?"). Penutup: "Kalau semua pegang tali, siapa yang benar-benar narik?"
+
+## Produksi #01 (25 Nov 2026) - yang diterapkan
+- Dua dunia: FABEL = malam hangat (gradasi coklat-hitam, bulan, bintang, cahaya lentera amber berkedip, karakter figur khas Aldy berwarna); BISNIS = biru-hitam dengan grid tipis + figur/ikon garis krem (gaya cetak biru). Pergantian dunia ditandai siluet tikus yang larut menjadi gedung garis.
+- Benda fabel dibawa ke dunia bisnis: ekor tikus berlabel "chat / followers / omzet" jatuh ke meja owner; mata tikus di gudang muncul lagi di belakang kantor; penutup kembali ke meja tuan tanah yang kursinya berubah jadi kursi owner.
+- Caption satu kata (kata kunci terakota), headline Fraunces hanya di frame 1, poros (kartu tokoh) dan pertanyaan penutup.
+- Kartu tokoh versi gelap: kartu krem di bawah sorot lampu panggung.
+
+## Rencana uji (setelah tayang, butuh data Insights)
+1. Bandingkan skip 3 dtk Fabel #01 vs reels edukasi terakhir (target < 50%).
+2. Rata-rata tonton: fabel menahan penonton sampai poros? Cek grafik retensi di detik ±35 (poros "ini ada namanya").
+3. Share/reach: target >= 0,6%. Fabel punya kalimat penutup yang mudah dikutip; kalau share rendah, perkuat kalimat penutup.
+4. Uji A/B kalimat pertama lewat Trial Reels: versi kejadian ganjil ("Desa itu membayar warga untuk membunuh tikus. Tikusnya malah bertambah.") vs versi sekarang.
+5. Jika 2 dari 3 fabel pertama mengalahkan reels edukasi di skip & share, jadikan Fabel Bisnis seri mingguan tetap.
+
+## Pelajaran tambahan untuk penulisan fabel berikutnya
+- Kalimat pertama sebaiknya sudah berisi keganjilan (hasil berlawanan dengan niat), bukan hanya pembukaan situasi. Referensi: "A snake died fighting a saw that never moved." -> fabel #02 dst. mulai dari kontradiksi.
+- Satu fabel = satu benda simbol yang bisa dipanggil ulang di penutup (ekor, gergaji, ember). Benda harus bisa digambar dengan siluet sederhana.
+- Bagian bisnis: 3 contoh paralel maksimal, masing-masing 2 kalimat (kejadian -> akibat), ritme sama.
+- Penutup = pertanyaan biner dengan benda simbol ("tikusnya atau ekornya?"), tanpa CTA lisan; CTA di caption.
