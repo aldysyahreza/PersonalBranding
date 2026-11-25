@@ -55,11 +55,11 @@
     "contoh": "Kartu standar meja packing: RAPI (selotip lurus, sudut terlindung) / BERSIH (tanpa debu, label lurus) / 1 KARTU TERIMA KASIH."
    },
    {
-    "say": "Perusahaan besar pakai matriks RACI buat ngatur ini. Buat bisnismu, cukup empat hal. Satu nama, bukan nama divisi. Satu tenggat, tanggal dan jamnya. Satu ukuran selesai, bentuknya apa. Dan satu tempat lapor, di mana dicek. Tulis empat hal ini di setiap pekerjaan. Karena kalau semua orang pegang tali, siapa yang benar-benar narik?",
+    "say": "Perusahaan besar pakai matriks RACI buat ngatur ini. RACI itu singkatan. R, responsible, yang mengerjakan. A, accountable, yang menanggung hasilnya. C, consulted, yang dimintai pendapat. I, informed, yang cukup dikabari. Intinya, tiap pekerjaan jelas siapa pegang apa. Buat bisnismu, cukup mulai dari empat hal. Satu nama, bukan nama divisi. Satu tenggat, tanggal dan jamnya. Satu ukuran selesai, bentuknya apa. Dan satu tempat lapor, di mana dicek. Tulis empat hal ini di setiap pekerjaan. Karena kalau semua orang pegang tali, siapa yang benar-benar narik?",
     "txt": "Nama. Tenggat. Ukuran selesai. *Tempat lapor.*",
     "shot": "anim",
     "dur": "",
-    "case": "SOLUSI: kartu tugas 'Order ulang stok terlaris' terisi 4 baris satu per satu sesuai ucapan: NAMA: Rani (bukan 'tim gudang' yang dicoret) / TENGGAT: Kamis 15.00 / SELESAI: PO terkirim ke supplier / LAPOR: grup WA + foto PO; label kecil 'RACI = versi perusahaan besar'; tali tambang kini dipegang tangan dengan label nama; PENUTUP: lapangan, tali tergeletak, pertanyaan di layar",
+    "case": "RACI: empat kartu huruf besar muncul satu per satu sesuai ucapan: R = yang mengerjakan (ikon tangan bekerja) / A = yang menanggung hasil (ikon stempel) / C = yang dimintai pendapat (ikon gelembung) / I = yang cukup dikabari (ikon lonceng); lalu SOLUSI: kartu tugas 'Order ulang stok terlaris' terisi 4 baris satu per satu sesuai ucapan: NAMA: Rani (bukan 'tim gudang' yang dicoret) / TENGGAT: Kamis 15.00 / SELESAI: PO terkirim ke supplier / LAPOR: grup WA + foto PO; label kecil 'RACI = versi perusahaan besar'; tali tambang kini dipegang tangan dengan label nama; PENUTUP: lapangan, tali tergeletak, pertanyaan di layar",
     "solusi": "",
     "contoh": ""
    }
