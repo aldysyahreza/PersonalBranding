@@ -1,0 +1,81 @@
+{
+ "id": "reels-fabel-01-ekor-tikus",
+ "title": "Fabel Bisnis #01: Ekor tikus",
+ "format": "reels",
+ "stage": "naskah",
+ "dx": 6,
+ "job": "Follow",
+ "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
+ "hue": "terracotta",
+ "series": "Fabel Bisnis",
+ "caption": "Yang kamu kasih bonus belum tentu yang kamu butuhkan; simpan ini sebelum bikin target tim bulan depan.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+ "pinned": "Hukum Goodhart: dirumuskan ekonom Charles Goodhart (1975); kalimat populernya 'saat ukuran jadi target, ia berhenti jadi ukuran yang baik' adalah rumusan antropolog Marilyn Strathern (1997). Fabel ini terinspirasi kisah sayembara ekor tikus di Hanoi tahun 1902 yang dicatat sejarawan Michael Vann. Contoh admin/konten/sales = ilustrasi.",
+ "story": "Poll: Target tim kamu sekarang lebih mirip... Tikus (hasil nyata) / Ekor (angka laporan) / Belum punya target",
+ "reel": {
+  "v": 2,
+  "angle": "cermin",
+  "exec": "banding",
+  "coverH": "Restorannya enak",
+  "coverHi": "yang diingat satpamnya",
+  "beats": [
+   {
+    "say": "Seorang tuan tanah membayar warga desa satu koin untuk setiap ekor tikus. Dalam sebulan, ribuan ekor menumpuk di mejanya. Tuan tanah tersenyum. Desanya pasti sudah bersih.",
+    "txt": "Satu koin untuk *satu ekor.*",
+    "shot": "anim",
+    "dur": "",
+    "case": "FABEL (berwarna, malam): tuan tanah di meja kayu, warga antre menyerahkan ekor tikus, koin amber berpindah tangan, tumpukan ekor makin tinggi; frame 1 = tangan menjatuhkan koin di atas ekor tikus + kalimat pembuka",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Tapi malam itu, dia mendengar suara dari gudang. Tikusnya justru makin banyak. Warga memotong ekornya, lalu melepas tikusnya lagi. Tikus tanpa ekor masih bisa beranak. Dan setiap anak tikus, nanti jadi koin baru. Beberapa warga bahkan mulai memelihara tikus di belakang rumah. Gak ada yang melanggar aturan. Semua orang cuma melakukan persis apa yang dibayar.",
+    "txt": "Persis apa yang *dibayar.*",
+    "shot": "anim",
+    "dur": "",
+    "case": "FABEL: lentera, pintu gudang berderit, mata-mata kecil menyala; gunting memotong ekor, tikus tanpa ekor lari ke ladang; kandang tikus di belakang rumah warga; warga tersenyum polos",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Di dunia ekonomi, ini ada namanya. Hukum Goodhart. Begitu sebuah angka dijadikan target, orang berhenti mengejar tujuannya. Mereka mulai mengejar angkanya.",
+    "txt": "Hukum *Goodhart.*",
+    "shot": "anim",
+    "dur": "",
+    "case": "PIVOT: layar gelap -> kartu tokoh Charles Goodhart (ilustrasi, 'Ekonom, penasihat bank sentral Inggris; hukum Goodhart 1975'); kalimat definisi kata demi kata",
+    "solusi": "",
+    "contoh": ""
+   },
+   {
+    "say": "Kamu kira ini cuma soal tikus. Admin dikejar target cepat balas chat. Chat dibalas cepat, tapi pembeli gak jadi beli. Tim konten dikejar target followers. Followers naik, tapi yang beli orang yang sama. Sales dikejar target omzet. Omzet tembus, tapi semua karena diskon besar. Ekornya numpuk di mejamu. Tikusnya masih di gudang.",
+    "txt": "Ekornya di meja. Tikusnya di *gudang.*",
+    "shot": "anim",
+    "dur": "",
+    "case": "DUNIA NYATA (garis putih tipis di latar gelap, seperti cetak biru): admin dengan stopwatch & bubble chat kosong; tim konten dengan angka followers naik tapi keranjang kosong; sales dengan label diskon besar; tiap angka berubah jadi ekor tikus yang jatuh ke meja owner; kamera mundur: gudang di belakang kantor penuh mata tikus",
+    "solusi": "Biaya hampir nol: (1) 3 standar tertempel di meja packing; (2) evaluasi bareng admin & tim packing: membuka paket sendiri dari sudut pandang pelanggan.",
+    "contoh": "Kartu standar meja packing: RAPI (selotip lurus, sudut terlindung) / BERSIH (tanpa debu, label lurus) / 1 KARTU TERIMA KASIH."
+   },
+   {
+    "say": "Jadi sebelum kamu kasih bonus untuk satu angka, tanya dulu satu hal. Yang kamu bayar ini tikusnya, atau ekornya?",
+    "txt": "Tikusnya, atau *ekornya?*",
+    "shot": "anim",
+    "dur": "",
+    "case": "PENUTUP: kembali ke meja tuan tanah, tapi kursinya kini kursi owner modern; satu koin berputar di meja lalu berhenti; teks pertanyaan; tanpa kartu seri/CTA di layar (CTA simpan hanya di caption)",
+    "solusi": "",
+    "contoh": ""
+   }
+  ],
+  "prod": {},
+  "intro": {
+   "short": "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, membenahi bisnisnya secara tiga ratus enam puluh derajat, dari hulu sampai hilir.",
+   "pakai": "ucap-lengkap"
+  }
+ },
+ "sistem": {
+  "formula": "Tipe A: animasi penuh + voice over (Motion Kit Tinta & Kertas), TANPA talking head (keputusan Aldy 18 Nov, pengecualian aturan skill 'manusia di setiap reels' & 'motion <=30%')",
+  "tugas": "Share",
+  "set": "-",
+  "target_durasi": "±80 dtk (182 kata)",
+  "teks_frame1": "Makanannya enak. Yang diingat: tukang parkirnya.",
+  "asal": "Pola IHT dipakai: adegan sehari-hari -> twist -> kalimat besar -> putar ulang sebelum/sesudah. Isi baru, bukan materi klien."
+ }
+}
