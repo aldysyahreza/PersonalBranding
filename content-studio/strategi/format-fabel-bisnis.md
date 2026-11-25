@@ -48,3 +48,7 @@
 
 - (25 Nov, Aldy) #02 diubah lagi: bukan pelanggan yang sering komplain, tapi SATU komplain kecil; struktur PERBANDINGAN dua cafe (yang mengabaikan vs yang mendengar). Tokoh Raka & Dita (rekaan). Naskah: posts/reels-fabel-02-dua-cafe.json. Visual: layar dibelah dua sepanjang fabel, penutup "kamu mau jadi cafe yang mana?".
 - Pelajaran: Aldy suka format banding dua sisi untuk fabel (pilihan tegas di akhir), komplain digambarkan wajar (sekali, hal kecil), bukan pelanggan cerewet.
+
+## Fabel #03 (26 Nov 2026): Tarik tambang 17-an -> Efek Ringelmann (1913) + social loafing
+- Menerapkan semua pelajaran #01-#02: kalimat pertama kontradiksi, dua tipe (tim tanpa peran vs tim dengan posisi + aba-aba), latar keseharian Indonesia (lomba 17-an), bahasa lisan, kesaksian Aldy, satu tindakan (satu pekerjaan = satu nama PIC), penutup memanggil benda simbol (tali).
+- Naskah: posts/reels-fabel-03-tarik-tambang.json.
