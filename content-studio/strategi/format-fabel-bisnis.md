@@ -39,7 +39,9 @@
 - Bagian bisnis: 3 contoh paralel maksimal, masing-masing 2 kalimat (kejadian -> akibat), ritme sama.
 - Penutup = pertanyaan biner dengan benda simbol ("tikusnya atau ekornya?"), tanpa CTA lisan; CTA di caption.
 
-## Fabel #02 (25 Nov 2026): Nenek di toko roti -> Exit, Voice, and Loyalty (Hirschman 1970)
-- Kalimat pertama langsung kontradiksi (pelajaran #01): "Hari nenek itu berhenti mengeluh, toko roti itu mulai mati."
-- Benda simbol: lonceng pintu toko (bunyi = suara pelanggan; lonceng diam berdebu = pelanggan pergi).
-- Naskah: posts/reels-fabel-02-nenek-roti.json.
+## Fabel #02 (25 Nov 2026): Kursi pojok warung kopi -> Exit, Voice, and Loyalty (Hirschman 1970)
+- Aldy menolak tokoh nenek & bahasa kaku -> diganti Pak Darto (ojek, rekaan) di warung kopi, bahasa ngobrol (nyeletuk, kemanisan, alot, benerin, udah pada pergi).
+- Kalimat pertama langsung kontradiksi: "Hari Pak Darto berhenti protes, warung kopi itu mulai sepi."
+- Benda simbol: kursi pojok (terisi = pelanggan yang bersuara; kosong = yang pergi).
+- Naskah: posts/reels-fabel-02-kursi-pojok.json.
+- Pelajaran: tokoh fabel = orang yang dekat dengan keseharian owner Indonesia (warung, ojek, pasar), bukan tokoh dongeng umum; kalimat dialog pakai bahasa lisan.
