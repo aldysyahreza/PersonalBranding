@@ -45,3 +45,6 @@
 - Benda simbol: kursi pojok (terisi = pelanggan yang bersuara; kosong = yang pergi).
 - Naskah: posts/reels-fabel-02-kursi-pojok.json.
 - Pelajaran: tokoh fabel = orang yang dekat dengan keseharian owner Indonesia (warung, ojek, pasar), bukan tokoh dongeng umum; kalimat dialog pakai bahasa lisan.
+
+- (25 Nov, Aldy) #02 diubah lagi: bukan pelanggan yang sering komplain, tapi SATU komplain kecil; struktur PERBANDINGAN dua cafe (yang mengabaikan vs yang mendengar). Tokoh Raka & Dita (rekaan). Naskah: posts/reels-fabel-02-dua-cafe.json. Visual: layar dibelah dua sepanjang fabel, penutup "kamu mau jadi cafe yang mana?".
+- Pelajaran: Aldy suka format banding dua sisi untuk fabel (pilihan tegas di akhir), komplain digambarkan wajar (sekali, hal kecil), bukan pelanggan cerewet.
