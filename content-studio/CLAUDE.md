@@ -278,3 +278,7 @@ Dasar: 3 sampel tulisan Aldy (voice/sampel-aldy.md). Tingkat disetujui Aldy: "pe
 5. GERBANG MUTU: `python3 tools/vo_cek.py vo/voNN_raw.ogg out/reelNN` harus **LULUS** (0 lonjakan nada, 0 sampel mentok, puncak ≤ -1 dBFS). Gagal = jangan render.
 6. Kirim `vo_cek.m4a` (aac 192k dari vo_clean.wav) ke Aldy bila ada pemotongan, sebelum visual dikerjakan.
 7. Render: `MK_MOOD=dark python3 animatic/build_mk.py out/reelNN mk-xxx.html` (mix: kompresor lembut → ukur → gain → alimiter lambat, -16 LUFS). Cek mp4 akhir: -16 ±0,5 LUFS.
+
+### 25 Nov — Fabel #04 "Dua tukang sate" (reel23, Sensory Marketing)
+- vo/vo23_raw.ogg (VO_CUTS 114.2-128.1: dua take gagal "Kedua…"), tanpa jeda poros. scratch/gen_fabel04.py -> animatic/mk-fabel04.html (22 adegan) -> out/reel23/reel.mp4 122 dtk, -16,2 LUFS. CTA komen "SENSORY" (lead magnet checklist BELUM dibuat).
+- Teknik baru SATE_JS: STREET (jalan malam, gedung berjendela, lampu jalan berkedip, marka bergerak), CART (gerobak sate: atap, papan nama, panggangan depan/belakang, api berdenyut, cahaya, asap 'in' kecil vs 'out' melebar ke jalan), MOTOR (motor melaju lalu berhenti), IC/ICO (ikon garis: eye, nose, ear, hand, tongue, music, spark, clock, bag, pin, scent, shirt), LBL, HL. Visual: timbangan indra vs logika, cincin jarak indra tampak atas + figur berjalan mendekat, etalase "maison" + manekin andalan disorot lampu, toko dalam dengan nada musik/kilau/aroma, pita ukur 0→20 m, ponsel Google Maps + kartu foto depan gelap→terang. Kartu tokoh Aradhna Krishna (Prof. marketing Univ. of Michigan, pelopor riset sensory marketing).
