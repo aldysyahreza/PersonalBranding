@@ -55,11 +55,11 @@
     "contoh": "Kartu standar meja packing: RAPI (selotip lurus, sudut terlindung) / BERSIH (tanpa debu, label lurus) / 1 KARTU TERIMA KASIH."
    },
    {
-    "say": "Di bisnismu, Raka itu pelanggan yang komplain di DM. Yang bilang admin kamu jutek. Yang kasih bintang tiga plus catatan soal pelayanan. Di bisnis-bisnis yang saya dampingi selama ini, polanya selalu sama. Pelanggan yang komplain justru pelanggan yang loyal. Jangan dibiarkan. Kasih solusi sampai selesai. Satu komplain yang kamu selesaikan, bisa balik jadi rekomendasi. Satu komplain yang kamu abaikan, biasanya bukan cuma satu orang yang pergi. Jadi kalau besok ada yang komplain, kamu mau jadi cafe yang mana?",
+    "say": "Di bisnismu, Raka itu pelanggan yang komplain di DM. Yang bilang admin kamu jutek. Di bisnis-bisnis yang saya dampingi selama ini, polanya selalu sama. Pelanggan yang komplain justru pelanggan yang loyal. Jangan dibiarkan. Kasih solusi sampai selesai. Satu komplain yang kamu selesaikan, bisa balik jadi rekomendasi. Satu komplain yang kamu abaikan, biasanya bukan cuma satu orang yang pergi. Jadi kalau besok ada yang komplain, kamu mau jadi cafe yang mana?",
     "txt": "Kamu mau jadi *cafe yang mana?*",
     "shot": "anim",
     "dur": "",
-    "case": "DUNIA CETAK BIRU dibelah dua: DM komplain / chat 'adminnya jutek ya' / ulasan bintang 3 soal pelayanan; KIRI diabaikan -> figur garis memudar keluar (1 jadi banyak); KANAN dibalas -> figur garis membawa 3 figur baru; KESAKSIAN ALDY: stempel/catatan 'Dari bisnis yang saya dampingi' + papan alur KOMPLAIN -> DENGAR -> SOLUSI -> SELESAI (centang satu per satu); PENUTUP: kembali ke dua cafe berseberangan, kiri gelap kosong, kanan terang ramai; pertanyaan di layar",
+    "case": "DUNIA CETAK BIRU dibelah dua: DM komplain / chat 'adminnya jutek ya'; KIRI diabaikan -> figur garis memudar keluar (1 jadi banyak); KANAN dibalas -> figur garis membawa 3 figur baru; KESAKSIAN ALDY: stempel/catatan 'Dari bisnis yang saya dampingi' + papan alur KOMPLAIN -> DENGAR -> SOLUSI -> SELESAI (centang satu per satu); PENUTUP: kembali ke dua cafe berseberangan, kiri gelap kosong, kanan terang ramai; pertanyaan di layar",
     "solusi": "",
     "contoh": ""
    }
