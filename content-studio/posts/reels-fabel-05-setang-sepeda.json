@@ -1,0 +1,83 @@
+{
+  "id": "reels-fabel-05-setang-sepeda",
+  "title": "Fabel Bisnis #05: Setang sepeda",
+  "format": "reels",
+  "stage": "vo",
+  "dx": 6,
+  "job": "Follow",
+  "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
+  "hue": "terracotta",
+  "series": "Fabel Bisnis",
+  "caption": "Tim yang gak inisiatif sering bukan malas, tapi sudah belajar bahwa keputusannya selalu diubah; kirim ke orang yang masih pegang setang timnya, biar dia tahu cara melepasnya pelan-pelan.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+  "pinned": "Teori: Learned helplessness (Martin Seligman & Steven Maier, 1967). 4 tahap melepas setang = adaptasi Situational Leadership (Paul Hersey & Ken Blanchard): mengarahkan, melatih, mendukung, mendelegasikan.",
+  "story": "Poll: Setang mana yang paling susah kamu lepas? Konten / Chat pembeli / Diskon & harga / Semua",
+  "reel": {
+    "v": 2,
+    "angle": "cermin",
+    "exec": "banding",
+    "coverH": "Gak pernah jatuh",
+    "coverHi": "gak pernah bisa",
+    "beats": [
+      {
+        "say": "Sore di gang kompleks. Seorang bapak ngajarin anaknya naik sepeda. Setangnya dia pegang. Tiap sepeda miring sedikit, langsung dia benerin. Seminggu. Sebulan. Anaknya gak pernah jatuh. Tapi juga gak pernah bisa. Suatu hari bapaknya sakit. Sepedanya cuma disandarkan di pagar. Kata anaknya, \"Nunggu Bapak aja.\"",
+        "txt": "Gak pernah jatuh. *Gak pernah bisa.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "FABEL: gang kompleks sore, bapak memegangi setang sepeda anak; sepeda disandarkan di pagar",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Di dunia bisnis, ini ada namanya. Learned Helplessness. Ketidakberdayaan yang dipelajari. Orang berhenti mencoba, karena belajar bahwa usahanya gak ngaruh.",
+        "txt": "*Learned* Helplessness",
+        "shot": "anim",
+        "dur": "",
+        "case": "POROS + kartu tokoh Martin Seligman",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Di bisnis, setangnya bisa apa aja. Desain konten harus kamu revisi. Balasan chat harus kamu cek. Diskon sepuluh ribu harus nunggu kamu. Lama-lama tim berhenti mikir. Bukan karena malas. Mereka belajar, apa pun yang mereka putuskan, ujungnya kamu ubah. Di bisnis yang saya dampingi, owner yang paling sering bilang \"tim saya gak inisiatif\", biasanya yang paling erat pegang setangnya.",
+        "txt": "Bukan malas. *Sudah belajar.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "PEMETAAN kantor + KESAKSIAN",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Solusinya bukan langsung lepas tangan. Lepas tangannya bertahap. Satu, pegang setang: kamu contohin, mereka lihat. Dua, pegang sadel: mereka kerjain, kamu dampingi. Tiga, lari di samping: mereka putusin, kamu cuma ditanya kalau perlu. Empat, lepas: mereka jalan sendiri, kamu cek hasilnya tiap minggu.",
+        "txt": "Lepas *bertahap.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "SOLUSI 4 tahap (adaptasi Situational Leadership, Hersey & Blanchard)",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Jadi, setang mana di bisnismu yang masih kamu pegang? Kirim video ini ke orang yang masih pegang setang timnya, biar dia tahu cara melepasnya pelan-pelan.",
+        "txt": "Setang mana *yang masih kamu pegang?*",
+        "shot": "anim",
+        "dur": "",
+        "case": "PENUTUP + CTA share",
+        "solusi": "",
+        "contoh": ""
+      }
+    ],
+    "prod": {},
+    "intro": {
+      "short": "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, membenahi bisnisnya secara tiga ratus enam puluh derajat, dari hulu sampai hilir.",
+      "pakai": "ucap-lengkap"
+    }
+  },
+  "sistem": {
+    "formula": "Tipe A: animasi penuh + voice over (Motion Kit Tinta & Kertas), TANPA talking head (keputusan Aldy 18 Nov, pengecualian aturan skill 'manusia di setiap reels' & 'motion <=30%')",
+    "tugas": "Share",
+    "set": "-",
+    "target_durasi": "±80 dtk (182 kata)",
+    "teks_frame1": "Makanannya enak. Yang diingat: tukang parkirnya.",
+    "asal": "Pola IHT dipakai: adegan sehari-hari -> twist -> kalimat besar -> putar ulang sebelum/sesudah. Isi baru, bukan materi klien."
+  },
+  "script": "Sore di gang kompleks. Seorang bapak ngajarin anaknya naik sepeda. Setangnya dia pegang. Tiap sepeda miring sedikit, langsung dia benerin. Seminggu. Sebulan. Anaknya gak pernah jatuh. Tapi juga gak pernah bisa. Suatu hari bapaknya sakit. Sepedanya cuma disandarkan di pagar. Kata anaknya, \"Nunggu Bapak aja.\"\nDi dunia bisnis, ini ada namanya. Learned Helplessness. Ketidakberdayaan yang dipelajari. Orang berhenti mencoba, karena belajar bahwa usahanya gak ngaruh.\nDi bisnis, setangnya bisa apa aja. Desain konten harus kamu revisi. Balasan chat harus kamu cek. Diskon sepuluh ribu harus nunggu kamu. Lama-lama tim berhenti mikir. Bukan karena malas. Mereka belajar, apa pun yang mereka putuskan, ujungnya kamu ubah. Di bisnis yang saya dampingi, owner yang paling sering bilang \"tim saya gak inisiatif\", biasanya yang paling erat pegang setangnya.\nSolusinya bukan langsung lepas tangan. Lepas tangannya bertahap. Satu, pegang setang: kamu contohin, mereka lihat. Dua, pegang sadel: mereka kerjain, kamu dampingi. Tiga, lari di samping: mereka putusin, kamu cuma ditanya kalau perlu. Empat, lepas: mereka jalan sendiri, kamu cek hasilnya tiap minggu.\nJadi, setang mana di bisnismu yang masih kamu pegang? Kirim video ini ke orang yang masih pegang setang timnya, biar dia tahu cara melepasnya pelan-pelan.",
+  "cta_keyword": ""
+}
