@@ -1,0 +1,83 @@
+{
+  "id": "reels-fabel-06-kerudung-adem",
+  "title": "Fabel Bisnis #06: Kerudung adem (market fit vs problem-solution fit)",
+  "format": "reels",
+  "stage": "naskah",
+  "dx": 6,
+  "job": "Follow",
+  "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
+  "hue": "terracotta",
+  "series": "Fabel Bisnis",
+  "caption": "Produk laku karena disukai dan produk laku karena dibutuhkan butuh cara jualan yang beda; komen \"PRODUK\" dan saya kirim panduan strategi produk biar bisnismu makin tepat sasaran.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+  "pinned": "Kerangka strategi produk Aldy: market fit vs problem-solution fit, produk hero = keduanya. Penguat: Regulatory Focus Theory (E. Tory Higgins, 1997) & regulatory fit (Lee & Aaker, 2004): pesan berbingkai keinginan cocok untuk fokus promotion, berbingkai rasa aman cocok untuk fokus prevention. Catatan: di literatur startup, PSF/PMF juga dipakai sebagai dua tahap (Ash Maurya).",
+  "story": "Poll: Produk andalanmu laku karena... Disukai / Dibutuhkan / Dua-duanya / Belum tahu",
+  "reel": {
+    "v": 2,
+    "angle": "cermin",
+    "exec": "banding",
+    "coverH": "Disukai atau dibutuhkan?",
+    "coverHi": "atau dua-duanya",
+    "beats": [
+      {
+        "say": "Pagi di pasar. Bu Ratna jualan tiga dagangan. Kerudung motif yang lagi tren. Laku, karena pembeli suka. Jamu pegal linu. Laku, karena pembeli butuh. Dan satu kerudung adem, gak gerah dipakai seharian. Cantik sesuai selera, sekaligus nyelesain masalah gerah. Yang ini habis duluan tiap pagi. Pembelinya balik lagi, bawa teman.",
+        "txt": "Disukai. Dibutuhkan. *Atau dua-duanya.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "FABEL: lapak pasar pagi, tiga dagangan; kerudung adem habis duluan",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Di dunia bisnis, ini ada namanya. Market fit, dan problem-solution fit. Market fit: produk cocok dengan selera pasarnya. Problem-solution fit: produk menyelesaikan masalah pembelinya.",
+        "txt": "Market fit · *Problem-solution fit*",
+        "shot": "anim",
+        "dur": "",
+        "case": "POROS",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Di bisnis yang saya dampingi, strategi produk selalu kami mulai dari pertanyaan ini. Produk ini sudah fit dengan marketnya, atau sudah jadi solusi bagi masalah target marketnya? Jawabannya menentukan konten dan copywriting yang tepat.",
+        "txt": "Konten mengikuti *jenis produknya.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "KESAKSIAN metode Aldy",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Kalau produkmu market fit, jual keinginannya. Tunjukkan orang yang mirip pembelimu memakainya, sampai mereka pengin jadi bagian dari itu. Kalau produkmu problem-solution fit, jual rasa amannya. Tunjukkan masalahnya, bukti hasilnya, dan testimoni. Psikolog Tory Higgins menyebutnya promotion focus dan prevention focus. Pesan yang cocok dengan alasan orang membeli, lebih mudah dipercaya. Dan kalau produkmu punya keduanya, itu produk hero. Jarang yang bisa menemukannya. Kembangkan produknya, perkuat brandnya, lalu jalankan marketingnya tepat sasaran.",
+        "txt": "Produk *hero.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "SOLUSI + kartu tokoh E. Tory Higgins (Columbia University, Regulatory Focus Theory 1997)",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Jadi, produkmu kerudung motif, jamu, atau kerudung adem? Mau panduan strategi produk biar bisnismu makin tepat sasaran? Komen \"PRODUK\", nanti saya kirim.",
+        "txt": "Komen *PRODUK*",
+        "shot": "anim",
+        "dur": "",
+        "case": "PENUTUP + CTA lead magnet",
+        "solusi": "",
+        "contoh": ""
+      }
+    ],
+    "prod": {},
+    "intro": {
+      "short": "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, membenahi bisnisnya secara tiga ratus enam puluh derajat, dari hulu sampai hilir.",
+      "pakai": "ucap-lengkap"
+    }
+  },
+  "sistem": {
+    "formula": "Tipe A: animasi penuh + voice over (Motion Kit Tinta & Kertas), TANPA talking head (keputusan Aldy 18 Nov, pengecualian aturan skill 'manusia di setiap reels' & 'motion <=30%')",
+    "tugas": "Share",
+    "set": "-",
+    "target_durasi": "±80 dtk (182 kata)",
+    "teks_frame1": "Makanannya enak. Yang diingat: tukang parkirnya.",
+    "asal": "Pola IHT dipakai: adegan sehari-hari -> twist -> kalimat besar -> putar ulang sebelum/sesudah. Isi baru, bukan materi klien."
+  },
+  "script": "Pagi di pasar. Bu Ratna jualan tiga dagangan. Kerudung motif yang lagi tren. Laku, karena pembeli suka. Jamu pegal linu. Laku, karena pembeli butuh. Dan satu kerudung adem, gak gerah dipakai seharian. Cantik sesuai selera, sekaligus nyelesain masalah gerah. Yang ini habis duluan tiap pagi. Pembelinya balik lagi, bawa teman.\nDi dunia bisnis, ini ada namanya. Market fit, dan problem-solution fit. Market fit: produk cocok dengan selera pasarnya. Problem-solution fit: produk menyelesaikan masalah pembelinya.\nDi bisnis yang saya dampingi, strategi produk selalu kami mulai dari pertanyaan ini. Produk ini sudah fit dengan marketnya, atau sudah jadi solusi bagi masalah target marketnya? Jawabannya menentukan konten dan copywriting yang tepat.\nKalau produkmu market fit, jual keinginannya. Tunjukkan orang yang mirip pembelimu memakainya, sampai mereka pengin jadi bagian dari itu. Kalau produkmu problem-solution fit, jual rasa amannya. Tunjukkan masalahnya, bukti hasilnya, dan testimoni. Psikolog Tory Higgins menyebutnya promotion focus dan prevention focus. Pesan yang cocok dengan alasan orang membeli, lebih mudah dipercaya. Dan kalau produkmu punya keduanya, itu produk hero. Jarang yang bisa menemukannya. Kembangkan produknya, perkuat brandnya, lalu jalankan marketingnya tepat sasaran.\nJadi, produkmu kerudung motif, jamu, atau kerudung adem? Mau panduan strategi produk biar bisnismu makin tepat sasaran? Komen \"PRODUK\", nanti saya kirim.",
+  "cta_keyword": "PRODUK"
+}

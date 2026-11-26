@@ -6,3 +6,7 @@
 # Lead magnet: Checklist Sensory Marketing (CTA reel23 "Komen SENSORY")
 - File: Checklist-Sensory-Marketing-TheBrandFixer.xlsx · Google Sheet "Checklist Sensory Marketing — The Brand Fixer" (privat).
 - Isi: 1 Mulai di sini (jarak indra, 3 aturan, cara pakai) · 2 Audit 22 poin dalam 5 bagian (Maps, 20 m, 5–10 m, pintu, dalam; skor 0/1/2, status KUAT/PERLU DIPOLES/BOCOR otomatis) · 3 Contoh kedai kopi (simulasi) · 4 Ide perbaikan per indra + biaya.
+
+# Lead magnet: Panduan Strategi Produk (CTA Fabel #06 "Komen PRODUK")
+- File: Panduan-Strategi-Produk-TheBrandFixer.xlsx · Google Sheet "Panduan Strategi Produk — The Brand Fixer" (privat).
+- Isi: 1 Mulai di sini (market fit / problem-solution fit / HERO + Higgins) · 2 Diagnosis 3 produk, 10 pernyataan skor 0-2, kategori otomatis (ambang 7/10) · 3 Strategi konten & copywriting per kategori · 4 Langkah lanjut · 5 Contoh (kerudung motif, jamu, kerudung adem).
