@@ -1,0 +1,83 @@
+{
+  "id": "reels-fabel-07-lagu-diketuk",
+  "title": "Fabel Bisnis #07: Lagu yang diketuk (Curse of Knowledge)",
+  "format": "reels",
+  "stage": "naskah",
+  "dx": 6,
+  "job": "Follow",
+  "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
+  "hue": "terracotta",
+  "series": "Fabel Bisnis",
+  "caption": "Kalimat yang jelas di kepalamu bisa terdengar seperti ketukan meja buat pembeli; kirim ke orang yang nulis copy di bisnismu, biar dia coba tes ini juga.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+  "pinned": "Studi: Elizabeth Newton (disertasi Stanford, 1990), \"tappers and listeners\": pengetuk memperkirakan 50% lagu tertebak, kenyataannya 3 dari 120 (2,5%). Dipopulerkan Chip & Dan Heath di Made to Stick (2007). Istilah curse of knowledge: Camerer, Loewenstein & Weber (1989).",
+  "story": "Kuis: Kamu sudah coba ketuk lagu ke orang terdekat? Berhasil ditebak / Gagal total / Belum coba",
+  "reel": {
+    "v": 2,
+    "angle": "cermin",
+    "exec": "banding",
+    "coverH": "Jelas di kepalamu",
+    "coverHi": "bunyi meja buat pembeli",
+    "beats": [
+      {
+        "say": "Sore di teras. Seorang ayah mengetuk meja. Tok, tok-tok, tok. \"Tebak, lagu apa?\" Anaknya bengong. Ayahnya heran. \"Masa gak tahu? Ini Balonku.\" Di kepala ayahnya, melodinya jelas sekali. Di telinga anaknya, cuma bunyi meja.",
+        "txt": "Jelas di kepalamu. *Cuma bunyi meja buat mereka.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "FABEL: teras sore, ayah mengetuk meja, gelembung not lagu di kepala ayah vs tok-tok di telinga anak",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Di dunia bisnis, ini ada namanya. Curse of Knowledge. Kutukan pengetahuan. Tahun sembilan belas sembilan puluh, peneliti Stanford, Elizabeth Newton, meminta orang mengetuk lagu terkenal. Pengetuk yakin, separuh pendengar bisa menebak. Kenyataannya, dari seratus dua puluh lagu, cuma tiga yang tertebak.",
+        "txt": "Yakin 50%. *Nyatanya 2,5%.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "POROS + kartu tokoh Elizabeth Newton (Stanford, 1990) + data 120 lagu, 3 tertebak",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Di bisnismu, ketukan itu ada di caption, website, dan iklan. \"Bahan premium.\" \"Kualitas terbaik.\" \"Formula eksklusif.\" Buat kamu, kalimat itu penuh makna. Buat pembeli, cuma bunyi meja. Di bisnis yang saya dampingi, copy yang paling disukai owner sering justru yang paling gak dimengerti pembeli.",
+        "txt": "Penuh makna buatmu. *Bunyi meja buat pembeli.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "PEMETAAN + KESAKSIAN",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Caranya dua. Satu, ganti kata sifat dengan bukti yang bisa dibayangkan. Bukan \"kualitas terbaik\", tapi \"jahitan dobel, gak lepas walau dicuci lima puluh kali.\" Dua, baca copy-mu ke orang awam. Minta dia ulangi pakai bahasanya sendiri. Kalau dia gak bisa, berarti kamu masih mengetuk.",
+        "txt": "Ganti kata sifat *dengan bukti.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "SOLUSI 2 langkah",
+        "solusi": "",
+        "contoh": ""
+      },
+      {
+        "say": "Coba ketuk satu lagu ke orang di sebelahmu. Lalu baca ulang caption produkmu. Kirim video ini ke orang yang nulis copy di bisnismu, biar dia coba tes ini juga.",
+        "txt": "Coba *ketuk satu lagu.*",
+        "shot": "anim",
+        "dur": "",
+        "case": "PENUTUP tantangan + CTA share",
+        "solusi": "",
+        "contoh": ""
+      }
+    ],
+    "prod": {},
+    "intro": {
+      "short": "Sebelumnya, kenalin. Saya Aldy Syahreza. Belasan tahun mendampingi lebih dari seratus brand lintas industri, membenahi bisnisnya secara tiga ratus enam puluh derajat, dari hulu sampai hilir.",
+      "pakai": "ucap-lengkap"
+    }
+  },
+  "sistem": {
+    "formula": "Tipe A: animasi penuh + voice over (Motion Kit Tinta & Kertas), TANPA talking head (keputusan Aldy 18 Nov, pengecualian aturan skill 'manusia di setiap reels' & 'motion <=30%')",
+    "tugas": "Share",
+    "set": "-",
+    "target_durasi": "±80 dtk (182 kata)",
+    "teks_frame1": "Makanannya enak. Yang diingat: tukang parkirnya.",
+    "asal": "Pola IHT dipakai: adegan sehari-hari -> twist -> kalimat besar -> putar ulang sebelum/sesudah. Isi baru, bukan materi klien."
+  },
+  "script": "Sore di teras. Seorang ayah mengetuk meja. Tok, tok-tok, tok. \"Tebak, lagu apa?\" Anaknya bengong. Ayahnya heran. \"Masa gak tahu? Ini Balonku.\" Di kepala ayahnya, melodinya jelas sekali. Di telinga anaknya, cuma bunyi meja.\nDi dunia bisnis, ini ada namanya. Curse of Knowledge. Kutukan pengetahuan. Tahun sembilan belas sembilan puluh, peneliti Stanford, Elizabeth Newton, meminta orang mengetuk lagu terkenal. Pengetuk yakin, separuh pendengar bisa menebak. Kenyataannya, dari seratus dua puluh lagu, cuma tiga yang tertebak.\nDi bisnismu, ketukan itu ada di caption, website, dan iklan. \"Bahan premium.\" \"Kualitas terbaik.\" \"Formula eksklusif.\" Buat kamu, kalimat itu penuh makna. Buat pembeli, cuma bunyi meja. Di bisnis yang saya dampingi, copy yang paling disukai owner sering justru yang paling gak dimengerti pembeli.\nCaranya dua. Satu, ganti kata sifat dengan bukti yang bisa dibayangkan. Bukan \"kualitas terbaik\", tapi \"jahitan dobel, gak lepas walau dicuci lima puluh kali.\" Dua, baca copy-mu ke orang awam. Minta dia ulangi pakai bahasanya sendiri. Kalau dia gak bisa, berarti kamu masih mengetuk.\nCoba ketuk satu lagu ke orang di sebelahmu. Lalu baca ulang caption produkmu. Kirim video ini ke orang yang nulis copy di bisnismu, biar dia coba tes ini juga.",
+  "cta_keyword": ""
+}
