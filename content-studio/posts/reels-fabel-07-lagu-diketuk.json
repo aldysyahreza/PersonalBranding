@@ -8,7 +8,7 @@
   "pillar": "Koneksi + Trust (analogi kehidupan sehari-hari)",
   "hue": "terracotta",
   "series": "Fabel Bisnis",
-  "caption": "Kalimat yang jelas di kepalamu bisa terdengar seperti ketukan meja buat pembeli dan timmu; kirim ke leader dan penulis copy di bisnismu, biar mereka coba tes ini juga.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
+  "caption": "Arahan yang jelas di kepalamu bisa terdengar seperti ketukan meja buat timmu; kirim ke leader di bisnismu, biar arahannya gak ditebak-tebak lagi.\n#TheBrandFixer #BrandingBisnis #PemilikBisnis",
   "pinned": "Studi: Elizabeth Newton (disertasi Stanford, 1990), \"tappers and listeners\": pengetuk memperkirakan 50% lagu tertebak, kenyataannya 3 dari 120 (2,5%). Dipopulerkan Chip & Dan Heath di Made to Stick (2007). Istilah curse of knowledge: Camerer, Loewenstein & Weber (1989). Solusi arahan tim: commander's intent (doktrin militer AS, dipopulerkan di Made to Stick) & back-brief (tim mengulang arahan dengan bahasanya sendiri).",
   "story": "Kuis: Kamu sudah coba ketuk lagu ke orang terdekat? Berhasil ditebak / Gagal total / Belum coba",
   "reel": {
@@ -16,7 +16,7 @@
     "angle": "cermin",
     "exec": "banding",
     "coverH": "Jelas di kepalamu",
-    "coverHi": "bunyi meja buat pembeli",
+    "coverHi": "bunyi meja buat timmu",
     "beats": [
       {
         "say": "Sore di teras. Seorang ayah mengetuk meja. Tok, tok-tok, tok. \"Tebak, lagu apa?\" Anaknya bengong. Ayahnya heran. \"Masa gak tahu? Ini Balonku.\" Di kepala ayahnya, melodinya jelas sekali. Di telinga anaknya, cuma bunyi meja.",
@@ -37,25 +37,25 @@
         "contoh": ""
       },
       {
-        "say": "Di bisnismu, ketukan ini ada di dua tempat. Pertama, di caption dan iklan. \"Bahan premium.\" \"Kualitas terbaik.\" Buat kamu, penuh makna. Buat pembeli, cuma bunyi meja. Kedua, di arahan ke tim. \"Bikin konten yang lebih menarik, ya.\" Di kepalamu sudah ada contohnya. Tim cuma bisa menebak. Hasilnya, revisi tiga kali. Di bisnis yang saya dampingi, banyak masalah yang dikira soal pasar atau soal tim, ternyata soal ketukan yang gak tersampaikan.",
-        "txt": "Ke pembeli. *Ke tim.*",
+        "say": "Di bisnismu, ketukan ini ada di setiap arahan ke tim. \"Bikin konten yang lebih menarik, ya.\" \"Follow up pelanggan lama.\" Di kepalamu, gambarnya sudah jelas. Di telinga tim, cuma bunyi meja. Mereka menebak, kamu revisi, mereka menebak lagi. Di bisnis yang saya dampingi, banyak masalah yang dikira soal tim, ternyata soal arahan yang gak tersampaikan.",
+        "txt": "Kamu revisi. *Mereka menebak lagi.*",
         "shot": "anim",
         "dur": "",
-        "case": "PEMETAAN dua tempat (copy & arahan tim) + KESAKSIAN",
+        "case": "PEMETAAN arahan ke tim + KESAKSIAN",
         "solusi": "",
         "contoh": ""
       },
       {
-        "say": "Caranya tiga. Satu, ganti kata sifat dengan gambaran yang bisa dibayangkan. Bukan \"kualitas terbaik\", tapi \"jahitan dobel, gak lepas walau dicuci lima puluh kali.\" Ke tim, tunjukkan satu contoh hasil yang kamu mau. Dua, sampaikan untuk apa, bukan cuma apa. Tim yang tahu tujuannya bisa ambil keputusan sendiri. Tiga, jangan tanya \"paham?\". Semua orang jawab paham. Minta tim ulangi arahanmu pakai bahasanya sendiri. Untuk copy, bacakan ke orang awam dengan cara yang sama. Kalau gak bisa diulang, berarti kamu masih mengetuk.",
+        "say": "Caranya tiga. Satu, tunjukkan satu contoh hasil yang kamu mau. Satu contoh lebih jelas dari sepuluh kalimat. Dua, sampaikan untuk apa, bukan cuma apa. Tim yang tahu tujuannya bisa ambil keputusan sendiri. Tiga, jangan tanya \"paham?\". Semua orang jawab paham. Minta mereka ulangi arahanmu pakai bahasanya sendiri. Kalau gak bisa diulang, berarti kamu masih mengetuk.",
         "txt": "Jangan tanya *\"paham?\"*",
         "shot": "anim",
         "dur": "",
-        "case": "SOLUSI 3 langkah (gambaran konkret + contoh; commander's intent; back-brief)",
+        "case": "SOLUSI 3 langkah (contoh hasil; commander's intent; back-brief)",
         "solusi": "",
         "contoh": ""
       },
       {
-        "say": "Coba ketuk satu lagu ke orang di sebelahmu. Lalu baca ulang caption produkmu, dan arahan terakhirmu ke tim. Kirim video ini ke leader dan penulis copy di bisnismu, biar mereka coba tes ini juga.",
+        "say": "Coba ketuk satu lagu ke orang di sebelahmu. Lalu ingat lagi arahan terakhirmu ke tim. Kirim video ini ke leader di bisnismu, biar arahannya gak ditebak-tebak lagi.",
         "txt": "Coba *ketuk satu lagu.*",
         "shot": "anim",
         "dur": "",
@@ -78,6 +78,6 @@
     "teks_frame1": "Makanannya enak. Yang diingat: tukang parkirnya.",
     "asal": "Pola IHT dipakai: adegan sehari-hari -> twist -> kalimat besar -> putar ulang sebelum/sesudah. Isi baru, bukan materi klien."
   },
-  "script": "Sore di teras. Seorang ayah mengetuk meja. Tok, tok-tok, tok. \"Tebak, lagu apa?\" Anaknya bengong. Ayahnya heran. \"Masa gak tahu? Ini Balonku.\" Di kepala ayahnya, melodinya jelas sekali. Di telinga anaknya, cuma bunyi meja.\nDi dunia bisnis, ini ada namanya. Curse of Knowledge. Kutukan pengetahuan. Tahun sembilan belas sembilan puluh, peneliti Stanford, Elizabeth Newton, meminta orang mengetuk lagu terkenal. Pengetuk yakin, separuh pendengar bisa menebak. Kenyataannya, dari seratus dua puluh lagu, cuma tiga yang tertebak.\nDi bisnismu, ketukan ini ada di dua tempat. Pertama, di caption dan iklan. \"Bahan premium.\" \"Kualitas terbaik.\" Buat kamu, penuh makna. Buat pembeli, cuma bunyi meja. Kedua, di arahan ke tim. \"Bikin konten yang lebih menarik, ya.\" Di kepalamu sudah ada contohnya. Tim cuma bisa menebak. Hasilnya, revisi tiga kali. Di bisnis yang saya dampingi, banyak masalah yang dikira soal pasar atau soal tim, ternyata soal ketukan yang gak tersampaikan.\nCaranya tiga. Satu, ganti kata sifat dengan gambaran yang bisa dibayangkan. Bukan \"kualitas terbaik\", tapi \"jahitan dobel, gak lepas walau dicuci lima puluh kali.\" Ke tim, tunjukkan satu contoh hasil yang kamu mau. Dua, sampaikan untuk apa, bukan cuma apa. Tim yang tahu tujuannya bisa ambil keputusan sendiri. Tiga, jangan tanya \"paham?\". Semua orang jawab paham. Minta tim ulangi arahanmu pakai bahasanya sendiri. Untuk copy, bacakan ke orang awam dengan cara yang sama. Kalau gak bisa diulang, berarti kamu masih mengetuk.\nCoba ketuk satu lagu ke orang di sebelahmu. Lalu baca ulang caption produkmu, dan arahan terakhirmu ke tim. Kirim video ini ke leader dan penulis copy di bisnismu, biar mereka coba tes ini juga.",
+  "script": "Sore di teras. Seorang ayah mengetuk meja. Tok, tok-tok, tok. \"Tebak, lagu apa?\" Anaknya bengong. Ayahnya heran. \"Masa gak tahu? Ini Balonku.\" Di kepala ayahnya, melodinya jelas sekali. Di telinga anaknya, cuma bunyi meja.\nDi dunia bisnis, ini ada namanya. Curse of Knowledge. Kutukan pengetahuan. Tahun sembilan belas sembilan puluh, peneliti Stanford, Elizabeth Newton, meminta orang mengetuk lagu terkenal. Pengetuk yakin, separuh pendengar bisa menebak. Kenyataannya, dari seratus dua puluh lagu, cuma tiga yang tertebak.\nDi bisnismu, ketukan ini ada di setiap arahan ke tim. \"Bikin konten yang lebih menarik, ya.\" \"Follow up pelanggan lama.\" Di kepalamu, gambarnya sudah jelas. Di telinga tim, cuma bunyi meja. Mereka menebak, kamu revisi, mereka menebak lagi. Di bisnis yang saya dampingi, banyak masalah yang dikira soal tim, ternyata soal arahan yang gak tersampaikan.\nCaranya tiga. Satu, tunjukkan satu contoh hasil yang kamu mau. Satu contoh lebih jelas dari sepuluh kalimat. Dua, sampaikan untuk apa, bukan cuma apa. Tim yang tahu tujuannya bisa ambil keputusan sendiri. Tiga, jangan tanya \"paham?\". Semua orang jawab paham. Minta mereka ulangi arahanmu pakai bahasanya sendiri. Kalau gak bisa diulang, berarti kamu masih mengetuk.\nCoba ketuk satu lagu ke orang di sebelahmu. Lalu ingat lagi arahan terakhirmu ke tim. Kirim video ini ke leader di bisnismu, biar arahannya gak ditebak-tebak lagi.",
   "cta_keyword": ""
 }
