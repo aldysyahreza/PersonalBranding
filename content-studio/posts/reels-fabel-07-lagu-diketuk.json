@@ -55,11 +55,11 @@
         "contoh": ""
       },
       {
-        "say": "Coba ketuk satu lagu ke orang di sebelahmu. Lalu ingat lagi arahan terakhirmu ke tim. Kirim video ini ke leader di bisnismu, biar arahannya gak ditebak-tebak lagi.",
-        "txt": "Coba *ketuk satu lagu.*",
+        "say": "Contohnya begini. Arahan \"Bikin konten yang lebih menarik, ya.\" Ganti jadi: \"Bikin tiga video pendek seperti contoh ini, buat promo gamis lebaran, biar chat yang tanya harga naik. Sebelum mulai, ceritakan ulang ke saya rencanamu.\" Jadi, arahan terakhirmu ke tim: masih ketukan, atau sudah jadi lagu yang utuh? Kirim video ini ke leader di bisnismu, biar arahannya gak ditebak-tebak lagi.",
+        "txt": "Ketukan, atau *lagu yang utuh?*",
         "shot": "anim",
         "dur": "",
-        "case": "PENUTUP tantangan + CTA share",
+        "case": "PENUTUP: arahan sebelum (dicoret) -> sesudah (contoh + tujuan + ceritakan ulang, tiga bagian disorot sesuai 3 langkah) + pertanyaan simbol + CTA share",
         "solusi": "",
         "contoh": ""
       }
@@ -78,6 +78,6 @@
     "teks_frame1": "Makanannya enak. Yang diingat: tukang parkirnya.",
     "asal": "Pola IHT dipakai: adegan sehari-hari -> twist -> kalimat besar -> putar ulang sebelum/sesudah. Isi baru, bukan materi klien."
   },
-  "script": "Sore di teras. Seorang ayah mengetuk meja. Tok, tok-tok, tok. \"Tebak, lagu apa?\" Anaknya bengong. Ayahnya heran. \"Masa gak tahu? Ini Balonku.\" Di kepala ayahnya, melodinya jelas sekali. Di telinga anaknya, cuma bunyi meja.\nDi dunia bisnis, ini ada namanya. Curse of Knowledge. Kutukan pengetahuan. Tahun sembilan belas sembilan puluh, peneliti Stanford, Elizabeth Newton, meminta orang mengetuk lagu terkenal. Pengetuk yakin, separuh pendengar bisa menebak. Kenyataannya, dari seratus dua puluh lagu, cuma tiga yang tertebak.\nDi bisnismu, ketukan ini ada di setiap arahan ke tim. \"Bikin konten yang lebih menarik, ya.\" \"Follow up pelanggan lama.\" Di kepalamu, gambarnya sudah jelas. Di telinga tim, cuma bunyi meja. Mereka menebak, kamu revisi, mereka menebak lagi. Di bisnis yang saya dampingi, banyak masalah yang dikira soal tim, ternyata soal arahan yang gak tersampaikan.\nCaranya tiga. Satu, tunjukkan satu contoh hasil yang kamu mau. Satu contoh lebih jelas dari sepuluh kalimat. Dua, sampaikan untuk apa, bukan cuma apa. Tim yang tahu tujuannya bisa ambil keputusan sendiri. Tiga, jangan tanya \"paham?\". Semua orang jawab paham. Minta mereka ulangi arahanmu pakai bahasanya sendiri. Kalau gak bisa diulang, berarti kamu masih mengetuk.\nCoba ketuk satu lagu ke orang di sebelahmu. Lalu ingat lagi arahan terakhirmu ke tim. Kirim video ini ke leader di bisnismu, biar arahannya gak ditebak-tebak lagi.",
+  "script": "Sore di teras. Seorang ayah mengetuk meja. Tok, tok-tok, tok. \"Tebak, lagu apa?\" Anaknya bengong. Ayahnya heran. \"Masa gak tahu? Ini Balonku.\" Di kepala ayahnya, melodinya jelas sekali. Di telinga anaknya, cuma bunyi meja.\nDi dunia bisnis, ini ada namanya. Curse of Knowledge. Kutukan pengetahuan. Tahun sembilan belas sembilan puluh, peneliti Stanford, Elizabeth Newton, meminta orang mengetuk lagu terkenal. Pengetuk yakin, separuh pendengar bisa menebak. Kenyataannya, dari seratus dua puluh lagu, cuma tiga yang tertebak.\nDi bisnismu, ketukan ini ada di setiap arahan ke tim. \"Bikin konten yang lebih menarik, ya.\" \"Follow up pelanggan lama.\" Di kepalamu, gambarnya sudah jelas. Di telinga tim, cuma bunyi meja. Mereka menebak, kamu revisi, mereka menebak lagi. Di bisnis yang saya dampingi, banyak masalah yang dikira soal tim, ternyata soal arahan yang gak tersampaikan.\nCaranya tiga. Satu, tunjukkan satu contoh hasil yang kamu mau. Satu contoh lebih jelas dari sepuluh kalimat. Dua, sampaikan untuk apa, bukan cuma apa. Tim yang tahu tujuannya bisa ambil keputusan sendiri. Tiga, jangan tanya \"paham?\". Semua orang jawab paham. Minta mereka ulangi arahanmu pakai bahasanya sendiri. Kalau gak bisa diulang, berarti kamu masih mengetuk.\nContohnya begini. Arahan \"Bikin konten yang lebih menarik, ya.\" Ganti jadi: \"Bikin tiga video pendek seperti contoh ini, buat promo gamis lebaran, biar chat yang tanya harga naik. Sebelum mulai, ceritakan ulang ke saya rencanamu.\" Jadi, arahan terakhirmu ke tim: masih ketukan, atau sudah jadi lagu yang utuh? Kirim video ini ke leader di bisnismu, biar arahannya gak ditebak-tebak lagi.",
   "cta_keyword": ""
 }
